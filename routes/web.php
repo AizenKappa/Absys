@@ -22,7 +22,7 @@ Route::get('/logout',[SessionController::class,'destroy']);
 Route::view('/user_info','user_info')->middleware('guest');
 Route::post('/check_user',[SessionController::class,'check']);
 
-Route::view('/pwd_reset','pwd_reset')->middleware('guest');
+Route::view('/pwd_reset','pwd_reset')->middleware("isvalidreset");
 Route::post('/pwd_reset',[SessionController::class,'reset']);
 
 Route::get('/home',[AbsysController::class,'index'])->middleware('auth');

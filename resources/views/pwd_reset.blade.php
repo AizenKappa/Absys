@@ -5,11 +5,16 @@
                 <img src="{{ asset('img/logo_ofppt.png') }}" class="rounded-full w-24">
             </div>
             <h1 class="text-xl text-center mb-5">Password Reset</h1>
+            {{-- @if(session()->has("user_cin"))
+                {{session(['user_cin' => session("user_cin")]);}}
+            @endif --}}
             <form method="POST" action="/pwd_reset">
                 @csrf
-                <div class="grid grid-cols-1 gap-4 mb-5">
-                    <x-inpute type='password' name='pwd' placeholder="new password"/>
-                    <x-inpute type='password' name='rpwd' placeholder="repete password"/>
+                
+                <div  class="grid grid-cols-1 gap-4 mb-5">
+                    
+                    <x-inpute type='text' name='pwd' placeholder="new password" />
+                    <x-inpute type='text' name='rpwd' placeholder="repete password" />
                 </div>
                 <x-button type='submit'/>
                     @if ($errors->any())
@@ -18,6 +23,7 @@
                         </div>
                     @endif
                 </div>
+                <input type="hidden" name='cin' value="{{session("user_cin")}}">
             </form>
         </div>
     </div>

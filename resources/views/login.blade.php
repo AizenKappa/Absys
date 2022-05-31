@@ -22,7 +22,12 @@
 
           <div class="form-group mb-6">
             <label for="Password" class="form-label inline-block mb-2 text-gray-700">Password</label>
-            <x-inpute type='password' name='password'/>
+            <div class="relative" x-data="{ open: false }">
+              <x-inpute type='password' name='password'/>
+              <x-svgs.eyeOn x-show="open" class="absolute top-2 right-2 pointer h-5 w-5" />
+              <x-svgs.eyeOff  class="absolute top-2 right-2 pointer h-5 w-5" />
+            </div>
+            
           </div>
 
           <div class="flex justify-between items-center mb-6">
