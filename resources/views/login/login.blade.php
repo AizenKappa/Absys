@@ -21,15 +21,24 @@
           </div>
 
           <div class="form-group mb-6">
-            <label for="Password" class="form-label inline-block mb-2 text-gray-700">Password</label>
-            <div class="relative" x-data="{ open: false }">
-              <x-inpute type='password' name='password'/>
-              <x-svgs.eyeOn x-show="open" class="absolute top-2 right-2 pointer h-5 w-5" />
-              <x-svgs.eyeOff  class="absolute top-2 right-2 pointer h-5 w-5" />
-            </div>
-            
-          </div>
 
+
+
+        <label for="Password" class="form-label inline-block mb-2 text-gray-700">Password</label>
+
+        <div class="relative" x-data="{ open: true }">
+
+            <input class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700
+          bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-ou
+            tm-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            type="text" :type="open?'password':'text'" name='password'/>
+
+            <x-svgs.eyeOn class="absolute top-2 right-2 pointer h-5 w-5" x-show="!open" @click="open = !open"/>
+            <x-svgs.eyeOff class="absolute top-2 right-2 pointer h-5 w-5" x-show="open" @click="open = !open"/>
+        </div>
+
+
+          </div>
           <div class="flex justify-between items-center mb-6">
             <div class="form-group form-check">
               <input type="checkbox" name="check"

@@ -430,12 +430,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .relative {
   position: relative;
 }
-.top-0 {
-  top: 0px;
-}
-.right-0 {
-  right: 0px;
-}
 .top-2 {
   top: 0.5rem;
 }
@@ -497,6 +491,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .h-4 {
   height: 1rem;
+}
+.h-10 {
+  height: 2.5rem;
 }
 .h-5 {
   height: 1.25rem;

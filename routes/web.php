@@ -19,10 +19,10 @@ Route::get('/',[SessionController::class,'create'])->middleware('guest');
 Route::post('/login',[SessionController::class,'store']);
 Route::get('/logout',[SessionController::class,'destroy']);
 
-Route::view('/user_info','user_info')->middleware('guest');
+Route::view('/user_info','login.user_info')->middleware('guest');
 Route::post('/check_user',[SessionController::class,'check']);
 
-Route::view('/pwd_reset','pwd_reset')->middleware("isvalidreset");
+Route::view('/pwd_reset','login.pwd_reset')->middleware("isvalidreset");
 Route::post('/pwd_reset',[SessionController::class,'reset']);
 
 Route::get('/home',[AbsysController::class,'index'])->middleware('auth');
