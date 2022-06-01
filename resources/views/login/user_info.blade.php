@@ -8,11 +8,11 @@
             <form method="POST" action="/check_user">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <x-inpute type='text' value="{{old('firstname')}}" name='firstname' placeholder="First name"/>
-                    <x-inpute type='text' value="{{old('lastname')}}" name='lastname' placeholder="Last name"/>
-                    <x-inpute type='text' value="{{old('cin')}}" name='cin' placeholder="CIN" class="mb-5 col-span-2"/>
+                    <x-contents.inpute type='text' value="{{old('firstname')}}" name='firstname' placeholder="First name"/>
+                    <x-contents.inpute type='text' value="{{old('lastname')}}" name='lastname' placeholder="Last name"/>
+                    <x-contents.inpute type='text' value="{{old('cin')}}" name='cin' placeholder="CIN" class="mb-5 col-span-2"/>
                 </div>
-                <x-button type='submit'/>
+                <x-contents.button type='submit'/>
                     @if ($errors->any())
                         <div class="w-full text-center bg-red-100 py-2 mt-3 rounded-md text-md text-red-500">
                             Les donnees sont incorecte         

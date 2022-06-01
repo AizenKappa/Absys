@@ -3,3 +3,19 @@
     background-size: cover;
     background-position: center;
 }
+.card li{
+    margin-bottom:1.2rem ;
+}
+@media only screen and (max-width: 767px) {
+    #helper {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  body{
+    background-color:rgb(233, 238, 255);
+  }
+  li{
+    cursor: pointer;
+  }

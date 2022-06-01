@@ -13,10 +13,10 @@
                 
                 <div  class="grid grid-cols-1 gap-4 mb-5">
                     
-                    <x-inpute type='text' name='pwd' placeholder="new password" />
-                    <x-inpute type='text' name='rpwd' placeholder="repete password" />
+                    <x-contents.inpute type='text' name='pwd' placeholder="new password" />
+                    <x-contents.inpute type='text' name='rpwd' placeholder="repete password" />
                 </div>
-                <x-button type='submit'/>
+                <x-contents.button type='submit'/>
                     @if ($errors->any())
                         <div class="w-full text-center bg-red-100 py-2 mt-3 rounded-md text-md text-red-500">
                             Les donnees sont incorecte         
