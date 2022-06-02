@@ -1,5 +1,5 @@
 
-<a x-on:click="activeLink={{$numLink}};open=false"  class="flex items-end" >
+<a x-on:click="activeLink={{$numLink}};open=(window.innerWidth > 768) ? true : false"  class="flex items-end" >
     <span :class="activeLink === {{$numLink}} ? activeClass:inactiveClass">
         <span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" viewBox="0 0 20 20"
