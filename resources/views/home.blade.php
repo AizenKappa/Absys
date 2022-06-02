@@ -35,10 +35,7 @@
                             <livewire:navlink :name="'Login'" :numLink="2" />
                             <livewire:navlink :name="'Register'" :numLink="3" />
                         </div>
-
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -57,9 +54,7 @@
                                 clip-rule="evenodd" />
                         </svg>
                     </button>
-
                     <a class="font-semibold text-xl text-[#475569] " href="/OFPPT">Dashboard</a>
-
                     <div class="flex items-center">
                         <a class="float-right" href="/bell" class="pr-3">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="gray">
@@ -67,7 +62,7 @@
                                     d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
                             </svg>
                         </a>
-                        <img class="rounded-full w-12" src="{{public_path("\img\pro.png")}}" alt="profile">
+                        <img class="rounded-full w-12" src="{{asset('img/pro.jpg')}}" alt="profile">
                     </div>
                 </nav>
             </header>
