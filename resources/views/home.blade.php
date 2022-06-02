@@ -28,17 +28,6 @@
                         <input class="p-2 border border-gray-800/80  rounded-md w-full" type="text"
                             placeholder="Search">
                     </div>
-
-
-                    {{-- <div class="border-t py-5 border-gray-300 grid gap-4">
-                        <h1 class="font-bold text-xs text-[#64748B] uppercase" href="/OFPPT">admin layout pages</h1>
-                        <x-train.navlink :active="1" :title="'hakim'" />
-                        <x-train.navlink :active="0" :title="'anas'" />
-                        <x-train.navlink :active="0" :title="'login'" />
-                        <x-train.navlink :active="0" :title="'register'" />
-                    </div>
-                    --}}
-
                     <div class="border-t py-5 border-gray-300 grid gap-4">
                         <h1 class="font-bold text-xs text-[#64748B] uppercase" href="/OFPPT">admin layout pages</h1>
                         <div class="cursor-pointer">
@@ -78,20 +67,16 @@
                                     d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
                             </svg>
                         </a>
-                        <img class="rounded-full w-12" src="{{asset(" /img/pro.png")}}" alt="profile">
+                        <img class="rounded-full w-12" src="{{public_path("\img\pro.png")}}" alt="profile">
                     </div>
                 </nav>
             </header>
             {{--End Header --}}
 
-            {{-- content --}}
+            {{-- Start content --}}
             <main class="w-full h-auto">
-
-                 
-
-                    
                     <div x-show="activeLink==1 ? true:false" class="bg-white w-full h-auto">
-                        link 1
+                        link 1{{-- here we will be putting the components --}}
                     </div>
 
                     <div x-show="activeLink==2 ? true:false" class="bg-white w-full">
@@ -100,12 +85,8 @@
                     <div x-show="activeLink==3 ? true:false" class="bg-white w-full">
                         link 3
                     </div>
-
-
-
-
             </main>
-
+        {{--End Content  --}}
 
 
         </div>
