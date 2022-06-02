@@ -1,13 +1,13 @@
 <x-layout>
     {{-- <h1>{{auth()->user()->firstname}}</h1>
     <a href="/logout">Logout</a> --}}
-    <div class="h-full bg-[#059669] flex relative" x-data="{open:(window.innerWidth > 768) ? true : false,
+    <div class="h-full flex relative overflow-auto" x-data="{open:(window.innerWidth > 768) ? true : false,
         activeLink:1,
         activeClass:'text-green-600',
         inactiveClass:'text-gray-400'}" @resize.window="open = (window.innerWidth > 768) ? true : false">
         {{-- Start sidebar --}}
-        <div x-show="open" class="absolute top-0 z-20  w-full bg-transparent p-1
-            md:static md:w-[15rem]  md:p-0">
+        <div x-show="open" class="absolute  top-0 z-20  w-full bg-transparent p-1
+            md:static md:w-[18rem]  md:p-0">
             <div class="bg-white rounded-md overflow-scroll shadow-lg h-auto md:rounded-none md:h-screen">
                 <div class="pt-5 px-6 ">
 
@@ -41,11 +41,11 @@
         </div>
         {{-- End Sidebar --}}
 
-        <div class="border w-full">
+        <div class="w-full " >
 
             {{-- Start header --}}
-            <header class="bg-white mb-12 md:bg-transparent">
-                <nav class="drop-shadow-md py-5 px-6 flex justify-between items-center ">
+            <header class=" md:bg-transparent ">
+                <nav class="py-5 px-6 flex justify-between items-center md:bg-[#059669]">
 
                     <button class="border py-1 px-2 rounded-md md:hidden" @click="open = true">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="gray">
@@ -54,10 +54,10 @@
                                 clip-rule="evenodd" />
                         </svg>
                     </button>
-                    <a class="font-semibold text-xl text-[#475569] " href="/OFPPT">Dashboard</a>
+                    <a class="font-semibold text-xl text-[#475569] md:text-[#ffffff] " href="/OFPPT">Dashboard</a>
                     <div class="flex items-center">
-                        <a class="float-right" href="/bell" class="pr-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="gray">
+                        <a class="float-right md:text-white" href="/bell" class="pr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path
                                     d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
                             </svg>
@@ -67,17 +67,16 @@
                 </nav>
             </header>
             {{--End Header --}}
-
             {{-- Start content --}}
-            <main class="w-full h-auto">
-                    <div x-show="activeLink==1 ? true:false" class="bg-white w-full h-auto">
+            <main class="w-full h-auto bg-[#059669] ">
+                    <div x-show="activeLink==1 ? true:false" class=" w-full h-[10rem]">
                         link 1{{-- here we will be putting the components --}}
                     </div>
 
-                    <div x-show="activeLink==2 ? true:false" class="bg-white w-full">
+                    <div x-show="activeLink==2 ? true:false" class=" w-full h-[10rem]">
                         link 2
                     </div>
-                    <div x-show="activeLink==3 ? true:false" class="bg-white w-full">
+                    <div x-show="activeLink==3 ? true:false" class=" w-full h-[10rem]">
                         link 3
                     </div>
             </main>
