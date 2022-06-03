@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,10 +17,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::create([
-            'cin' => 'B123456',
-            'firstname' => 'kamal',
-            'lastname' => 'najil',
-            'password' => 'anas123'
+            'cin' => "B123456",
+            'firstname' => "najil",
+            'lastname' => "kamal",
+            'password' => "anas123",
         ]);
+
+       /*  $path = public_path("sql/File.sql");
+        DB::unprepared(file_get_contents($path));
+        $this->command->info('Success'); */
     }
 }

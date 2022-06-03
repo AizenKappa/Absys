@@ -43,13 +43,22 @@
     var items = document.querySelectorAll("#dashboard-cards li")
     var demo = document.querySelector("#testets")
         items.forEach(e =>{e.addEventListener("click",function(){
-            items.forEach(li => li.style.color = "black");
-            e.style.color = "#059669";
+            items.forEach(li =>{li.style.color = "gray";li.children[1].style.color = "black"})
+            e.style.color = "#059669"; e.children[1].style.color = "#059669"
+            
             /* First one */
+
+
+
             if(e.value == 12)
-                demo.innerHTML = `<x-contents.svg :name="'edu'"/>`
+                demo.innerHTML = `<x-system.add-absence/>`
             else
                 demo.innerHTML = `no component here x_x`
-    })})
+
+
+                
+    })});onload = () => document.querySelector("#test").click()
+    
+    
 </script>
 </x-layout>
