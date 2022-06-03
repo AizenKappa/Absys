@@ -1,8 +1,3 @@
-
-
-
-
-
-<section class=" bg-blue-700">
-    
-</section>
+{{-- <section class="border ">
+        <livewire:fildrop />
+</section> --}}

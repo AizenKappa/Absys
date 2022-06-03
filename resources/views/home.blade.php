@@ -23,8 +23,10 @@
                    <x-contents.svg :name="'menu'"/>
                 <div @click="open=!open" class="bg-red-700 rounded-full h-10 w-10 cursor-pointer" ></div>
             </div>
-            <div id="testets" class="w-full h-[80rem]">
+            <div id="testets" class="w-full h-auto">
                 {{-- contents --}}
+                <livewire:fildrop  />
+                <livewire:groupe-drop  />
             </div>
         </div>
     </div>
@@ -50,10 +52,17 @@
 
 
 
-            if(e.value == 12)
-                demo.innerHTML = `<x-system.add-absence/>`
-            else
-                demo.innerHTML = `no component here x_x`
+           /*  if(e.dataset.link == "dashboard"){
+                demo.innerHTML = `this is the dashboard`;
+            }
+            else if(e.dataset.link == "ajt"){
+                demo.innerHTML = `<livewire:fildrop  />`;
+            }
+            else if(e.dataset.link =="justif"){
+                demo.innerHTML = `Justifier l'absence`;
+            } */
+            
+                
 
 
                 
