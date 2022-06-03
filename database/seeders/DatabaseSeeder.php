@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
             'password' => "anas123",
         ]);
 
-       /*  $path = public_path("sql/File.sql");
+        $path = database_path("absysInsert/sql/insertFile.sql");
         DB::unprepared(file_get_contents($path));
-        $this->command->info('Success'); */
+        $this->command->info('Success');
     }
 }
