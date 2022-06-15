@@ -26,5 +26,5 @@ Route::view('/pwd_reset','login.pwd_reset')->middleware("isvalidreset");
 Route::post('/pwd_reset',[SessionController::class,'reset']);
 
 Route::get('/home',[AbsysController::class,'index'])->middleware('auth');
-
-Route::view("/test","test");
+Route::view('/just','home');
+Route::view('/detail','home');
