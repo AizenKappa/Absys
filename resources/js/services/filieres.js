@@ -7,6 +7,8 @@ export default function useFilieres(){
     const groupes = ref([])
     const stagiaires = ref([])
     const profs = ref([])
+    const etats = ref([])
+
     var nom_gp = ref(null)
 
     const getFilieres = async () => {
@@ -32,9 +34,16 @@ export default function useFilieres(){
         profs.value = response.data.data
 
     };
+
+    const getetats = async (id, period , limitD , limitF) =>{
+        console.log(period,limitD,limitF)
+        let response = await axios.get(`/api/etats/${id}/${period}/${limitD}/${limitF}`)
+        // etats.value = response.data.data
+        console.log(response.data.data)
+    };
     
 
-    return { filieres , groupes , stagiaires , getFilieres , profs , getgroupes , getstagiaires , nom_gp };
+    return { filieres , groupes , stagiaires , getFilieres , profs , getgroupes , getstagiaires , nom_gp , getetats};
 
     
 }

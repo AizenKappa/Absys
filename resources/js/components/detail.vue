@@ -5,30 +5,29 @@
 
     <div class="w-[100%] h-[2.5rem] flex justify-center">
         <!-- Filieres_Select -->
-        <select id="filieres_select" v-model="selected" class="font-medium w-[80%] h-full">
-            <option class="hidden">choose your class</option>
-            <option>Tous Filieres</option>
-            <option :value="fil.id" v-for="fil in filieres" :key="fil.id">{{fil.nom_fil}}</option>
+        <select id="filieres_select" v-model="selected_fil" class="font-medium w-[80%] h-full">
+            <option value="Tous" selected>Tous Filieres</option>
+            <option v-for="fil in filieres" :value="fil.id" :key="fil.id">{{fil.nom_fil}}</option>
         </select>
     </div>
 
     <div class="w-full px-12 mt-[5rem] flex justify-between">
-        <select class="w-[30%] py-1" v-model="selected_p">
-            <option class="hidden" selected>Periode</option>
-            <option>Cette semaine</option>
-            <option>La semain precedent</option>
-            <option>Ce mois</option>
-            <option>Le mois precedent</option>
-            <option>L'annee entiere</option>
-            <option value="show_date">Limitation</option>
+        <select v-on:change="period_debut = null , period_fin = null" class="w-[30%] py-1" v-model="selected_period">
+            <option value="year" selected>L'annee entiere</option>
+            <option value="week">Cette semaine</option>
+            <option value="subweek">La semain precedent</option>
+            <option value="month">Ce mois</option>
+            <option value="submonth">Le mois precedent</option>
+            <option value="limit">Limitation</option>
         </select>
-        <div v-if="selected_p == 'show_date'" class="w-[50%] flex justify-around items-center">
-            <input class="w-[40%] px-2" type="date"><fas icon="angles-right" />
-            <input class="w-[40%] px-2" type="date">
+        <div v-if="selected_period == 'limit'" class="w-[50%] flex justify-around items-center">
+            <input v-model="period_debut" class="w-[40%] px-2" type="date"><fas icon="angles-right" required=""/>
+            <input v-model="period_fin" class="w-[40%] px-2" type="date">
         </div>
     </div>
     <div class="w-full pl-[90%] mt-[2rem]">
-        <button class="text-2xl text-white rounded-full w-[3rem] h-[3rem] shadow-md shadow-bleu-500"><fas icon="magnifying-glass" /></button>
+        <button v-on:click="getetats(selected_fil,selected_period,period_debut,period_fin)"
+        class="text-2xl text-white rounded-full w-[3rem] h-[3rem] shadow-md shadow-bleu-500"><fas icon="magnifying-glass" /></button>
     </div>
 </section>
 </template>
@@ -39,13 +38,15 @@
     import { onMounted } from 'vue';
 
     /* Variables Help-us */
-    const selected = ref("choose your class")
-    const selected_p = ref("Periode")
+    const selected_fil = ref("Tous")
+    const selected_period = ref("year")
+    const period_debut = ref(null)
+    const period_fin = ref(null)
 
     /* Call Api Groupes */
     const getcontents = () =>  { selected_gp.value = "choose your groupe" , getgroupes(selected.value)}
     /* Return all our functuons and variables from { services/filieres.js } to use here */
-    const { getFilieres , filieres , profs , getgroupes , groupes , stagiaires, getstagiaires , nom_gp } = useFilieres();
+    const { getFilieres , filieres , profs , getgroupes , groupes , stagiaires, getstagiaires , nom_gp , getetats } = useFilieres();
     /* On Mounted call Aoi Flieres */
     onMounted(getFilieres())
     

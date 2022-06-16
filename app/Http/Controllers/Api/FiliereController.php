@@ -7,8 +7,10 @@ use App\Http\Resources\FiliereResource;
 use App\Models\Etat;
 use App\Models\Filiere;
 use App\Models\Groupe;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use PHPUnit\TextUI\XmlConfiguration\Group;
 
 class FiliereController extends Controller
 {
@@ -36,10 +38,76 @@ class FiliereController extends Controller
         return FiliereResource::collection(Groupe::Find($request->id)->profs);
     }
 
-    public function index_etats(Request $request)
+    public function getetats(Request $request)
     {
-        return FiliereResource::collection(Etat::all());
+        $id = $request->id;
+        $period = $request->period;
+
+        //for the whole year
+        if($period == "year"){ 
+            if(date("M") >= 1 && date("M") <= 7 ){
+                $period_debut = (date("Y")-1).'-08-30';
+                $period_fin = date("Y").'-08-30';
+            }else{
+                $period_debut = date("Y").'-08-30';
+                $period_fin = (date("Y")+1).'-08-30';
+            }
+            
+        }
+
+        //for current week
+        elseif($period == "week"){
+            $period_debut = Carbon::now()->startOfWeek()->format('Y-m-d');
+            $period_fin = Carbon::now()->endOfWeek()->format('Y-m-d');
+        }
+
+        //for last week
+        elseif($period == "subweek"){
+            $period_debut = Carbon::now()->subWeek()->startOfWeek()->format('Y-m-d');
+            $period_fin = Carbon::now()->subWeek()->endOfWeek()->format('Y-m-d');
+        }
+
+        //for current month
+        elseif($period == "month"){
+            $period_debut = Carbon::now()->startOfMonth()->format('Y-m-d');
+            $period_fin = Carbon::now()->endOfMonth()->format('Y-m-d');
+        }
+
+        //for last month
+        elseif($period == "submonth"){
+            $period_debut = Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d');
+            $period_fin = Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d');
+        }
+
+        //if he chooses date manually
+        else{
+            $period_debut = $request->selected_period_debut;
+            $period_fin = $request->selected_period_fin;
+
+        }
+
+
+        if($id == 'Tous')
+            return FiliereResource::collection(Etat::whereBetween('date_abs', [$period_debut, $period_fin ])->get());
+        else
+            Etat::with('stagiaire.groupe')->get()
+            ->where('stagiaire.groupe.filiere_id',$id)
+            ->whereBetween('date_abs',[$period_debut, $period_fin ]);
+
     }
 
-
 }
+/* About carbon */
+    // 'etat' => Stagiaire::find($this->id)->absences->where('etat_justif','NJ'),
+    // 'start last week' => Carbon::now()->subWeek()->startOfWeek()->format('Y-m-d'),
+    // 'end last week' => Carbon::now()->subWeek()->endOfWeek()->format('Y-m-d'),
+
+    // 'start current week' => Carbon::now()->startOfWeek()->format('Y-m-d'),
+    // 'end current week' => Carbon::now()->endOfWeek()->format('Y-m-d'),
+    // 'timediff' => $timeOut->diffInMinutes($timeIn) / 60
+
+
+
+
+    
+

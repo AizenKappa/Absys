@@ -19,23 +19,20 @@ class FiliereResource extends JsonResource
     public function toArray($request)
     {
         
-        $timeIn = Carbon::parse('9:30:00');
-        $timeOut = Carbon::parse('12:00:00');
+        // $timeIn = Carbon::parse('9:30:00');
+        // $timeOut = Carbon::parse('12:00:00');
 
 
-        if($this->nom_st !== null){
-            $nom_gp = Groupe::find($this->groupe_id)->nom_gp;
-            return [
-                'id' => $this->id,
-                'nom_st'=> $this->nom_st,
-                'prenom_st'=> $this->prenom_st,
-                'nom_gp'=> $nom_gp,
-            ];
-        }
+        // if($this->nom_st !== null){
+        //     $nom_gp = Groupe::find($this->groupe_id)->nom_gp;
+        //     return [
+        //         'id' => $this->id,
+        //         'nom_st'=> $this->nom_st,
+        //         'prenom_st'=> $this->prenom_st,
+        //         'nom_gp'=> $nom_gp,
+        //     ];
+        // }
 
-        if($this->etat_justif !== null){
-            return parent::toArray($request);
-        }
         return parent::toArray($request);
 
     }
