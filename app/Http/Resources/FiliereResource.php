@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Etat;
 use App\Models\Groupe;
 use App\Models\Stagiaire;
 use Carbon\Carbon;
@@ -23,15 +24,16 @@ class FiliereResource extends JsonResource
         // $timeOut = Carbon::parse('12:00:00');
 
 
-        // if($this->nom_st !== null){
-        //     $nom_gp = Groupe::find($this->groupe_id)->nom_gp;
-        //     return [
-        //         'id' => $this->id,
-        //         'nom_st'=> $this->nom_st,
-        //         'prenom_st'=> $this->prenom_st,
-        //         'nom_gp'=> $nom_gp,
-        //     ];
-        // }
+        if($this->nom_st !== null){
+            $nom_gp = Groupe::find($this->groupe_id)->nom_gp;
+            return [
+                'id' => $this->id,
+                'nom_st'=> $this->nom_st,
+                'prenom_st'=> $this->prenom_st,
+                'nom_gp'=> $nom_gp,
+                'etat' => Etat::Where('stagiaire_id',$this->id)->get()
+            ];
+        }
 
         return parent::toArray($request);
 

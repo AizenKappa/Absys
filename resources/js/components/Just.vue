@@ -203,6 +203,7 @@
 
     /* Calcule total Absences NJ */
     const getNbAbsences = (array) => {
+        console.log(array)
         var total = array.reduce(( sum , currentOject )=> sum + getabsence(currentOject) ,0 )
         return total
     }
@@ -216,7 +217,6 @@
 
         var date1 = new Date(2000, 0, 1,  hour1 , e.h_debut[3] + e.h_debut[4]);
         var date2 = new Date(2000, 0, 1, hour2, e.h_fin[3] + e.h_fin[4] );
-
         return ((date2 - date1)/36e5)
     }
     

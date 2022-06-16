@@ -94,8 +94,8 @@
         </div>
         
 </form>
-<iframe name="content" class="w-full">
-</iframe>
+<!-- <iframe name="content" class="w-full">
+</iframe> -->
 </template>
 
 
@@ -114,6 +114,7 @@
     const { getFilieres , filieres , profs , getgroupes , groupes , stagiaires, getstagiaires , nom_gp } = useFilieres();
     /* On Mounted call Aoi Flieres */
     onMounted(getFilieres())
+
     
 </script>
 
