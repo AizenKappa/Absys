@@ -2501,6 +2501,7 @@ function useFilieres() {
   var groupes = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
   var stagiaires = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
   var profs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
+  var etats = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
   var nom_gp = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
 
   var getFilieres = /*#__PURE__*/function () {
@@ -2613,6 +2614,35 @@ function useFilieres() {
     };
   }();
 
+  var getetats = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(id, period, limitD, limitF) {
+      var response;
+      return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              console.log(period, limitD, limitF);
+              _context5.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/etats/".concat(id, "/").concat(period, "/").concat(limitD, "/").concat(limitF));
+
+            case 3:
+              response = _context5.sent;
+              // etats.value = response.data.data
+              console.log(response.data.data);
+
+            case 5:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }));
+
+    return function getetats(_x4, _x5, _x6, _x7) {
+      return _ref5.apply(this, arguments);
+    };
+  }();
+
   return {
     filieres: filieres,
     groupes: groupes,
@@ -2621,7 +2651,8 @@ function useFilieres() {
     profs: profs,
     getgroupes: getgroupes,
     getstagiaires: getstagiaires,
-    nom_gp: nom_gp
+    nom_gp: nom_gp,
+    getetats: getetats
   };
 }
 

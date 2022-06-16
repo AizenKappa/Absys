@@ -22,7 +22,7 @@ Route::get('filieres',[FiliereController::class,'index_filieres']);
 Route::get('filieres/{id}',[FiliereController::class,'getgroupes']);
 Route::get('groupes/{id}',[FiliereController::class,'getstagiaires']);
 Route::get('profs/{id}',[FiliereController::class,'getprofs']);
-Route::get('etats/{fil}/{period}',[FiliereController::class,'index_etats']);
+Route::get('etats/{id}/{period}/{selected_period_debut}/{selected_period_fin}',[FiliereController::class,'getetats']);
 
 Route::post('addAbsence',function(Request $request){
         $data = $request->all();

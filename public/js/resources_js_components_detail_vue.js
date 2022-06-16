@@ -2178,8 +2178,10 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
-    var selected = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("choose your class");
-    var selected_p = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("Periode");
+    var selected_fil = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("Tous");
+    var selected_period = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("year");
+    var period_debut = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+    var period_fin = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     /* Call Api Groupes */
 
     var getcontents = function getcontents() {
@@ -2196,14 +2198,17 @@ __webpack_require__.r(__webpack_exports__);
         groupes = _useFilieres.groupes,
         stagiaires = _useFilieres.stagiaires,
         getstagiaires = _useFilieres.getstagiaires,
-        nom_gp = _useFilieres.nom_gp;
+        nom_gp = _useFilieres.nom_gp,
+        getetats = _useFilieres.getetats;
     /* On Mounted call Aoi Flieres */
 
 
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(getFilieres());
     var __returned__ = {
-      selected: selected,
-      selected_p: selected_p,
+      selected_fil: selected_fil,
+      selected_period: selected_period,
+      period_debut: period_debut,
+      period_fin: period_fin,
       getcontents: getcontents,
       getFilieres: getFilieres,
       filieres: filieres,
@@ -2213,6 +2218,7 @@ __webpack_require__.r(__webpack_exports__);
       stagiaires: stagiaires,
       getstagiaires: getstagiaires,
       nom_gp: nom_gp,
+      getetats: getetats,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
       useFilieres: _services_filieres_js__WEBPACK_IMPORTED_MODULE_1__["default"],
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted
@@ -2251,99 +2257,27 @@ var _hoisted_1 = {
 
 var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-    "class": "hidden"
-  }, "choose your class", -1
+    value: "Tous",
+    selected: ""
+  }, "Tous Filieres", -1
   /* HOISTED */
   );
 });
 
-var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", null, "Tous Filieres", -1
-  /* HOISTED */
-  );
-});
-
-var _hoisted_4 = ["value"];
-var _hoisted_5 = {
+var _hoisted_3 = ["value"];
+var _hoisted_4 = {
   "class": "w-full px-12 mt-[5rem] flex justify-between"
 };
 
-var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-    "class": "hidden",
-    selected: ""
-  }, "Periode", -1
-  /* HOISTED */
-  );
-});
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<option value=\"year\" selected data-v-742d4c48>L&#39;annee entiere</option><option value=\"week\" data-v-742d4c48>Cette semaine</option><option value=\"subweek\" data-v-742d4c48>La semain precedent</option><option value=\"month\" data-v-742d4c48>Ce mois</option><option value=\"submonth\" data-v-742d4c48>Le mois precedent</option><option value=\"limit\" data-v-742d4c48>Limitation</option>", 6);
 
-var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", null, "Cette semaine", -1
-  /* HOISTED */
-  );
-});
-
-var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", null, "La semain precedent", -1
-  /* HOISTED */
-  );
-});
-
-var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", null, "Ce mois", -1
-  /* HOISTED */
-  );
-});
-
-var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", null, "Le mois precedent", -1
-  /* HOISTED */
-  );
-});
-
-var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", null, "L'annee entiere", -1
-  /* HOISTED */
-  );
-});
-
-var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-    value: "show_date"
-  }, "Limitation", -1
-  /* HOISTED */
-  );
-});
-
-var _hoisted_13 = [_hoisted_6, _hoisted_7, _hoisted_8, _hoisted_9, _hoisted_10, _hoisted_11, _hoisted_12];
-var _hoisted_14 = {
+var _hoisted_11 = [_hoisted_5];
+var _hoisted_12 = {
   key: 0,
   "class": "w-[50%] flex justify-around items-center"
 };
-
-var _hoisted_15 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "class": "w-[40%] px-2",
-    type: "date"
-  }, null, -1
-  /* HOISTED */
-  );
-});
-
-var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "class": "w-[40%] px-2",
-    type: "date"
-  }, null, -1
-  /* HOISTED */
-  );
-});
-
-var _hoisted_17 = {
+var _hoisted_13 = {
   "class": "w-full pl-[90%] mt-[2rem]"
-};
-var _hoisted_18 = {
-  "class": "text-2xl text-white rounded-full w-[3rem] h-[3rem] shadow-md shadow-bleu-500"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_fas = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("fas");
@@ -2351,30 +2285,55 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Filieres_Select "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     id: "filieres_select",
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
-      return $setup.selected = $event;
+      return $setup.selected_fil = $event;
     }),
     "class": "font-medium w-[80%] h-full"
-  }, [_hoisted_2, _hoisted_3, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.filieres, function (fil) {
+  }, [_hoisted_2, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.filieres, function (fil) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: fil.id,
       key: fil.id
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fil.nom_fil), 9
     /* TEXT, PROPS */
-    , _hoisted_4);
+    , _hoisted_3);
   }), 128
   /* KEYED_FRAGMENT */
   ))], 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.selected]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.selected_fil]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    onChange: _cache[1] || (_cache[1] = function ($event) {
+      return $setup.period_debut = null, $setup.period_fin = null;
+    }),
     "class": "w-[30%] py-1",
-    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-      return $setup.selected_p = $event;
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $setup.selected_period = $event;
     })
-  }, _hoisted_13, 512
+  }, _hoisted_11, 544
+  /* HYDRATE_EVENTS, NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.selected_period]]), $setup.selected_period == 'limit' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+      return $setup.period_debut = $event;
+    }),
+    "class": "w-[40%] px-2",
+    type: "date"
+  }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.selected_p]]), $setup.selected_p == 'show_date' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
-    icon: "angles-right"
-  }), _hoisted_16])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.period_debut]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
+    icon: "angles-right",
+    required: ""
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+      return $setup.period_fin = $event;
+    }),
+    "class": "w-[40%] px-2",
+    type: "date"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.period_fin]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[5] || (_cache[5] = function ($event) {
+      return $setup.getetats($setup.selected_fil, $setup.selected_period, $setup.period_debut, $setup.period_fin);
+    }),
+    "class": "text-2xl text-white rounded-full w-[3rem] h-[3rem] shadow-md shadow-bleu-500"
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
     icon: "magnifying-glass"
   })])])]);
 }
@@ -2410,6 +2369,7 @@ function useFilieres() {
   var groupes = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
   var stagiaires = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
   var profs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
+  var etats = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
   var nom_gp = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
 
   var getFilieres = /*#__PURE__*/function () {
@@ -2522,6 +2482,35 @@ function useFilieres() {
     };
   }();
 
+  var getetats = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(id, period, limitD, limitF) {
+      var response;
+      return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              console.log(period, limitD, limitF);
+              _context5.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/etats/".concat(id, "/").concat(period, "/").concat(limitD, "/").concat(limitF));
+
+            case 3:
+              response = _context5.sent;
+              // etats.value = response.data.data
+              console.log(response.data.data);
+
+            case 5:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }));
+
+    return function getetats(_x4, _x5, _x6, _x7) {
+      return _ref5.apply(this, arguments);
+    };
+  }();
+
   return {
     filieres: filieres,
     groupes: groupes,
@@ -2530,7 +2519,8 @@ function useFilieres() {
     profs: profs,
     getgroupes: getgroupes,
     getstagiaires: getstagiaires,
-    nom_gp: nom_gp
+    nom_gp: nom_gp,
+    getetats: getetats
   };
 }
 

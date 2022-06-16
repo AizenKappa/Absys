@@ -23,7 +23,7 @@ return new class extends Migration
             $table->time("h_fin");
             $table->string("seance");
             $table->string("etat_justif")->default("NJ");
-            $table->string("motif")->default('pas De Motif');
+            $table->string("motif")->default("---");
         });
     }
 
