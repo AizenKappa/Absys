@@ -1,4 +1,4 @@
-<x-layout>
+<x-loginLayout>
     <div class="h-screen overflow-hidden login-bg grid place-items-center">
         <div class="p-6 rounded-lg shadow-lg bg-white max-w-md lg:w-[400px]">
             <div class="grid place-items-center my-2">
@@ -27,4 +27,4 @@
             </form>
         </div>
     </div>
-</x-layout>
+</x-loginLayout>

@@ -1,18 +1,18 @@
 
 
 <template>
-<section class="h-[45rem]">
+<form target="content" action="api/addAbsence" method="POST" class="h-[45rem]">
 
     <!-- Dropdowns-Fileres- -->
         <div id class=" px-10 flex justify-between">
             <div class="w-[100%] h-[2rem] flex justify-between">
                 <!-- Filieres_Select -->
-                <select id="filieres_select" v-model="selected" class="w-[34rem] font-medium " v-on:change="getcontents()">
+                <select name="filiere" id="filieres_select" v-model="selected" class="w-[34rem] font-medium " v-on:change="getcontents()">
                     <option class="hidden">choose your class</option>
-                    <option :value="fil.id" v-for="fil in filieres" :key="fil.id">{{fil.nom_fil}}</option>
+                    <option  :value="fil.id" v-for="fil in filieres" :key="fil.id">{{fil.nom_fil}}</option>
                 </select>
                 <!-- Groupes_select -->
-                <select v-if="selected != 'choose your class'" class="w-[23rem] font-medium"
+                <select name="groupe" v-if="selected != 'choose your class'" class="w-[23rem] font-medium"
                 v-model="selected_gp"
                 v-on:change="getstagiaires(selected_gp)">
                     <option class="hidden">choose your groupe</option>
@@ -53,7 +53,7 @@
                                     <div class="text-left">{{st.prenom_st}}</div>
                                 </td>
                                 <td class="p-2 whitespace-nowrap">
-                                    <div><input type="checkbox" class="h-4 w-4"></div>
+                                    <div><input :name="'st-'+st.id" value='absent' type="checkbox" class="h-4 w-4"></div>
                                 </td>
                             </tr>
                         </tbody>
@@ -66,29 +66,36 @@
 
     <!-- Aboute absence -->
         <div v-if="nom_gp != null" class="w-full flex justify-between px-[3rem]">
-            <select class="w-[15rem] font-medium h-[2rem] shadow-lg shadow-gray-300">
+            <select name="prof" class="w-[15rem] font-medium h-[2rem] shadow-lg shadow-gray-300">
                 <option class="hidden" selected >Le formateur</option>
-                <option v-for="prof in profs" :key="prof.id">{{prof.nom_prof}}</option>
+                <option :value="prof.id" v-for="prof in profs" :key="prof.id">{{prof.nom_prof}}</option>
             </select>
 
-            <label><input type="checkbox"><span class="ml-[1rem]">Seance 1</span></label>
-            <label><input type="checkbox"><span class="ml-[1rem]">Seance 2</span></label>
-            <label><input type="checkbox"><span class="ml-[1rem]">Seance 3</span></label>
-            <label><input type="checkbox"><span class="ml-[1rem]">Seance 4</span></label>
+            <label><input name="seance-1" type="checkbox" value='true' ><span class="ml-[1rem]">Seance 1</span></label>
+            <label><input name="seance-2" type="checkbox" value='true' ><span class="ml-[1rem]">Seance 2</span></label>
+            <label><input name="seance-3" type="checkbox" value='true' ><span class="ml-[1rem]">Seance 3</span></label>
+            <label><input name="seance-4" type="checkbox" value='true' ><span class="ml-[1rem]">Seance 4</span></label>
 
-            <select class="w-[10rem] font-medium h-[2rem] shadow-lg shadow-gray-300">
+            <select name="seanceType" class="w-[10rem] font-medium h-[2rem] shadow-lg shadow-gray-300">
                 <option class="hidden" selected >La seance</option>
-                <option selected >Presentiel</option>
-                <option selected >A distance</option>
+                <option value='Presentiel' >Presentiel</option>
+                <option value="distanciel" >A distance</option>
             </select>
         </div>
-
+        <input v-if="nom_gp != null" type="date" default="today" name="date_abs" />
     <!-- Button -->
         <div v-if="nom_gp != null" class="w-full pl-[90%] mt-[2rem]">
-            <button class="text-2xl text-white rounded-full w-[3rem] h-[3rem]"><fas icon="arrow-right" /></button>
+            
+            <button type="submit" 
+            class="text-2xl text-white rounded-full
+                w-[3rem] h-[3rem]" name="subBtn"><fas icon="arrow-right" /></button>
+       
+            
         </div>
         
-</section>
+</form>
+<iframe name="content" class="w-full">
+</iframe>
 </template>
 
 

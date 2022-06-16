@@ -1,6 +1,6 @@
 
 
-<x-layout>
+<x-loginLayout>
 
 <div class="h-screen overflow-hidden login-bg grid justify-center">
   <div class="sm:w-[400px]">
@@ -13,7 +13,7 @@
     {{-- form --}}
     <div class="block p-6 rounded-lg shadow-lg bg-white w-full">
       <h1 class="text-2xl text-center mb-3">Login</h1>
-        <form method="POST" action="/login">
+        <form method="POST" action="/login" >
           @csrf
           <div class="form-group mb-6">
             <label for="username" class="form-label inline-block mb-2 text-gray-700">Username</label>
@@ -26,15 +26,17 @@
 
         <label for="Password" class="form-label inline-block mb-2 text-gray-700">Password</label>
 
-        <div class="relative" x-data="{ open: true }">
+        <div id="login" class="relative" >
 
-            <input class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700
+          <input class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700
           bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-ou
             tm-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-           :type="open?'password':'text'" name='password'/>
+           :type="open ? 'password':'text'" name='password' autocomplete="on"/>
+            <fas :icon="open ? 'eye-slash':'eye'" 
+            class="cursor-pointer absolute top-2 right-2 pointer h-5 w-5" 
+            @click="open = !open"/>
 
-            <x-contents.svg :name="'eyeOn'" class="absolute top-2 right-2 pointer h-5 w-5" x-show="open" @click="open = !open"/>
-            <x-contents.svg :name="'eyeOff'" class="absolute top-2 right-2 pointer h-5 w-5" x-show="!open" @click="open = !open"/>
+    
         </div>
 
 
@@ -64,4 +66,4 @@
       </div>
     </div>
   </div>
-</x-layout>
+</x-loginLayout>

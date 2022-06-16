@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -22,7 +23,7 @@ return new class extends Migration
             $table->time("h_fin");
             $table->string("seance");
             $table->string("etat_justif")->default("NJ");
-            $table->string("motif");
+            $table->string("motif")->default('pas De Motif');
         });
     }
 

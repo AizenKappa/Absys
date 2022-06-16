@@ -20,5 +20,5 @@ class Etat extends Model
     {
         return $this->belongsTo(Prof::class);
     }
-
+    /* Etat::with('stagiaire','stagiaire.groupe')->first()->stagiaire->groupe->filiere_id */
 }

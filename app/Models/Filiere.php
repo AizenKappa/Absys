@@ -17,4 +17,5 @@ class Filiere extends Model
     {
         return $this->hasMany(Groupe::class);
     }
+    
 }
