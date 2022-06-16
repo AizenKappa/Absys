@@ -630,11 +630,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-\[26rem\] {
   width: 26rem;
 }
-.w-5 {
-  width: 1.25rem;
-}
 .w-24 {
   width: 6rem;
+}
+.w-5 {
+  width: 1.25rem;
 }
 .w-\[96\%\] {
   width: 96%;
@@ -714,11 +714,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .rounded-full {
   border-radius: 9999px;
 }
-.rounded {
-  border-radius: 0.25rem;
-}
 .rounded-lg {
   border-radius: 0.5rem;
+}
+.rounded {
+  border-radius: 0.25rem;
 }
 .rounded-md {
   border-radius: 0.375rem;

@@ -42,18 +42,21 @@ class FiliereController extends Controller
     {
         $id = $request->id;
         $period = $request->period;
-
+        $curr_month = (int)date("m");
+        $cuur_year = (int)date("Y");
         //for the whole year
         if($period == "year"){ 
-            if(date("M") >= 1 && date("M") <= 7 ){
-                $period_debut = (date("Y")-1).'-08-30';
-                $period_fin = date("Y").'-08-30';
+            if($curr_month >= 1 && $curr_month <= 7 ){
+                $period_debut = ($cuur_year-1).'-08-30';
+                
+                $period_fin = $cuur_year.'-08-30';
             }else{
-                $period_debut = date("Y").'-08-30';
-                $period_fin = (date("Y")+1).'-08-30';
+                $period_debut = $cuur_year.'-08-30';
+                $period_fin = ($cuur_year+1).'-08-30';
             }
             
         }
+        
 
         //for current week
         elseif($period == "week"){
@@ -85,7 +88,6 @@ class FiliereController extends Controller
             $period_fin = $request->selected_period_fin;
 
         }
-
 
         if($id == 'Tous')
             return FiliereResource::collection(Etat::whereBetween('date_abs', [$period_debut, $period_fin ])->get());
