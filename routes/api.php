@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\FiliereController;
 use App\Models\Etat;
+use App\Models\Stagiaire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -28,7 +29,8 @@ Route::post('addAbsence',function(Request $request){
         $data = $request->all();
         $stag_ids =[];
         $seance =  $request->input("seanceType");
-        
+        $seanceTotal = 0;
+        $seanceNum=[];
         $prof_id = $request->input("prof");
         $date_abs = $request->input("date_abs");
       
@@ -41,8 +43,17 @@ Route::post('addAbsence',function(Request $request){
                 array_push($stag_ids,intval($id));
                 
             }
+            if(Str::startsWith($key,'seance-')){
+                $s = Str::of($key)->explode('-')[1];//'st-12' => ['st','12']
+
+                array_push($seanceNum,intval($s));
+                $seanceTotal++;
+                // dump($s);
+                // dump($seanceNum);
+                // dd();
+            }
         }
-     
+        
         
         foreach($stag_ids as $v){
             Etat::create([
@@ -53,6 +64,9 @@ Route::post('addAbsence',function(Request $request){
                 "h_fin"=>"10:30:00",
                 "seance"=>$seance
             ]);
+            $currentAbsence = Stagiaire::find($v)->heure_absence_st;
+            
+            Stagiaire::Where('id',$v)->update(['heure_absence_st'=>($currentAbsence + $seanceTotal*(2.5))]);
         }
         
         
