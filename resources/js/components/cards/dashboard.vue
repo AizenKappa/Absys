@@ -25,7 +25,7 @@
                         <img
                         @click="show=!show" 
                         class="rounded-full h-12 w-12 cursor-pointer" 
-                        src="https://source.unsplash.com/random/500x500/?face">
+                        ><!-- src="https://source.unsplash.com/random/500x500/?face" -->
                 </div>
                 <div id="page-contents" class="w-full h-auto">
                 <!-- --  contents -- -->

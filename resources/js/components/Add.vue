@@ -1,7 +1,7 @@
 
 
 <template>
-<form target="content" action="api/addAbsence" method="POST" class="h-[45rem]">
+
 
     <!-- Dropdowns-Fileres- -->
         <div id class=" px-10 flex justify-between">
@@ -53,7 +53,7 @@
                                     <div class="text-left">{{st.prenom_st}}</div>
                                 </td>
                                 <td class="p-2 whitespace-nowrap">
-                                    <div><input :name="'st-'+st.id" value='absent' type="checkbox" class="h-4 w-4"></div>
+                                    <div><input @change="checkStd()" ref="st_inputs"  :name="st.id" value='absent' type="checkbox" class="h-4 w-4"></div>
                                 </td>
                             </tr>
                         </tbody>
@@ -66,43 +66,126 @@
 
     <!-- Aboute absence -->
         <div v-if="nom_gp != null" class="w-full flex justify-between px-[3rem]">
-            <select name="prof" class="w-[15rem] font-medium h-[2rem] shadow-lg shadow-gray-300">
-                <option class="hidden" selected >Le formateur</option>
+            <select v-model="prof_id" name="prof" class="w-[15rem] font-medium h-[2rem] shadow-lg shadow-gray-300">
+                <option class="hidden" :value="null" selected >Le formateur</option>
                 <option :value="prof.id" v-for="prof in profs" :key="prof.id">{{prof.nom_prof}}</option>
             </select>
-
-            <label><input name="seance-1" type="checkbox" value='true' ><span class="ml-[1rem]">Seance 1</span></label>
-            <label><input name="seance-2" type="checkbox" value='true' ><span class="ml-[1rem]">Seance 2</span></label>
-            <label><input name="seance-3" type="checkbox" value='true' ><span class="ml-[1rem]">Seance 3</span></label>
-            <label><input name="seance-4" type="checkbox" value='true' ><span class="ml-[1rem]">Seance 4</span></label>
-
-            <select name="seanceType" class="w-[10rem] font-medium h-[2rem] shadow-lg shadow-gray-300">
-                <option class="hidden" selected >La seance</option>
+            <select   v-model="absenceDuration" name="absenceDuration" class="w-[12rem] font-medium h-[2rem] shadow-lg shadow-gray-300">
+                <!-- <option class="hidden" :value='null'  >La période d'absence</option> -->
+                <option value='allDay'  >Toute La Journée</option>
+                <option value='matin' :selected="hourMinute < 13.5" >La Matinée</option>
+                <option value='midi' :selected="hourMinute > 13.5" >L'après-midi</option>
+                <option value='seance-1' >La Première Séance</option>
+                <option value='seance-2' >La Deuxième Séance</option>
+                <option value='seance-3' >La Troisième Séance</option>
+                <option value='seance-4' >La Quatrième Séance</option>
+                
+            </select>
+            <select  v-model="seance" name="seanceType" class="w-[10rem] font-medium h-[2rem] shadow-lg shadow-gray-300">
+                <option class="hidden" selected :value="null" >La seance</option>
                 <option value='Presentiel' >Presentiel</option>
-                <option value="distanciel" >A distance</option>
+                <option value="distanciel" >Distanciel</option>
             </select>
         </div>
-        <input v-if="nom_gp != null" type="date" default="today" name="date_abs" />
+        <input v-model="date_abs"   class="w-[10rem] font-medium h-[2rem] shadow-lg shadow-gray-300"
+         v-if="nom_gp != null" type="date"  name="date_abs" />
     <!-- Button -->
         <div v-if="nom_gp != null" class="w-full pl-[90%] mt-[2rem]">
             
-            <button type="submit" 
+            <button 
+         @click="addAbsence()"   :disabled="submitBtn==false"
+         :class="submitBtn == true ? 'text-green-600':'text-red-600'"
             class="text-2xl text-white rounded-full
-                w-[3rem] h-[3rem]" name="subBtn"><fas icon="arrow-right" /></button>
+                w-[3rem] h-[3rem]" 
+                ><fas icon="arrow-right" /></button>
        
             
         </div>
-        
-</form>
-<!-- <iframe name="content" class="w-full">
-</iframe> -->
+   
+        <span>{{isStdChecked}}</span>-
+        <span>{{student_ids}}</span>-
+        <span>{{seance}}</span>-
+        <span>{{date_abs}}</span>-
+        <span>{{prof_id}}</span>-
+        <span>{{absenceDuration}}</span>-
 </template>
 
 
 <script setup>
+    import axios from "axios";
     import { ref } from 'vue';
     import useFilieres from '../services/filieres.js'
-    import { onMounted } from 'vue';
+    import { onMounted,onUpdated } from 'vue';
+    /* some Logic Variables */
+    const currentHour =ref(new Date().getHours()) 
+    const currentminutes =ref(new Date().getMinutes())
+    const hourMinute = ref((currentHour.value + currentminutes.value/60)) 
+    const st_inputs = ref([])
+    /* Inputs to send  */
+    const prof_id = ref(null);
+    const seance = ref(null);
+    const date_abs = ref(new Date().toISOString().slice(0, 19).split('T')[0])/* return the date of today  */
+    const isStdChecked = ref(false)/* return true if a student is selected False if not */
+    const absenceDuration = ref((hourMinute.value < 13.5) ? 'matin':('midi'));
+    const student_ids = ref([]);/* an Array that contain all of the student ids selected */
+
+    
+    const submitBtn = ref(false);
+
+    function checkStd(){
+           isStdChecked.value = false
+            student_ids.value = [];
+            for(let i = 0 ; i < st_inputs.value.length ; i++){
+                var id = st_inputs.value[i].name
+                if(st_inputs.value[i].checked ){
+                    isStdChecked.value = true
+                    student_ids.value.push( Number(id))
+                }
+            }
+           
+    }
+    
+    function addAbsence(){
+        // send a POST request
+        console.log('entered');
+     axios.post('/api/addAbsence', {
+            stagiaire_ids:student_ids.value,
+            prof_id: prof_id.value,
+            absenceDuration:absenceDuration.value,
+            seance:seance.value,
+            date_abs:date_abs.value
+        })
+        .then((response) => {
+            /* success */
+            console.log(response);
+
+        }).catch((error) => {
+            /* Error */
+            console.log(error);
+            });
+        reset();
+    }
+/* fomateur , seance ,student */
+    onUpdated(()=>{
+        submitBtn.value = formCheck()
+    })
+
+    function formCheck(){
+        if(isStdChecked.value == false ||  prof_id.value == null
+        || seance.value == null){
+            return false;
+        }
+        return true;
+    }
+
+    function reset(){
+        prof_id.value = null
+        isStdChecked.value = false 
+        seance.value = null
+         for(let i = 0 ; i < st_inputs.value.length ; i++){
+                st_inputs.value[i].checked = false;   
+            }
+    }
 
     /* Variables Help-us */
     const selected = ref("choose your class")
