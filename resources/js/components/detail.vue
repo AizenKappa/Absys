@@ -3,16 +3,20 @@
 <template>
 <section>
 
-    <div class="w-[100%] h-[2.5rem] flex justify-center">
-        <!-- Filieres_Select -->
-        <select id="filieres_select" v-model="selected_fil" class="font-medium w-[80%] h-full">
-            <option value="Tous" selected>Tous Filieres</option>
-            <option v-for="fil in filieres" :value="fil.id" :key="fil.id">{{fil.nom_fil}}</option>
-        </select>
+    <!-- Filieres_Select -->
+    <div class=" px-10">
+            <div class="w-[100%] lg:flex lg:justify-between">
+                <div class="w-full lg:w-[45%] my-12">
+                    <select name="filiere" id="filieres_select" v-model="selected_fil" class="w-full font-medium h-[2rem]" v-on:change="getcontents()">
+                        <option value="Tous" selected>Tous Filieres</option>
+                        <option  :value="fil.id" v-for="fil in filieres" :key="fil.id">{{fil.nom_fil}}</option>
+                    </select>            
+                </div>
+            </div>
     </div>
 
-    <div class="w-full px-12 mt-[5rem] flex justify-between">
-        <select v-on:change="period_debut = null , period_fin = null" class="w-[30%] py-1" v-model="selected_period">
+    <div class="w-full px-12 grid grid-cols-1 gap-6 lg:flex md:justify-between">
+        <select v-on:change="period_debut = null , period_fin = null" class="w-[50%] md:w-[15rem] h-7" v-model="selected_period">
             <option value="year" selected>L'annee entiere</option>
             <option value="week">Cette semaine</option>
             <option value="subweek">La semain precedent</option>
@@ -20,15 +24,19 @@
             <option value="submonth">Le mois precedent</option>
             <option value="limit">Limitation</option>
         </select>
-        <div v-if="selected_period == 'limit'" class="w-[50%] flex justify-around items-center">
-            <input v-model="period_debut" class="w-[40%] px-2" type="date"><fas icon="angles-right" required=""/>
-            <input v-model="period_fin" class="w-[40%] px-2" type="date">
+        <div v-if="selected_period == 'limit'" class="sm:w-[28rem] w-[100%] place-items-center gap-4 grid grid-cols-1 sm:flex justify-between items-center">
+            <input v-model="period_debut" class="sm:w-[12rem] w-[60%] px-2" type="date" required>
+            <fas class="hidden sm:block" icon="angles-right"/><fas class="block sm:hidden" icon="angles-down"/>
+            <input v-model="period_fin" class="sm:w-[12rem] w-[60%] px-2" type="date" required>
         </div>
     </div>
-    <div class="w-full pl-[90%] mt-[2rem]">
+
+
+    <div class="grid place-content-end px-5 py-6">
         <button v-on:click="getetats(selected_fil,selected_period,period_debut,period_fin)"
         class="text-2xl text-white rounded-full w-[3rem] h-[3rem] shadow-md shadow-bleu-500"><fas icon="magnifying-glass" /></button>
     </div>
+
 </section>
 </template>
 

@@ -5,18 +5,23 @@ const router = createRouter({
     routes: [
       {
         path: '/home',
-        name: 'add-absences',
-        component: () => import('../components/Add.vue')
+        name: 'add absences',
+        component: () => import('../components/Home.vue')
       },
       {
           path: '/just',
-          name: 'justfier-absences',
+          name: 'justfier absences',
           component: () => import('../components/Just.vue')
         },
         {
           path: '/detail',
-          name: 'class-details',
-          component: () => import('../components/detail.vue')
+          name: 'details de class',
+          component: () => import('../components/Detail.vue')
+        },
+        {
+          path: '/profile',
+          name: 'Profile',
+          component: () => import('../components/Profile.vue')
         },
     ]
   })

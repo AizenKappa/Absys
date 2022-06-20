@@ -7,9 +7,13 @@ use App\Http\Resources\FiliereResource;
 use App\Models\Etat;
 use App\Models\Filiere;
 use App\Models\Groupe;
+use App\Models\User;
+use App\Models\Stagiaire;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use PHPUnit\TextUI\XmlConfiguration\Group;
 
 class FiliereController extends Controller
@@ -18,6 +22,11 @@ class FiliereController extends Controller
     public function index_filieres()
     {
         return FiliereResource::collection(Filiere::all());
+    }
+
+    public function index_stagiaires()
+    {
+        return Stagiaire::With('groupe')->get();
     }
 
 
@@ -92,10 +101,133 @@ class FiliereController extends Controller
         if($id == 'Tous')
             return FiliereResource::collection(Etat::whereBetween('date_abs', [$period_debut, $period_fin ])->get());
         else
-            Etat::with('stagiaire.groupe')->get()
-            ->where('stagiaire.groupe.filiere_id',$id)
-            ->whereBetween('date_abs',[$period_debut, $period_fin ]);
 
+        return FiliereResource::collection(Etat::with('stagiaire.groupe')->get()
+            ->where('stagiaire.groupe.filiere_id',$id)
+            ->whereBetween('date_abs',[$period_debut, $period_fin ]));
+
+    }
+
+    public function addUpAbsence(Request $request)
+    {
+
+        $stagiaire_ids = $request->stagiaire_ids;
+        $prof_id = $request->prof_id;
+        $absenceDuration = $request->absenceDuration;
+        $seance = $request->seance;
+        $date_abs = $request->typeSeance;
+        $h_debut = '';
+        $h_fin = '';
+        $t1 = "08:30:00";
+        $t2 = "11:00:00";
+        $t3 = "13:30:00";
+        $t4 = "16:00:00";
+        $t5 = "18:30:00";
+        $seanceTotal = 0;
+        if ($absenceDuration == "allDay") {
+            $h_debut = $t1;
+            $h_fin  = $t5;
+            $seanceTotal = 10;
+        } else if ($absenceDuration == "matin") {
+            $h_debut = $t1;
+            $h_fin  = $t3;
+            $seanceTotal = 5;
+        } else if ($absenceDuration == "midi") {
+            $h_debut = $t3;
+            $h_fin  = $t5;
+            $seanceTotal = 5;
+        } else if ($absenceDuration == "seance-1") {
+            $h_debut = $t1;
+            $h_fin  = $t2;
+            $seanceTotal = 2.5;
+        } else if ($absenceDuration == "seance-2") {
+            $h_debut = $t2;
+            $h_fin  = $t3;
+            $seanceTotal = 2.5;
+        } else if ($absenceDuration == "seance-3") {
+            $h_debut = $t3;
+            $h_fin  = $t4;
+            $seanceTotal = 2.5;
+        } else if ($absenceDuration == "seance-4") {
+            $h_debut = $t4;
+            $h_fin  = $t5;
+            $seanceTotal = 2.5;
+        }
+        foreach ($stagiaire_ids as $v) {
+            Etat::create([
+                "stagiaire_id" => $v,
+                "prof_id" => $prof_id,
+                "date_abs" => $date_abs ?? Carbon::now(),
+                "h_debut" => $h_debut,
+                "h_fin" => $h_fin,
+                "seance" => $seance
+            ]);
+            $currentAbsence = Stagiaire::find($v)->heure_absence_st;
+    
+            Stagiaire::Where('id', $v)->update(['heure_absence_st' => ($currentAbsence + $seanceTotal)]);
+        }
+    }
+
+    public function addJustif(Request $request)
+    {
+       $absences_ids = $request->absences_ids;
+
+       if($request->motif === "autre") $motif = $request->manualle_motif;
+       else $motif = $request->motif;
+       
+       Etat::whereIn('id',$absences_ids)->update(['etat_justif' => 'J','motif' => $motif]);
+    }
+
+    public function getuser()
+    {
+        $user = User::Find(Auth::id()) ;
+        return [
+            'user_id' => $user->id,
+            'cin' => $user->cin,
+            'email' => $user->email,
+            'firstname' => $user->firstname,
+            'lastname' => $user->lastname,
+        ];
+    }
+
+    public function update_user(Request $request)
+    {
+        $password = User::Find($request->id)->password;
+
+        if (Hash::check($request->password, $password))
+        {
+            $cin = $request->cin;
+            $email = $request->email;
+
+            
+            if($request->cin != null){
+                $search1 = User::Where('cin',$request->cin)->count();
+                if($search1 > 0) { return ['champ' => 'cin' ,'message' => 'Cin existe déja']; }
+            }else{
+                $cin = User::Find($request->id)->cin;
+            }
+
+
+            if($request->email != null){
+                $search2 = User::Where('email',$request->email)->count();
+                if($search2 > 0) { return ['champ' => 'email' ,'message' => 'Cet E-mail déja existe']; }
+            }else{
+                $email = User::Find($request->id)->email;
+            }
+            
+            User::Find($request->id)->update([
+                'firstname' => $request->firstname,
+                'lastname' => $request->lastname,
+                'cin' => $cin,
+                'email' => $email
+            ]);
+
+            return [
+                'message' => 'update_successed',
+            ];
+
+        }else{ return ['champ' => 'password', 'message' => 'wrong password']; }
+       
     }
 
 }

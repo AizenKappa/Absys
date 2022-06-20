@@ -1,28 +1,32 @@
 
 
 <template>
-
+<section class="h-auto relative">
 
     <!-- Dropdowns-Fileres- -->
-        <div id class=" px-10 flex justify-between">
-            <div class="w-[100%] h-[2rem] flex justify-between">
+        <div class=" px-10">
+            <div class="w-[100%] lg:flex lg:justify-between">
                 <!-- Filieres_Select -->
-                <select name="filiere" id="filieres_select" v-model="selected" class="w-[34rem] font-medium " v-on:change="getcontents()">
-                    <option class="hidden">choose your class</option>
-                    <option  :value="fil.id" v-for="fil in filieres" :key="fil.id">{{fil.nom_fil}}</option>
-                </select>
+                <div class="w-full lg:w-[45%] my-12">
+                    <select name="filiere" id="filieres_select" v-model="selected" class="w-full font-medium h-[2rem]" v-on:change="getcontents()">
+                        <option class="hidden">choose your class</option>
+                        <option  :value="fil.id" v-for="fil in filieres" :key="fil.id">{{fil.nom_fil}}</option>
+                    </select>
+                </div>
                 <!-- Groupes_select -->
-                <select name="groupe" v-if="selected != 'choose your class'" class="w-[23rem] font-medium"
-                v-model="selected_gp"
-                v-on:change="getstagiaires(selected_gp)">
-                    <option class="hidden">choose your groupe</option>
-                    <option :value="gp.id" v-for="gp in groupes" :key="gp.id">{{gp.nom_gp}}</option>
-                </select>
+                <div class="w-full lg:w-[45%] my-12">
+                    <select name="groupe" v-if="selected != 'choose your class'" class="w-full font-medium h-[2rem]"
+                    v-model="selected_gp"
+                    v-on:change="getstagiaires(selected_gp)">
+                        <option class="hidden">choose your groupe</option>
+                        <option :value="gp.id" v-for="gp in groupes" :key="gp.id">{{gp.nom_gp}}</option>
+                    </select>
+                </div>
             </div>
         </div>
 
     <!-- Table -->
-        <div v-if="nom_gp != null" class="antialiased text-gray-600 px-[6rem] py-[3rem]">
+        <div v-if="nom_gp != null" class="antialiased text-gray-600 lg:px-[2rem] xl:px-[6rem] py-[3rem]">
             <div class="flex flex-col justify-center">
             <div class="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
                 <header class="px-5 py-4 border-b border-gray-200 w-full">
@@ -65,12 +69,12 @@
         </div>          
 
     <!-- Aboute absence -->
-        <div v-if="nom_gp != null" class="w-full flex justify-between px-[3rem]">
-            <select v-model="prof_id" name="prof" class="w-[15rem] font-medium h-[2rem] shadow-lg shadow-gray-300">
+        <div v-if="nom_gp != null" class="w-full grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 place-items-center gap-y-8">
+            <select v-model="prof_id" name="prof" class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300">
                 <option class="hidden" :value="null" selected >Le formateur</option>
                 <option :value="prof.id" v-for="prof in profs" :key="prof.id">{{prof.nom_prof}}</option>
             </select>
-            <select   v-model="absenceDuration" name="absenceDuration" class="w-[12rem] font-medium h-[2rem] shadow-lg shadow-gray-300">
+            <select   v-model="absenceDuration" name="absenceDuration" class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300">
                 <!-- <option class="hidden" :value='null'  >La période d'absence</option> -->
                 <option value='allDay'  >Toute La Journée</option>
                 <option value='matin' :selected="hourMinute < 13.5" >La Matinée</option>
@@ -81,38 +85,34 @@
                 <option value='seance-4' >La Quatrième Séance</option>
                 
             </select>
-            <select  v-model="seance" name="seanceType" class="w-[10rem] font-medium h-[2rem] shadow-lg shadow-gray-300">
+            <select  v-model="seance" name="seanceType" class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300">
                 <option class="hidden" selected :value="null" >La seance</option>
                 <option value='Presentiel' >Presentiel</option>
                 <option value="distanciel" >Distanciel</option>
             </select>
+            <input v-model="date_abs"   class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300"
+            type="date"  name="date_abs" />
         </div>
-        <input v-model="date_abs"   class="w-[10rem] font-medium h-[2rem] shadow-lg shadow-gray-300"
-         v-if="nom_gp != null" type="date"  name="date_abs" />
+        
     <!-- Button -->
-        <div v-if="nom_gp != null" class="w-full pl-[90%] mt-[2rem]">
-            
-            <button 
-         @click="addAbsence()"   :disabled="submitBtn==false"
-         :class="submitBtn == true ? 'text-green-600':'text-red-600'"
-            class="text-2xl text-white rounded-full
-                w-[3rem] h-[3rem]" 
-                ><fas icon="arrow-right" /></button>
-       
+        <div v-if="nom_gp != null" class="w-full md:pl-[90%] pl-[85%] h-[6rem] flex items-center">
+            <button :disabled="submitBtn==false"
+            @click="addAbsence(student_ids,prof_id,absenceDuration,seance,date_abs,reset)" 
+            :class="submitBtn == true ? 'button-on':'button-off'" 
+            class="text-2xl text-white rounded-full w-[3rem] h-[3rem] cursor-pointer" 
+            ><fas icon="arrow-right" /></button>
             
         </div>
-   
-        <span>{{isStdChecked}}</span>-
-        <span>{{student_ids}}</span>-
-        <span>{{seance}}</span>-
-        <span>{{date_abs}}</span>-
-        <span>{{prof_id}}</span>-
-        <span>{{absenceDuration}}</span>-
+
+        <div v-if="add_status == 200">
+            Succssed
+        </div>
+</section>
 </template>
 
 
 <script setup>
-    import axios from "axios";
+
     import { ref } from 'vue';
     import useFilieres from '../services/filieres.js'
     import { onMounted,onUpdated } from 'vue';
@@ -128,63 +128,39 @@
     const isStdChecked = ref(false)/* return true if a student is selected False if not */
     const absenceDuration = ref((hourMinute.value < 13.5) ? 'matin':('midi'));
     const student_ids = ref([]);/* an Array that contain all of the student ids selected */
-
-    
     const submitBtn = ref(false);
+    
+    window.scrollTo(0, 0)
 
-    function checkStd(){
-           isStdChecked.value = false
-            student_ids.value = [];
-            for(let i = 0 ; i < st_inputs.value.length ; i++){
-                var id = st_inputs.value[i].name
-                if(st_inputs.value[i].checked ){
-                    isStdChecked.value = true
-                    student_ids.value.push( Number(id))
-                }
-            }
-           
+    const checkStd = () => {
+        isStdChecked.value = false
+        student_ids.value = [];
+        st_inputs.value.forEach(e => {
+            var id = e.name
+            if(e.checked ){ isStdChecked.value = true ; student_ids.value.push( Number(id))}   
+        });
+        buttopCheck()
     }
     
-    function addAbsence(){
-        // send a POST request
-        console.log('entered');
-     axios.post('/api/addAbsence', {
-            stagiaire_ids:student_ids.value,
-            prof_id: prof_id.value,
-            absenceDuration:absenceDuration.value,
-            seance:seance.value,
-            date_abs:date_abs.value
-        })
-        .then((response) => {
-            /* success */
-            console.log(response);
-
-        }).catch((error) => {
-            /* Error */
-            console.log(error);
-            });
-        reset();
-    }
 /* fomateur , seance ,student */
     onUpdated(()=>{
-        submitBtn.value = formCheck()
+        buttopCheck()
     })
 
-    function formCheck(){
-        if(isStdChecked.value == false ||  prof_id.value == null
-        || seance.value == null){
-            return false;
-        }
+    const buttopCheck = () => {
+        submitBtn.value = formCheck()
+    }
+
+    const formCheck = () => {
+        if(isStdChecked.value == false ||  prof_id.value == null || seance.value == null) return false;
         return true;
     }
 
-    function reset(){
-        prof_id.value = null
+    const reset = () => {
+        prof_id.value = seance.value = null
         isStdChecked.value = false 
-        seance.value = null
-         for(let i = 0 ; i < st_inputs.value.length ; i++){
-                st_inputs.value[i].checked = false;   
-            }
+        absenceDuration.value = (hourMinute.value < 13.5) ? 'matin':('midi');
+        st_inputs.value.forEach(e => e.checked = false);
     }
 
     /* Variables Help-us */
@@ -194,7 +170,7 @@
     /* Call Api Groupes */
     const getcontents = () =>  { selected_gp.value = "choose your groupe" , getgroupes(selected.value)}
     /* Return all our functuons and variables from { services/filieres.js } to use here */
-    const { getFilieres , filieres , profs , getgroupes , groupes , stagiaires, getstagiaires , nom_gp } = useFilieres();
+    const { getFilieres , filieres , profs , getgroupes , groupes , addAbsence ,stagiaires, getstagiaires , nom_gp , add_status } = useFilieres();
     /* On Mounted call Aoi Flieres */
     onMounted(getFilieres())
 
@@ -206,12 +182,17 @@
         background-color: rgb(0, 143, 255);
         border: 1px solid rgb(0, 143, 255);
     }
-    button:hover{
+    .button-on:hover{
         background-color: rgb(0, 120, 255);
         border: 1px solid rgb(0, 120, 255);
     }
-    button:active{
+    .button-on:active{
         background-color: rgb(0, 100, 255);
         border: 1px solid rgb(0, 100, 255);
     }
+    .button-off{
+        opacity: 0.4;
+        cursor: default;
+    }
+
 </style>

@@ -25,8 +25,10 @@ class SessionController extends Controller
         $remember_me  = ( !empty( $request->input('check')) )? TRUE : FALSE;
 
         if(Auth::attempt($user,$remember_me)){
-            return redirect("/home");
+            $request->session()->regenerate();
+            return redirect()->intended('home');
         }
+
     }
 
     public function destroy()

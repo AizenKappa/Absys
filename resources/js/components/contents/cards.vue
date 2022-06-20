@@ -10,17 +10,17 @@
             <h2 class="px-6 mb-4 text-xs uppercase font-bold text-gray-500 ">Admin section</h2>
             <div class="grid gap-5 px-6 text-gray-400">
 
-                <router-link to="/home">
+                <router-link to="/home" @click="$emit('update:modelValue',check())">
                     <fas icon="user" />
-                    <span >Dashboard</span>
+                    <span>Dashboard</span>
                 </router-link>
 
-                <router-link to="/just">
+                <router-link to="/just" @click="$emit('update:modelValue',check())">
                     <fas icon="user-graduate" />
                     <span>Ajouter l'absence</span>
                 </router-link>
 
-                <router-link to="/detail">
+                <router-link to="/detail" @click="$emit('update:modelValue',check())">
                     <fas icon="user-graduate" />
                     <span>Justifier l'absence</span>
                 </router-link>
@@ -45,6 +45,8 @@
                 <a href="#">ABORT EDU</a>
 
                 <a href="#">ABORT EDU</a>
+  
+
             </div>
         </div>
 
@@ -52,6 +54,18 @@
         
 </section>
 </template>
+
+<script setup>
+    defineProps(['modelValue'])
+    defineEmits(['update:modelValue'])
+
+    const check = () => {
+        var stmt = null
+        window.innerWidth > 767 ? stmt = true : stmt =false
+        return stmt
+    }
+</script>
+
 
 <style scoped>
     .router-link-active{

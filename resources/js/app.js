@@ -10,8 +10,8 @@ import { createApp } from 'vue';
 import { RouterLink , RouterView } from 'vue-router';
 import router from './router'
 
-import cards from './components/cards/cards.vue'
-import dashboard from './components/cards/dashboard.vue'
+import cards from './components/contents/cards.vue'
+import dashboard from './components/contents/dashboard.vue'
 
 
 

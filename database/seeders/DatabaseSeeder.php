@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             'cin' => "B123456",
             'firstname' => "najil",
             'lastname' => "kamal",
+            'email' => 'najil.kamal@ofppt-edu.ma',
             'password' => "anas123",
         ]);
 
