@@ -94,7 +94,11 @@
                        <p class="text-center text-red-600 text-lg font-bold"> No Result Found</p>
                         </td>
             </tr>
-            <tr  v-show="!searchFailed" class="p-4 cursor-pointer  border-b hover:bg-slate-500 transition-colors"  
+
+           
+                  
+            
+            <tr  v-show="!searchFailed" @click="redirectUser(st.id)" class="p-4 cursor-pointer  border-b hover:bg-slate-500 transition-colors"  
             v-for="st in stagIntoPages[currentPage]" :key="st.id">
                 <td class="text-center border">{{st.id}}</td>
                 <td class="text-center border">{{st.nom_st}}</td>
@@ -102,7 +106,11 @@
                 <td class="text-center border">{{st.groupe.nom_gp}}</td>
                 <td class="text-center border">{{st.heure_absence_st}}</td>
                 <td class="text-center p-2 border">{{st.numero_personnelle}}</td>
+                 <!-- <router-link to="stagiaire">
+                test
+               </router-link>  -->
             </tr>
+            
         </table>
 <!-- pointer-events-none -->
 <div v-show="!searchFailed" class="flex justify-center select-none bg-white ">
@@ -135,7 +143,14 @@
 <script setup>
     import { faSortAlphaAsc } from '@fortawesome/free-solid-svg-icons';
     import axios  from 'axios';
+    
     import {ref ,reactive,watch, onMounted,computed} from "vue";
+    import { useRouter, useRoute } from 'vue-router'
+
+    import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
+    const router = useRouter();
+  
+
     const stagPerPage = ref(15);
     const stagiaires = ref([]);
     const currentPage=ref(0)
@@ -210,7 +225,7 @@
         stagiaires.value = response.data
         stagiaires.value.sort((a, b) => (a['heure_absence_st'] < b['heure_absence_st']) ? 1 : -1)
         stagIntoPages.value = arrayChunk(stagiaires.value,Number(stagPerPage.value),search.value)
-        console.log(stagiaires.value)
+       
     };
 
 
@@ -267,6 +282,18 @@
         console.log(sort.type)
         console.log(sort.option)
     }
+
+    function redirectUser(id){
+        router.push(`/stagiaire/${id}`)
+     
+    }
+    // onBeforeRouteLeave((to, from) => {
+    //   const answer = window.confirm(
+    //     'Do you really want to leave? you have unsaved changes!'
+    //   )
+    //   // cancel the navigation and stay on the same page
+    //   if (!answer) return false
+    // })
 </script>
 
 <style scoped>

@@ -9,6 +9,11 @@ const router = createRouter({
         component: () => import('../components/Home.vue')
       },
       {
+        path: '/add',
+        name: 'ajouter absence',
+        component: () => import('../components/Add.vue')
+      },
+      {
           path: '/just',
           name: 'justfier absences',
           component: () => import('../components/Just.vue')
@@ -22,6 +27,12 @@ const router = createRouter({
           path: '/profile',
           name: 'Profile',
           component: () => import('../components/Profile.vue')
+        },
+        {
+          path: '/stagiaire/:id',
+          name: 'Stagiaire',
+          component: () => import('../components/Stagiaire.vue'),
+          
         },
     ]
   })

@@ -15,17 +15,20 @@
                     <span>Dashboard</span>
                 </router-link>
 
-                <router-link to="/just" @click="$emit('update:modelValue',check())">
+                <router-link to="/add" @click="$emit('update:modelValue',check())">
                     <fas icon="user-graduate" />
                     <span>Ajouter l'absence</span>
                 </router-link>
 
-                <router-link to="/detail" @click="$emit('update:modelValue',check())">
+                <router-link to="/just" @click="$emit('update:modelValue',check())">
                     <fas icon="user-graduate" />
                     <span>Justifier l'absence</span>
                 </router-link>
 
-                <a href="#">Detail par Class</a>
+                <router-link to="/detail" @click="$emit('update:modelValue',check())">
+                    <fas icon="user-graduate" />
+                    <span>Deatil Class</span>
+                </router-link>
                 
             </div>
         </div>

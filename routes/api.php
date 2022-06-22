@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\FiliereController;
 use App\Models\Etat;
+use App\Models\Groupe;
 use App\Models\Stagiaire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,20 @@ Route::get('groupes/{id}', [FiliereController::class, 'getstagiaires']);
 Route::get('profs/{id}', [FiliereController::class, 'getprofs']);
 Route::get('etats/{id}/{period}/{selected_period_debut}/{selected_period_fin}', [FiliereController::class, 'getetats']);
 Route::post('updateUser', [FiliereController::class, 'update_user']);
+
+Route::get('stagiaire/{id}',function($id){
+    $stag = Stagiaire::find($id);
+    $groupe_id = $stag->groupe_id;
+    $gr = Groupe::find($groupe_id);
+    $class_total_abs = $gr->stagiaires->pluck("heure_absence_st")->reduce(function($carry,$element){
+        return $carry + $element;
+    });
+    return [
+        'groupe_id' => $groupe_id,
+        'st_info'=>$stag,
+        'class_total_abs' =>$class_total_abs
+        ];
+});
 
 
 Route::post('addAbsence',[FiliereController::class, 'addUpabsence']);
