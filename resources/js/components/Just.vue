@@ -241,7 +241,7 @@
     }
 
     const addJustifAndReset = () => {
-        addJustif(student_ids,selected_motif,selected_motif_autre)
+        addJustif(student_ids.value,selected_motif.value,selected_motif_autre.value)
 
             const selected = ref("choose your class")
 

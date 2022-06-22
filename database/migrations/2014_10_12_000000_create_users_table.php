@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('lastname');
             $table->string('password');
             $table->string('email');
-            $table->string('picture_path');
+            $table->string('picture_path')->default('undefindedUser.png');
             $table->rememberToken();
             $table->timestamps();
         });

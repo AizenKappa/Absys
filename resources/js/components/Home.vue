@@ -5,7 +5,7 @@
 <section v-if="shallwe" class="h-screen relative">
 
   <!-- Recherche and lines -->
-    <div class="w-full flex justify-between mb-3 mt-12 px-10">
+    <div class="w-full grid grid-col-1 gap-4 sm:flex sm:justify-between mb-3 mt-12 px-10">
 
         <div class="relative w-[15rem]">
             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -124,7 +124,7 @@
                     </td>
                 </tr>
 
-                <tr  v-show="!searchFailed" class="p-4 cursor-pointer active:bg-slate-300 border-b hover:bg-slate-200 h-14 transition-colors"  
+                <tr @click="studentInfo(st.id)"  v-show="!searchFailed" class="p-4 cursor-pointer active:bg-slate-300 border-b hover:bg-slate-200 h-14 transition-colors"  
                     v-for="st in stagIntoPages[currentPage]" :key="st.id">
                     <td class="text-center text-slate-900">{{st.id}}</td>
                     <td class="text-center text-slate-500">{{st.nom_st}}</td>
@@ -187,6 +187,7 @@
     import { faSortAlphaAsc ,  } from '@fortawesome/free-solid-svg-icons';
     import axios  from 'axios';
     import {ref ,reactive,watch, onMounted,computed , onBeforeMount} from "vue";
+    import { useRoute,useRouter } from 'vue-router';
 
     const stagPerPage = ref(15)
     const stagiaires = ref([])
@@ -194,7 +195,11 @@
     const search = ref("")
     const shallwe = ref(false)
     const dash = ref(false)
-
+    
+    const router = useRouter()
+    function studentInfo(id){
+        router.push('/stagiaire/'+id)
+    }
     const lastPageNum = computed(()=>{ return stagIntoPages.value.length - 1 })
       
     watch(stagPerPage,()=>{ currentPage.value = 0
