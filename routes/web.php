@@ -34,8 +34,10 @@ Route::post('/pwd_reset',[SessionController::class,'reset']);
 
 Route::get('/home',[AbsysController::class,'index'])->middleware('auth');
 Route::view('/just','home')->middleware('auth');
+Route::view('/add','home')->middleware('auth');
 Route::view('/detail','home')->middleware('auth');
 Route::view('/Profile','home')->middleware('auth');
+Route::view('/stagiaire/{id}',"home")->middleware('auth');
 
 Route::get('/user', [FiliereController::class, 'getuser']);
 Route::post('/profile', [FiliereController::class, 'getprofile']);
