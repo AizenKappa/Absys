@@ -15,6 +15,7 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PHPUnit\TextUI\XmlConfiguration\Group;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class FiliereController extends Controller
 {
@@ -187,8 +188,52 @@ class FiliereController extends Controller
             'email' => $user->email,
             'firstname' => $user->firstname,
             'lastname' => $user->lastname,
+            'image' => asset('images/'. $user->picture_path )
+        ];
+        
+    }
+
+    public function deletPicture(){
+
+        $user = User::Find(Auth::id()) ;
+
+        $user->picture_path = "undefindedUser.png";
+
+        $user->save();
+
+        return [
+
+            'status' => 'pucture deleted'
         ];
     }
+
+
+    public function getprofile(Request $request)
+    {
+
+        $image = request()->file('image');
+        $imageName = $image->getClientOriginalName();
+        $imageName = time().'_'.$imageName;
+
+
+        $img = Image::make($image);
+        $img->fit(300, 300);
+        $img->save(public_path('/images/'. $imageName));
+
+        $id = Auth::id();
+        $user = User::Find($id);
+        $user->picture_path = $imageName;
+        $user->save();
+
+        return [
+
+            'status' => 'update successed'
+        ];
+
+
+
+    }
+
 
     public function update_user(Request $request)
     {

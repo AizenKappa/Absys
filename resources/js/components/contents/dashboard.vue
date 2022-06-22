@@ -25,10 +25,11 @@
                     <span class="hidden md:block mt-3 font-bold text-white uppercase text-sm">{{title}}</span>
                     <span @click="dash=true" class="w-10 h-10 flex justify-center rounded-sm items-center text-xl active:border-[3px] active:border-zinc-900 md:hidden cursor-pointer"><fas icon="bars" /></span>
                         <img id="profile"
+                        v-if="imageUser"
                         v-on:click="show=!show"
                         @focusout="show=false"
                         class="rounded-full h-12 w-12 cursor-pointer"
-                        src="https://source.unsplash.com/random/500x500/?face"
+                        :src="imageUser"
                         >
                 </div>
                 <div id="page-contents" class="w-full h-auto">
@@ -59,13 +60,21 @@
 
 <script setup>
 
-    import { ref, onMounted, watch } from 'vue';
+    import { ref, onMounted, watch, onBeforeMount } from 'vue';
     import { useRoute } from 'vue-router';
+    import axios from "axios";
 
     const show = ref(false)
     const dash = ref(null)
     const title = ref(null)
     const route = useRoute();
+    const imageUser = ref(false)
+    
+
+    onBeforeMount(()=>{
+        getuser()
+    })
+
 
     //on resize
     window.innerWidth > 767 ? dash.value = true : dash.value = false
@@ -81,7 +90,13 @@
     document.addEventListener('mouseup', function(e) {
     if (!document.getElementById('profile').contains(e.target)) { show.value = false } });
         
-   
+    //get user image
+    const getuser = async () =>{
+        let response = await axios.get(`/user`)
+        imageUser.value = response.data.image
+
+
+    };
    
     
         

@@ -6,8 +6,10 @@ use App\Http\Controllers\SessionController;
 use App\Http\Resources\FiliereResource;
 use App\Models\Etat;
 use App\Models\User;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Intervention\Image\ImageManagerStatic as Image;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +38,10 @@ Route::view('/detail','home')->middleware('auth');
 Route::view('/Profile','home')->middleware('auth');
 
 Route::get('/user', [FiliereController::class, 'getuser']);
+Route::post('/profile', [FiliereController::class, 'getprofile']);
+Route::get('/deletPicture', [FiliereController::class, 'deletPicture']);
+
+
 
 
 // Route::get('/test',function(){

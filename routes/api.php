@@ -30,6 +30,8 @@ Route::get('etats/{id}/{period}/{selected_period_debut}/{selected_period_fin}', 
 Route::post('updateUser', [FiliereController::class, 'update_user']);
 
 
+
+
 Route::post('addAbsence',[FiliereController::class, 'addUpabsence']);
 Route::post('addJustif',[FiliereController::class, 'addJustif']);
 
