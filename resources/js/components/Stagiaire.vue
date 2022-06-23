@@ -18,6 +18,12 @@
     const  studentId= ref(route.params.id)
     
     /* Pie Chart Configuration */
+    onMounted(()=>{
+            window.addEventListener("unload",function(event){
+            alert("hello")
+           
+        })
+    })
     
 </script>
 

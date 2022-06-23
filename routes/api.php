@@ -82,13 +82,67 @@ Route::get('stagiaire/{id}',function($id){
                 return $carry + $element;
             });
     $absence_just =  $absenceStag->where('etat_justif','J');
-    $absence_nj =  $absenceStag->where('etat_justif','NJ');
 
+    foreach($absence_just as $k){
+        $startTime = Carbon::parse($k['h_debut']);
+        $endTime = Carbon::parse($k['h_fin']);
+        $k["nbAbs"] = $endTime->diffInMinutes($startTime)/60;
+         
+    }
+    
+    $absence_nj =  $absenceStag->where('etat_justif','NJ');
+    foreach($absence_nj as $k){
+        $startTime = Carbon::parse($k['h_debut']);
+        $endTime = Carbon::parse($k['h_fin']);
+        $k["nbAbs"] = $endTime->diffInMinutes($startTime)/60;
+         
+    }
     $justData = monthAbs($absence_just);
     $njData = monthAbs($absence_nj);
             
-  
+
+  /* absence par Prof by order*/
+  /*
+  [
+    'omar Hajoui'=>5,"Naji 
+  ] 
+   */
+//   $prof=[];
+ $st_prof = $gr->profs;
+ $profs = [];
+foreach($st_prof as $k){
+    array_push($profs,[
+        $k["nom_prof"] => 0
+    ]);
+   
+}
+$absProf = collect($profs)->collapse();
+// dd($profs);
+
+
+  foreach($absenceStag as $k){
+    $startTime = Carbon::parse($k['h_debut']);
+    $endTime = Carbon::parse($k['h_fin']);
+    $k["nbAbs"] =floatval($endTime->diffInMinutes($startTime)/60) ;
+    $profName = (string)$k->prof->nom_prof;
+    $test = $absProf->get($profName);
+    
+    $absProf["$profName"] = floatval($test) + $k["nbAbs"];
+  }
+  $absProf = $absProf->sortDesc()->filter(function($item){
+    return $item > 0;
+  })->all();
+  $res=[];
+  foreach($absProf as $k=>$v){
+
+    array_push($res,[
+        "nom"=>$k,
+        "hours"=>$v
+    ]);
+  }
+  /*  */
     return [
+        'absProf'=>$res,
         'groupe_name'=>$groupe_name,
         'groupe_id'=>$groupe_id,
         'stFullName'=>$stFullName,

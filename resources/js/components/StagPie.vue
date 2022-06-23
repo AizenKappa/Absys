@@ -6,14 +6,101 @@
     <div class="w-[90%] border mx-auto">   
          <canvas id="monthly"></canvas>
     </div>
-  
-    <!-- <button @click="add">Add</button>
-    <button @click="remove">Remove</button> -->
+    <div>
+        <h1>Heure justifiées</h1>
+        <table class="border border-black">
+            <tr>
+                <th>date abs</th>
+                <th>h_debut</th>
+                <th>h_fin</th>
+                <th>Nb h</th>
+                <th>prof</th>
+                <th>seance</th>
+                <th>motif</th>
+            </tr>
+            <template  v-if="nj_abs.length>0">
+                 <tr v-for="abs in nj_abs" :key="abs.id">
+                    <td>{{abs.date_abs}}</td>
+                    <td>{{abs.h_debut}}</td>
+                    <td>{{abs.h_fin}}</td>
+                    <td>{{abs.nbAbs}}</td>
+                    <td>{{abs.prof.nom_prof}}</td>
+                    <td>{{abs.seance}}</td>
+                    <td>{{abs.motif}}</td>
+            </tr>
+            </template>
+           
+            <template v-else>
+                <tr>
+                    <td colspan="7"> Aucune Absence justifiées</td> 
+                </tr>
+            </template>
+           
+                
+        </table>
+
+    </div>
+
+    <div>
+        <h1>Heure non justifiées</h1>
+        <table class="border border-black">
+            <tr>
+                <th>date abs</th>
+                <th>h_debut</th>
+                <th>h_fin</th>
+                <th>Nb h</th>
+                <th>prof</th>
+                <th>seance</th>
+            </tr>
+            <template  v-if="just_abs.length > 0">
+                <tr v-for="abs in just_abs" :key="abs.id">
+                    <td>{{abs.date_abs}}</td>
+                    <td>{{abs.h_debut}}</td>
+                    <td>{{abs.h_fin}}</td>
+                    <td>{{abs.nbAbs}}</td>
+                    <td>{{abs.prof.nom_prof}}</td>
+                    <td>{{abs.seance}}</td>
+                    
+                </tr>
+            </template>
+            
+            <template v-else>
+                <tr>
+                    <td colspan="6">Tous les absence sont justifées</td>  
+                </tr>
+                
+            </template>
+                
+        </table>
+
+    </div>
+
+    <div>
+        <h1>HEURE d'ABSENCE PAR PROF</h1>
+        <table>
+            <tr>
+                <th>Nom PROF</th>
+                <th>HOURs</th>
+            </tr>
+            <template v-if="absProf.length > 0"  v-for="(pr,index) in absProf" :key="index">
+                <tr>
+                    <th>{{pr.nom}}</th>
+                    <th>{{pr.hours}}</th>
+                </tr>
+            </template>
+            <template v-else>
+                <tr>
+                    <td colspan="2">Clean</td>
+                </tr>
+            </template>
+        </table>
+    </div>
+    
 
 </template> 
 
 <script setup>
-    import {ref,onMounted} from "vue";
+    import {ref,onMounted } from "vue";
     import Chart from 'chart.js/auto';
     import axios from "axios";
     const props = defineProps(['studentId']);
@@ -32,8 +119,10 @@
     const monthly_abs_just = ref([]);
     const monthly_abs_nj = ref([]);
    
-        
+    const just_abs = ref([])
+    const nj_abs = ref([])
     
+    const absProf =  ref({})
     onMounted(async()=>{
        
         await axios.get(`/api/stagiaire/${props.studentId}`).then((response) =>
@@ -46,7 +135,13 @@
             groupe_total_abs.value = studentInfo.value.class_total_abs
 
             monthly_abs_just.value =studentInfo.value.monthly_abs.just 
-            monthly_abs_nj.value =studentInfo.value.monthly_abs.nj 
+            monthly_abs_nj.value =studentInfo.value.monthly_abs.nj
+            
+            
+            just_abs.value =studentInfo.value.just_abs 
+            nj_abs.value =studentInfo.value.nj_abs
+            
+            absProf.value =studentInfo.value.absProf 
             // console.log(st_total_abs.value)
             // console.log(groupe_total_abs.value)
             var pieOptions =  
