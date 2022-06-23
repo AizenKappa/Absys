@@ -77,7 +77,7 @@
 
     })
 
-
+    
     //on resize
     window.innerWidth > 767 ? dash.value = true : dash.value = false
     window.onresize = function(){ window.innerWidth > 767 ? dash.value = true : dash.value = false }

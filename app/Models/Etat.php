@@ -11,6 +11,8 @@ class Etat extends Model
     public $timestamps = false;
     protected $guarded = [];
 
+
+    protected $with = ['prof'];
     public function stagiaire()
     {
         return $this->belongsTo(Stagiaire::class);

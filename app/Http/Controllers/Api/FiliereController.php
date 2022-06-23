@@ -133,7 +133,7 @@ class FiliereController extends Controller
         $prof_id = $request->prof_id;
         $absenceDuration = $request->absenceDuration;
         $seance = $request->seance;
-        $date_abs = $request->typeSeance;
+        $date_abs = $request->date_abs;
         $h_debut = '';
         $h_fin = '';
         $t1 = "08:30:00";
@@ -171,19 +171,22 @@ class FiliereController extends Controller
             $h_fin  = $t5;
             $seanceTotal = 2.5;
         }
+        // ?? Carbon::now()
         foreach ($stagiaire_ids as $v) {
             Etat::create([
                 "stagiaire_id" => $v,
                 "prof_id" => $prof_id,
-                "date_abs" => $date_abs ?? Carbon::now(),
+                "date_abs" =>$date_abs ?? Carbon::now() ,
                 "h_debut" => $h_debut,
                 "h_fin" => $h_fin,
                 "seance" => $seance
             ]);
+            
             $currentAbsence = Stagiaire::find($v)->heure_absence_st;
     
             Stagiaire::Where('id', $v)->update(['heure_absence_st' => ($currentAbsence + $seanceTotal)]);
         }
+      
     }
 
     

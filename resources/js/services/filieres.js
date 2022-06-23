@@ -51,15 +51,18 @@ export default function useFilieres(){
         console.log(etats)
     };
 
-    const addAbsence = (st_ids,prof_id,periode,seance,date_abs , reset) => {
+    const addAbsence = (st_ids,prof_id,periode,seance,date_abs,reset) => {
         // send a POST request
+        
         axios.post('/api/addAbsence', {
             stagiaire_ids:st_ids,
             prof_id: prof_id,
             absenceDuration:periode,
             seance:seance,
             date_abs:date_abs
-        }).then((response) => {add_status.value = response.status}).catch((error) => {console.log(error);});
+        }).then((response) => {
+            add_status.value = response.status
+        }).catch((error) => {console.log(error);});
         reset()
     }
 
