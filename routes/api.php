@@ -29,6 +29,11 @@ Route::get('groupes/{id}', [FiliereController::class, 'getstagiaires']);
 Route::get('profs/{id}', [FiliereController::class, 'getprofs']);
 Route::get('etats/{id}/{period}/{selected_period_debut}/{selected_period_fin}', [FiliereController::class, 'getetats']);
 Route::post('updateUser', [FiliereController::class, 'update_user']);
+Route::get('/users', [FiliereController::class, 'getusers']);
+
+
+
+
 
 Route::get('stagiaire/{id}',function($id){
     $stag = Stagiaire::find($id);

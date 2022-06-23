@@ -41,8 +41,12 @@
             <hr class="px-16 my-5 mt-7">
             <h2 class="px-6 mb-4 text-gray-500 text-xs uppercase font-bold ">Admin section</h2>
             <div class="grid gap-5 px-6 text-gray-400">
-                <a href="#">ABORT EDU</a>
 
+                <router-link to="/User" @click="$emit('update:modelValue',check())">
+                    <fas icon="user-graduate" />
+                    <span>Update Users</span>
+                </router-link>
+                
                 <a href="#">ABORT EDU</a>
 
                 <a href="#">ABORT EDU</a>

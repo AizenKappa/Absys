@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
             'lastname' => "kamal",
             'email' => 'najil.kamal@ofppt-edu.ma',
             'password' => "anas123",
-            'picture_path' => "none",
         ]);
 
         $path = database_path("absysInsert/sql/insertFile.sql");

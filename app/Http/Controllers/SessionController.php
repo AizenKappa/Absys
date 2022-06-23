@@ -33,6 +33,10 @@ class SessionController extends Controller
 
     public function destroy()
     {
+        $user = User::Find(Auth::user()->id);
+        $user->status = 0;
+        $user->save();
+        
         auth()->logout();
         return redirect("/");
     }

@@ -38,10 +38,30 @@ Route::view('/add','home')->middleware('auth');
 Route::view('/detail','home')->middleware('auth');
 Route::view('/Profile','home')->middleware('auth');
 Route::view('/stagiaire/{id}',"home")->middleware('auth');
+Route::view('/User',"home")->middleware('auth');
+Route::view('/addUser',"home")->middleware('auth');
 
 Route::get('/user', [FiliereController::class, 'getuser']);
+Route::get('/user/{id}', [FiliereController::class, 'deletuser']);
+
 Route::post('/profile', [FiliereController::class, 'getprofile']);
 Route::get('/deletPicture', [FiliereController::class, 'deletPicture']);
+Route::post('/addNewUser', [FiliereController::class, 'addUser']);
+Route::get('/users', [FiliereController::class, 'getusers']);
+
+Route::get('/updateStatus', function (){
+
+
+    if(Auth::check()){
+        $user = User::Find(Auth::user()->id);
+        $user->status = 1;
+        $user->save();
+    }
+
+
+});
+
+
 
 
 

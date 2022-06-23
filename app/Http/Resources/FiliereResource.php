@@ -5,8 +5,11 @@ namespace App\Http\Resources;
 use App\Models\Etat;
 use App\Models\Groupe;
 use App\Models\Stagiaire;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use PHPUnit\TextUI\XmlConfiguration\Group;
 
 class FiliereResource extends JsonResource
@@ -45,6 +48,21 @@ class FiliereResource extends JsonResource
                 'nom_gp'=> $nom_gp,
                 'Nj' => $sum,
                 'etat' => $etats
+            ];
+        }
+
+        if($this->picture_path !== null){
+
+                
+
+            return [
+                'id' => $this->id,
+                'cin'=> $this->cin,
+                'firstname'=> $this->firstname,
+                'lastname'=> $this->lastname,
+                'email' => $this->email,
+                "picture_path" => asset('/images/'.$this->picture_path),
+                "status" => $this->status
             ];
         }
 

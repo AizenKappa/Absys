@@ -36865,6 +36865,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var imageUser = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onBeforeMount)(function () {
       getuser();
+      updateStatus();
     }); //on resize
 
     window.innerWidth > 767 ? dash.value = true : dash.value = false;
@@ -36913,6 +36914,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       };
     }();
 
+    var updateStatus = /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/updateStatus');
+
+              case 2:
+                response = _context2.sent;
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      return function updateStatus() {
+        return _ref3.apply(this, arguments);
+      };
+    }();
+    /* setInterval(updateStatus, 2000); */
+
+
     var __returned__ = {
       show: show,
       dash: dash,
@@ -36920,6 +36949,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       route: route,
       imageUser: imageUser,
       getuser: getuser,
+      updateStatus: updateStatus,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       watch: vue__WEBPACK_IMPORTED_MODULE_0__.watch,
@@ -37002,14 +37032,64 @@ var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
 });
 
 var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    href: "#"
-  }, "Detail par Class", -1
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Deatil Class", -1
   /* HOISTED */
   );
 });
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"card\" data-v-1efcb439><hr class=\"px-16 my-5 mt-7\" data-v-1efcb439><h2 class=\"px-6 mb-4 text-gray-500 text-xs uppercase font-bold\" data-v-1efcb439>Admin section</h2><div class=\"grid gap-5 px-6 text-gray-400\" data-v-1efcb439><a href=\"#\" data-v-1efcb439>ABORT EDU</a><a href=\"#\" data-v-1efcb439>ABORT EDU</a><a href=\"#\" data-v-1efcb439>ABORT EDU</a><a href=\"#\" data-v-1efcb439>ABORT EDU</a></div></div>", 1);
+var _hoisted_10 = {
+  "class": "card"
+};
+
+var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+    "class": "px-16 my-5 mt-7"
+  }, null, -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
+    "class": "px-6 mb-4 text-gray-500 text-xs uppercase font-bold"
+  }, "Admin section", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_13 = {
+  "class": "grid gap-5 px-6 text-gray-400"
+};
+
+var _hoisted_14 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Update Users", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_15 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: "#"
+  }, "ABORT EDU", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: "#"
+  }, "ABORT EDU", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: "#"
+  }, "ABORT EDU", -1
+  /* HOISTED */
+  );
+});
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_fas = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("fas");
@@ -37031,7 +37111,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-    to: "/just",
+    to: "/add",
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return _ctx.$emit('update:modelValue', $setup.check());
     })
@@ -37045,7 +37125,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-    to: "/detail",
+    to: "/just",
     onClick: _cache[2] || (_cache[2] = function ($event) {
       return _ctx.$emit('update:modelValue', $setup.check());
     })
@@ -37058,7 +37138,35 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  }), _hoisted_9])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" --second card "), _hoisted_10]);
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/detail",
+    onClick: _cache[3] || (_cache[3] = function ($event) {
+      return _ctx.$emit('update:modelValue', $setup.check());
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
+        icon: "user-graduate"
+      }), _hoisted_9];
+    }),
+    _: 1
+    /* STABLE */
+
+  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" --second card "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/User",
+    onClick: _cache[4] || (_cache[4] = function ($event) {
+      return _ctx.$emit('update:modelValue', $setup.check());
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
+        icon: "user-graduate"
+      }), _hoisted_14];
+    }),
+    _: 1
+    /* STABLE */
+
+  }), _hoisted_15, _hoisted_16, _hoisted_17])])]);
 }
 
 /***/ }),
@@ -37256,6 +37364,12 @@ var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_0__.createRouter)({
       return __webpack_require__.e(/*! import() */ "resources_js_components_Home_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/Home.vue */ "./resources/js/components/Home.vue"));
     }
   }, {
+    path: '/add',
+    name: 'ajouter absence',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_components_Add_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/Add.vue */ "./resources/js/components/Add.vue"));
+    }
+  }, {
     path: '/just',
     name: 'justfier absences',
     component: function component() {
@@ -37272,6 +37386,18 @@ var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_0__.createRouter)({
     name: 'Profile',
     component: function component() {
       return __webpack_require__.e(/*! import() */ "resources_js_components_Profile_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/Profile.vue */ "./resources/js/components/Profile.vue"));
+    }
+  }, {
+    path: '/User',
+    name: 'Update users',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_components_User_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/User.vue */ "./resources/js/components/User.vue"));
+    }
+  }, {
+    path: '/addUser',
+    name: 'add users',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_components_addUser_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/addUser.vue */ "./resources/js/components/addUser.vue"));
     }
   }]
 });
@@ -42546,7 +42672,7 @@ function genPropsAccessExp(name) {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_Home_vue":1,"resources_js_components_Just_vue":1,"resources_js_components_Detail_vue":1,"resources_js_components_Profile_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_Home_vue":1,"resources_js_components_Add_vue":1,"resources_js_components_Just_vue":1,"resources_js_components_Detail_vue":1,"resources_js_components_Profile_vue":1,"resources_js_components_User_vue":1,"resources_js_components_addUser_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

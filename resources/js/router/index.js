@@ -29,10 +29,14 @@ const router = createRouter({
           component: () => import('../components/Profile.vue')
         },
         {
-          path: '/stagiaire/:id',
-          name: 'Stagiaire',
-          component: () => import('../components/Stagiaire.vue'),
-          
+          path: '/User',
+          name: 'Update users',
+          component: () => import('../components/User.vue')
+        },
+        {
+          path: '/addUser',
+          name: 'add users',
+          component: () => import('../components/addUser.vue')
         },
     ]
   })

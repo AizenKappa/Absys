@@ -73,6 +73,8 @@
 
     onBeforeMount(()=>{
         getuser()
+        updateStatus()
+
     })
 
 
@@ -95,10 +97,14 @@
         let response = await axios.get(`/user`)
         imageUser.value = response.data.image
 
-
     };
    
-    
+    const updateStatus = async () => {
+        let response = await axios.get('/updateStatus')
+    }
+
+
+    /* setInterval(updateStatus, 2000); */
         
 
 </script>

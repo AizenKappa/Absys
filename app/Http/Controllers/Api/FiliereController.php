@@ -42,6 +42,23 @@ class FiliereController extends Controller
         return FiliereResource::collection(Groupe::Find($request->id)->stagiaires);
     }
 
+    public function getusers()
+    {
+
+        return FiliereResource::collection(User::all());
+    }
+
+    public function deletuser(Request $request){
+        
+
+        User::Find($request->id)
+            ->delete();
+
+        return [
+            'message' => 'delet successe'
+        ];
+    }
+
 
     public function getprofs(Request $request)
     {
@@ -169,6 +186,8 @@ class FiliereController extends Controller
         }
     }
 
+    
+
     public function addJustif(Request $request)
     {
        $absences_ids = $request->absences_ids;
@@ -192,6 +211,7 @@ class FiliereController extends Controller
         ];
         
     }
+    
 
     public function deletPicture(){
 
@@ -273,6 +293,24 @@ class FiliereController extends Controller
 
         }else{ return ['champ' => 'password', 'message' => 'wrong password']; }
        
+    }
+
+    public function addUser(Request $request){
+
+        $user = new User;
+        $user->firstname =  $request->first;
+        $user->lastname =  $request->last;
+        $user->cin =  $request->cin;
+        $user->email =  $request->email;
+        $user->password =  $request->pwd;
+        $user->save();
+
+        
+        return [
+            'message' => 'user added successe'
+            
+        ];
+        
     }
 
 }
