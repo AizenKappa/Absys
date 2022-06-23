@@ -60,13 +60,13 @@
                         <tbody class="text-sm divide-y divide-gray-100">
                              <tr v-for="user in users" :key="user.id">
                                 <td class="p-2 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900 flex items-center">
+                                    <div class="text-sm font-medium text-gray-900 flex items-center mr-4">
                                         <img class="w-10 h-10 lg:mr-6 mr-3 rounded-full" :src="user.picture_path">
                                         {{user.firstname}} {{user.lastname}}
                                     </div>
                                 </td>
                                 <td class="p-2 whitespace-nowrap text-sm text-gray-500">
-                                    <div class="text-left">{{user.email}}</div>
+                                    <div class="ml-4">{{user.email}}</div>
                                 </td>
 
                                 <td class="p-2 whitespace-nowrap">
@@ -121,15 +121,36 @@
 
     const users = ref(null)
     const wait =ref(false)
-
+    
     const getusers = async () =>{
         let response = await axios.get(`/api/users`)
-        users.value = response.data.data
-        console.log(response.data.data)
+
+        var data = response.data.data
+        var online = []
+        var offline = []
+
+
+        /* TRie */
+        for(let i = 0 ; i< data.length ;i++){
+
+            if(data[i].status == true){
+
+                online.push(data[i])
+
+            }else{
+                offline.push(data[i])
+            }
+        }
+
+        users.value = online.concat(offline)
+
+        console.log("updated")
+
     };
 
     onMounted(()=>{
         getusers()
+        
     })
 
     const getUser = (event) => {
@@ -140,7 +161,7 @@
         deletUser(id)
     }
 
-    /* setInterval(getusers, 1000); */
+    /* setInterval(getusers, 15000); */
 
     const deletUser = async (id) =>{
         let response = await axios.get(`/user/${id}`)
@@ -159,6 +180,6 @@
         setTimeout(function() {
             wait.value = false;
         }, 500);
-        }
+    }
 
 </script>

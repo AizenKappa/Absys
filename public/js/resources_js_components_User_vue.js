@@ -34,7 +34,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     var getusers = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var response;
+        var response, data, online, offline, i;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -44,10 +44,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 response = _context.sent;
-                users.value = response.data.data;
-                console.log(response.data.data);
+                data = response.data.data;
+                online = [];
+                offline = [];
+                /* TRie */
 
-              case 5:
+                for (i = 0; i < data.length; i++) {
+                  if (data[i].status == true) {
+                    online.push(data[i]);
+                  } else {
+                    offline.push(data[i]);
+                  }
+                }
+
+                users.value = online.concat(offline);
+                console.log("updated");
+
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -69,7 +82,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       prompt("Voulez vraimment delet user id : " + id);
       deletUser(id);
     };
-    /* setInterval(getusers, 1000); */
+    /* setInterval(getusers, 15000); */
 
 
     var deletUser = /*#__PURE__*/function () {
@@ -211,14 +224,14 @@ var _hoisted_14 = {
   "class": "p-2 whitespace-nowrap"
 };
 var _hoisted_15 = {
-  "class": "text-sm font-medium text-gray-900 flex items-center"
+  "class": "text-sm font-medium text-gray-900 flex items-center mr-4"
 };
 var _hoisted_16 = ["src"];
 var _hoisted_17 = {
   "class": "p-2 whitespace-nowrap text-sm text-gray-500"
 };
 var _hoisted_18 = {
-  "class": "text-left"
+  "class": "ml-4"
 };
 var _hoisted_19 = {
   "class": "p-2 whitespace-nowrap"

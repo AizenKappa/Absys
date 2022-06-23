@@ -49,12 +49,13 @@ Route::get('/deletPicture', [FiliereController::class, 'deletPicture']);
 Route::post('/addNewUser', [FiliereController::class, 'addUser']);
 Route::get('/users', [FiliereController::class, 'getusers']);
 
+
 Route::get('/updateStatus', function (){
 
 
     if(Auth::check()){
         $user = User::Find(Auth::user()->id);
-        $user->status = 1;
+        $user->status = time()+10;
         $user->save();
     }
 

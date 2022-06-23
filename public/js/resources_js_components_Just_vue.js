@@ -103,7 +103,7 @@ __webpack_require__.r(__webpack_exports__);
     };
 
     var addJustifAndReset = function addJustifAndReset() {
-      addJustif(student_ids, selected_motif, selected_motif_autre);
+      addJustif(student_ids.value, selected_motif.value, selected_motif_autre.value);
       var selected = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("choose your class");
       selected_motif.value = "Motif";
       selected_motif_autre.value = null;

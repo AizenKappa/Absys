@@ -53,7 +53,12 @@ class FiliereResource extends JsonResource
 
         if($this->picture_path !== null){
 
-                
+
+            if($this->status >= time()){
+                $status = true;
+            }else{
+                $status = false;
+            }
 
             return [
                 'id' => $this->id,
@@ -62,7 +67,7 @@ class FiliereResource extends JsonResource
                 'lastname'=> $this->lastname,
                 'email' => $this->email,
                 "picture_path" => asset('/images/'.$this->picture_path),
-                "status" => $this->status
+                "status" => $status
             ];
         }
 

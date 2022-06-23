@@ -38,6 +38,12 @@ const router = createRouter({
           name: 'add users',
           component: () => import('../components/addUser.vue')
         },
+        {
+          path: '/stagiaire/:id',
+          name: 'Stagiaire',
+          component: () => import('../components/Stagiaire.vue'),
+          
+        },
     ]
   })
   

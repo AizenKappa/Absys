@@ -12,6 +12,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm-bundler.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -21,6 +22,7 @@ function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyri
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -114,13 +116,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       if (send.value == true) {
         addUser();
-      } // const addAbsence = (st_ids,prof_id,periode,seance,date_abs , reset) => {
-      //     // send a POST request
-      //     axios.post('/api/addAbsence', {
-      //         
-      //     }).then((response) => {add_status.value = response.status}).catch((error) => {console.log(error);});
-      // }
-
+      }
     };
 
     var addUser = /*#__PURE__*/function () {
@@ -142,8 +138,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 response = _context.sent;
                 console.log(response.data);
+                router.push('/user');
 
-              case 4:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -173,6 +170,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       reactive: vue__WEBPACK_IMPORTED_MODULE_0__.reactive,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
+      useRoute: vue_router__WEBPACK_IMPORTED_MODULE_2__.useRoute,
       axios: (axios__WEBPACK_IMPORTED_MODULE_1___default())
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
@@ -201,10 +199,10 @@ var _hoisted_1 = {
   "class": "h-screen"
 };
 var _hoisted_2 = {
-  "class": "grid place-content-center mt-10"
+  "class": "grid place-content-center mt-10 w-full"
 };
 var _hoisted_3 = {
-  "class": "bg-white w-[45rem] px-5 py-10 rounded-lg shadow-md shadow-slate-300"
+  "class": "bg-white xl:w-[45rem] lg:w-[38rem] md:w-[29rem] w-[85vw] sm:[23rem] px-5 py-10 rounded-lg shadow-md shadow-slate-300"
 };
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {

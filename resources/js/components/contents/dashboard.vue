@@ -75,6 +75,8 @@
         getuser()
         updateStatus()
 
+        
+
     })
 
     
@@ -98,13 +100,17 @@
         imageUser.value = response.data.image
 
     };
+
+
+
    
     const updateStatus = async () => {
         let response = await axios.get('/updateStatus')
     }
 
+    setInterval( updateStatus, 10000);
 
-    /* setInterval(updateStatus, 2000); */
+
         
 
 </script>

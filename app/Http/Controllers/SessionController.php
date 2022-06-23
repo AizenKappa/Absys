@@ -17,6 +17,7 @@ class SessionController extends Controller
     public function store(Request $request)
     {
         $result = $request->validate(['cin' => 'bail|required|exists:users,cin']);
+        
         $user = $request->validate([
             'cin' => '',
             'password' => ['bail','required',new vpassword($result['cin'])]
