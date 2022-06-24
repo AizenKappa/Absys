@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\FiliereController;
 use App\Http\Controllers\SessionController;
 use App\Http\Resources\FiliereResource;
 use App\Models\Etat;
+use App\Models\Groupe;
 use App\Models\User;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,7 +64,22 @@ Route::get('/updateStatus', function (){
 });
 
 
+Route::get('/test',function(){
 
+    $result = collect([]);
+    
+    $allGroupes = Groupe::all();
+    $allGroupes->each(function($groupe)use($result){
+        $stagNb = $groupe->stagiaires->count();
+        if($stagNb != 0){
+            $result->push($groupe);
+        }
+        
+    });
+    dd($result);
+
+
+});
 
 
 

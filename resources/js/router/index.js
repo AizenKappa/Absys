@@ -29,7 +29,7 @@ const router = createRouter({
           component: () => import('../components/Profile.vue')
         },
         {
-          path: '/User',
+          path: '/user',
           name: 'Update users',
           component: () => import('../components/User.vue')
         },
