@@ -48,7 +48,57 @@ class FiliereController extends Controller
         return FiliereResource::collection(User::all());
     }
 
-    public function deletuser(Request $request){
+    public function userById(Request $request) {
+
+        $user = User::Find($request->id) ;
+        return [
+            'user_id' => $user->id,
+            'cin' => $user->cin,
+            'email' => $user->email,
+            'firstname' => $user->firstname,
+            'lastname' => $user->lastname,
+        ];
+
+    }
+
+    public function editThisUser (Request $request){
+
+        $cin = $request->cin;
+        $email = $request->email;
+
+        if($cin != null){
+            $search1 = User::Where('cin',$cin)->count();
+            if($search1 > 0) { return ['champ' => 'cin' ,'message' => 'Cin existe déja']; }
+        }else{
+            $cin = User::Find($request->id)->cin;
+        }
+
+
+        if($email != null){
+            $search2 = User::Where('email',$request->email)->count();
+            if($search2 > 0) { return ['champ' => 'email' ,'message' => 'Cet E-mail déja existe']; }
+        }else{
+            $email = User::Find($request->id)->email;
+        }
+        
+
+            User::Find($request->id)->update([
+                'firstname' => $request->first,
+                'lastname' => $request->last,
+                'cin' => $cin,
+                'email' => $email
+            ]);
+
+        
+        return [
+            'message' => 'user edited successe'
+            
+        ];
+
+    }
+
+    public function deletuser(Request $request)
+    {
         
 
         User::Find($request->id)
@@ -59,6 +109,15 @@ class FiliereController extends Controller
         ];
     }
 
+    public function updatePwdUser(Request $request) {
+
+        User::Find($request->id)
+        ->password = $request->password;
+
+        return [
+            'message' => 'Password udated successefuly'
+        ];
+    }
 
     public function getprofs(Request $request)
     {
@@ -216,7 +275,8 @@ class FiliereController extends Controller
     }
     
 
-    public function deletPicture(){
+    public function deletPicture()
+    {
 
         $user = User::Find(Auth::id()) ;
 
@@ -298,7 +358,16 @@ class FiliereController extends Controller
        
     }
 
-    public function addUser(Request $request){
+    public function addUser(Request $request)
+    {
+        
+        $search1 = User::Where('email',$request->email)->count();
+        if($search1 > 0) { return ['champ' => 'email' ,'message' => 'Cet E-mail déja existe']; }
+
+
+        $search2 = User::Where('cin',$request->cin)->count();
+        if($search2 > 0) { return ['champ' => 'cin' ,'message' => 'Cin existe déja']; }
+        
 
         $user = new User;
         $user->firstname =  $request->first;

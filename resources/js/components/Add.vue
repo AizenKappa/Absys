@@ -107,6 +107,7 @@
         <div v-if="add_status == 200">
             Succssed
         </div>
+        
 </section>
 </template>
 

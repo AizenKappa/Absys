@@ -37498,6 +37498,12 @@ var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_0__.createRouter)({
       return __webpack_require__.e(/*! import() */ "resources_js_components_addUser_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/addUser.vue */ "./resources/js/components/addUser.vue"));
     }
   }, {
+    path: '/editUser/:id',
+    name: 'editUsers',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_components_editUser_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/editUser.vue */ "./resources/js/components/editUser.vue"));
+    }
+  }, {
     path: '/stagiaire/:id',
     name: 'Stagiaire',
     component: function component() {
@@ -42776,7 +42782,7 @@ function genPropsAccessExp(name) {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_Home_vue":1,"resources_js_components_Add_vue":1,"resources_js_components_Just_vue":1,"resources_js_components_Detail_vue":1,"resources_js_components_Profile_vue":1,"resources_js_components_User_vue":1,"resources_js_components_addUser_vue":1,"resources_js_components_Stagiaire_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_Home_vue":1,"resources_js_components_Add_vue":1,"resources_js_components_Just_vue":1,"resources_js_components_Detail_vue":1,"resources_js_components_Profile_vue":1,"resources_js_components_User_vue":1,"resources_js_components_addUser_vue":1,"resources_js_components_editUser_vue":1,"resources_js_components_Stagiaire_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

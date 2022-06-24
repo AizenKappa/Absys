@@ -31,7 +31,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
-    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();
+    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)(); //new User Object
+
     var newUser = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
       nom: {
         text: "",
@@ -67,10 +68,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var emailError = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("E-mail invalide");
     var cinError = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("Cin invalide");
     var pwdError = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("Mot de pass faible !!");
-    var rpwdError = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("Mots de passe ne correspondent pas"); //checking on-inpute
+    var rpwdError = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("Les mots de passe ne correspondent pas");
+    var resetEmailError = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+    var resetCinError = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false); // after submit we start checking on-inpute event
 
-    var start = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+    var start = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false); //true if everything good and false if not
+
     var send = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+    /* On click we check our form */
 
     var checkform = function checkform() {
       //si les champs vide
@@ -94,16 +99,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       start.value = true;
       checkuser();
     };
+    /* On inpute we check this out */
+
 
     var checkinpute = function checkinpute(event) {
       if (start.value) {
-        if (event.target.title == "first") newUser.nom.check = newUser.nom.reg.test(newUser.nom.text);else if (event.target.title == "last") newUser.prenom.check = newUser.prenom.reg.test(newUser.prenom.text);else if (event.target.title == "email") newUser.email.check = newUser.email.reg.test(newUser.email.text);else if (event.target.title == "cin") newUser.cin.check = newUser.cin.reg.test(newUser.cin.text);else if (event.target.title == "pwd") {
+        if (event.target.title == "first") newUser.nom.check = newUser.nom.reg.test(newUser.nom.text);else if (event.target.title == "last") newUser.prenom.check = newUser.prenom.reg.test(newUser.prenom.text);else if (event.target.title == "email") {
+          resetEmailError.value == true ? emailError.value = "E-mail invalide" : '';
+          newUser.email.check = newUser.email.reg.test(newUser.email.text);
+        } else if (event.target.title == "cin") {
+          resetCinError.value == true ? cinError.value = "Cin invalide" : '';
+          newUser.cin.check = newUser.cin.reg.test(newUser.cin.text);
+        } else if (event.target.title == "pwd") {
           newUser.password.text.length <= 4 ? newUser.password.check = false : newUser.password.check = true;
         } else if (event.target.title == "rpwd") {
           newUser.password.text != newUser.rpassword.text ? newUser.rpassword.check = false : newUser.rpassword.check = true;
         }
       }
     };
+    /* If everything right we call addUser Function  */
+
 
     var checkuser = function checkuser() {
       for (var e in newUser) {
@@ -119,6 +134,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         addUser();
       }
     };
+    /* Add new user */
+
 
     var addUser = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -138,10 +155,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 response = _context.sent;
-                console.log(response.data);
-                router.push('/user');
 
-              case 5:
+                if (response.data.message !== "user added successe") {
+                  if (response.data.champ == "email") {
+                    newUser.email.check = false;
+                    emailError.value = response.data.message;
+                    resetEmailError.value = true;
+                  } else if (response.data.champ == "cin") {
+                    newUser.cin.check = false;
+                    cinError.value = response.data.message;
+                    resetCinError.value = true;
+                  }
+                } else {
+                  router.push('/user');
+                }
+
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -163,6 +192,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       cinError: cinError,
       pwdError: pwdError,
       rpwdError: rpwdError,
+      resetEmailError: resetEmailError,
+      resetCinError: resetCinError,
       start: start,
       send: send,
       checkform: checkform,
@@ -219,29 +250,20 @@ var _hoisted_5 = {
 var _hoisted_6 = {
   "class": "relative z-0 w-full mb-8 group"
 };
-
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "floating_first_name",
-  "class": "peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-}, "Nom", -1
-/* HOISTED */
-);
-
-var _hoisted_8 = {
+var _hoisted_7 = {
   key: 0,
   "class": "text-red-600"
 };
-var _hoisted_9 = {
+var _hoisted_8 = {
   "class": "relative z-0 w-full mb-8 group"
 };
-
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "floating_last_name",
-  "class": "peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-}, "Prénom", -1
-/* HOISTED */
-);
-
+var _hoisted_9 = {
+  key: 0,
+  "class": "text-red-600"
+};
+var _hoisted_10 = {
+  "class": "relative z-0 w-full mb-8 group"
+};
 var _hoisted_11 = {
   key: 0,
   "class": "text-red-600"
@@ -249,67 +271,29 @@ var _hoisted_11 = {
 var _hoisted_12 = {
   "class": "relative z-0 w-full mb-8 group"
 };
-
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "floating_email",
-  "class": "peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-}, "E-mail address", -1
-/* HOISTED */
-);
-
-var _hoisted_14 = {
+var _hoisted_13 = {
   key: 0,
   "class": "text-red-600"
 };
-var _hoisted_15 = {
+var _hoisted_14 = {
   "class": "relative z-0 w-full mb-8 group"
 };
-
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "cin",
-  "class": "peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-}, "CIN", -1
-/* HOISTED */
-);
-
+var _hoisted_15 = {
+  key: 0,
+  "class": "text-orange-400"
+};
+var _hoisted_16 = {
+  "class": "relative z-0 w-full mb-8 group"
+};
 var _hoisted_17 = {
   key: 0,
   "class": "text-red-600"
 };
-var _hoisted_18 = {
-  "class": "relative z-0 w-full mb-8 group"
-};
-
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "pwd",
-  "class": "peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-}, "Mot de pass", -1
-/* HOISTED */
-);
-
-var _hoisted_20 = {
-  key: 0,
-  "class": "text-orange-400"
-};
-var _hoisted_21 = {
-  "class": "relative z-0 w-full mb-8 group"
-};
-
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "r-pwd",
-  "class": "peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-}, "Répéter le mot de pass", -1
-/* HOISTED */
-);
-
-var _hoisted_23 = {
-  key: 0,
-  "class": "text-red-600"
-};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Add Table "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
     onSubmit: _cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {}, ["prevent"]))
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.newUser.nom.check ? 'focus:border-blue-600' : 'focus:border-red-600', "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none focus:outline-none focus:ring-0 peer"]),
     onInput: $setup.checkinpute,
     title: "first",
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
@@ -318,14 +302,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "text",
     name: "floating_first_name",
     id: "floating_first_name",
-    "class": "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer",
     placeholder: " ",
     required: ""
-  }, null, 544
-  /* HYDRATE_EVENTS, NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newUser.nom.text]]), _hoisted_7, !$setup.newUser.nom.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.nomError), 1
+  }, null, 34
+  /* CLASS, HYDRATE_EVENTS */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newUser.nom.text]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.newUser.nom.check ? 'peer-focus:text-blue-600' : 'peer-focus:text-red-600', "peer-focus:font-medium absolute text-md text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"]),
+    "for": "floating_first_name"
+  }, "Nom", 2
+  /* CLASS */
+  ), !$setup.newUser.nom.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.nomError), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.newUser.prenom.check ? 'focus:border-blue-600' : 'focus:border-red-600', "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none -blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"]),
     onInput: $setup.checkinpute,
     title: "last",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
@@ -334,14 +323,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "text",
     name: "floating_last_name",
     id: "floating_last_name",
-    "class": "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer",
     placeholder: " ",
     required: ""
-  }, null, 544
-  /* HYDRATE_EVENTS, NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newUser.prenom.text]]), _hoisted_10, !$setup.newUser.prenom.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.prenomError), 1
+  }, null, 34
+  /* CLASS, HYDRATE_EVENTS */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newUser.prenom.text]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.newUser.prenom.check ? 'peer-focus:text-blue-600' : 'peer-focus:text-red-600', "peer-focus:font-medium absolute text-md text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"]),
+    "for": "floating_last_name"
+  }, "Prénom", 2
+  /* CLASS */
+  ), !$setup.newUser.prenom.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.prenomError), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.newUser.email.check ? 'focus:border-blue-600' : 'focus:border-red-600', "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none -blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"]),
     onInput: $setup.checkinpute,
     title: "email",
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
@@ -349,14 +343,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     type: "text",
     name: "floating_email",
-    "class": "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer",
     placeholder: " ",
     required: ""
-  }, null, 544
-  /* HYDRATE_EVENTS, NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newUser.email.text]]), _hoisted_13, !$setup.newUser.email.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.emailError), 1
+  }, null, 34
+  /* CLASS, HYDRATE_EVENTS */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newUser.email.text]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.newUser.email.check ? 'peer-focus:text-blue-600' : 'peer-focus:text-red-600', "peer-focus:font-medium absolute text-md text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"]),
+    "for": "floating_email"
+  }, "E-mail address", 2
+  /* CLASS */
+  ), !$setup.newUser.email.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.emailError), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.newUser.cin.check ? 'focus:border-blue-600' : 'focus:border-red-600', "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none -blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"]),
     onInput: $setup.checkinpute,
     title: "cin",
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
@@ -364,14 +363,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     type: "text",
     name: "cin",
-    "class": "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer",
     placeholder: " ",
     required: ""
-  }, null, 544
-  /* HYDRATE_EVENTS, NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newUser.cin.text]]), _hoisted_16, !$setup.newUser.cin.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.cinError), 1
+  }, null, 34
+  /* CLASS, HYDRATE_EVENTS */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newUser.cin.text]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.newUser.cin.check ? 'peer-focus:text-blue-600' : 'peer-focus:text-red-600', "peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"]),
+    "for": "cin"
+  }, "CIN", 2
+  /* CLASS */
+  ), !$setup.newUser.cin.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.cinError), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.newUser.password.check ? 'focus:border-blue-600' : 'focus:border-red-600', "block py-2.5 px-0 w-full text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none -blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"]),
     onInput: $setup.checkinpute,
     title: "pwd",
     "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
@@ -379,14 +383,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     type: "password",
     name: "pwd",
-    "class": "block py-2.5 px-0 w-full text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer",
     placeholder: " ",
     required: ""
-  }, null, 544
-  /* HYDRATE_EVENTS, NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newUser.password.text]]), _hoisted_19, !$setup.newUser.password.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.pwdError), 1
+  }, null, 34
+  /* CLASS, HYDRATE_EVENTS */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newUser.password.text]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.newUser.password.check ? 'peer-focus:text-blue-600' : 'peer-focus:text-red-600', "peer-focus:font-medium absolute text-md text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"]),
+    "for": "pwd"
+  }, "Mot de pass", 2
+  /* CLASS */
+  ), !$setup.newUser.password.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.pwdError), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.newUser.rpassword.check ? 'focus:border-blue-600' : 'focus:border-red-600', "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none -blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"]),
     onInput: $setup.checkinpute,
     title: "rpwd",
     "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
@@ -394,12 +403,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     type: "password",
     name: "r-pwd",
-    "class": "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer",
     placeholder: " ",
     required: ""
-  }, null, 544
-  /* HYDRATE_EVENTS, NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newUser.rpassword.text]]), _hoisted_22, !$setup.newUser.rpassword.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.rpwdError), 1
+  }, null, 34
+  /* CLASS, HYDRATE_EVENTS */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newUser.rpassword.text]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.newUser.rpassword.check ? 'peer-focus:text-blue-600' : 'peer-focus:text-red-600', "peer-focus:font-medium absolute text-md text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"]),
+    "for": "r-pwd"
+  }, "Répéter le mot de pass", 2
+  /* CLASS */
+  ), !$setup.newUser.rpassword.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.rpwdError), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[6] || (_cache[6] = function ($event) {

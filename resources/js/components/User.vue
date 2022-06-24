@@ -6,7 +6,6 @@
 
 
 
-
     <div class="flex flex-col mt-24 xl:px-16 md:px-0 sm:px-10 select-none">
 
 
@@ -83,13 +82,19 @@
                                 </td>
 
                                 <td>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                    </svg>
+                                    <!-- Edit btn -->
+                                    <router-link :to='"/editUser/"+user.id'>
+                                        <div class="cursor-pointer opacity-[0.7] hover:opacity-[1] hover:scale-110 max-w-max max-h-max">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                        </div>
+                                    </router-link>
                                 </td>
                                 <td>
+                                    <!-- Delet btn -->
                                     <div class="text-red-500 cursor-pointer opacity-[0.7] hover:opacity-[1] hover:scale-110 max-w-max max-h-max">
                                         <button @click="getUser" :title="user.id" class=" absolute w-[1.5rem] h-[1.5rem] opacity-0"></button>
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
