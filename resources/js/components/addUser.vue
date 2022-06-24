@@ -65,7 +65,7 @@
 
     import { reactive, onMounted, ref } from "vue"
 
-    import { useRoute } from "vue-router";
+    import { useRouter } from "vue-router";
     
     import axios from "axios";
 
@@ -78,7 +78,7 @@
         rpassword : { text:"", check:true}
     })
 
-
+    const router = useRouter()
 
     const nomError = ref("Nom invalide")
     const prenomError = ref("Prenom invalide")
@@ -149,6 +149,7 @@
         if(send.value == true){
 
             addUser()
+
         }
 
 
