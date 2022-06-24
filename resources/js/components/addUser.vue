@@ -68,7 +68,7 @@
     import { useRouter } from "vue-router";
     
     import axios from "axios";
-
+    const router = useRouter()
     const newUser = reactive({
         nom : { text:"", check:true, reg: /^[a-z\s]{3,}$/i },
         prenom : { text:"", check:true, reg: /^[a-z\s]{3,}$/i},
@@ -78,7 +78,7 @@
         rpassword : { text:"", check:true}
     })
 
-    const router = useRouter()
+
 
     const nomError = ref("Nom invalide")
     const prenomError = ref("Prenom invalide")
@@ -149,7 +149,6 @@
         if(send.value == true){
 
             addUser()
-
         }
 
 

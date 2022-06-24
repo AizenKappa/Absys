@@ -157,8 +157,9 @@
 
         var id = event.target.title
 
-        prompt("Voulez vraimment delet user id : "+id)
+        // prompt("Voulez vraimment delet user id : "+id)
         deletUser(id)
+        getusers()
     }
 
     /* setInterval(getusers, 15000); */
