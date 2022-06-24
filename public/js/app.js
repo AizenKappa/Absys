@@ -37486,7 +37486,7 @@ var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_0__.createRouter)({
       return __webpack_require__.e(/*! import() */ "resources_js_components_Profile_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/Profile.vue */ "./resources/js/components/Profile.vue"));
     }
   }, {
-    path: '/User',
+    path: '/user',
     name: 'Update users',
     component: function component() {
       return __webpack_require__.e(/*! import() */ "resources_js_components_User_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/User.vue */ "./resources/js/components/User.vue"));

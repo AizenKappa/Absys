@@ -78,9 +78,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     });
 
     var getUser = function getUser(event) {
-      var id = event.target.title;
-      prompt("Voulez vraimment delet user id : " + id);
+      var id = event.target.title; // prompt("Voulez vraimment delet user id : "+id)
+
       deletUser(id);
+      getusers();
     };
     /* setInterval(getusers, 15000); */
 

@@ -31,6 +31,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
+    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();
     var newUser = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
       nom: {
         text: "",
@@ -154,6 +155,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }();
 
     var __returned__ = {
+      router: router,
       newUser: newUser,
       nomError: nomError,
       prenomError: prenomError,
@@ -170,7 +172,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       reactive: vue__WEBPACK_IMPORTED_MODULE_0__.reactive,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
-      useRoute: vue_router__WEBPACK_IMPORTED_MODULE_2__.useRoute,
+      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_2__.useRouter,
       axios: (axios__WEBPACK_IMPORTED_MODULE_1___default())
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
