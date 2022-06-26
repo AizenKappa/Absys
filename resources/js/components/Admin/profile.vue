@@ -18,7 +18,6 @@
                     <label class="w-full">
                         <div class="mb-2 text-sm text-slate-600 font-bold">Nom</div>
                         <input
-                        @click="clickbtn"
                         v-on:input="checkinpute"
                         :class="!user.first.check ?'inpute-error':''" title="first" v-model="user.first.text" class="shadow-md rounded-md py-6 px-3 outline-2 outline-cyan-500 shadow-gray-300 w-[100%] lg:w-[16rem] h-[2rem]" placeholder="Nom" type="text">
                         <span class="error_message" v-if="!user.first.check">Nom invalide</span>
@@ -26,7 +25,6 @@
                     <label class="w-full">
                         <div class="mb-2 text-sm text-slate-600 font-bold">Prenom</div>
                         <input
-                        @click="clickbtn"
                         v-on:input="checkinpute"
                         :class="!user.last.check ?'inpute-error':''" title="last"  v-model="user.last.text" class="shadow-md rounded-md py-6 px-3 outline-2 outline-cyan-500 shadow-gray-300 w-[100%] lg:w-[16rem] h-[2rem]" placeholder="Prenom" type="text">
                         <span class="error_message" v-if="!user.last.check">Prenom invalide</span>
@@ -34,7 +32,6 @@
                     <label class="w-full">
                         <div class="mb-2 text-sm text-slate-600 font-bold">CIN</div>
                         <input
-                        @click="clickbtn"
                         v-on:input="checkinpute"
                         :class="!user.cin.check ? 'inpute-error':''" title="cin"  v-model="user.cin.text" class="shadow-md rounded-md py-6 px-3 outline-2 outline-cyan-500 shadow-gray-300 w-[100%] lg:w-[16rem] h-[2rem]" placeholder="CIN" type="text">
                         <span class="error_message" v-if="!user.cin.check">{{ cinError }}</span>
@@ -42,37 +39,39 @@
                     <label class="w-full">
                         <div class="mb-2 text-sm text-slate-600 font-bold">EMAIL</div>
                         <input
-                        @click="clickbtn"
                         v-on:input="checkinpute"
                         :class="!user.email.check ? 'inpute-error':''" title="email" v-model="user.email.text" class="shadow-md rounded-md py-6 px-3 outline-2 outline-cyan-500 shadow-gray-300 w-[100%] lg:w-[16rem] h-[2rem]" placeholder="mail@edu-ofppt.ma"  type="email">
                         <span class="error_message" v-if="!user.email.check">{{ emailError }}</span>
                     </label>
                 </div>
-                
-                <!-- Password -->
-                <div class="py-8 px-5 mb-10">
-                    <div class="grid grid-cols-1">
-                        <label for="pwd" class="mb-2 text-sm text-slate-600 font-bold">PASSWORD</label>
-                        <span class="text-sm text-slate-400">// Entrez le mot de pass pour enregistrer les modifications</span>
-                        <input id="pwd" v-model="user.pwd.text" type="password" title="pwd"
-                        @click="clickbtn"
-                        :class="!user.pwd.check ? 'inpute-error':''"
-                        v-on:input="checkinpute"
-                        class="shadow-md rounded-md py-6 px-3 outline-2 outline-cyan-500 shadow-gray-300 w-[17rem] h-[1.5rem]">
-                        <span class="error_message" v-if="!user.pwd.check" >{{ pwdError}}</span>
+
+                <form @submit.prevent>
+                    <!-- Password -->
+                    <div class="py-8 px-5 mb-10">
+                        <div class="grid grid-cols-1">
+                            <label for="pwd" class="mb-2 text-sm text-slate-600 font-bold">PASSWORD</label>
+                            <span class="text-sm text-slate-400">// Entrez le mot de pass pour enregistrer les modifications</span>
+                            <input id="pwd" v-model="user.pwd.text" type="password" title="pwd"
+                            :disabled = "disablePwd"
+                            :class="!user.pwd.check ? 'inpute-error':''"
+                            v-on:input="checkinpute"
+                            class="shadow-md rounded-md py-6 px-3 outline-2 outline-cyan-500 shadow-gray-300 w-[17rem] h-[1.5rem] mt-5" required>
+                            <span class="error_message" v-if="!user.pwd.check" >{{ pwdError}}</span>
+                        </div>
                     </div>
-                </div>
-                <!-- Button -->
-                <div class="absolute bottom-5 right-5">
-                    <button
-                    v-on:click="checkuser()"
-                    class="bg-transparent active:bg-blue-500 text-blue-700 font-semibold active:text-white py-2 px-6 border border-blue-500 active:border-transparent rounded">
-                        Save
-                    </button>
-                </div>
+                    <!-- Button -->
+                    <div class="absolute bottom-5 right-5">
+                        <button
+                        v-on:click="checkuser()"
+                        class="bg-transparent active:bg-blue-500 text-blue-700 font-semibold active:text-white py-2 px-6 border border-blue-500 active:border-transparent rounded">
+                            Save
+                        </button>
+                    </div>
+                </form>
 
             </div>
 
+            <!-- Image Profe -->
             <div class="h-[20rem] w-[15rem] relative row-start-1 row-end-2">
                 <div class="h-[5rem] w-full bg-transparent"></div>
                 <div class="xl:h-[15rem] h-[10rem] w-full bg-gray-100 shadow-lg shadow-gray-300 rounded-md"></div>
@@ -120,21 +119,26 @@
     
 
 <script setup>
-    import { reactive , onBeforeMount, ref, onMounted, } from 'vue';
+    import { reactive , onBeforeMount, ref, onMounted, onUpdated } from 'vue';
     import axios from "axios";
 
+    import { useToast } from "vue-toastification";
+    const toast = useToast();
+
     const done = ref(false)
-    const rex = ref({})
     const show = ref(false)
     const input = ref(null)
-
-
-
+    
     const cinError = ref("Cin invalide")
     const emailError = ref("E-mail invalide")
-    const pwdError = ref("Empty password")
+    const pwdError = ref("")
+    const old_user = ref(null)
 
+    const resetEmailError = ref(false)
+    const resetCinError = ref(false)
     
+    const disablePwd = ref(true)
+
     const user = reactive({
         id : { value : "", check:true },
         first : { text: "", check: true, reg: /^[a-z\s]{3,}$/i },
@@ -145,59 +149,89 @@
         image: { path: "", check:true}
     })
 
- 
+    /* On change inpute file : new image */
     function inputeload(event) {
       
         const data = new FormData()
         data.append('image',event.target.files[0])
 
         getprofile(data)
-        // let reader = new FileReader();
-        // reader.readAsDataURL(event.target.files[0])
-        // reader.onload = e => {
-        //     input.value.src = e.target.result
-        // }
-
-        
 
     }
-    
 
-
-    const old_user = ref(null)
-
+    /* Get the Auth User */
     const getuser = async () =>{
-        let response = await axios.get(`/user`)
+        let response = await axios.get(`/authUser`)
         user.id.value = response.data.user_id
         user.first.text = response.data.firstname
         user.last.text = response.data.lastname
         user.email.text = response.data.email
         user.cin.text = response.data.cin
         user.image.path = response.data.image
-
-
-
         old_user.value = response.data
-
+        disablePwd.value = true
     };
-    
+
     onBeforeMount(() => { getuser() })
+
+    onUpdated(()=>{
+
+        if(nochanges()){
+            
+            disablePwd.value = true
+            user.pwd.text = ""
+
+        }else{
+             disablePwd.value = false
+        }
+    })
 
     const checkinpute = (event) => {
 
         if(event.target.title == "first") user.first.check = user.first.reg.test(user.first.text)
 
         else if(event.target.title == "last") user.last.check = user.last.reg.test(user.last.text)
-           
-        else if(event.target.title == "cin") user.cin.check = user.cin.reg.test(user.cin.text)
-           
-        else if(event.target.title == "email") user.email.check = user.email.reg.test(user.email.text)
+
+        else if(event.target.title == "email"){
+
+            resetEmailError.value == true ? emailError.value = "E-mail invalide" : ''
+
+            user.email.check = user.email.reg.test(user.email.text)
+
+            } 
+            
+        else if(event.target.title == "cin"){
+
+            resetCinError.value == true ? cinError.value = "Cin invalide" : ''
+
+            user.cin.check = user.cin.reg.test(user.cin.text)
+
+        }
 
         else if(event.target.title == "pwd") user.pwd.text == "" ? '' : user.pwd.check = true
 
     }
 
+    const nochanges = () => {
+
+        if(old_user.value.firstname == user.first.text && old_user.value.lastname == user.last.text
+            && old_user.value.email == user.email.text && old_user.value.cin == user.cin.text){
+                
+            return true
+        }
+        return false
+    }
+
     const checkuser = () => {
+
+        if(disablePwd.value){
+            return
+        }
+            
+
+        if(user.pwd.text.length == 0){
+            return;
+        }
 
         for(let e in user){
             if(!user[e].check){
@@ -213,36 +247,46 @@
     }
 
     const sendData = async () => {
-        console.log("ye^p")
-        await axios.post('/api/updateUser', {
-            id:user.id.value,
-            firstname: user.first.text,
-            lastname: user.last.text,
-            cin: user.cin.text == old_user.value.cin ? null : user.cin.text,
+
+        let response = await axios.post(`/updateUser`,{ 
+
+            id:user.id.value, firstname: user.first.text,  lastname: user.last.text, password:user.pwd.text,
             email: user.email.text == old_user.value.email ? null : user.email.text,
-            password:user.pwd.text
-        }).then((response) => { rex.value = response.data, console.log(rex.value) }).catch((error) => {console.log(error);});
-        if(rex.value.champ == 'cin'){
-            cinError.value = rex.value.message
+            cin: user.cin.text == old_user.value.cin ? null : user.cin.text,
+        
+        })
+
+        if(response.data.message != "update_successed"){
+
+            if(response.data.champ == 'cin'){
+
+            cinError.value = response.data.message
             user.cin.check = false
+            resetCinError.value = true
 
-        }else if(rex.value.champ == 'email'){
-            emailError.value = rex.value.message
-            user.email.check = false
-        }else if(rex.value.champ == 'password'){
-            pwdError.value = rex.value.message
-            user.pwd.check = false
+
+            }else if(response.data.champ == 'email'){
+
+                emailError.value = response.data.message
+                user.email.check = false
+                resetEmailError.value = true
+
+
+            }else if(response.data.champ == 'password'){
+
+                pwdError.value = response.data.message
+                user.pwd.check = false
+            
+            }
+
+        }else{
+            success(response.data.message)
         }
-    }
-
-    const clickbtn = (event) => {
-        if(event.target.title == "cin"){ cinError.value = "Cin invalide" } 
-        else if(event.target.title == "email"){ emailError.value = "email invalide" }
-        else if(event.target.title == "pwd"){  pwdError.value = "Empty password" }        
+        
     }
 
     const updateimage = async () => {
-        let response = await axios.get(`/user`)
+        let response = await axios.get(`/authUser`)
         user.image.path = response.data.image
     }
 
@@ -258,12 +302,27 @@
         console.log(response.data.status)
     }
 
+    const success = (message) => {
+
+        toast.success(message, {
+            position: "bottom-right",
+            timeout: 3000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            icon: true,
+            hideProgressBar: false,
+        });
+        user.pwd.text = ""
+        getuser()
+    }
+
 </script>
 
 
 <style scoped>
     .inpute-error{
-        outline: 2px solid red;
+        outline: 3px solid red;
     }
     .error_message{
         color: red;

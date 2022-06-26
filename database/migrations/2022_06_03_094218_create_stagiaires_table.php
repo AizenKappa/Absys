@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("nom_st");
             $table->string("prenom_st");
             $table->foreignId("groupe_id");
+            $table->string("status")->default("Active");
             $table->integer("heure_absence_st")->default(0);
             $table->string("numero_personnelle")->default("-----");
         });

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -24,30 +25,35 @@ const router = createRouter({
           component: () => import('../components/Detail.vue')
         },
         {
-          path: '/profile',
+          path: '/Profile',
           name: 'Profile',
-          component: () => import('../components/Profile.vue')
+          component: () => import('../components/Admin/profile.vue')
         },
         {
-          path: '/user',
+          path: '/User',
           name: 'Update users',
-          component: () => import('../components/User.vue')
+          component: () => import('../components/Admin/aboutUsers.vue')
         },
         {
           path: '/addUser',
           name: 'add users',
-          component: () => import('../components/addUser.vue')
+          component: () => import('../components/Admin/addUser.vue')
         },
         {
           path: '/editUser/:id',
           name: 'editUsers',
-          component: () => import('../components/editUser.vue')
+          component: () => import('../components/Admin/editUser.vue')
         },
         {
           path: '/stagiaire/:id',
           name: 'Stagiaire',
           component: () => import('../components/Stagiaire.vue'),
           
+        },
+        {
+          path: '/Estg',
+          name: 'Update stagiares',
+          component: () => import('../components/Admin/editStgiaire.vue')
         },
     ]
   })

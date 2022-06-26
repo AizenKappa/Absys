@@ -149,6 +149,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     function sortTable(event) {
       var parent = event.currentTarget;
       var sortType = parent.dataset.column;
+      event;
 
       if (sort.type == sortType) {
         sort.option == "asc" ? sort.option = "desc" : sort.option = "asc";

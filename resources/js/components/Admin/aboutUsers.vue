@@ -4,33 +4,30 @@
     <section class="h-screen">
 
 
-
-
     <div class="flex flex-col mt-24 xl:px-16 md:px-0 sm:px-10 select-none">
-
-
            
-            <div class="w-full flex justify-between xl:p-0 px-10 md:px-10 sm:p-0">
+        <div class="w-full flex justify-between xl:p-0 px-10 md:px-10 sm:p-0">
 
-                <!-- Refresh btn -->
-                <div @click="callusers()" class="py-2 px-3 mb-3 active:bg-slate-200 bg-white max-w-max max-h-max rounded-md shadow-md shadow-cyan-700 cursor-pointer hover:bg-slate-100">                
-                    <span class="text-cyan-600 text-3xl"><fas icon="arrow-rotate-right"/></span>
-                </div>
-
-                 <!-- Add user btn -->
-                <router-link  to="/addUser">
-                    <div class="inline-flex items-center px-5 py-3  text-base font-semibold text-white 
-                        justify-around select-none bg-blue-600 rounded-md cursor-pointer w-[8.5rem] hover:bg-blue-700">
-                        Add User
-                        <fas icon="plus" />
-                    </div>
-                </router-link>
-
+        <!-- Refresh btn -->
+            <div @click="callusers()" class="py-2 px-3 mb-3 active:bg-slate-200 bg-white max-w-max max-h-max rounded-md shadow-md shadow-cyan-700 cursor-pointer hover:bg-slate-100">                
+                <span class="text-cyan-600 text-3xl"><fas icon="arrow-rotate-right"/></span>
             </div>
 
-            <!-- Table -->
+                <!-- Add user btn -->
+            <router-link  to="/addUser">
+                <div class="inline-flex items-center px-5 py-3  text-base font-semibold text-white 
+                    justify-around select-none bg-blue-600 rounded-md cursor-pointer w-[8.5rem] hover:bg-blue-700">
+                    Add User
+                    <fas icon="plus" />
+                </div>
+            </router-link>
 
-            <div class="flex flex-col justify-center  rounded-md">
+        </div>
+
+            
+        <!-- Table -->
+        <div class="flex flex-col justify-center  rounded-md">
+
             <div class="w-full mx-auto bg-white shadow-lg rounded-md border border-gray-200">
                 <div class="p-3 w-full  rounded-md">
                 <div class="overflow-y-scroll h-[23rem]  rounded-md">
@@ -96,7 +93,7 @@
                                 <td>
                                     <!-- Delet btn -->
                                     <div class="text-red-500 cursor-pointer opacity-[0.7] hover:opacity-[1] hover:scale-110 max-w-max max-h-max">
-                                        <button @click="getUser" :title="user.id" class=" absolute w-[1.5rem] h-[1.5rem] opacity-0"></button>
+                                        <button @click="deleteThis" :title="user.id" class=" absolute w-[1.5rem] h-[1.5rem] opacity-0"></button>
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -110,9 +107,9 @@
                 </div>
             </div>
             </div>
-            </div>
 
-                
+        </div>
+  
     </div>
 
 
@@ -123,12 +120,17 @@
     import { ref, onMounted } from "vue"
     import axios from "axios";
 
-
     const users = ref(null)
     const wait =ref(false)
     
+
+    onMounted(()=>{
+        getusers()
+    })
+
+    /* Get all useres we have in database */
     const getusers = async () =>{
-        let response = await axios.get(`/api/users`)
+        let response = await axios.get(`/allUsers`)
 
         var data = response.data.data
         var online = []
@@ -149,32 +151,22 @@
 
         users.value = online.concat(offline)
 
-        console.log("updated")
-
     };
 
-    onMounted(()=>{
-        getusers()
-        
-    })
+    /* Get id of user on event and call our functions to delet him  */
+    const deleteThis = (event) => {
 
-    const getUser = (event) => {
-
-        var id = event.target.title
-
-        // prompt("Voulez vraimment delet user id : "+id)
-        deletUser(id)
+        sweetalert(event.target.title)
         getusers()
     }
 
-    /* setInterval(getusers, 15000); */
-
-    const deletUser = async (id) =>{
+    const deletUserById = async (id) =>{
         let response = await axios.get(`/user/${id}`)
         console.log(response.data)
 
     };
 
+    /* For refresh btn and we set timout for spam click :D */
     const callusers = () =>{
         if (wait.value) {
             return;
@@ -186,6 +178,30 @@
         setTimeout(function() {
             wait.value = false;
         }, 500);
+    }
+
+    /* Alert to confirme for delete user */
+    const sweetalert = (id) => {
+        Swal.fire({
+            title: 'Êtes-vous sûr?',
+            text: "Vou ne pourrez pas revenir en aarriére!",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText:"Annuler",
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Supprimer!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deletUserById(id)
+                getusers()
+                Swal.fire(
+                'Suprimé!',
+                'Le compte a été supprimé.',
+                'success'
+                )
+            }
+        })
     }
 
 </script>

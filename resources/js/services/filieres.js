@@ -4,15 +4,15 @@ import axios from "axios";
 export default function useFilieres(){
     
     const filieres = ref([])
-    const groupes = ref([])
-    const stagiaires = ref([])
+    const groupes = ref(null)
+    const stagiaires = ref(null)
     const profs = ref([])
     const etats = ref([])
     const add_status = ref(false)
     const justif_status = ref(false)
     const user = ref()
 
-    var nom_gp = ref(null)
+    const nom_gp = ref(null)
 
     const getFilieres = async () => {
         let response = await axios.get("/api/filieres")
@@ -28,6 +28,7 @@ export default function useFilieres(){
         let response = await axios.get(`/api/groupes/${groupe_id}`)
         stagiaires.value = response.data.data
         nom_gp.value = stagiaires.value[0].nom_gp
+        console.log(stagiaires.value)
         getprofs(groupe_id)
         
     };

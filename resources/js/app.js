@@ -6,6 +6,12 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(fas)
 
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+
+import Swal from 'sweetalert2'
+window.Swal = Swal
+
 import { createApp } from 'vue';
 import { RouterLink , RouterView } from 'vue-router';
 import router from './router'
@@ -20,6 +26,7 @@ createApp({})
 .component('dashboard', dashboard)
 .component('fas', FontAwesomeIcon )
 .use(router)
+.use(Toast)
 .mount('#app')
 
 
