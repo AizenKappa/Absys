@@ -41,6 +41,8 @@ Route::view('/Profile','home')->middleware('auth');
 Route::view('/stagiaire/{id}',"home")->middleware('auth');
 Route::view('/User',"home")->middleware('auth');
 Route::view('/addUser',"home")->middleware('auth');
+Route::view('/SearchByDate',"home")->middleware('auth');
+Route::view('/etatEdit',"home")->middleware('auth');
 
 Route::get('/user', [FiliereController::class, 'getuser']);
 Route::get('/user/{id}', [FiliereController::class, 'deletuser']);

@@ -1,75 +1,93 @@
-
-
 <template>
-<section>
 
-    <!-- Filieres_Select -->
-    <div class=" px-10">
-            <div class="w-[100%] lg:flex lg:justify-between">
-                <div class="w-full lg:w-[45%] my-12">
-                    <select name="filiere" id="filieres_select" v-model="selected_fil" class="w-full font-medium h-[2rem]" v-on:change="getcontents()">
-                        <option value="Tous" selected>Tous Filieres</option>
-                        <option  :value="fil.id" v-for="fil in filieres" :key="fil.id">{{fil.nom_fil}}</option>
-                    </select>            
-                </div>
-            </div>
-    </div>
-
-    <div class="w-full px-12 grid grid-cols-1 gap-6 lg:flex md:justify-between">
-        <select v-on:change="period_debut = null , period_fin = null" class="w-[50%] md:w-[15rem] h-7" v-model="selected_period">
-            <option value="year" selected>L'annee entiere</option>
-            <option value="week">Cette semaine</option>
-            <option value="subweek">La semain precedent</option>
-            <option value="month">Ce mois</option>
-            <option value="submonth">Le mois precedent</option>
-            <option value="limit">Limitation</option>
+    <div class="w-full lg:w-[45%] my-12">
+        <select   class="w-full font-medium h-[2rem]" @change="chartfilter"  v-model="selectedFil" >
+            <option    value="all" selected>Tous les Filieres</option>
+            <option  :value="fil.id" v-for="fil in fillWithAbs" :key="fil.id">{{fil.nom_fil}}</option>
         </select>
-        <div v-if="selected_period == 'limit'" class="sm:w-[28rem] w-[100%] place-items-center gap-4 grid grid-cols-1 sm:flex justify-between items-center">
-            <input v-model="period_debut" class="sm:w-[12rem] w-[60%] px-2" type="date" required>
-            <fas class="hidden sm:block" icon="angles-right"/><fas class="block sm:hidden" icon="angles-down"/>
-            <input v-model="period_fin" class="sm:w-[12rem] w-[60%] px-2" type="date" required>
+    </div>
+    <select  @change="chartSort" v-model="sort" >
+        <option value="noSort" selected>Sort</option>
+        <option value="total_h">Total</option>
+        <option value="nj_h">Nj</option>
+    </select>
+
+    <template v-if="classDetails.exist == true">
+            <template  v-for="el in classDetails.info" :key="el.groupe.nom_gp">
+                <ClassChart v-if="el.show" :data="el" ></ClassChart>
+            </template>
+    </template>
+   
+    <template  v-else>
+        <div class="bg-red-100 rounded-lg py-5 px-6 mb-4
+         text-normal text-center text-red-700 mx-auto " role="alert">
+            No Data found
         </div>
-    </div>
-
-
-    <div class="grid place-content-end px-5 py-6">
-        <button v-on:click="getetats(selected_fil,selected_period,period_debut,period_fin)"
-        class="text-2xl text-white rounded-full w-[3rem] h-[3rem] shadow-md shadow-bleu-500"><fas icon="magnifying-glass" /></button>
-    </div>
-
-</section>
+    </template>
+    
 </template>
 
+
 <script setup>
-    import { ref } from 'vue';
-    import useFilieres from '../services/filieres.js'
-    import { onMounted } from 'vue';
+    import {ref ,onMounted, onUpdated} from "vue";
+    import ClassChart from "./ClassChart.vue";
+     
 
-    /* Variables Help-us */
-    const selected_fil = ref("Tous")
-    const selected_period = ref("year")
-    const period_debut = ref(null)
-    const period_fin = ref(null)
-
-    /* Call Api Groupes */
-    const getcontents = () =>  { selected_gp.value = "choose your groupe" , getgroupes(selected.value)}
-    /* Return all our functuons and variables from { services/filieres.js } to use here */
-    const { getFilieres , filieres , profs , getgroupes , groupes , stagiaires, getstagiaires , nom_gp , getetats } = useFilieres();
-    /* On Mounted call Aoi Flieres */
-    onMounted(getFilieres())
+    import axios from "axios";
+    const selectedFil = ref("all")
+    const classDetails = ref([])
+    const fillWithAbs = ref([])
+    const sort = ref("noSort")
+   
+    onMounted(()=>{
+        getData()
+        console.log(classDetails.value)
+    })
+    function help(){
+        console.log(test.click())
+    }
     
+    
+    async function getData(){
+          
+            
+            let response = await  axios.get(`/api/details`)
+            classDetails.value = response.data
+            fillWithAbs.value = classDetails.value.fillWithAbs
+            // console.log(classDetails.value)
+            console.log(fillWithAbs.value)
+    }
+    function chartfilter(){
+        console.log("hello")
+        var fil_selected = selectedFil.value
+        classDetails.value.info.forEach((ele)=>{
+            var fil_id = ele.groupe.filiere.id 
+            if(fil_selected == "all"){
+                ele.show = true
+            }
+            else if(fil_id == fil_selected ){
+                    ele.show = true
+            }
+            else{
+                ele.show = false
+            }
+        })
+    }
+
+    function chartSort(){
+        if(sort.value != "noSort"){
+            classDetails.value.info.sort((a, b) => (a[sort.value] < b[sort.value]) ? 1 : -1)
+        }
+        
+    }
+
+    
+    
+
 </script>
+
 <style scoped>
-    button{
-        background-color: rgb(0, 143, 255);
-        border: 1px solid rgb(0, 143, 255);
-    }
-    button:hover{
-        background-color: rgb(0, 120, 255);
-        border: 1px solid rgb(0, 120, 255);
-    }
-    button:active{
-        background-color: rgb(0, 100, 255);
-        border: 1px solid rgb(0, 100, 255);
-    }
+[v-cloak]{
+    display: none;
+}
 </style>

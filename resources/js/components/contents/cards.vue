@@ -25,9 +25,13 @@
                     <span>Justifier l'absence</span>
                 </router-link>
 
+                <router-link to="/SearchByDate" @click="$emit('update:modelValue',check())">
+                    <fas icon="user-graduate" />
+                    <span class="text-center ">Recherche par Date</span>
+                </router-link>
                 <router-link to="/detail" @click="$emit('update:modelValue',check())">
                     <fas icon="user-graduate" />
-                    <span>Deatil Class</span>
+                    <span class="text-center ">Detail Class</span>
                 </router-link>
                 
             </div>
@@ -47,7 +51,10 @@
                     <span>Update Users</span>
                 </router-link>
                 
-                <a href="#">ABORT EDU</a>
+                <router-link to="/etatEdit" @click="$emit('update:modelValue',check())">
+                    <fas icon="user-graduate" />
+                    <span>Edit Absence</span>
+                </router-link>
 
                 <a href="#">ABORT EDU</a>
 

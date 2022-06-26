@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\FiliereController;
 use App\Models\Etat;
+use App\Models\Filiere;
 use App\Models\Groupe;
 use App\Models\Stagiaire;
 use Illuminate\Http\Request;
@@ -174,3 +175,120 @@ Route::post('addJustif',[FiliereController::class, 'addJustif']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+/* Route to get all the groupes with their own graphes  */
+//Groupe Name
+//hours justified By Month 
+//Hours Non Justified By Month
+//make A Leaderoard OF the groupe sorted By Total Hours OR BY Non Justified Hours 
+
+Route::get('/details',function(Request $request){
+    
+    $result = [
+        
+        "fillWithAbs"=>[],
+        "exist"=>false,
+        "info"=>[]
+    ];
+    $fillWithAbs = [];
+    $groupeWithAbs = [];//les groupes qui contient au moins une absence
+    
+    $etats_just = Etat::with("stagiaire.groupe.filiere")->where("etat_justif","J")->without("prof")->get();
+    $etats_nj = Etat::with("stagiaire.groupe.filiere")->where("etat_justif","NJ")->without("prof")->get();
+ 
+        $allEtat = Etat::with("stagiaire.groupe.filiere")->without("prof")->get()->all();
+        foreach($allEtat as $e){
+            $groupe = $e->stagiaire->groupe;
+            $fil = $e->stagiaire->groupe->filiere;
+            if(!in_array($groupe,$groupeWithAbs)){
+                array_push($groupeWithAbs,$groupe);
+            }   
+            if(!in_array($fil,$fillWithAbs)){
+                array_push($fillWithAbs,$fil);
+            } 
+         
+           
+        }
+        $result["fillWithAbs"] = $fillWithAbs;
+        
+        $result["groupesWithAbs"] = $groupeWithAbs;
+
+
+        foreach($groupeWithAbs as $groupe){
+                        $nom_gp = $groupe->nom_gp;
+                        $just_abs = monthAbs($etats_just->where("stagiaire.groupe.nom_gp","=",$nom_gp));
+                        $nj_abs = monthAbs($etats_nj->where("stagiaire.groupe.nom_gp","=",$nom_gp));
+                        $total_h = 0;
+                        $nj_h=0;
+                        foreach($just_abs  as $el  ){
+                            $total_h +=$el;
+                            if($el > 0 ){
+                                $result["exist"] = true;
+                            }
+                        }
+                        foreach($nj_abs  as $el  ){
+                            $total_h +=$el;
+                            $nj_h +=$el;
+                            if($el > 0 ){
+                                $result["exist"] = true;
+                            }
+                        }
+                array_push($result["info"],[
+                    
+                    "groupe" => $groupe,
+                    "just_abs"=>$just_abs,
+                    "nj_abs"=>$nj_abs,
+                    "show"=>true,
+                    "nj_h"=>$nj_h,
+                    "total_h"=>$total_h
+                            ]);
+            
+        }
+    return $result    ;
+
+});
+
+
+
+/* Api to get the faculty that have absence */
+
+Route::get('etatFil',function(){
+    $allEtat = Etat::with("stagiaire.groupe.filiere")->get()->all();
+    $allFil = Filiere::all();
+    $allfill = $allFil->map(function($item){
+        $item->push([
+            "myGroupes"=>$item->groupes
+        ]);
+    });
+   
+    $allGroupes = Groupe::all();
+    $result = [
+        "allFilWithGroupes" =>$allFil,
+        "allGroupes"=>$allGroupes,
+        "fillWithAbs"=>[],
+        "groupeWithAbs"=>[],
+        "allAbs"=> $allEtat
+        
+    ];
+    $fillWithAbs = [];
+    $groupeWithAbs = [];//les groupes qui contient au moins une absence
+    
+        foreach($allEtat as $e){
+            $groupe = $e->stagiaire->groupe;
+            $fil = $e->stagiaire->groupe->filiere;
+            if(!in_array($groupe,$groupeWithAbs)){
+                array_push($groupeWithAbs,$groupe);
+            }   
+            if(!in_array($fil,$fillWithAbs)){
+                
+                array_push($fillWithAbs,$fil);
+            } 
+         
+           
+        }
+        $result["groupeWithAbs"] = $groupeWithAbs;
+        $result["fillWithAbs"] = $fillWithAbs;
+        return $result;
+});
+    

@@ -5,7 +5,7 @@
 
     <div id="helper">
         <!-- -- SideBar -- -->
-        <div v-if="dash" class="md:block md:h-screen md:w-[16rem] w-[96%] md:mx-0 mt-3 md:mt-0 bg-white md:overflow-y-scroll md:fixed fixed z-50">
+        <div v-if="dash" class="md:block md:h-screen md:w-[14rem] w-[96%] md:mx-0 mt-3 md:mt-0 bg-white md:overflow-y-scroll md:fixed fixed z-50">
             <div id="dashboard-header" class="flex justify-between mt-8 mb-10 mx-6">
                 <h1 class=" text-sm uppercase font-bold">Hello User</h1>
                 <span @click="dash=false" class="w-8 h-8 flex justify-center text-lg rounded-sm items-center active:border-[3px] active:border-zinc-900 md:hidden cursor-pointer"><fas icon="xmark" /></span>
@@ -15,7 +15,7 @@
 
         </div>
     </div>
-    <div id="home" :class="dash?'opacity-[0.4] md:opacity-[1]':'opacity-[1]'" class="md:pl-[16rem] bg-blue-50 h-full">
+    <div id="home" :class="dash?'opacity-[0.4] md:opacity-[1]':'opacity-[1]'" class="md:pl-[14rem] bg-blue-50 h-full">
         <!-- --home page -- -->
         <div class="relative h-full">
             <div class="md:h-[20rem] h-[30rem] bg-sky-600">

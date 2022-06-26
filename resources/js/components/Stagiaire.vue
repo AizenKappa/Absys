@@ -1,174 +1,116 @@
 <template>
-    <div class="w-[50%] border mx-auto">   
-         <canvas id="pie"></canvas>
+<section>
+<div class="flex flex-col lg:flex-row mt-2 gap-2 items-center justify-around lg:justify-center  md:grid-cols-2
+  ">
+    <div class=" p-4 w-[300px] h-[300px]  shadow-lg rounded bg-[#334155] mx-auto ">   
+         <canvas class="relateive z-20" id="pie"></canvas>
     </div>
 
-    <div class="w-[90%] border mx-auto">   
+    <div class="h-[260px] max-w-[450px]  mx-auto  w-full md:w-full md:justify-self-end  md:h-[316px]
+    shadow-lg rounded bg-[#334155] " >   
          <canvas id="monthly"></canvas>
     </div>
-    <!-- <div>
-        <h1>Heure justifiées</h1>
-        <table class="border border-black">
-            <tr>
-                <th>date abs</th>
-                <th>h_debut</th>
-                <th>h_fin</th>
-                <th>Nb h</th>
-                <th>prof</th>
-                <th>seance</th>
-                <th>motif</th>
-            </tr>
-            <template  v-if="nj_abs.length>0">
-                 <tr v-for="abs in nj_abs" :key="abs.id">
-                    <td>{{abs.date_abs}}</td>
-                    <td>{{abs.h_debut}}</td>
-                    <td>{{abs.h_fin}}</td>
-                    <td>{{abs.nbAbs}}</td>
-                    <td>{{abs.prof.nom_prof}}</td>
-                    <td>{{abs.seance}}</td>
-                    <td>{{abs.motif}}</td>
-            </tr>
-            </template>
-           
-            <template v-else>
-                <tr>
-                    <td colspan="7"> Aucune Absence justifiées</td> 
-                </tr>
-            </template>
-           
-                
-        </table>
+</div>
+    
 
-    </div>
-
-    <div>
-        <h1>Heure non justifiées</h1>
-        <table class="border border-black">
-            <tr>
-                <th>date abs</th>
-                <th>h_debut</th>
-                <th>h_fin</th>
-                <th>Nb h</th>
-                <th>prof</th>
-                <th>seance</th>
-            </tr>
-            <template  v-if="just_abs.length > 0">
-                <tr v-for="abs in just_abs" :key="abs.id">
-                    <td>{{abs.date_abs}}</td>
-                    <td>{{abs.h_debut}}</td>
-                    <td>{{abs.h_fin}}</td>
-                    <td>{{abs.nbAbs}}</td>
-                    <td>{{abs.prof.nom_prof}}</td>
-                    <td>{{abs.seance}}</td>
-                    
-                </tr>
-            </template>
-            
-            <template v-else>
-                <tr>
-                    <td colspan="6">Tous les absence sont justifées</td>  
-                </tr>
-                
-            </template>
-                
-        </table>
-
-    </div>
-
-    <div>
-        <h1>HEURE d'ABSENCE PAR PROF</h1>
-        <table>
-            <tr>
-                <th>Nom PROF</th>
-                <th>HOURs</th>
-            </tr>
-            <template v-if="absProf.length > 0"  v-for="(pr,index) in absProf" :key="index">
-                <tr>
-                    <th>{{pr.nom}}</th>
-                    <th>{{pr.hours}}</th>
-                </tr>
-            </template>
-            <template v-else>
-                <tr>
-                    <td colspan="2">Clean</td>
-                </tr>
-            </template>
-        </table>
-    </div> -->
-<div class="flex flex-col">
+    <!-- justifée -->
+<div class="flex flex-col max-w-[800px]  mx-auto rounded-lg" v-cloak>
   <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
       <div class="overflow-x-auto">
-        <table class="min-w-full">
-          <thead class="border-b border-2 border-black">
+        <table class="min-w-full rounded-sm">
+          <thead class="border-b border-2 ">
 
-                <tr class="bg-[#21e88b]">
-                    <th colspan="7"><h1 class="text-black text-center w-full">Les Absences justifiées</h1>
+                <tr class="bg-[#26d0ce]">
+                    <th colspan="7"><h1 class="text-black text-sm py-2 md:text-2xl font-bold
+                    text-center w-full">Les Absences justifiées</h1>
                     </th>
                 </tr>
-                <tr>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Date
-              </th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Debut
-              </th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Fin
-              </th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Durée
-              </th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Prof
-              </th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Type Seance
-              </th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Motif
-              </th>
+            </thead>
+            <tbody class="bg-gray-600">
+                <tr class="border text-white">
+                    <th scope="col" class="
+                    text-md border border-black
+                    font-medium  md:px-2 md:py-1 text-center">
+                        Date
+                    </th>
+                    <th scope="col" class="text-md border border-black
+                    font-medium  md:px-2 md:py-1 text-center ">
+                        Debut
+                    </th>
+                    <th scope="col" class="text-md border border-black
+                    font-medium  md:px-2 md:py-1 text-center ">
+                        Fin
+                    </th>
+                    <th scope="col" class="text-md border border-black
+                    font-medium  md:px-2 md:py-1 text-center">
+                        Durée
+                    </th>
+                    <th scope="col" class="text-md border border-black
+                    font-medium  md:px-2 md:py-1 text-center">
+                        Prof
+                    </th>
+                    <th scope="col" class="text-md border border-black
+                    font-medium  md:px-2 md:py-1 text-center">
+                        Type Seance
+                    </th>
+                    <th scope="col" class="text-md border border-black
+                    font-medium  md:px-2 md:py-1 text-center">
+                        Motif
+                    </th>
              
-            </tr>
-          </thead>
-          <tbody>
+                </tr>
+            </tbody>
+                
+          
+          <tbody >
             <template v-if="just_abs.length > 0">
-                <tr v-for="abs in just_abs" :key="abs.id" class="border-b">
-                    <td class="px-6 py-4 whitespace-nowrap
-                    text-sm font-medium text-gray-900">{{abs.date_abs}}</td>
+                <tr v-for="abs in just_abs" :key="abs.id" class="border-b bg-white">
                     <td class="text-sm text-gray-900
-                    font-light px-6 py-4 whitespace-nowrap">
-                        {{abs.h_debut}}
+                    font-medium px-6 py-4 whitespace-nowrap
+                    border border-gray-500">{{abs.date_abs}}</td>
+                    <td class="text-sm text-gray-900
+                    font-medium px-6 py-4 whitespace-nowrap
+                    border border-gray-500 text-center">
+                        {{abs.h_debut.slice(0,5)}}
                     </td>
                     <td class="text-sm text-gray-900
-                    font-light px-6 py-4 whitespace-nowrap">
-                        {{abs.h_fin}}
+                    font-medium px-6 py-4 whitespace-nowrap
+                    border border-gray-500 text-center">
+                        {{abs.h_fin.slice(0,5)}}
                     </td>
                     <td class="text-sm text-gray-900
-                    font-light px-6 py-4 whitespace-nowrap">
+                    font-medium px-6 py-4 whitespace-nowrap
+                    border border-gray-500 text-center">
                         {{abs.nbAbs}}
                     </td>
                     <td class="text-sm text-gray-900
-                    font-light px-6 py-4 whitespace-nowrap">
+                    font-medium px-6 py-4 border border-gray-500
+                     whitespace-nowrap text-center">
+                    
                         {{abs.prof.nom_prof}}
                     </td>
                     <td class="text-sm text-gray-900
-                    font-light px-6 py-4 whitespace-nowrap">
+                    font-medium px-6 py-4 whitespace-nowrap
+                    border border-gray-500 text-center">
                         {{abs.seance}}
                     </td>
                     <td class="text-sm text-gray-900
-                    font-light px-6 py-4 whitespace-nowrap">
+                    font-medium px-6 py-4 whitespace-nowrap
+                    border border-gray-500 text-center">
                         {{abs.motif}}
                     </td>
                 </tr>
             </template>
             
             <template v-else>
-
-                <th colspan="6" class="text-sm text-gray-900
-                    font-light px-6 py-4 whitespace-nowrap">
+                <tr class="bg-white"  v-cloak>
+                    <th colspan="7" class="text-lg text-gray-900
+                    font-semibold px-6 py-4 whitespace-nowrap">
                         Aucune Absence justifiées
-                </th>
+                    </th>
+                </tr>
+                
 
             </template>
           </tbody>
@@ -179,77 +121,89 @@
 
 
 </div>
+</section>
 
-
-<div class="flex flex-col">
+<!-- no justifée -->
+<div class="flex flex-col max-w-[800px]  mx-auto" v-cloak>
   <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
       <div class="overflow-x-auto">
-        <table class="min-w-full">
-          <thead class="border-b border-2 border-black">
+        <table class="min-w-full bg-white">
+          <thead class="border-b ">
 
-                <tr class="bg-[#f3158f]">
-                    <th colspan="7"><h1 class="text-black text-center w-full">Les Absences Non justifiées</h1>
+                <tr class="bg-[#4c51bf]">
+                    <th colspan="7">
+                        <h1 class="text-black py-2 text-sm    md:text-2xl font-bold
+                    text-center w-full">
+                        Les Absences Non justifiées
+                        </h1>
                     </th>
                 </tr>
           </thead>
-          <tbody>
-            <tr>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+          <tbody class="bg-gray-600">
+            <tr class="border text-white">
+              <th scope="col" class="text-sm md:text-md border border-black
+               font-medium  md:px-2 md:py-1 text-center">
                 Date
               </th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+              <th scope="col" class="text-sm md:text-md border border-black
+               font-medium  md:px-2 md:py-1 text-center">
                 Debut
               </th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+              <th scope="col" class="text-sm md:text-md border border-black
+               font-medium  md:px-2 md:py-1 text-center">
                 Fin
               </th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+              <th scope="col" class="text-sm md:text-md border border-black
+               font-medium  md:px-2 md:py-1 text-center">
                 Durée
               </th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+              <th scope="col" class="text-sm md:text-md border border-black
+               font-medium  md:px-2 md:py-1 text-center">
                 Prof
               </th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+              <th scope="col" class="text-sm md:text-md border border-black
+               font-medium  md:px-2 md:py-1 text-center">
                 Type Seance
               </th>
             </tr>
           </tbody>
           <tbody>
             <template v-if="nj_abs.length > 0">
-                <tr v-for="abs in nj_abs" :key="abs.id" class="border-2 border-black">
-                    <td class="px-6 py-4  whitespace-nowrap
-                    text-sm font-medium text-gray-900">{{abs.date_abs}}</td>
-                    <td class="text-sm text-gray-900
-                    font-light px-6 py-4 whitespace-nowrap">
-                        {{abs.h_debut}}
+                <tr v-for="abs in nj_abs" :key="abs.id" class="border border-black">
+                    <td class="md:px-2 md:py-1  whitespace-nowrap
+                    text-sm font-medium text-gray-900 text-center border border-gray-500">{{abs.date_abs}}</td>
+                    <td class="text-sm text-gray-900 text-center border border-gray-500
+                    font-medium md:px-2 md:py-1 whitespace-nowrap">
+                        {{abs.h_debut.slice(0,5)}}
                     </td>
-                    <td class="text-sm text-gray-900
-                    font-light px-6 py-4 whitespace-nowrap">
-                        {{abs.h_fin}}
+                    <td class="text-sm text-gray-900 text-center border border-gray-500
+                    font-medium md:px-2 md:py-1 whitespace-nowrap">
+                        {{abs.h_fin.slice(0,5)}}
                     </td>
-                    <td class="text-sm text-gray-900
-                    font-light px-6 py-4 whitespace-nowrap">
+                    <td class="text-sm text-gray-900 text-center border border-gray-500
+                    font-medium md:px-2 md:py-1 whitespace-nowrap">
                         {{abs.nbAbs}}
                     </td>
-                    <td class="text-sm text-gray-900
-                    font-light px-6 py-4 whitespace-nowrap">
+                    <td class="text-sm text-gray-900 text-center border border-gray-500
+                    font-medium md:px-2 md:py-1 whitespace-nowrap">
                         {{abs.prof.nom_prof}}
                     </td>
-                    <td class="text-sm text-gray-900
-                    font-light px-6 py-4 whitespace-nowrap">
+                    <td class="text-sm text-gray-900 text-center border border-gray-500
+                    font-medium md:px-2 md:py-1 whitespace-nowrap">
                         {{abs.seance}}
                     </td>
                 </tr>
             </template>
             
+
             <template v-else>
-
-                <th colspan="6" class="text-sm text-gray-900
-                    font-light px-6 py-4 whitespace-nowrap">
+                <tr class="bg-white"  v-cloak>
+                    <th colspan="6" class="text-lg text-gray-900
+                    font-semibold px-6 py-4 whitespace-nowrap">
                         Aucune Absence justifiées
-                </th>
-
+                    </th>
+                </tr>
             </template>
           </tbody>
         </table>
@@ -320,20 +274,32 @@
             // console.log(groupe_total_abs.value)
             var pieOptions =  
             {
+                layout: {
+                    padding: 5
+                    },
                 plugins: 
                     {
-                        labels:
-                        {
-                            render: 'percentage',
-                            fontStyle: 'bolder',
-                            position: 'bottom',
-                        },
+                        
+
                         datalabels: 
                         {
                             fontStyle: 'bolder',
+                            color:"white",
                             render: true,
-                            formatter: function(value) { return ""} 
-                        }
+                          
+                        },
+                        legend: 
+                        {
+                            labels: {
+                                font: {
+                                    size: 12,
+                                    weight:"bold"
+                                    },
+                                color:"white",
+                                align:"end",
+                                position:"end"
+                            },
+                        },
                     }
             }
             var pieData =
@@ -341,16 +307,16 @@
                     labels: [groupe_name.value,stFullName.value],
                     datasets: 
                     [{
-                        label: 'My First Dataset',
+                      
                         data: [groupe_total_abs.value,st_total_abs.value],
-                        backgroundColor: ['rgb(255, 99, 132)','rgb(54, 162, 235)'],
+                        backgroundColor: ['#4c51bf','#26d0ce'],
                         hoverOffset: 4    
                     }]
                 }
 
             /* Configuration Object  */
             var pieConfig = {
-            type:"pie",
+            type:"doughnut",
             data:pieData,//object
             options:pieOptions,//object
        //array
@@ -364,25 +330,38 @@
             
 
             var monthlyOptions = {
-                    scales: 
-                    {
-                        y: 
-                        {   beginAtZero: true,
-                            ticks: {callback: function(value, index, ticks) {return value + " h";}}
-                        }
-                    },                                    
+                interaction: {
+                intersect: false,
+                mode: 'index',
+                },
+                    maintainAspectRatio:false,
+                    responsive:true,
                     plugins: 
                     {
                         title: 
                         {
-                            display: true,text: stFullName.value,
+                            position:"top",
+                            align:"top",
+                            color:"white",
+                            display: true,
+                            text: stFullName.value,
                             font: {size: 15}    
                         },
+                        ticks:{
+                            color:"white"
+                        },
+                        
                         legend: 
                         {
                             labels: {
-                                font: {size: 10}
-                            }
+                                font: {
+                                    size: 12,
+                                    weight:"bold"
+                                    },
+                                color:"white",
+                                align:"end",
+                                position:"end"
+                            },
                         },
                         labels: 
                         {
@@ -397,7 +376,50 @@
                             fontStyle: "bolder",
                             showZero: true,
                         },
-                    }
+                        tooltip:{
+                            callbacks:{
+                                label: function(context) {
+                                    var label = context.dataset.label || '';
+                                    return label + ": "+ context.parsed.y + " h";
+                            }
+                            }
+                            
+                        }
+                    },
+                    scales: {
+                        y:{ 
+                            ticks: {
+                                callback: function(value, index, ticks) {return value + " h";},
+                                color:"#AAB0B8",
+                                font:{
+                                    size:12,
+                                    weight:"bolder"
+                                }
+                                },
+                            grid:{
+                                display: true,
+                                borderDash: [3],
+                                borderDashOffset: [3],
+                                color:"gray"
+                            }
+                          
+                        },
+                        x:{
+                            ticks: {
+                                
+                                color:"#AAB0B8",
+                                font:{
+                                    size:10,
+                                    weight:"bolder"
+                                }
+                                },
+                            grid:{
+                                display: false,
+                             
+                            }
+                        }
+                    }                                   
+                    
                 }
                 
             var monthlyData = 
@@ -411,22 +433,25 @@
                         {
                         label: 'Heures justifiées',
                         data:  monthly_abs_just.value ,
-                        backgroundColor: ['rgb(78, 216, 36, 0.3)'],
-                        borderColor: [ 'rgb(78, 216, 36, 1)'],    
-                        borderWidth: 1
+                        backgroundColor: "#4c51bf",
+                        borderColor: "#4c51bf",    
+                        tension:0.5,
+                        borderWidth: 2,
+                        fill:false
                         },
                         { 
                         label: 'Heures Non justifiées',
                         data: monthly_abs_nj.value,
-                        backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-                        borderColor: ['rgba(255, 99, 132, 1)',],
-                        borderWidth: 1
+                        backgroundColor:"#fff",
+                        borderColor: "#fff",
+                        tension:0.5,
+                        borderWidth: 2
                         }
                     ]
             }
             var monthlyConfig=
             {
-                type:"bar",
+                type:"line",
                 data: monthlyData,
                 options: monthlyOptions
             }
@@ -438,7 +463,12 @@
 </script>
 
 <style scoped>
-    table,thead,tr,td,tbody{
+    /* table > *{
         border:1px solid black
+    } */
+    [v-cloak] {
+    display: none;
     }
 </style>
+
+

@@ -78,9 +78,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     });
 
     var getUser = function getUser(event) {
-      var id = event.target.title;
-      prompt("Voulez vraimment delet user id : " + id);
+      var id = event.target.title; // prompt("Voulez vraimment delet user id : "+id)
+
       deletUser(id);
+      getusers();
     };
     /* setInterval(getusers, 15000); */
 
@@ -341,13 +342,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _User_vue_vue_type_template_id_d884f594__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./User.vue?vue&type=template&id=d884f594 */ "./resources/js/components/User.vue?vue&type=template&id=d884f594");
 /* harmony import */ var _User_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./User.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/User.vue?vue&type=script&setup=true&lang=js");
-/* harmony import */ var C_Users_Hakim_Assim_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_Users_Hakim_Assim_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_User_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_User_vue_vue_type_template_id_d884f594__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/User.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_User_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_User_vue_vue_type_template_id_d884f594__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/User.vue"]])
 /* hot reload */
 if (false) {}
 

@@ -19,9 +19,14 @@ const router = createRouter({
           component: () => import('../components/Just.vue')
         },
         {
+          path: '/SearchByDate',
+          name: 'Recherche par Date',
+          component: () => import('../components/SearchByDate.vue')
+        },
+        {
           path: '/detail',
           name: 'details de class',
-          component: () => import('../components/Detail.vue')
+          component: () => import('../components/detail.vue')
         },
         {
           path: '/profile',
@@ -29,7 +34,7 @@ const router = createRouter({
           component: () => import('../components/Profile.vue')
         },
         {
-          path: '/user',
+          path: '/User',
           name: 'Update users',
           component: () => import('../components/User.vue')
         },
@@ -44,6 +49,12 @@ const router = createRouter({
           component: () => import('../components/Stagiaire.vue'),
           
         },
+        {
+          path: '/etatEdit',
+          name: 'Etat Edit',
+          component: () => import('../components/EtatEdit.vue')
+        },
+        
     ]
   })
   
