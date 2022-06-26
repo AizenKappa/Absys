@@ -30,8 +30,6 @@ Route::get('filieres/{id}', [FiliereController::class, 'getgroupes']);
 Route::get('groupes/{id}', [FiliereController::class, 'getstagiaires']);
 Route::get('profs/{id}', [FiliereController::class, 'getprofs']);
 Route::get('etats/{id}/{period}/{selected_period_debut}/{selected_period_fin}', [FiliereController::class, 'getetats']);
-Route::post('updateUser', [FiliereController::class, 'update_user']);
-Route::get('/users', [FiliereController::class, 'getusers']);
 
 
 
@@ -73,6 +71,8 @@ function monthAbs(Collection $type){
     return $result;
    
 }
+
+
 Route::get('stagiaire/{id}',function($id){
     $stag = Stagiaire::find($id);
     $absenceStag =Etat::with('prof')->where('stagiaire_id',$id)->get(); 

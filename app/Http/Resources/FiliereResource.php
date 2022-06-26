@@ -46,8 +46,10 @@ class FiliereResource extends JsonResource
                 'nom_st'=> $this->nom_st,
                 'prenom_st'=> $this->prenom_st,
                 'nom_gp'=> $nom_gp,
+                'num' => $this->numero_personnelle,
                 'Nj' => $sum,
-                'etat' => $etats
+                'etat' => $etats,
+                'status' => $this->status
             ];
         }
 

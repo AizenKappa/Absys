@@ -657,8 +657,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 function useFilieres() {
   var filieres = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
-  var groupes = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
-  var stagiaires = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
+  var groupes = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+  var stagiaires = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
   var profs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
   var etats = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
   var add_status = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
@@ -734,9 +734,10 @@ function useFilieres() {
               response = _context3.sent;
               stagiaires.value = response.data.data;
               nom_gp.value = stagiaires.value[0].nom_gp;
+              console.log(stagiaires.value);
               getprofs(groupe_id);
 
-            case 6:
+            case 7:
             case "end":
               return _context3.stop();
           }

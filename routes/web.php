@@ -23,50 +23,71 @@ use Intervention\Image\ImageManagerStatic as Image;
 |
 */
 
+Route::view('/user_info','login.user_info')->middleware('guest');
+Route::view('/pwd_reset','login.pwd_reset')->middleware("isvalidreset");
+
 Route::get('/',[SessionController::class,'create'])->middleware('guest');
 Route::post('/login',[SessionController::class,'store']);
 Route::get('/logout',[SessionController::class,'destroy']);
-
-Route::view('/user_info','login.user_info')->middleware('guest');
 Route::post('/check_user',[SessionController::class,'check']);
-
-Route::view('/pwd_reset','login.pwd_reset')->middleware("isvalidreset");
 Route::post('/pwd_reset',[SessionController::class,'reset']);
 
-Route::get('/home',[AbsysController::class,'index'])->middleware('auth');
-Route::view('/just','home')->middleware('auth');
+
+
+
+
+
+
+    /* Definition of Vue routes */
+Route::get('/home',function(){
+    return view('home');
+})->middleware('auth');
+
+Route::get('/just', function(){
+    return view('home');
+})->middleware('auth');
+
+
 Route::view('/add','home')->middleware('auth');
 Route::view('/detail','home')->middleware('auth');
-Route::view('/Profile','home')->middleware('auth');
 Route::view('/stagiaire/{id}',"home")->middleware('auth');
+
+
+
+
+
+    /*!!--Admin section --!!*/
+Route::view('/editUser/{id}',"home")->middleware('auth');
+Route::view('/Profile','home')->middleware('auth');
 Route::view('/User',"home")->middleware('auth');
+Route::view('/Estg',"home")->middleware('auth');
 Route::view('/addUser',"home")->middleware('auth');
 Route::view('/SearchByDate',"home")->middleware('auth');
 Route::view('/etatEdit',"home")->middleware('auth');
 
-Route::get('/user', [FiliereController::class, 'getuser']);
-Route::get('/user/{id}', [FiliereController::class, 'deletuser']);
-
-Route::post('/profile', [FiliereController::class, 'getprofile']);
-Route::get('/deletPicture', [FiliereController::class, 'deletPicture']);
-Route::post('/addNewUser', [FiliereController::class, 'addUser']);
-Route::get('/users', [FiliereController::class, 'getusers']);
 
 
-Route::get('/updateStatus', function (){
+
+    /* CRUD USER -----> */
+Route::post('/profile', [FiliereController::class, 'getprofile'])->middleware('auth');
+Route::get('/deletPicture', [FiliereController::class, 'deletPicture'])->middleware('auth');
+Route::get('/allUsers', [FiliereController::class, 'index_users'])->middleware('auth');
+Route::post('/userById', [FiliereController::class, 'userById'])->middleware('auth');
+Route::post('/addNewUser', [FiliereController::class, 'addUser'])->middleware('auth');
+Route::post('/editThisUser', [FiliereController::class, 'editThisUser'])->middleware('auth');
+Route::post('/updatePwdUser', [FiliereController::class, 'updatePwdUser'])->middleware('auth');
+Route::post('updateUser', [FiliereController::class, 'update_user'])->middleware('auth');
+Route::get('/allUsers/{id}', [FiliereController::class, 'deletuser'])->middleware('auth');
+Route::get('/authUser', [FiliereController::class, 'getAuthUser'])->middleware('auth');
+Route::get('/updateStatus', [FiliereController::class, 'updateStatus'])->middleware('auth');
+Route::post('/updateStagiaire', [FiliereController::class, 'update_stagiaire'])->middleware('auth');
 
 
-    if(Auth::check()){
-        $user = User::Find(Auth::user()->id);
-        $user->status = time()+10;
-        $user->save();
-    }
 
 
-});
 
 
-Route::get('/test',function(){
+/* Route::get('/test',function(){
 
     $result = collect([]);
     
@@ -81,7 +102,7 @@ Route::get('/test',function(){
     dd($result);
 
 
-});
+}); */
 
 
 

@@ -7,7 +7,7 @@
         <!-- -- SideBar -- -->
         <div v-if="dash" class="md:block md:h-screen md:w-[14rem] w-[96%] md:mx-0 mt-3 md:mt-0 bg-white md:overflow-y-scroll md:fixed fixed z-50">
             <div id="dashboard-header" class="flex justify-between mt-8 mb-10 mx-6">
-                <h1 class=" text-sm uppercase font-bold">Hello User</h1>
+                <h1 class=" text-sm uppercase font-bold">{{ fullName }}</h1>
                 <span @click="dash=false" class="w-8 h-8 flex justify-center text-lg rounded-sm items-center active:border-[3px] active:border-zinc-900 md:hidden cursor-pointer"><fas icon="xmark" /></span>
             </div>
             <!-- -- Caeds -- -->
@@ -69,7 +69,7 @@
     const title = ref(null)
     const route = useRoute();
     const imageUser = ref(false)
-    
+    const fullName = ref("")
 
     onBeforeMount(()=>{
         getuser()
@@ -96,8 +96,9 @@
         
     //get user image
     const getuser = async () =>{
-        let response = await axios.get(`/user`)
+        let response = await axios.get(`/authUser`)
         imageUser.value = response.data.image
+        fullName.value = response.data.firstname+' '+response.data.lastname
 
     };
 

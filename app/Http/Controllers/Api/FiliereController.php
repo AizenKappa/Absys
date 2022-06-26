@@ -42,13 +42,75 @@ class FiliereController extends Controller
         return FiliereResource::collection(Groupe::Find($request->id)->stagiaires);
     }
 
-    public function getusers()
+    public function index_users()
     {
 
         return FiliereResource::collection(User::all());
     }
 
-    public function deletuser(Request $request){
+    public function userById(Request $request) {
+
+        $user = User::Find($request->id) ;
+        return [
+            'user_id' => $user->id,
+            'cin' => $user->cin,
+            'email' => $user->email,
+            'firstname' => $user->firstname,
+            'lastname' => $user->lastname,
+        ];
+
+    }
+
+    public function editThisUser (Request $request){
+
+        $password = User::Find(Auth::user()->id)->password;
+
+        if (Hash::check($request->password, $password)){
+
+
+            $cin = $request->cin;
+            $email = $request->email;
+
+            if($cin != null){
+                $search1 = User::Where('cin',$cin)->count();
+                if($search1 > 0) { return ['champ' => 'cin' ,'message' => 'Cin existe déja']; }
+            }else{
+                $cin = User::Find($request->id)->cin;
+            }
+
+
+            if($email != null){
+                $search2 = User::Where('email',$request->email)->count();
+                if($search2 > 0) { return ['champ' => 'email' ,'message' => 'Cet E-mail déja existe']; }
+            }else{
+                $email = User::Find($request->id)->email;
+            }
+            
+
+                User::Find($request->id)->update([
+                    'firstname' => $request->first,
+                    'lastname' => $request->last,
+                    'cin' => $cin,
+                    'email' => $email
+                ]);
+
+            
+            return [
+                'message' => 'user edited successe'
+                
+            ];
+        }else{
+
+            return [
+                'champ' => 'password',
+                'message' => 'Incorrecte mot de passe'
+                
+            ];
+        }
+    }
+
+    public function deletuser(Request $request)
+    {
         
 
         User::Find($request->id)
@@ -59,6 +121,28 @@ class FiliereController extends Controller
         ];
     }
 
+    public function updatePwdUser(Request $request) {
+
+        $password = User::Find(Auth::user()->id)->password;
+
+        if (Hash::check($request->authPwd, $password)){
+
+            User::Find($request->id)
+            ->password = $request->password;
+
+            return [
+                'message' => 'Password updated successefuly'
+            ];
+        }else{
+
+            return [
+                'champ' => 'password',
+                'message' => 'Incorrecte mot de passe'
+                
+            ];
+
+        }
+    }
 
     public function getprofs(Request $request)
     {
@@ -189,6 +273,25 @@ class FiliereController extends Controller
       
     }
 
+
+    public function updateStatus(){
+        if(Auth::check()){
+            $user = User::Find(Auth::user()->id);
+            $user->status = time()+10;
+            $user->save();
+        }
+    }
+
+    public function update_stagiaire(Request $request) {
+
+        
+        Stagiaire::Find($request->id)->update([
+            'nom_st' => $request->first,
+            'prenom_st' => $request->last,
+            'status' => $request->status,
+            'numero_personnelle' => $request->num
+        ]);
+    }
     
 
     public function addJustif(Request $request)
@@ -201,7 +304,7 @@ class FiliereController extends Controller
        Etat::whereIn('id',$absences_ids)->update(['etat_justif' => 'J','motif' => $motif]);
     }
 
-    public function getuser()
+    public function getAuthUser()
     {
         $user = User::Find(Auth::id()) ;
         return [
@@ -210,13 +313,15 @@ class FiliereController extends Controller
             'email' => $user->email,
             'firstname' => $user->firstname,
             'lastname' => $user->lastname,
+            'role' => $user->role,
             'image' => asset('images/'. $user->picture_path )
         ];
         
     }
     
 
-    public function deletPicture(){
+    public function deletPicture()
+    {
 
         $user = User::Find(Auth::id()) ;
 
@@ -294,27 +399,51 @@ class FiliereController extends Controller
                 'message' => 'update_successed',
             ];
 
-        }else{ return ['champ' => 'password', 'message' => 'wrong password']; }
+        }else{ 
+            return [
+                'champ' => 'password', 
+                'message' => 'wrong password'
+            ]; }
        
     }
 
-    public function addUser(Request $request){
+    public function addUser(Request $request)
+    {   
 
-        $user = new User;
-        $user->firstname =  $request->first;
-        $user->lastname =  $request->last;
-        $user->cin =  $request->cin;
-        $user->email =  $request->email;
-        $user->password =  $request->pwd;
-        $user->save();
 
-        
-        return [
-            'message' => 'user added successe'
+            $password = User::Find(Auth::user()->id)->password;
+
+            if (Hash::check($request->curpwd , $password)){
             
-        ];
-        
+            
+            $search1 = User::Where('email',$request->email)->count();
+            if($search1 > 0) { return ['champ' => 'email' ,'message' => 'Cet E-mail déja existe']; }
+
+
+            $search2 = User::Where('cin',$request->cin)->count();
+            if($search2 > 0) { return ['champ' => 'cin' ,'message' => 'Cin existe déja']; }
+            
+
+            $user = new User;
+            $user->firstname =  $request->first;
+            $user->lastname =  $request->last;
+            $user->cin =  $request->cin;
+            $user->email =  $request->email;
+            $user->password =  $request->pwd;
+            $user->save();
+
+            return [
+                'message' => 'user added successe'
+                
+            ];
+        }else{
+            return [ 
+                'champ' => 'password' ,
+                'message' => 'Incorrecte mot de passe'
+            ];
+        }
     }
+    
 
 }
 /* About carbon */

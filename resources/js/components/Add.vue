@@ -66,7 +66,7 @@
             </div>
             </div>
             </div>
-        </div>          
+        </div>       
 
     <!-- Aboute absence -->
         <div v-if="nom_gp != null" class="w-full grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 place-items-center gap-y-8">
@@ -107,6 +107,7 @@
         <div v-if="add_status == 200">
             Succssed
         </div>
+        
 </section>
 </template>
 

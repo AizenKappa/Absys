@@ -40,11 +40,12 @@
 
     <!-- --second card -->
 
+        <template v-if="adminSection">
 
-        <div class="card">
-            <hr class="px-16 my-5 mt-7">
-            <h2 class="px-6 mb-4 text-gray-500 text-xs uppercase font-bold ">Admin section</h2>
-            <div class="grid gap-5 px-6 text-gray-400">
+            <div class="card">
+                <hr class="px-16 my-5 mt-7">
+                <h2 class="px-6 mb-4 text-gray-500 text-xs uppercase font-bold ">Admin section</h2>
+                <div class="grid gap-5 px-6 text-gray-400">
 
                 <router-link to="/User" @click="$emit('update:modelValue',check())">
                     <fas icon="user-graduate" />
@@ -56,13 +57,22 @@
                     <span>Edit Absence</span>
                 </router-link>
 
-                <a href="#">ABORT EDU</a>
+                    <router-link to="/Estg" @click="$emit('update:modelValue',check())">
+                        <fas icon="user-graduate" />
+                        <span>Update Stagiaiare</span>
+                    </router-link>
+                    
+                    <a href="#">ABORT EDU</a>
 
-                <a href="#">ABORT EDU</a>
-  
+                    <a href="#">ABORT EDU</a>
 
+                    <a href="#">ABORT EDU</a>
+    
+
+                </div>
             </div>
-        </div>
+
+        </template>
 
 
         
@@ -70,14 +80,35 @@
 </template>
 
 <script setup>
+
+    import { ref, onBeforeMount } from 'vue';
+    import axios from "axios";
+
     defineProps(['modelValue'])
     defineEmits(['update:modelValue'])
+    
+    const adminSection = ref(false)
+
+
+    const getuser = async () =>{
+        let response = await axios.get(`/authUser`)
+
+        if(response.data.role === "admin"){
+            adminSection.value = true
+        }
+
+    };
+
+    onBeforeMount(() => {
+        getuser()
+    })
 
     const check = () => {
         var stmt = null
         window.innerWidth > 767 ? stmt = true : stmt =false
         return stmt
     }
+
 </script>
 
 
