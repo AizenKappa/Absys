@@ -56,9 +56,9 @@ const router = createRouter({
           
         },
         {
-          path: '/etatEdit',
+          path: '/editEtat',
           name: 'Etat Edit',
-          component: () => import('../components/EtatEdit.vue')
+          component: () => import('../components/Admin/editEtat.vue')
         },
         { path: '/Estg',
           name: 'Update stagiares',

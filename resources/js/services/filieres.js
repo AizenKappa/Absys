@@ -52,13 +52,13 @@ export default function useFilieres(){
         console.log(etats)
     };
 
-    const addAbsence = (st_ids,prof_id,periode,seance,date_abs,reset) => {
+    const addAbsence = (st_ids,prof_id,duration_id,seance,date_abs,reset) => {
         // send a POST request
-        
+        console.log(duration_id)
         axios.post('/api/addAbsence', {
             stagiaire_ids:st_ids,
             prof_id: prof_id,
-            absenceDuration:periode,
+            duration_id:duration_id,
             seance:seance,
             date_abs:date_abs
         }).then((response) => {

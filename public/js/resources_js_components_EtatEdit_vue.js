@@ -37,58 +37,280 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var allGroupes = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
     var data = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
     var allAbs = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var allDurations = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
     /* End raw data */
 
+    var currentEtatList = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
     var selectedGroupe = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)("none");
     var currentGroupe = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
     var fillWithAbs = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var currentStList = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var currentProfs = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var currentEtat = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
+    var absenceRefs = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var stag = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var date_abs = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var prof = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var duration = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var seance = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var etat_jusitf = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var motif = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var currentAbsInfo = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({
+      id: null,
+      stagiaire_id: null,
+      prof_id: null,
+      duration_id: null,
+      date_abs: null,
+      seance: null,
+      etat_justif: null,
+      motif: null
+    });
+    var saveBtn = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var editBtn = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var deleteBtn = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    /* current Edit */
+
+    var editMode = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(false);
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
       getData();
     });
 
-    function getData() {
-      return _getData.apply(this, arguments);
+    function updateEtat(abs_id, index) {
+      editBtn.value.forEach(function (ele) {
+        ele.disabled = false;
+      });
+      saveBtn.value.forEach(function (ele) {
+        ele.disabled = false;
+      });
+      deleteBtn.value.forEach(function (ele) {
+        ele.disabled = false;
+      });
+      editBtn.value[index].classList.toggle("hidden");
+      deleteBtn.value[index].classList.toggle("hidden");
+      saveBtn.value[index].classList.toggle("hidden");
+      editMode.value = false;
+      currentEtat.value = null;
+      console.log(stag.value[index].value);
+
+      if (stag.value[index].value != currentAbsInfo.value.stagiaire_id || date_abs.value[index].value != currentAbsInfo.value.date_abs || prof.value[index].value != currentAbsInfo.value.prof_id || duration.value[index].value != currentAbsInfo.value.duration_id || seance.value[index].value != currentAbsInfo.value.seance || etat_jusitf.value[index].value != currentAbsInfo.value.etat_justif || motif.value[index].value != currentAbsInfo.value.motif) {
+        console.log("something has Changed");
+        if (allAbs.value[index].motif) allAbs.value[index].motif = motif.value[index].value;
+        sendUpdateRequest(abs_id, stag.value[index].value, prof.value[index].value, duration.value[index].value, date_abs.value[index].value, seance.value[index].value, etat_jusitf.value[index].value, motif.value[index].value);
+      } else {
+        console.log("no changes");
+      }
     }
 
-    function _getData() {
-      _getData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+    function sendUpdateRequest(_x, _x2, _x3, _x4, _x5, _x6, _x7, _x8) {
+      return _sendUpdateRequest.apply(this, arguments);
+    }
+
+    function _sendUpdateRequest() {
+      _sendUpdateRequest = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(abs_id, stagiaire_id, prof_id, duration_id, date_abs, seance, etat_justif, motif) {
         var response;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default()("/api/etatFil");
+                return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/updateEtat", {
+                  id: abs_id,
+                  stagiaire_id: stagiaire_id,
+                  prof_id: prof_id,
+                  duration_id: duration_id,
+                  date_abs: date_abs,
+                  seance: seance,
+                  etat_justif: etat_justif,
+                  motif: motif
+                });
 
               case 2:
                 response = _context.sent;
-                data.value = response.data;
-                allFilWithGroupes.value = data.value.allFilWithGroupes;
-                fillWithAbs.value = data.value.fillWithAbs;
-                allGroupes.value = data.value.allGroupes;
-                allAbs.value = data.value.allAbs;
-                console.log(data.value); // gpSelect()
+                console.log(response);
 
-              case 9:
+              case 4:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
       }));
+      return _sendUpdateRequest.apply(this, arguments);
+    }
+
+    function getData() {
       return _getData.apply(this, arguments);
     }
 
-    function gpSelect() {
+    function _getData() {
+      _getData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default()("/api/etatFil");
+
+              case 2:
+                response = _context2.sent;
+                data.value = response.data;
+                allFilWithGroupes.value = data.value.allFilWithGroupes;
+                fillWithAbs.value = data.value.fillWithAbs;
+                allGroupes.value = data.value.allGroupes;
+                allAbs.value = data.value.allAbs;
+                currentEtatList.value = allAbs.value;
+                allDurations.value = data.value.allDurations;
+                console.log(data.value); // gpSelect()
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+      return _getData.apply(this, arguments);
+    }
+
+    function getInfo(_x9, _x10, _x11) {
+      return _getInfo.apply(this, arguments);
+    }
+
+    function _getInfo() {
+      _getInfo = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(groupe_id, abs_id, index) {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                editBtn.value.forEach(function (ele, ind) {
+                  if (index != ind) {
+                    ele.disabled = true;
+                  }
+                });
+                saveBtn.value.forEach(function (ele, ind) {
+                  if (index != ind) {
+                    ele.disabled = true;
+                  }
+                });
+                deleteBtn.value.forEach(function (ele, ind) {
+                  if (index != ind) {
+                    ele.disabled = true;
+                  }
+                });
+                editBtn.value[index].classList.toggle("hidden");
+                saveBtn.value[index].classList.toggle("hidden");
+                deleteBtn.value[index].classList.toggle("hidden");
+                editMode.value = true;
+
+                if (!(currentEtat.value != index)) {
+                  _context3.next = 14;
+                  break;
+                }
+
+                console.log(groupe_id);
+                currentEtat.value = index;
+                _context3.next = 12;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default().post("api/getSome", {
+                  "groupe_id": groupe_id,
+                  "abs_id": abs_id
+                }).then(function (response) {
+                  console.log(response.data);
+                  currentStList.value = response.data.Stagiaires;
+                  currentProfs.value = response.data.Profs;
+                  currentAbsInfo.value.id = abs_id;
+                  currentAbsInfo.value.stagiaire_id = stag.value[index].value;
+                  currentAbsInfo.value.prof_id = prof.value[index].value;
+                  currentAbsInfo.value.duration_id = duration.value[index].value;
+                  currentAbsInfo.value.date_abs = date_abs.value[index].value;
+                  currentAbsInfo.value.seance = seance.value[index].value;
+                  currentAbsInfo.value.etat_justif = etat_jusitf.value[index].value;
+                  currentAbsInfo.value.motif = motif.value[index].value;
+                });
+
+              case 12:
+                _context3.next = 15;
+                break;
+
+              case 14:
+                console.log("you can' send a Request ");
+
+              case 15:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+      return _getInfo.apply(this, arguments);
+    }
+
+    function deleteEtat(_x12, _x13) {
+      return _deleteEtat.apply(this, arguments);
+    }
+
+    function _deleteEtat() {
+      _deleteEtat = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(abs_id, index) {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/deleteEtat", {
+                  id: abs_id
+                });
+
+              case 2:
+                response = _context4.sent;
+                console.log(response.data);
+                currentEtatList.value = currentEtatList.value.filter(function (ele, ind) {
+                  return ind != index;
+                });
+                editBtn.value.forEach(function (ele) {
+                  ele.disabled = false;
+                });
+                saveBtn.value.forEach(function (ele) {
+                  ele.disabled = false;
+                });
+                deleteBtn.value.forEach(function (ele) {
+                  ele.disabled = false;
+                });
+                editBtn.value[index].classList.toggle("hidden");
+                deleteBtn.value[index].classList.toggle("hidden");
+                saveBtn.value[index].classList.toggle("hidden");
+                editMode.value = false;
+                currentEtat.value = null;
+
+              case 13:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+      return _deleteEtat.apply(this, arguments);
+    }
+
+    function changeFil() {
+      selectedGroupe.value = "none";
+
       if (selectedFil.value != "all") {
-        currentGroupe.value = allFilWithGroupes.value[selectedFil.value].groupes;
+        currentGroupe.value = allFilWithGroupes.value[selectedFil.value - 1].groupes;
+        currentEtatList.value = allAbs.value.filter(function (ele) {
+          return ele.stagiaire.groupe.filiere_id == selectedFil.value;
+        });
+      } else {}
+    }
+
+    function changeGp() {
+      if (selectedFil.value == "all") {
         selectedGroupe.value = "none";
       } else {
-        currentGroupe.value = [];
-        selectedFil.value = "all";
+        currentEtatList.value = allAbs.value.filter(function (ele) {
+          return ele.stagiaire.groupe_id == selectedGroupe.value;
+        });
       }
-
-      console.log(currentGroupe.value);
     }
 
     var __returned__ = {
@@ -98,11 +320,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       allGroupes: allGroupes,
       data: data,
       allAbs: allAbs,
+      allDurations: allDurations,
+      currentEtatList: currentEtatList,
       selectedGroupe: selectedGroupe,
       currentGroupe: currentGroupe,
       fillWithAbs: fillWithAbs,
+      currentStList: currentStList,
+      currentProfs: currentProfs,
+      currentEtat: currentEtat,
+      absenceRefs: absenceRefs,
+      stag: stag,
+      date_abs: date_abs,
+      prof: prof,
+      duration: duration,
+      seance: seance,
+      etat_jusitf: etat_jusitf,
+      motif: motif,
+      currentAbsInfo: currentAbsInfo,
+      saveBtn: saveBtn,
+      editBtn: editBtn,
+      deleteBtn: deleteBtn,
+      editMode: editMode,
+      updateEtat: updateEtat,
+      sendUpdateRequest: sendUpdateRequest,
       getData: getData,
-      gpSelect: gpSelect,
+      getInfo: getInfo,
+      deleteEtat: deleteEtat,
+      changeFil: changeFil,
+      changeGp: changeGp,
       axios: (axios__WEBPACK_IMPORTED_MODULE_0___default()),
       onMounted: vue__WEBPACK_IMPORTED_MODULE_1__.onMounted,
       ref: vue__WEBPACK_IMPORTED_MODULE_1__.ref
@@ -135,7 +380,9 @@ var _withScopeId = function _withScopeId(n) {
 };
 
 var _hoisted_1 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, "Let's edit an Etat", -1
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text"
+  }, null, -1
   /* HOISTED */
   );
 });
@@ -171,27 +418,114 @@ var _hoisted_7 = {
   "class": "hidden",
   selected: ""
 };
+var _hoisted_8 = {
+  "class": "w-full text-sm text-left text-gray-500 dark:text-gray-400"
+};
 
-var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "nom"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "prenom"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "date_abs"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "h_debut"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "h_fin"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "prof"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "type seance"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "etat_justif"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "motif"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Edit")], -1
+var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", {
+    "class": "text-xs text-white uppercase bg-sky-600"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    scope: "col",
+    "class": "px-6 py-3"
+  }, " Nom Complet "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    scope: "col",
+    "class": "px-6 py-3"
+  }, " Date "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    scope: "col",
+    "class": "px-6 py-3"
+  }, " Formateur "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    scope: "col",
+    "class": "px-6 py-3"
+  }, " Durée "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    scope: "col",
+    "class": "px-6 py-3"
+  }, " Type "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    scope: "col",
+    "class": "px-6 py-3"
+  }, " Etat "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    scope: "col",
+    "class": "px-6 py-3"
+  }, " motif "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    scope: "col",
+    "class": "px-6 py-3"
+  }, " Edit ")])], -1
   /* HOISTED */
   );
 });
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Edit");
+var _hoisted_10 = ["disabled"];
+var _hoisted_11 = ["value"];
+var _hoisted_12 = ["value"];
+var _hoisted_13 = ["disabled", "value"];
+var _hoisted_14 = ["disabled"];
+var _hoisted_15 = ["value"];
+var _hoisted_16 = ["value"];
+var _hoisted_17 = ["disabled"];
+var _hoisted_18 = ["value"];
+var _hoisted_19 = ["value"];
+var _hoisted_20 = ["disabled"];
+var _hoisted_21 = {
+  "class": "hidden",
+  selected: ""
+};
 
+var _hoisted_22 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+    value: "Presentiel"
+  }, "Presentiel", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_23 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+    value: "distanciel"
+  }, "Distanciel", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("> ");
+
+var _hoisted_25 = ["disabled"];
+var _hoisted_26 = {
+  "class": "hidden",
+  selected: ""
+};
+
+var _hoisted_27 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+    value: "NJ"
+  }, "NJ", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_28 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+    value: "J"
+  }, "J", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("> ");
+
+var _hoisted_30 = ["disabled", "value"];
+var _hoisted_31 = ["onClick"];
+var _hoisted_32 = ["onClick"];
+var _hoisted_33 = ["onClick"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": "w-full font-medium h-[2rem]",
-    onChange: $setup.gpSelect,
+    onChange: $setup.changeFil,
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $setup.selectedFil = $event;
     })
   }, [_hoisted_3, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.allFilWithGroupes, function (fil, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
-      value: index,
+      value: fil.id,
       key: fil.id
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fil.nom_fil), 9
     /* TEXT, PROPS */
@@ -200,11 +534,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   ))], 544
   /* HYDRATE_EVENTS, NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.selectedFil]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.selectedFil]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <nav v-if=\"selectedFil!='all'\" class=\"w-full bg-white px-4 py-5\">\r\n        <div class=\"grid-cols-3 bg-slate-100 lg:scale-100 scale-75 rounded-lg grid sm:grid-cols-5 border-4 border-slate-100\">\r\n            <a\r\n            v-for=\"groupe in currentGroupe \"\r\n            :title=\"groupe.id\"\r\n            @click=\"check\" \r\n            class=\"p-5 cursor-pointer bg-slate-100 text-center border-b-4 border-transparent\" :key=\"groupe.id\">{{groupe.nom_gp}}</a>\r\n        </div>\r\n    </nav> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $setup.selectedGroupe = $event;
     }),
-    onChange: $setup.gpSelect
+    onChange: $setup.changeGp
   }, [$setup.selectedFil != 'all' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     key: 0
   }, [_hoisted_5, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.currentGroupe, function (groupe) {
@@ -219,41 +553,140 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* STABLE_FRAGMENT */
   )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", _hoisted_7, "You need to choose a Class "))], 544
   /* HYDRATE_EVENTS, NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.selectedGroupe]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" {{allFilWithGroupes[selectedFil]}} "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", null, [_hoisted_8, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.allAbs, function (abs) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(abs.stagiaire.nom_st), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(abs.stagiaire.prenom_st), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(abs.date_abs), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(abs.h_debut), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(abs.h_fin), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(abs.prof.nom_prof), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(abs.seance), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(abs.etat_justif), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(abs.motif), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.selectedGroupe]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" {{allFilWithGroupes[selectedFil]}} "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.currentEtatList, function (abs, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
       ref_for: true,
-      ref: ""
-    }, {
-      "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [_hoisted_9];
-      }),
-      _: 1
-      /* STABLE */
-
-    }, 512
-    /* NEED_PATCH */
-    )])]);
-  }), 256
-  /* UNKEYED_FRAGMENT */
-  ))])], 64
+      ref: "absenceRefs",
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["bg-white border-b select-none", abs.etat_jusitf == 'NJ' ? ' bg-red-100' : '']),
+      key: index
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+      ref_for: true,
+      ref: "stag",
+      disabled: index == $setup.currentEtat ? false : true
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+      value: abs.stagiaire_id,
+      selected: ""
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(abs.stagiaire.nom_st + " " + abs.stagiaire.prenom_st), 9
+    /* TEXT, PROPS */
+    , _hoisted_11), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.currentStList, function (st) {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+        value: st.id,
+        key: st.id
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(st.nom_st + " " + st.prenom_st), 9
+      /* TEXT, PROPS */
+      , _hoisted_12)), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, st.id != abs.stagiaire_id]]);
+    }), 128
+    /* KEYED_FRAGMENT */
+    ))], 8
+    /* PROPS */
+    , _hoisted_10)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      ref_for: true,
+      ref: "date_abs",
+      disabled: index == $setup.currentEtat ? false : true,
+      type: "date",
+      value: abs.date_abs
+    }, null, 8
+    /* PROPS */
+    , _hoisted_13)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+      ref_for: true,
+      ref: "prof",
+      disabled: index == $setup.currentEtat ? false : true
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+      value: abs.prof_id,
+      selected: ""
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(abs.prof.nom_prof), 9
+    /* TEXT, PROPS */
+    , _hoisted_15), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.currentProfs, function (prof) {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+        value: prof.id,
+        key: prof.id
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(prof.nom_prof), 9
+      /* TEXT, PROPS */
+      , _hoisted_16)), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, prof.id != abs.prof_id]]);
+    }), 128
+    /* KEYED_FRAGMENT */
+    ))], 8
+    /* PROPS */
+    , _hoisted_14)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+      ref_for: true,
+      ref: "duration",
+      disabled: index == $setup.currentEtat ? false : true,
+      name: "absenceDuration",
+      "class": "w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+      value: abs.duration_id
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(abs.duration.title), 9
+    /* TEXT, PROPS */
+    , _hoisted_18), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.allDurations, function (duration) {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+        value: duration.id,
+        key: duration.id
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(duration.title), 9
+      /* TEXT, PROPS */
+      , _hoisted_19)), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, duration.id != abs.duration_id]]);
+    }), 128
+    /* KEYED_FRAGMENT */
+    ))], 8
+    /* PROPS */
+    , _hoisted_17)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+      ref_for: true,
+      ref: "seance",
+      disabled: index == $setup.currentEtat ? false : true
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(abs.seance), 1
+    /* TEXT */
+    ), _hoisted_22, _hoisted_23, _hoisted_24], 8
+    /* PROPS */
+    , _hoisted_20)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+      ref_for: true,
+      ref: "etat_jusitf",
+      disabled: index == $setup.currentEtat ? false : true
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(abs.etat_justif), 1
+    /* TEXT */
+    ), _hoisted_27, _hoisted_28, _hoisted_29], 8
+    /* PROPS */
+    , _hoisted_25)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      ref_for: true,
+      ref: "motif",
+      disabled: index == $setup.currentEtat ? false : true,
+      type: "text",
+      "class": "bg-transparent px-2 h-9 focus:outline-cyan-500",
+      value: abs.motif,
+      size: "6"
+    }, null, 8
+    /* PROPS */
+    , _hoisted_30)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      ref_for: true,
+      ref: "editBtn",
+      "class": "w-8 cursor-pointer text-blue-600 hover:underline",
+      onClick: function onClick($event) {
+        return $setup.getInfo(abs.stagiaire.groupe_id, abs.id, index);
+      }
+    }, "Edit", 8
+    /* PROPS */
+    , _hoisted_31), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      ref_for: true,
+      ref: "saveBtn",
+      "class": "hidden cursor-pointer text-green-600 hover:underline",
+      onClick: function onClick($event) {
+        return $setup.updateEtat(abs.id, index);
+      }
+    }, "Save", 8
+    /* PROPS */
+    , _hoisted_32), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      ref_for: true,
+      ref: "deleteBtn",
+      "class": "hidden cursor-pointer text-red-600 hover:underline",
+      onClick: function onClick($event) {
+        return $setup.deleteEtat(abs.id, index);
+      }
+    }, "Delete", 8
+    /* PROPS */
+    , _hoisted_33)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <td class=\"px-6 py-4\">\r\n                    <input :disabled = \"true\" class=\"bg-transparent px-2 h-9 focus:outline-cyan-500\" type=\"text\" :value=\"abs.stagiaire.prenom_st \">\r\n                </td>\r\n                <td class=\"px-6 py-4\">\r\n                    <input :disabled = \"true\" class=\"bg-transparent px-2 h-9 focus:outline-cyan-500\" type=\"text\" :value=\" st.num\">\r\n                </td>\r\n                <td class=\"px-6 py-4 text-left font-medium\">\r\n                    <select :disabled = \"true\" class=\"py-2 px-1\">\r\n                        <option class=\"hidden\" selected>{{ st.status }}</option>\r\n                        <option>Active</option>\r\n                        <option>Abondonné</option>\r\n\r\n                    </select>\r\n                </td>\r\n                <td class=\"px-6 py-4 text-left font-medium\">\r\n                    <div @click=\"editThis\" class=\"w-8 cursor-pointer text-blue-600 hover:underline\">Edit</div>\r\n                    <div :id=\"st.id\" @click=\"saveThis\" class=\"w-8 cursor-pointer text-green-600 hover:underline hidden\">Save</div>\r\n                </td> ")], 2
+    /* CLASS */
+    );
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])])], 64
   /* STABLE_FRAGMENT */
   );
 }

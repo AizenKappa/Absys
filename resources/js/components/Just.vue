@@ -59,7 +59,7 @@
                                 </td>
                                     <td class="p-2 whitespace-nowrap">
                                     <div>
-                                       {{ st.Nj }}
+                                       {{ st.Nj+" h" }}
                                     </div>
                                 </td>
                             </tr>
@@ -122,13 +122,13 @@
                                     <div class="text-left">{{item.date_abs}}</div>
                                 </td>
                                 <td class="p-2 whitespace-nowrap">
-                                    <div class="text-left">{{item.h_debut}}</div>
+                                    <div class="text-left">{{item.duration.h_debut}}</div>
                                 </td>
                                 <td class="p-2 whitespace-nowrap">
-                                    <div class="text-left">{{item.h_fin}}</div>
+                                    <div class="text-left">{{item.duration.h_fin}}</div>
                                 </td>
                                 <td class="p-2 whitespace-nowrap">
-                                    <div class="text-left">{{ getProfName(item.prof_id) }}</div>
+                                    <div class="text-left">{{item.prof.nom_prof }}</div>
                                 </td>
                                 <td class="p-2 whitespace-nowrap">
                                     <div class="text-left">{{item.seance}}</div>

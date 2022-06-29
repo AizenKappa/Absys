@@ -34,8 +34,8 @@ class FiliereResource extends JsonResource
             $etats = Etat::Where('stagiaire_id',$this->id)->get()->where('etat_justif','NJ');
             $sum = 0;
             foreach($etats as $etat){
-                $startTime = Carbon::parse($etat->h_debut);
-                $finishTime = Carbon::parse($etat->h_fin);
+                $startTime = Carbon::parse($etat->duration->h_debut);
+                $finishTime = Carbon::parse($etat->duration->h_fin);
 
                 $sum += $finishTime->diffInMinutes($startTime)/60;
 

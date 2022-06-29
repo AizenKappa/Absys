@@ -12,7 +12,7 @@ class Etat extends Model
     protected $guarded = [];
 
 
-    protected $with = ['prof'];
+    protected $with = ['prof','duration'];
     public function stagiaire()
     {
         return $this->belongsTo(Stagiaire::class);
@@ -21,6 +21,10 @@ class Etat extends Model
     public function prof()
     {
         return $this->belongsTo(Prof::class);
+    }
+    public function duration()
+    {
+        return $this->belongsTo(Duration::class);
     }
     /* Etat::with('stagiaire','stagiaire.groupe')->first()->stagiaire->groupe->filiere_id */
 }

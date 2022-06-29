@@ -541,12 +541,13 @@ function useFilieres() {
     };
   }();
 
-  var addAbsence = function addAbsence(st_ids, prof_id, periode, seance, date_abs, reset) {
+  var addAbsence = function addAbsence(st_ids, prof_id, duration_id, seance, date_abs, reset) {
     // send a POST request
+    console.log(duration_id);
     axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/addAbsence', {
       stagiaire_ids: st_ids,
       prof_id: prof_id,
-      absenceDuration: periode,
+      duration_id: duration_id,
       seance: seance,
       date_abs: date_abs
     }).then(function (response) {

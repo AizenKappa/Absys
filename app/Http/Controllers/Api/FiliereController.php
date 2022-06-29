@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FiliereResource;
+use App\Models\Duration;
 use App\Models\Etat;
 use App\Models\Filiere;
 use App\Models\Groupe;
@@ -215,61 +216,30 @@ class FiliereController extends Controller
 
         $stagiaire_ids = $request->stagiaire_ids;
         $prof_id = $request->prof_id;
-        $absenceDuration = $request->absenceDuration;
+        $duration_id = $request->duration_id;
         $seance = $request->seance;
         $date_abs = $request->date_abs;
-        $h_debut = '';
-        $h_fin = '';
-        $t1 = "08:30:00";
-        $t2 = "11:00:00";
-        $t3 = "13:30:00";
-        $t4 = "16:00:00";
-        $t5 = "18:30:00";
-        $seanceTotal = 0;
-        if ($absenceDuration == "allDay") {
-            $h_debut = $t1;
-            $h_fin  = $t5;
-            $seanceTotal = 10;
-        } else if ($absenceDuration == "matin") {
-            $h_debut = $t1;
-            $h_fin  = $t3;
-            $seanceTotal = 5;
-        } else if ($absenceDuration == "midi") {
-            $h_debut = $t3;
-            $h_fin  = $t5;
-            $seanceTotal = 5;
-        } else if ($absenceDuration == "seance-1") {
-            $h_debut = $t1;
-            $h_fin  = $t2;
-            $seanceTotal = 2.5;
-        } else if ($absenceDuration == "seance-2") {
-            $h_debut = $t2;
-            $h_fin  = $t3;
-            $seanceTotal = 2.5;
-        } else if ($absenceDuration == "seance-3") {
-            $h_debut = $t3;
-            $h_fin  = $t4;
-            $seanceTotal = 2.5;
-        } else if ($absenceDuration == "seance-4") {
-            $h_debut = $t4;
-            $h_fin  = $t5;
-            $seanceTotal = 2.5;
-        }
-        // ?? Carbon::now()
+       
+        $dura = Duration::find($duration_id);
+       
+        $startTime = Carbon::parse($dura->h_debut);
+        $endTime = Carbon::parse($dura->h_fin);
+        $hours = $endTime->diffInMinutes($startTime)/60;
         foreach ($stagiaire_ids as $v) {
             Etat::create([
                 "stagiaire_id" => $v,
                 "prof_id" => $prof_id,
                 "date_abs" =>$date_abs ?? Carbon::now() ,
-                "h_debut" => $h_debut,
-                "h_fin" => $h_fin,
+                "duration_id"=>$duration_id,
                 "seance" => $seance
             ]);
             
             $currentAbsence = Stagiaire::find($v)->heure_absence_st;
     
-            Stagiaire::Where('id', $v)->update(['heure_absence_st' => ($currentAbsence + $seanceTotal)]);
+            Stagiaire::Where('id', $v)->update(['heure_absence_st' => ($currentAbsence + $hours)]);
         }
+
+        return "This is Working ";
       
     }
 

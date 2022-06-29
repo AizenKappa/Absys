@@ -63,7 +63,7 @@ Route::view('/User',"home")->middleware('auth');
 Route::view('/Estg',"home")->middleware('auth');
 Route::view('/addUser',"home")->middleware('auth');
 Route::view('/SearchByDate',"home")->middleware('auth');
-Route::view('/etatEdit',"home")->middleware('auth');
+Route::view('/editEtat',"home")->middleware('auth');
 
 
 

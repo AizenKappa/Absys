@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\FiliereController;
+use App\Models\Duration;
 use App\Models\Etat;
 use App\Models\Filiere;
 use App\Models\Groupe;
@@ -62,8 +63,8 @@ function monthAbs(Collection $type){
         [$month.'-01',$month.'-31']);
         $oneMonthAbs = 0;
         foreach($thisMonthAbs as $k ){
-            $startTime = Carbon::parse($k['h_debut']);
-            $endTime = Carbon::parse($k['h_fin']);
+            $startTime = Carbon::parse($k->duration['h_debut']);
+            $endTime = Carbon::parse($k->duration['h_fin']);
             $oneMonthAbs += $endTime->diffInMinutes($startTime)/60;
         }
         array_push($result,$oneMonthAbs);
@@ -75,7 +76,8 @@ function monthAbs(Collection $type){
 
 Route::get('stagiaire/{id}',function($id){
     $stag = Stagiaire::find($id);
-    $absenceStag =Etat::with('prof')->where('stagiaire_id',$id)->get(); 
+    $absenceStag =Etat::where('stagiaire_id',$id)->get(); 
+    
     $groupe_id = $stag->groupe_id;
     $gr = Groupe::find($groupe_id);
     $groupe_name = $gr->nom_gp;
@@ -90,16 +92,16 @@ Route::get('stagiaire/{id}',function($id){
     $absence_just =  $absenceStag->where('etat_justif','J');
 
     foreach($absence_just as $k){
-        $startTime = Carbon::parse($k['h_debut']);
-        $endTime = Carbon::parse($k['h_fin']);
+        $startTime = Carbon::parse($k->duration['h_debut']);
+        $endTime = Carbon::parse($k->duration['h_fin']);
         $k["nbAbs"] = $endTime->diffInMinutes($startTime)/60;
          
     }
     
     $absence_nj =  $absenceStag->where('etat_justif','NJ');
     foreach($absence_nj as $k){
-        $startTime = Carbon::parse($k['h_debut']);
-        $endTime = Carbon::parse($k['h_fin']);
+        $startTime = Carbon::parse($k->duration['h_debut']);
+        $endTime = Carbon::parse($k->duration['h_fin']);
         $k["nbAbs"] = $endTime->diffInMinutes($startTime)/60;
          
     }
@@ -127,13 +129,13 @@ $absProf = collect($profs)->collapse();
 
 
   foreach($absenceStag as $k){
-    $startTime = Carbon::parse($k['h_debut']);
-    $endTime = Carbon::parse($k['h_fin']);
+    $startTime = Carbon::parse($k->duration['h_debut']);
+    $endTime = Carbon::parse($k->duration['h_fin']);
     $k["nbAbs"] =floatval($endTime->diffInMinutes($startTime)/60) ;
     $profName = (string)$k->prof->nom_prof;
     $test = $absProf->get($profName);
     
-    $absProf["$profName"] = floatval($test) + $k["nbAbs"];
+    $absProf["$profName"] = floatval($test) + floatval($k["nbAbs"]);
   }
   $absProf = $absProf->sortDesc()->filter(function($item){
     return $item > 0;
@@ -194,9 +196,10 @@ Route::get('/details',function(Request $request){
     $fillWithAbs = [];
     $groupeWithAbs = [];//les groupes qui contient au moins une absence
     
-    $etats_just = Etat::with("stagiaire.groupe.filiere")->where("etat_justif","J")->without("prof")->get();
-    $etats_nj = Etat::with("stagiaire.groupe.filiere")->where("etat_justif","NJ")->without("prof")->get();
- 
+    $etats_just = Etat::with("stagiaire.groupe.filiere")->where("etat_justif","J")->get();
+//    dd($etats_just);
+    $etats_nj = Etat::with("stagiaire.groupe.filiere")->where("etat_justif","NJ")->get();
+    // dd($etats_nj);
         $allEtat = Etat::with("stagiaire.groupe.filiere")->without("prof")->get()->all();
         foreach($allEtat as $e){
             $groupe = $e->stagiaire->groupe;
@@ -214,11 +217,11 @@ Route::get('/details',function(Request $request){
         
         $result["groupesWithAbs"] = $groupeWithAbs;
 
-
         foreach($groupeWithAbs as $groupe){
                         $nom_gp = $groupe->nom_gp;
                         $just_abs = monthAbs($etats_just->where("stagiaire.groupe.nom_gp","=",$nom_gp));
                         $nj_abs = monthAbs($etats_nj->where("stagiaire.groupe.nom_gp","=",$nom_gp));
+                       
                         $total_h = 0;
                         $nj_h=0;
                         foreach($just_abs  as $el  ){
@@ -234,8 +237,8 @@ Route::get('/details',function(Request $request){
                                 $result["exist"] = true;
                             }
                         }
+                        
                 array_push($result["info"],[
-                    
                     "groupe" => $groupe,
                     "just_abs"=>$just_abs,
                     "nj_abs"=>$nj_abs,
@@ -256,6 +259,7 @@ Route::get('/details',function(Request $request){
 Route::get('etatFil',function(){
     $allEtat = Etat::with("stagiaire.groupe.filiere")->get()->all();
     $allFil = Filiere::all();
+    $allDurations = Duration::all();
     $allfill = $allFil->map(function($item){
         $item->push([
             "myGroupes"=>$item->groupes
@@ -264,6 +268,7 @@ Route::get('etatFil',function(){
    
     $allGroupes = Groupe::all();
     $result = [
+        "allDurations"=>$allDurations,
         "allFilWithGroupes" =>$allFil,
         "allGroupes"=>$allGroupes,
         "fillWithAbs"=>[],
@@ -292,3 +297,104 @@ Route::get('etatFil',function(){
         return $result;
 });
     
+/* Under Test  */
+
+Route::post("/getSome",function(Request $request){
+    $groupe_id = $request->groupe_id;
+    $stagiaires = Groupe::find($groupe_id)->stagiaires;
+    $profs = Groupe::find($groupe_id)->profs;
+    return [
+       "Stagiaires" => $stagiaires,
+       "Profs" =>$profs
+    ];
+
+
+});
+
+
+// Route::post("/getProfs",function(Request $reques)){
+//     $pro
+// }
+
+
+
+Route::get("getDurations",function(){
+    $duration = Duration::all();
+    return $duration;
+});
+
+Route::post("/updateEtat",function(Request $request){
+    
+    $id = $request->id;
+   
+    $prof_id = $request->prof_id;
+    $duration_id = $request->duration_id;
+    $date_abs = $request->date_abs;
+    $seance = $request->seance;
+    $etat_justif = $request->etat_justif;
+    $motif = $request->motif;
+    $last_duration_id = $request->last_duration_id;
+
+    $etat = Etat::find($id);
+    
+    
+    $etat->update([
+        "prof_id"=>$prof_id,
+        "duration_id"=>$duration_id,
+        "date_abs"=>$date_abs,
+        "seance"=>$seance,
+        "etat_justif"=>$etat_justif,
+        "motif"=>$motif,
+    ]);
+
+    $newDuration = Duration::find($duration_id);
+    $lastDuration = Duration::find($last_duration_id);
+    $startTime = Carbon::parse($newDuration->h_debut);
+    $endTime = Carbon::parse($newDuration->h_fin);
+
+    $newHour =floatval($endTime->diffInMinutes($startTime)/60) ;
+
+    $startTime = Carbon::parse($lastDuration->h_debut);
+    $endTime = Carbon::parse($lastDuration->h_fin);
+    $lastHour=floatval($endTime->diffInMinutes($startTime)/60);
+
+    $result = $newHour - $lastHour;
+    //     >update([
+    //         "heure_absence_st" => + $heure_absence_st
+    //     ]);
+    
+    $stag = Stagiaire::find($etat->stagiaire_id);
+    $heure_absence_st = $stag->heure_absence_st;
+
+    $heure_absence_st = $heure_absence_st + $result;
+    $stag->heure_absence_st = $heure_absence_st;
+    $stag->save();
+   
+    return [
+        "data"=>$request->all(),
+        "test"=>"work"
+    ];
+});
+
+Route::post("/deleteEtat",function(Request $request){
+    
+    $etat = Etat::find($request->id);
+    $stag = Stagiaire::find($etat->stagiaire_id);
+    $currentHour = floatval($stag->heure_absence_st);
+    $startTime = Carbon::parse($etat->duration['h_debut']);
+    $endTime = Carbon::parse($etat->duration['h_fin']);
+    $heure_absence_st =floatval($endTime->diffInMinutes($startTime)/60) ;
+    $stag->update([
+        "heure_absence_st" =>$currentHour - $heure_absence_st
+    ]);
+    $result = $etat->delete();
+
+    if($result){
+        return "Deleted Successfully";
+    }
+    else{
+        return "Something went Wrong";
+    }
+
+
+});

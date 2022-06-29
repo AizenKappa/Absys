@@ -72,12 +72,12 @@
                     <td class="text-sm text-gray-900
                     font-medium px-6 py-4 whitespace-nowrap
                     border border-gray-500 text-center">
-                        {{abs.h_debut.slice(0,5)}}
+                        {{abs.duration.h_debut.slice(0,5)}}
                     </td>
                     <td class="text-sm text-gray-900
                     font-medium px-6 py-4 whitespace-nowrap
                     border border-gray-500 text-center">
-                        {{abs.h_fin.slice(0,5)}}
+                        {{abs.duration.h_fin.slice(0,5)}}
                     </td>
                     <td class="text-sm text-gray-900
                     font-medium px-6 py-4 whitespace-nowrap
@@ -175,11 +175,11 @@
                     text-sm font-medium text-gray-900 text-center border border-gray-500">{{abs.date_abs}}</td>
                     <td class="text-sm text-gray-900 text-center border border-gray-500
                     font-medium md:px-2 md:py-1 whitespace-nowrap">
-                        {{abs.h_debut.slice(0,5)}}
+                        {{abs.duration.h_debut.slice(0,5)}}
                     </td>
                     <td class="text-sm text-gray-900 text-center border border-gray-500
                     font-medium md:px-2 md:py-1 whitespace-nowrap">
-                        {{abs.h_fin.slice(0,5)}}
+                        {{abs.duration.h_fin.slice(0,5)}}
                     </td>
                     <td class="text-sm text-gray-900 text-center border border-gray-500
                     font-medium md:px-2 md:py-1 whitespace-nowrap">

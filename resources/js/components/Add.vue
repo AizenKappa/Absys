@@ -74,17 +74,23 @@
                 <option class="hidden" :value="null" selected >Le formateur</option>
                 <option :value="prof.id" v-for="prof in profs" :key="prof.id">{{prof.nom_prof}}</option>
             </select>
-            <select   v-model="absenceDuration" name="absenceDuration" class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300">
-                <!-- <option class="hidden" :value='null'  >La période d'absence</option> -->
-                <option value='allDay'  >Toute La Journée</option>
-                <option value='matin' :selected="hourMinute < 13.5" >La Matinée</option>
-                <option value='midi' :selected="hourMinute > 13.5" >L'après-midi</option>
-                <option value='seance-1' >La Première Séance</option>
-                <option value='seance-2' >La Deuxième Séance</option>
-                <option value='seance-3' >La Troisième Séance</option>
-                <option value='seance-4' >La Quatrième Séance</option>
-                
-            </select>
+                <select   v-model="duration_id" name="duration_id" class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300">
+                    <option class="hidden" :value='null'  >La période d'absence</option>
+                    <template v-for="duration in durations" :key="duration.id">
+
+                        <option :value="duration.id" >{{duration.title}}</option>
+
+                    </template>
+                    
+                    <!-- <option value='allDay'  >Toute La Journée</option>
+                    <option value='matin' :selected="hourMinute < 13.5" >La Matinée</option>
+                    <option value='midi' :selected="hourMinute > 13.5" >L'après-midi</option>
+                    <option value='seance-1' >La Première Séance</option>
+                    <option value='seance-2' >La Deuxième Séance</option>
+                    <option value='seance-3' >La Troisième Séance</option>
+                    <option value='seance-4' >La Quatrième Séance</option> -->
+                    
+                </select>
             <select  v-model="seance" name="seanceType" class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300">
                 <option class="hidden" selected :value="null" >La seance</option>
                 <option value='Presentiel' >Presentiel</option>
@@ -97,7 +103,7 @@
     <!-- Button -->
         <div v-if="nom_gp != null" class="w-full md:pl-[90%] pl-[85%] h-[6rem] flex items-center">
             <button :disabled="submitBtn==false"
-            @click="addAbsence(student_ids,prof_id,absenceDuration,seance,date_abs,reset)" 
+            @click="addAbsence(student_ids,prof_id,duration_id,seance,date_abs,reset)" 
             :class="submitBtn == true ? 'button-on':'button-off'" 
             class="text-2xl text-white rounded-full w-[3rem] h-[3rem] cursor-pointer" 
             ><fas icon="arrow-right" /></button>
@@ -117,6 +123,7 @@
     import { ref } from 'vue';
     import useFilieres from '../services/filieres.js'
     import { onMounted,onUpdated } from 'vue';
+import axios from 'axios';
     /* some Logic Variables */
     const currentHour =ref(new Date().getHours()) 
     const currentminutes =ref(new Date().getMinutes())
@@ -127,12 +134,17 @@
     const seance = ref(null);
     const date_abs = ref(new Date().toISOString().slice(0, 19).split('T')[0])/* return the date of today  */
     const isStdChecked = ref(false)/* return true if a student is selected False if not */
-    const absenceDuration = ref((hourMinute.value < 13.5) ? 'matin':('midi'));
+    const duration_id = ref(null);
     const student_ids = ref([]);/* an Array that contain all of the student ids selected */
     const submitBtn = ref(false);
     
+    const durations = ref([])
     window.scrollTo(0, 0)
 
+    async function getDuration(){
+        let response = await axios.get("/api/getDurations")
+       durations.value = response.data;
+    }
     const checkStd = () => {
         isStdChecked.value = false
         student_ids.value = [];
@@ -153,14 +165,14 @@
     }
 
     const formCheck = () => {
-        if(isStdChecked.value == false ||  prof_id.value == null || seance.value == null) return false;
+        if(isStdChecked.value == false ||  prof_id.value == null || seance.value == null ||duration_id.value == null ) return false;
         return true;
     }
 
     const reset = () => {
-        prof_id.value = seance.value = null
+        prof_id.value = seance.value = duration_id.value= null;
         isStdChecked.value = false 
-        absenceDuration.value = (hourMinute.value < 13.5) ? 'matin':('midi');
+
         st_inputs.value.forEach(e => e.checked = false);
     }
 
@@ -173,7 +185,10 @@
     /* Return all our functuons and variables from { services/filieres.js } to use here */
     const { getFilieres , filieres , profs , getgroupes , groupes , addAbsence ,stagiaires, getstagiaires , nom_gp , add_status } = useFilieres();
     /* On Mounted call Aoi Flieres */
-    onMounted(getFilieres())
+    onMounted(()=>{
+        getDuration()
+        getFilieres()
+    })
 
     
 </script>

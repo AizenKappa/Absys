@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -14,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('etats', function (Blueprint $table) {
+        Schema::create('durations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("stagiaire_id");
-            
-            $table->foreignId("prof_id");
-            $table->foreignId("duration_id");
-            $table->date("date_abs");
-            $table->string("seance");
-            $table->string("etat_justif")->default("NJ");
-            $table->string("motif")->default("---");
+            $table->string("title")->unique();
+            $table->time("h_debut");
+            $table->time("h_fin");
             $table->timestamps();
         });
     }
@@ -35,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('etats');
+        Schema::dropIfExists('durations');
     }
 };

@@ -52,9 +52,9 @@
                     <span>Update Users</span>
                 </router-link>
                 
-                <router-link to="/etatEdit" @click="$emit('update:modelValue',check())">
+                <router-link to="/editEtat" @click="$emit('update:modelValue',check())">
                     <fas icon="user-graduate" />
-                    <span>Edit Absence</span>
+                    <span>Update Absence</span>
                 </router-link>
 
                     <router-link to="/Estg" @click="$emit('update:modelValue',check())">
