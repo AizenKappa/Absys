@@ -1,5 +1,5 @@
 <template>
-   <input type="text"/>
+ 
     <div class="w-full lg:w-[45%] my-12">
         <select   class="w-full font-medium h-[2rem]" @change="changeFil"  v-model="selectedFil" >
             <option    value="all" selected>Tous les Filieres</option>
@@ -7,146 +7,165 @@
         </select>
     </div>
 
-    <!-- <nav v-if="selectedFil!='all'" class="w-full bg-white px-4 py-5">
+
+
+    <nav v-if="selectedFil != 'all'" class="w-full bg-white px-4 py-5">
         <div class="grid-cols-3 bg-slate-100 lg:scale-100 scale-75 rounded-lg grid sm:grid-cols-5 border-4 border-slate-100">
             <a
-            v-for="groupe in currentGroupe "
-            :title="groupe.id"
-            @click="check" 
-            class="p-5 cursor-pointer bg-slate-100 text-center border-b-4 border-transparent" :key="groupe.id">{{groupe.nom_gp}}</a>
+            v-for="gp in currentGroupe"
+            :title="gp.id"
+            @click="changeGp" 
+            class="p-5 cursor-pointer bg-slate-100 text-center border-b-4 border-transparent" :key="gp.id">{{ gp.nom_gp }}</a>
         </div>
-    </nav> -->
-    <select  v-model="selectedGroupe" @change="changeGp">
-    
-        <template v-if="selectedFil != 'all'">
-            <option value="none" class="hidden">Select A Groupe</option>
-            <option :value="groupe.id" v-for="groupe in currentGroupe ">{{groupe.nom_gp}}</option>
-        </template>
-        <template v-else>
-            <option value="none" class="hidden" selected>You need to choose a Class </option>
-        </template>
-        
-    </select>
-    <!-- {{allFilWithGroupes[selectedFil]}} -->
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-white uppercase bg-sky-600">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    Nom Complet
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Date
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Formateur
-                </th>
-                <th  scope="col" class="px-6 py-3">
-                    Durée
-                </th>
-                <th  scope="col" class="px-6 py-3">
-                    Type
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Etat
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    motif
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Edit
-                </th>
+    </nav>
 
-            </tr>
-        </thead>
 
-        <tbody>
+
+
+    <div v-if="true" class="relative sm:p-5 scale-75 overflow-x-auto shadow-md sm:scale-90 lg:scale-100 s">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-white uppercase bg-sky-600">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        <div class="text-center">Nom</div>
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        <div class="text-center">Date</div>
+                        
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        <div class="text-center">Formateur</div>
+                        
+                    </th>
+                    <th  scope="col" class="px-6 py-3">
+                        <div class="text-center">Durée</div>
             
-        <tr ref="absenceRefs"
-         class="bg-white border-b select-none"
-         :class="abs.etat_jusitf == 'NJ'?' bg-red-100':''"
-         v-for="(abs,index) in currentEtatList" :key="index" >
-            <td >
-                <!-- <select ref="stag" :disabled="(index == currentEtat)? false:true"  >
-                    <option :value="abs.stagiaire_id"    selected></option>
-                    <option v-show="st.id != abs.stagiaire_id " :value="st.id" v-for="st in currentStList" :key="st.id">{{st.nom_st+" "+st.prenom_st}}</option>
-                </select> -->
-                <span>{{ abs.stagiaire.nom_st +" " + abs.stagiaire.prenom_st }}</span>
-            </td>
-            <td>
-                <input ref="date_abs" :disabled="(index == currentEtat)? false:true"
-                        type="date" :value="abs.date_abs">
-            </td>
-            <td>
-                <select ref="prof" :disabled="(index == currentEtat)? false:true"  >
-                    <option  :value=" abs.prof_id" selected>{{ abs.prof.nom_prof }}</option>
-                    <option v-show="prof.id != abs.prof_id " :value="prof.id" v-for="prof in currentProfs" :key="prof.id">{{prof.nom_prof}}</option>
-                </select>
-            </td>
-            <td>
-                <select ref="duration" :disabled="(index == currentEtat)? false:true"
-                    name="absenceDuration" class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300">
-                    <option   :value="abs.duration_id"  >{{abs.duration.title}}</option>
-                    <option :value="duration.id"  v-show="duration.id != abs.duration_id"
-                      v-for="duration in allDurations" :key="duration.id"
-                      >{{duration.title}}</option>
-                   
-                    
-                </select>
-            </td>
-            <td>
-                <select ref="seance" :disabled="(index == currentEtat)? false:true"  >
-                    <option  class="hidden" selected>{{ abs.seance }}</option>
-                    <option value='Presentiel' >Presentiel</option>
-                    <option value="distanciel" >Distanciel</option>>
-                </select>
-            </td>
-            <td>
-                <select ref="etat_jusitf"
-                    @change="editMotif(index)"
-                 :disabled="(index == currentEtat)? false:true"  >
-                    <option     class="hidden" selected>{{ abs.etat_justif }}</option>
-                    <option     value='NJ' >NJ</option>
-                    <option     value="J" >J</option>>
-                </select>
-            </td>
-            <td>
-                <input ref="motif" 
-                :disabled="abs.etat_justif == 'NJ'"
-                 type="text"
-                 class="bg-transparent px-2 h-9 focus:outline-cyan-500"
-                  :value="abs.motif" size="6">
-            </td>
-            <td>
-                <button ref="editBtn"    class="w-8 cursor-pointer text-blue-600 hover:underline"
-                  @click="getInfo(abs.stagiaire.groupe_id,abs.id,index)"
-                  >Edit</button>
-                <button ref="saveBtn"  class="hidden  cursor-pointer text-green-600 hover:underline " @click="updateEtat(abs.id,index)">Save</button>
-                <button ref="deleteBtn"
-                  class="hidden  cursor-pointer text-red-600 hover:underline " @click="deleteEtat(abs.id,index)">Delete</button>
-            </td>
-                <!-- <td class="px-6 py-4">
-                    <input :disabled = "true" class="bg-transparent px-2 h-9 focus:outline-cyan-500" type="text" :value="abs.stagiaire.prenom_st ">
-                </td>
-                <td class="px-6 py-4">
-                    <input :disabled = "true" class="bg-transparent px-2 h-9 focus:outline-cyan-500" type="text" :value=" st.num">
-                </td>
-                <td class="px-6 py-4 text-left font-medium">
-                    <select :disabled = "true" class="py-2 px-1">
-                        <option class="hidden" selected>{{ st.status }}</option>
-                        <option>Active</option>
-                        <option>Abondonné</option>
+                    </th>
+                    <th  scope="col" class="px-6 py-3">
+                        <div class="text-center">Type</div>
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        <div class="text-center">Etat</div>
+                        
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        <div class="text-center">Motif</div>
+                        
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        <div class="text-center">Edit</div>
+                       
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        <div class="text-center">Delet</div>
+                        
+                    </th>
+                </tr>
+            </thead>
 
-                    </select>
-                </td>
-                <td class="px-6 py-4 text-left font-medium">
-                    <div @click="editThis" class="w-8 cursor-pointer text-blue-600 hover:underline">Edit</div>
-                    <div :id="st.id" @click="saveThis" class="w-8 cursor-pointer text-green-600 hover:underline hidden">Save</div>
-                </td> -->
-            </tr>
-        </tbody>
+            <tbody>
+                
+                <tr ref="absenceRefs"  class="bg-white border-b select-none"
+                :class="index == currentEtat ?'text-black':'' "
+                v-for="(abs,index) in currentEtatList" :key="index" >
 
-    </table>
-    
+                    <td class="p-4">
+                        <div class="scale-75 w-full">
+                            {{ abs.stagiaire.nom_st +" " + abs.stagiaire.prenom_st }}
+                        </div>             
+                    </td>
+
+                    <td class="p-4" >
+                        <div class="scale-90 w-full">
+                            <input class="w-full font-medium h-[2rem] shadow-sm shadow-gray-300" ref="date_abs" 
+                            :disabled="(index == currentEtat)? false:true" type="date" :value="abs.date_abs"
+                            >                   
+                        </div> 
+                    </td>
+
+                    <td class="p-4">
+                        <div class="scale-90">
+                            <select class="w-full font-medium h-[2rem] shadow-sm shadow-gray-300" ref="prof" :disabled="(index == currentEtat)? false:true"  >
+                                <option  :value=" abs.prof_id" selected>{{ abs.prof.nom_prof }}</option>
+                                <option v-show="prof.id != abs.prof_id " :value="prof.id" v-for="prof in currentProfs" :key="prof.id">{{prof.nom_prof}}</option>
+                            </select>
+                        </div>
+                                    
+                    </td>
+
+
+                    <td class="px-6 py-4 text-left font-medium">
+                        <div class="w-32 scale-90">
+                            <select ref="duration" :disabled="(index == currentEtat)? false:true"
+                            name="absenceDuration" class="w-full font-medium h-[2rem] shadow-sm shadow-gray-300">
+                            <option   :value="abs.duration_id"  >{{abs.duration.title}}</option>
+                            <option :value="duration.id"  v-show="duration.id != abs.duration_id"
+                            v-for="duration in allDurations" :key="duration.id"
+                            >{{duration.title}}</option>
+                        </select>
+                        </div>
+                        
+                    </td>
+
+                    <td class="px-6 py-4 text-left font-medium">
+                        <select class="w-28 scale-90 w-full font-medium h-[2rem] shadow-sm shadow-gray-300" ref="seance" :disabled="(index == currentEtat)? false:true"  >
+                            <option  class="hidden" selected>{{ abs.seance }}</option>
+                            <option value='Presentiel' >Presentiel</option>
+                            <option value="distanciel" >Distanciel</option>>
+                        </select>
+                    </td>
+
+
+                    <td class="px-6 py-4 text-left font-medium">
+                        <select ref="etat_jusitf"
+                        class="w-16 scale-75 font-medium h-[2rem] shadow-sm shadow-gray-300"
+                        @change="editMotif(index)"
+                        :disabled="(index == currentEtat)? false:true"  >
+                            <option class="hidden" selected>{{ abs.etat_justif }}</option>
+                            <option value='NJ' >NJ</option>
+                            <option value="J" >J</option>>
+                        </select>
+                    </td>
+
+
+                    <td class="px-6 py-4 text-left font-medium">
+                        <input ref="motif"
+                        :disabled="abs.etat_justif == 'NJ'" 
+                        class="w-full font-medium h-[2rem] shadow-sm shadow-gray-300 bg-transparent px-2 h-9 focus:outline-cyan-500" type="text"
+                        :value="abs.motif" size="6">
+                    </td>
+
+                    <td>
+                        <div class="grid grid-cols-1 place-items-center gap-2">
+
+                            <button ref="saveBtn"  class="hidden  cursor-pointer text-green-600 hover:underline " @click="updateEtat(abs.id,index)">Save</button>
+
+                            <button ref="editBtn"    class="w-8 cursor-pointer text-blue-600 hover:underline"
+                            @click="getInfo(abs.stagiaire.groupe_id,abs.id,index)">Edit</button>
+
+                        </div>
+
+                    </td>
+
+                    <td class="px-6 py-4 text-left font-medium">
+                       <div class="text-red-500 cursor-pointer opacity-[0.7] hover:opacity-[1] hover:scale-110 max-w-max max-h-max">
+                                <button @click="deleteEtat(abs.id,index)" class=" absolute w-[1.5rem] h-[1.5rem] opacity-0"></button>
+                                    <svg ref="deleteBtn" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                        </div>
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+
+
     
 </template>
 
@@ -234,18 +253,13 @@
                 ele.disabled = false
             
         })
-        deleteBtn.value.forEach((ele)=>{
-            
-                ele.disabled = false
-            
-        })
+
         motif.value.forEach((ele)=>{
             
                 ele.disabled = true
             
         })
         editBtn.value[index].classList.toggle("hidden")
-        deleteBtn.value[index].classList.toggle("hidden")
         saveBtn.value[index].classList.toggle("hidden")
         editMode.value = false
         currentEtat.value = null
@@ -312,7 +326,7 @@
         
         var etat_j = etat_jusitf.value[index]
         var moti = motif.value[index]
-        console.log(etat_j.value)
+
         if(etat_j.value == "NJ"){
             moti.disabled = true
         }else{
@@ -331,14 +345,9 @@
                 ele.disabled = true
             }
         })
-        deleteBtn.value.forEach((ele,ind)=>{
-            if(index != ind){
-                ele.disabled = true
-            }
-        })
+
         editBtn.value[index].classList.toggle("hidden")
         saveBtn.value[index].classList.toggle("hidden")
-        deleteBtn.value[index].classList.toggle("hidden")
 
         editMode.value = true
         if(currentEtat.value != index){
@@ -348,7 +357,7 @@
                 "groupe_id":groupe_id,
                 "abs_id":abs_id
             }).then((response)=>{
-                console.log(response.data)
+
                 currentStList.value  = response.data.Stagiaires
                 currentProfs.value = response.data.Profs
                 currentAbsInfo.value.id=abs_id
@@ -372,10 +381,10 @@
             id:abs_id
         })
         console.log(response.data)
-        
-        currentEtatList.value =currentEtatList.value.filter((ele,ind)=>{
+        absenceRefs.value[index].style.display = "none"
+        /* currentEtatList.value =currentEtatList.value.filter((ele,ind)=>{
             return ind != index
-        })
+        }) */
    
         editBtn.value.forEach((ele)=>{
             
@@ -388,14 +397,7 @@
                 ele.disabled = false
             
         })
-        deleteBtn.value.forEach((ele)=>{
-            
-                ele.disabled = false
-            
-        })
-        editBtn.value[index].classList.toggle("hidden")
-        deleteBtn.value[index].classList.toggle("hidden")
-        saveBtn.value[index].classList.toggle("hidden")
+
         editMode.value = false
         currentEtat.value = null
         
@@ -414,22 +416,29 @@
         }
     }
 
-    function changeGp(){
-        if(selectedFil.value == "all"){
-            selectedGroupe.value ="none"
-        }else{
-            currentEtatList.value = allAbs.value.filter((ele)=>{
-                     return ele.stagiaire.groupe_id == selectedGroupe.value
-                })
-        }
+    function changeGp(event){
+        
+        document.querySelectorAll("a").forEach(element => {
+            element.classList.remove("activeLink")
+        });
+        event.target.classList.add("activeLink")
+        
+        currentEtatList.value = allAbs.value.filter((ele)=>{
+        return ele.stagiaire.groupe_id == event.target.title
+        })
     }
-
     
 </script>
 
 <style scoped>
+    .activeLink{
+        border-color: rgb(8, 91, 255);
+        transition: all .8s ease 0s;
+    }
+    *{
+        box-sizing: border-box;
+    }
+    
 
-table  *{
-    border:1px solid black;
-}
 </style>
+
