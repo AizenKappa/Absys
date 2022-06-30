@@ -102,23 +102,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           alert("You need to type a Motif");
         } else {
           sendUpdateRequest(abs_id, prof.value[index].value, duration.value[index].value, date_abs.value[index].value, seance.value[index].value, etat_jusitf.value[index].value, motif.value[index].value, currentAbsInfo.value.duration_id);
-          saveBtn.value.forEach(function (ele) {
-            ele.disabled = false;
-          });
-          motif.value.forEach(function (ele) {
-            ele.disabled = true;
-          });
-          editBtn.value[index].classList.toggle("hidden");
-          saveBtn.value[index].classList.toggle("hidden");
-          currentEtat.value = null;
+          reset(index);
         }
       } else {
         console.log("no changes");
+        reset(index);
       }
+    }
 
+    function reset(index) {
       editBtn.value.forEach(function (ele) {
         ele.disabled = false;
       });
+      saveBtn.value.forEach(function (ele) {
+        ele.disabled = false;
+      });
+      motif.value.forEach(function (ele) {
+        ele.disabled = true;
+      });
+      editBtn.value[index].classList.toggle("hidden");
+      saveBtn.value[index].classList.toggle("hidden");
+      currentEtat.value = null;
     }
 
     function sendUpdateRequest(_x, _x2, _x3, _x4, _x5, _x6, _x7, _x8) {
@@ -292,11 +296,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     ele.disabled = false;
                   });
                   saveBtn.value.forEach(function (ele, ind) {
-                    if (index != ind) {
-                      ele.disabled = true;
-                    } else {
-                      ele.disabled = false;
-                    }
+                    // if(index != ind){
+                    //     ele.disabled = true
+                    // }else{
+                    ele.disabled = false; // }
                   });
                 }
 
@@ -359,6 +362,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       deleteBtn: deleteBtn,
       editMotif: editMotif,
       updateEtat: updateEtat,
+      reset: reset,
       sendUpdateRequest: sendUpdateRequest,
       getData: getData,
       getInfo: getInfo,

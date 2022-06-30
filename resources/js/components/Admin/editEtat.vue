@@ -268,37 +268,41 @@
                  prof.value[index].value,duration.value[index].value,
                  date_abs.value[index].value,seance.value[index].value,
                  etat_jusitf.value[index].value,motif.value[index].value,currentAbsInfo.value.duration_id)
-                  saveBtn.value.forEach((ele)=>{
-                        ele.disabled = false
-                    })
 
-                motif.value.forEach((ele)=>{
-                    
-                        ele.disabled = true
-                    
-                })
-                editBtn.value[index].classList.toggle("hidden")
-                saveBtn.value[index].classList.toggle("hidden")
-            
-                currentEtat.value = null
+                  reset(index)
                 }
-
-                
                
                  
                 
             }else{
                 console.log("no changes")
+                reset(index)
+
             }
-             editBtn.value.forEach((ele)=>{
+             
+    }
+
+    function reset(index){
+        editBtn.value.forEach((ele)=>{
             
                 ele.disabled = false
             
+            })
+                    saveBtn.value.forEach((ele)=>{
+                        ele.disabled = false
+                    })
+
+                    motif.value.forEach((ele)=>{
+                        ele.disabled = true
+                    })
+                    editBtn.value[index].classList.toggle("hidden")
+                    saveBtn.value[index].classList.toggle("hidden")
             
-        })
-        
-        
+                    currentEtat.value = null
     }
+        
+        
+    
 
     
     async function sendUpdateRequest(abs_id,prof_id,duration_id,date_abs,seance,etat_justif,motif,last_duration_id){
@@ -395,11 +399,11 @@
                 ele.disabled = false
             })
             saveBtn.value.forEach((ele,ind)=>{
-            if(index != ind){
-                ele.disabled = true
-            }else{
+            // if(index != ind){
+            //     ele.disabled = true
+            // }else{
                 ele.disabled = false
-            }
+            // }
         })
 
         }
