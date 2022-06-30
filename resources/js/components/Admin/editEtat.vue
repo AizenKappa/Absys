@@ -149,7 +149,7 @@
 
                     <td class="px-6 py-4 text-left font-medium">
                        <div class="text-red-500 cursor-pointer opacity-[0.7] hover:opacity-[1] hover:scale-110 max-w-max max-h-max">
-                                <button @click="deleteEtat(abs.id,index)" class=" absolute w-[1.5rem] h-[1.5rem] opacity-0"></button>
+                                <button @click="deleteEtatBox(abs.id,index)" class=" absolute w-[1.5rem] h-[1.5rem] opacity-0"></button>
                                     <svg ref="deleteBtn" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -175,7 +175,9 @@
     import axios from 'axios';
     import {onMounted, ref} from "vue";
     import testVue from '../test.vue';
-    
+    import { useToast } from "vue-toastification";
+
+    const toast = useToast();
     const message = ref("Hello World")
     const selectedFil = ref("all")
     /*Start raw data */
@@ -197,6 +199,7 @@
 
     const absenceRefs = ref([])
     
+    const wait = ref(false)
    
     const date_abs = ref([]);
     const prof=ref([]);
@@ -389,25 +392,33 @@
     }
 
     async function deleteEtat(abs_id,index){
-        let response = await axios.post("/api/deleteEtat",{
+       await axios.post("/api/deleteEtat",{
             id:abs_id
-        })
-        console.log(response.data)
-        absenceRefs.value[index].style.display = "none"
-        if(currentEtat.value == index){
-             editBtn.value.forEach((ele)=>{
-            
-                ele.disabled = false
-            })
-            saveBtn.value.forEach((ele,ind)=>{
-            // if(index != ind){
-            //     ele.disabled = true
-            // }else{
-                ele.disabled = false
-            // }
-        })
+        }).then((response)=>{
+                    absenceRefs.value[index].style.display = "none"
+                if(currentEtat.value == index){
+                    editBtn.value.forEach((ele)=>{
+                    
+                        ele.disabled = false
+                    })
+                    saveBtn.value.forEach((ele,ind)=>{
+                  
+                        ele.disabled = false
+                    
+                })
 
-        }
+                }
+        }).catch(error=>{
+            // Swal.fire({
+            //     icon: 'error',
+            //     title: 'Oops...',
+            //     text: 'Something went wrong!',
+            //     footer: '<a href="">Why do I have this issue?</a>'
+            //     })
+            //error  Message
+        })
+        
+        
         
         
         
@@ -436,7 +447,60 @@
         return ele.stagiaire.groupe_id == event.target.title
         })
     }
-    
+    const errorNet = () => {
+        toast.error("Error network" , {
+            position: "bottom-right",
+            timeout: 3000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            icon: true,
+            hideProgressBar: false,
+        });
+    }
+    const callusers = () =>{
+        if (wait.value) {
+            return;
+        }
+
+        errorNet()
+        wait.value  = true;
+
+        setTimeout(function() {
+            wait.value = false;
+        }, 3000);
+    }
+    /* Alert to confirme for delete user */
+    const deleteEtatBox = (abs_id,index) => {
+        if(navigator.onLine ==false){
+           callusers()
+        }else{
+             Swal.fire({
+            title: 'Êtes-vous sûr?',
+            text: "Vou ne pourrez pas revenir en arriére!",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText:"Annuler",
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Supprimer!'
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                
+               deleteEtat(abs_id,index)
+                
+                Swal.fire(
+                'Suprimé!',
+                'Le compte a été supprimé.',
+                'success'
+                )
+            }
+            
+        })
+        }
+       
+    }
 </script>
 
 <style scoped>

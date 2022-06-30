@@ -129,7 +129,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var sweetalert = function sweetalert(id) {
       Swal.fire({
         title: 'Êtes-vous sûr?',
-        text: "Vou ne pourrez pas revenir en aarriére!",
+        text: "Vou ne pourrez pas revenir en arriére!",
         icon: 'warning',
         showCancelButton: true,
         cancelButtonText: "Annuler",
