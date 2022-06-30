@@ -72,7 +72,7 @@
     </div>
 
     <!-- Justif Table -->
-    <div v-if="list_etats != false" class="antialiased text-gray-600 lg:px-[2rem] xl:px-[6rem] py-[3rem]">
+    <div v-if="show_etats == true" class="antialiased text-gray-600 lg:px-[2rem] xl:px-[6rem] py-[3rem]">
             <div class="flex flex-col justify-center">
             <div class="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
                 <header class="px-5 py-4 border-b border-gray-200 w-full">
@@ -147,7 +147,7 @@
     </div>
 
     <!-- Motif -->
-    <div v-if="list_etats != false"  class="px-8 grid grid-cols-1 sm:flex sm:justify-between sm:items-center md:pr-14 h-28">
+    <div v-if="show_etats == true"  class="px-8 grid grid-cols-1 sm:flex sm:justify-between sm:items-center md:pr-14 h-28">
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <select v-model="selected_motif" class="w-[10rem] h-7 font-medium shadow-lg shadow-gray-300" v-on:change="selected_motif_autre = null">
                 <option class="hidden">Motif</option>
@@ -170,9 +170,9 @@
     </div>
     
     <!-- Not found -->
-    <div v-if="show_error" class="h-screen grid place-content-center top-0 w-full">
+<!--     <div v-if="show_error" class="h-screen grid place-content-center top-0 w-full">
         <img class="w-[10rem]" src="./contents/page.png">
-    </div>
+    </div> -->
 
 </section>
 </template>
@@ -191,12 +191,14 @@
 
     const selected_gp = ref("choose your groupe")
     const list_etats = ref(false)
+    const show_etats = ref(false)
     const show_error = ref(false)
 
     const isStdChecked = ref(false)
     const st_inputs = ref([])
     const student_ids = ref([])
-    const submitBtn = ref(false);
+    const submitBtn = ref(false)
+    const lista_helper = ref([])
     /* Call Api Groupes */
     const getcontents = () =>  { selected_gp.value = "choose your groupe" , getgroupes(selected.value)}
     /* Return all our functuons and variables from { services/filieres.js } to use here */
@@ -206,22 +208,28 @@
     const getstContents = () => { getstagiaires(selected_gp.value) , list_etats.value = false ,show_error.value = false }
     /* This function hide stagiaires table and show Justif table */
     window.scrollTo(0, 0)
-
+    const id_st = ref(0)
     const getJustifTable = (id) => {
         var list = []
+        id_st.value = id
+
+        show_etats.value = true
         stagiaires.value.forEach(st => {
             if(st.id == id) {
                 list_etats.value = st.etat
                 return true
-            }});nom_gp.value = null
+        }})
+
+        nom_gp.value = null
+
         if(Object.keys(list_etats.value).length === 0){
-            show_error.value = true
+            /* show_error.value = true */
         }
     }
     const getsts = () => {
         
         getstagiaires(selected_gp.value)
-        list_etats.value = false
+        show_etats.value = false
         show_error.value = false
     }
 
@@ -241,31 +249,39 @@
     }
 
     const addJustifAndReset = () => {
-        addJustif(student_ids.value,selected_motif.value,selected_motif_autre.value)
+        addJustif(student_ids.value,selected_motif.value,selected_motif_autre.value,reset)
+    }
 
-            const selected = ref("choose your class")
+    const reset = () => {
 
             selected_motif.value = "Motif"
             selected_motif_autre.value = null
 
-            selected_gp.value ="choose your groupe"
-            list_etats.value =false
             show_error.value =false
 
             isStdChecked.value =false
-            st_inputs.value =[]
-            student_ids.value =[]
+            
             submitBtn.value =false
+            
+            lista_helper.value = []
+            for(let e in list_etats.value){
 
-            window.scrollTo(0, 0)
+                if(!student_ids.value.includes(list_etats.value[e].id)){
+                    lista_helper.value.push(list_etats.value[e])
+                }
+            }
+
+            list_etats.value = lista_helper.value
+            student_ids.value =[]
     }
+    
     
     const checkStd = () => {
         isStdChecked.value = false;
         student_ids.value = [];
         st_inputs.value.forEach(e => {
             var id = e.name
-            if(e.checked ){ isStdChecked.value = true ; student_ids.value.push( Number(id))} 
+            if(e.checked ){ isStdChecked.value = true ; student_ids.value.push( Number(id))}
         });
         buttopCheck()
     }

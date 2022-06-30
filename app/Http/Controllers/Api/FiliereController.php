@@ -239,7 +239,10 @@ class FiliereController extends Controller
             Stagiaire::Where('id', $v)->update(['heure_absence_st' => ($currentAbsence + $hours)]);
         }
 
-        return "This is Working ";
+        return [
+            "message" => "L'absence ajoutée avec Succés"
+
+        ];
       
     }
 

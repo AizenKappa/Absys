@@ -103,15 +103,11 @@
     <!-- Button -->
         <div v-if="nom_gp != null" class="w-full md:pl-[90%] pl-[85%] h-[6rem] flex items-center">
             <button :disabled="submitBtn==false"
-            @click="addAbsence(student_ids,prof_id,duration_id,seance,date_abs,reset)" 
+            @click="addAbsence(student_ids,prof_id,duration_id,seance,date_abs,reset,errorNet)" 
             :class="submitBtn == true ? 'button-on':'button-off'" 
             class="text-2xl text-white rounded-full w-[3rem] h-[3rem] cursor-pointer" 
             ><fas icon="arrow-right" /></button>
             
-        </div>
-
-        <div v-if="add_status == 200">
-            Succssed
         </div>
         
 </section>
@@ -119,15 +115,12 @@
 
 
 <script setup>
-
+    import { useToast } from "vue-toastification";
     import { ref } from 'vue';
     import useFilieres from '../services/filieres.js'
     import { onMounted,onUpdated } from 'vue';
-import axios from 'axios';
+    import axios from 'axios';
     /* some Logic Variables */
-    const currentHour =ref(new Date().getHours()) 
-    const currentminutes =ref(new Date().getMinutes())
-    const hourMinute = ref((currentHour.value + currentminutes.value/60)) 
     const st_inputs = ref([])
     /* Inputs to send  */
     const prof_id = ref(null);
@@ -137,6 +130,7 @@ import axios from 'axios';
     const duration_id = ref(null);
     const student_ids = ref([]);/* an Array that contain all of the student ids selected */
     const submitBtn = ref(false);
+    const toast = useToast();
     
     const durations = ref([])
     window.scrollTo(0, 0)
@@ -169,11 +163,11 @@ import axios from 'axios';
         return true;
     }
 
-    const reset = () => {
+    const reset = (message) => {
         prof_id.value = seance.value = duration_id.value= null;
         isStdChecked.value = false 
-
         st_inputs.value.forEach(e => e.checked = false);
+        success(message)
     }
 
     /* Variables Help-us */
@@ -189,6 +183,31 @@ import axios from 'axios';
         getDuration()
         getFilieres()
     })
+
+    const success = (message) => {
+
+        toast.success(message, {
+            position: "bottom-right",
+            timeout: 3000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            icon: true,
+            hideProgressBar: false,
+        });
+    }
+
+    const errorNet = () => {
+        toast.error("Error network" , {
+            position: "bottom-right",
+            timeout: 3000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            icon: true,
+            hideProgressBar: false,
+        });
+    }
 
     
     

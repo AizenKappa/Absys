@@ -1,8 +1,9 @@
 import { ref } from "vue"; 
 import axios from "axios";
-
+import { useToast } from "vue-toastification";
 export default function useFilieres(){
-    
+
+    const toast = useToast();
     const filieres = ref([])
     const groupes = ref(null)
     const stagiaires = ref(null)
@@ -52,7 +53,7 @@ export default function useFilieres(){
         console.log(etats)
     };
 
-    const addAbsence = (st_ids,prof_id,duration_id,seance,date_abs,reset) => {
+    const addAbsence = (st_ids,prof_id,duration_id,seance,date_abs,reset,errorNet) => {
         // send a POST request
         console.log(duration_id)
         if(date_abs==""){
@@ -65,20 +66,47 @@ export default function useFilieres(){
             seance:seance,
             date_abs:date_abs
             }).then((response) => {
-            add_status.value = response.status
-            }).catch((error) => {console.log(error);});
-            reset()
+            reset(response.data.message)
+            }).catch((error) => { errorNet() });
+    
+
         }
         
     }
 
-    const addJustif = (abs_ids,motif,manualle_motif) => {
+    const addJustif = (abs_ids,motif,manualle_motif,reset) => {
         // send a POST request
         axios.post('/api/addJustif', {
             absences_ids:abs_ids,
             motif: motif,
-            manualle_motif:manualle_motif,//
-        }).then((response) => {justif_status.value = response.status}).catch((error) => {console.log(error);});
+            manualle_motif:manualle_motif,})
+        .then((response) => {success("justification ajoutée avec succés"), reset()})
+        .catch((error) => {  errorNet() });
+    }
+
+    const success = (message) => {
+
+        toast.success(message, {
+            position: "bottom-right",
+            timeout: 3000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            icon: true,
+            hideProgressBar: false,
+        });
+    }
+
+    const errorNet = () => {
+        toast.error("Error network" , {
+            position: "bottom-right",
+            timeout: 3000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            icon: true,
+            hideProgressBar: false,
+        });
     }
     
 
