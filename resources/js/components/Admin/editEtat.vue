@@ -389,25 +389,28 @@
     }
 
     async function deleteEtat(abs_id,index){
-        let response = await axios.post("/api/deleteEtat",{
+       await axios.post("/api/deleteEtat",{
             id:abs_id
-        })
-        console.log(response.data)
-        absenceRefs.value[index].style.display = "none"
-        if(currentEtat.value == index){
-             editBtn.value.forEach((ele)=>{
-            
-                ele.disabled = false
-            })
-            saveBtn.value.forEach((ele,ind)=>{
-            // if(index != ind){
-            //     ele.disabled = true
-            // }else{
-                ele.disabled = false
-            // }
-        })
+        }).then((response)=>{
+                    absenceRefs.value[index].style.display = "none"
+                if(currentEtat.value == index){
+                    editBtn.value.forEach((ele)=>{
+                    
+                        ele.disabled = false
+                    })
+                    saveBtn.value.forEach((ele,ind)=>{
+                  
+                        ele.disabled = false
+                    
+                })
 
-        }
+                }
+        }).catch(error=>{
+            errorNet()
+            //error  Message
+        })
+        
+        
         
         
         
@@ -435,6 +438,17 @@
         currentEtatList.value = allAbs.value.filter((ele)=>{
         return ele.stagiaire.groupe_id == event.target.title
         })
+    }
+    const errorNet = () => {
+        toast.error("Error network" , {
+            position: "bottom-right",
+            timeout: 3000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            icon: true,
+            hideProgressBar: false,
+        });
     }
     
     /* Alert to confirme for delete user */

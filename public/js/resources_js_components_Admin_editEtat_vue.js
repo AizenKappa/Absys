@@ -276,7 +276,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     function _deleteEtat() {
       _deleteEtat = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(abs_id, index) {
-        var response;
         return _regeneratorRuntime().wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
@@ -284,26 +283,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context4.next = 2;
                 return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/deleteEtat", {
                   id: abs_id
+                }).then(function (response) {
+                  absenceRefs.value[index].style.display = "none";
+
+                  if (currentEtat.value == index) {
+                    editBtn.value.forEach(function (ele) {
+                      ele.disabled = false;
+                    });
+                    saveBtn.value.forEach(function (ele, ind) {
+                      ele.disabled = false;
+                    });
+                  }
+                })["catch"](function (error) {
+                  errorNet(); //error  Message
                 });
 
               case 2:
-                response = _context4.sent;
-                console.log(response.data);
-                absenceRefs.value[index].style.display = "none";
-
-                if (currentEtat.value == index) {
-                  editBtn.value.forEach(function (ele) {
-                    ele.disabled = false;
-                  });
-                  saveBtn.value.forEach(function (ele, ind) {
-                    // if(index != ind){
-                    //     ele.disabled = true
-                    // }else{
-                    ele.disabled = false; // }
-                  });
-                }
-
-              case 6:
               case "end":
                 return _context4.stop();
             }
@@ -333,6 +328,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return ele.stagiaire.groupe_id == event.target.title;
       });
     }
+
+    var errorNet = function errorNet() {
+      toast.error("Error network", {
+        position: "bottom-right",
+        timeout: 3000,
+        closeOnClick: true,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        icon: true,
+        hideProgressBar: false
+      });
+    };
     /* Alert to confirme for delete user */
 
 
@@ -389,6 +396,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       deleteEtat: deleteEtat,
       changeFil: changeFil,
       changeGp: changeGp,
+      errorNet: errorNet,
       deleteEtatBox: deleteEtatBox,
       axios: (axios__WEBPACK_IMPORTED_MODULE_0___default()),
       onMounted: vue__WEBPACK_IMPORTED_MODULE_1__.onMounted,
