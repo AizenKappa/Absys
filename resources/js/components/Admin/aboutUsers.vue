@@ -161,9 +161,10 @@
     }
 
     const deletUserById = async (id) =>{
-        let response = await axios.get(`/user/${id}`)
+        
+        let response = await axios.get(`/allUsers/${id}`)
         console.log(response.data)
-
+ 
     };
 
     /* For refresh btn and we set timout for spam click :D */

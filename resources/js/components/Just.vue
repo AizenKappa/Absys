@@ -271,8 +271,16 @@
                 }
             }
 
+
+
             list_etats.value = lista_helper.value
             student_ids.value =[]
+
+            st_inputs.value.forEach(element => {
+                element.checked = false
+            });
+
+
     }
     
     

@@ -45,8 +45,10 @@ class FiliereController extends Controller
 
     public function index_users()
     {
-
-        return FiliereResource::collection(User::all());
+        $id = Auth::user()->id;
+        return FiliereResource::collection(User::all()->filter( function($e) use($id) {
+            return $e->id != $id;
+        }));
     }
 
     public function userById(Request $request) {
@@ -57,6 +59,7 @@ class FiliereController extends Controller
             'cin' => $user->cin,
             'email' => $user->email,
             'firstname' => $user->firstname,
+            'role' => $user->role,
             'lastname' => $user->lastname,
         ];
 
@@ -92,6 +95,7 @@ class FiliereController extends Controller
                     'firstname' => $request->first,
                     'lastname' => $request->last,
                     'cin' => $cin,
+                    'role' => $request->role,
                     'email' => $email
                 ]);
 
@@ -403,6 +407,7 @@ class FiliereController extends Controller
             $user->cin =  $request->cin;
             $user->email =  $request->email;
             $user->password =  $request->pwd;
+            $user->role = $request->role;
             $user->save();
 
             return [

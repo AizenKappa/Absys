@@ -28,8 +28,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'profile',
+  emits: ['profile'],
   setup: function setup(__props, _ref) {
-    var expose = _ref.expose;
+    var expose = _ref.expose,
+        emit = _ref.emit;
     expose();
     var toast = (0,vue_toastification__WEBPACK_IMPORTED_MODULE_2__.useToast)();
     var done = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
@@ -237,8 +239,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 response = _context3.sent;
                 user.image.path = response.data.image;
+                emit('profile');
 
-              case 4:
+              case 5:
               case "end":
                 return _context3.stop();
             }
@@ -322,6 +325,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
 
     var __returned__ = {
+      emit: emit,
       toast: toast,
       done: done,
       show: show,

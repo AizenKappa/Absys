@@ -123,6 +123,8 @@
     import axios from "axios";
 
     import { useToast } from "vue-toastification";
+
+    const emit = defineEmits(['profile'])
     const toast = useToast();
 
     const done = ref(false)
@@ -288,6 +290,7 @@
     const updateimage = async () => {
         let response = await axios.get(`/authUser`)
         user.image.path = response.data.image
+        emit('profile')
     }
 
     const getprofile = async (data) =>{

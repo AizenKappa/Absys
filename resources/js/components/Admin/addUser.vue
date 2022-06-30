@@ -54,6 +54,7 @@
                     for="cin" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">CIN</label>
                     <span v-if="!newUser.cin.check" class=" text-red-600">{{ cinError }}</span>
                 </div>
+
                 <!-- Password -->
                 <div class="relative z-0 w-full mb-8 group">
                     <input
@@ -74,6 +75,14 @@
                     for="r-pwd" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Répéter le mot de pass</label>
                     <span v-if="!newUser.rpassword.check" class=" text-red-600">{{ rpwdError }}</span>
                 </div>
+
+                <div class="mb-5">
+                    <select class=" h-[2rem] w-[10rem] border-b-2 border-gray-400 focus:border-blue-600 outline-none" v-model="newUser.role.text">
+                        <option value="admin">Admin</option>
+                        <option selected value="Formateur">Formateur</option>
+                    </select>
+                </div>
+
                 <!-- Auth Password -->
                 <span class="text-gray-400 mt-[5rem]  text-sm">//Entrez votre mot de passe pour enregistrer les changements</span>
                 <div class="relative z-0 w-full mt-[1.8rem] mb-8 group">
@@ -114,6 +123,7 @@
         email : { text:"", check:true, reg: /^[\w\.\-]{5,}@[\w\-]+\.[\w]+$/i },
         cin : { text:"", check:true, reg: /^[A-Z]{1,3}[0-9]{4,6}$/i },
         password : { text:"", check:true },
+        role : { text:"Formateur", check:true },
         rpassword : { text:"", check:true}
     })
 
@@ -224,7 +234,8 @@
         let response = await axios.post(`/addNewUser`,{
             first:newUser.nom.text,last:newUser.prenom.text,
             cin:newUser.cin.text, email:newUser.email.text,
-            pwd:newUser.password.text,curpwd:AuthPwd.text
+            pwd:newUser.password.text,curpwd:AuthPwd.text,
+            role:newUser.role.text
             
         })
 
@@ -274,6 +285,9 @@
             newUser[elem].text = ""
 
         }
+
+
+        newUser.role.text = "Formateur"
         AuthPwd.text = ""
     }
 

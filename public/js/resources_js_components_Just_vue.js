@@ -127,6 +127,9 @@ __webpack_require__.r(__webpack_exports__);
 
       list_etats.value = lista_helper.value;
       student_ids.value = [];
+      st_inputs.value.forEach(function (element) {
+        element.checked = false;
+      });
     };
 
     var checkStd = function checkStd() {

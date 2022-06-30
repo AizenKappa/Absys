@@ -48,7 +48,15 @@
                     <span v-if="!user.cin.check" class=" text-red-600 ml-2">{{cinError}}</span>
                 </div>
 
-                <form @submit.prevent class="mt-5" >
+
+                <div class="mb-2">
+                    <select class="px-2 h-[2rem] w-[10rem] outline-teal-500 outline-2 focus:bg-white bg-slate-200" v-model="user.role.text">
+                        <option value="admin">Admin</option>
+                        <option selected value="Formateur">Formateur</option>
+                    </select>
+                </div>
+
+                <form @submit.prevent >
                     <!-- Auth Password -->
                     <div class="grid grid-cols-1 gap-1 mb-6">
                         <span class="text-gray-400  text-sm mb-2">//Entrez votre mot de passe pour enregistrer les changements</span>
@@ -136,6 +144,7 @@
         email : { text:"", check:true, reg: /^[\w\.\-]{5,}@[\w\-]+\.[\w]+$/i },
         cin : { text:"", check:true, reg: /^[A-Z]{1,3}[0-9]{4,6}$/i },
         pwd : { text:"", check:true },
+        role: { text:"", check:true },
         rpwd : { text:"", check:true },
     })
 
@@ -226,6 +235,7 @@
         user.prenom.text = response.data.lastname
         user.email.text = response.data.email
         user.cin.text = response.data.cin
+        user.role.text = response.data.role
  
         currentCin.value = response.data.cin
         currentEmail.value = response.data.email
@@ -262,7 +272,7 @@
             id: user.id.value ,first:user.nom.text,last:user.prenom.text,
             cin: user.cin.text.toLowerCase() == currentCin.value.toLowerCase() ?  null : user.cin.text , 
             email: user.email.text.toLowerCase() == currentEmail.value.toLowerCase() ?  null : user.email.text ,
-            password:AuthPwd_one.text
+            password:AuthPwd_one.text, role: user.role.text
         })
 
         if(response.data.message !== "user edited successe" ){

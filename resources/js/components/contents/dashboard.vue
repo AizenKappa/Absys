@@ -34,7 +34,7 @@
                 </div>
                 <div id="page-contents" class="w-full h-auto">
                 <!-- --  contents -- -->
-                <router-view />
+                <router-view @profile="getuser" />
                 </div>
             </div>
             </div>
@@ -75,8 +75,6 @@
         getuser()
         updateStatus()
 
-        
-
     })
 
     
@@ -97,11 +95,11 @@
     //get user image
     const getuser = async () =>{
         let response = await axios.get(`/authUser`)
+
         imageUser.value = response.data.image
         fullName.value = response.data.firstname+' '+response.data.lastname
 
     };
-
 
 
    

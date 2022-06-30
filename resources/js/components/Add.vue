@@ -148,7 +148,7 @@
         });
         buttopCheck()
     }
-    
+
 /* fomateur , seance ,student */
     onUpdated(()=>{
         buttopCheck()
