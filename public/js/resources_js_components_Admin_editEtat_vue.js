@@ -333,6 +333,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return ele.stagiaire.groupe_id == event.target.title;
       });
     }
+    /* Alert to confirme for delete user */
+
+
+    var deleteEtatBox = function deleteEtatBox(abs_id, index) {
+      Swal.fire({
+        title: 'Êtes-vous sûr?',
+        text: "Vou ne pourrez pas revenir en arriére!",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: "Annuler",
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Supprimer!'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          deleteEtat(abs_id, index);
+          Swal.fire('Suprimé!', 'Le compte a été supprimé.', 'success');
+        }
+      });
+    };
 
     var __returned__ = {
       message: message,
@@ -369,6 +389,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       deleteEtat: deleteEtat,
       changeFil: changeFil,
       changeGp: changeGp,
+      deleteEtatBox: deleteEtatBox,
       axios: (axios__WEBPACK_IMPORTED_MODULE_0___default()),
       onMounted: vue__WEBPACK_IMPORTED_MODULE_1__.onMounted,
       ref: vue__WEBPACK_IMPORTED_MODULE_1__.ref,
@@ -837,7 +858,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* PROPS */
     , _hoisted_41)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       onClick: function onClick($event) {
-        return $setup.deleteEtat(abs.id, index);
+        return $setup.deleteEtatBox(abs.id, index);
       },
       "class": "absolute w-[1.5rem] h-[1.5rem] opacity-0"
     }, null, 8

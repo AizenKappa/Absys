@@ -149,7 +149,7 @@
 
                     <td class="px-6 py-4 text-left font-medium">
                        <div class="text-red-500 cursor-pointer opacity-[0.7] hover:opacity-[1] hover:scale-110 max-w-max max-h-max">
-                                <button @click="deleteEtat(abs.id,index)" class=" absolute w-[1.5rem] h-[1.5rem] opacity-0"></button>
+                                <button @click="deleteEtatBox(abs.id,index)" class=" absolute w-[1.5rem] h-[1.5rem] opacity-0"></button>
                                     <svg ref="deleteBtn" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -437,6 +437,29 @@
         })
     }
     
+    /* Alert to confirme for delete user */
+    const deleteEtatBox = (abs_id,index) => {
+        Swal.fire({
+            title: 'Êtes-vous sûr?',
+            text: "Vou ne pourrez pas revenir en arriére!",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText:"Annuler",
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Supprimer!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+               deleteEtat(abs_id,index)
+                
+                Swal.fire(
+                'Suprimé!',
+                'Le compte a été supprimé.',
+                'success'
+                )
+            }
+        })
+    }
 </script>
 
 <style scoped>
