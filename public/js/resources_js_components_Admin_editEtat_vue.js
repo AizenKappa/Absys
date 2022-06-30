@@ -70,7 +70,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var deleteBtn = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
     /* current Edit */
 
-    var editMode = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(false);
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
       getData();
     });
@@ -90,31 +89,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
 
     function updateEtat(abs_id, index) {
-      editBtn.value.forEach(function (ele) {
-        ele.disabled = false;
-      });
-      saveBtn.value.forEach(function (ele) {
-        ele.disabled = false;
-      });
-      motif.value.forEach(function (ele) {
-        ele.disabled = true;
-      });
-      editBtn.value[index].classList.toggle("hidden");
-      saveBtn.value[index].classList.toggle("hidden");
-      editMode.value = false;
-      currentEtat.value = null;
-
       if (date_abs.value[index].value != currentAbsInfo.value.date_abs || prof.value[index].value != currentAbsInfo.value.prof_id || duration.value[index].value != currentAbsInfo.value.duration_id || seance.value[index].value != currentAbsInfo.value.seance || etat_jusitf.value[index].value != currentAbsInfo.value.etat_justif || motif.value[index].value != currentAbsInfo.value.motif) {
         console.log("something has Changed");
 
-        if (allAbs.value[index].motif) {
+        if (motif.value[index].value) {
           allAbs.value[index].motif = motif.value[index].value;
         }
 
-        sendUpdateRequest(abs_id, prof.value[index].value, duration.value[index].value, date_abs.value[index].value, seance.value[index].value, etat_jusitf.value[index].value, motif.value[index].value, currentAbsInfo.value.duration_id);
+        if (date_abs.value[index].value == "") {
+          alert("You need to select a Proper Date For the Request to be sent ");
+        } else if (etat_jusitf.value[index].value == "J" && motif.value[index].value == "") {
+          alert("You need to type a Motif");
+        } else {
+          sendUpdateRequest(abs_id, prof.value[index].value, duration.value[index].value, date_abs.value[index].value, seance.value[index].value, etat_jusitf.value[index].value, motif.value[index].value, currentAbsInfo.value.duration_id);
+          saveBtn.value.forEach(function (ele) {
+            ele.disabled = false;
+          });
+          motif.value.forEach(function (ele) {
+            ele.disabled = true;
+          });
+          editBtn.value[index].classList.toggle("hidden");
+          saveBtn.value[index].classList.toggle("hidden");
+          currentEtat.value = null;
+        }
       } else {
         console.log("no changes");
       }
+
+      editBtn.value.forEach(function (ele) {
+        ele.disabled = false;
+      });
     }
 
     function sendUpdateRequest(_x, _x2, _x3, _x4, _x5, _x6, _x7, _x8) {
@@ -221,16 +225,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
                 editBtn.value[index].classList.toggle("hidden");
                 saveBtn.value[index].classList.toggle("hidden");
-                editMode.value = true;
 
                 if (!(currentEtat.value != index)) {
-                  _context3.next = 15;
+                  _context3.next = 14;
                   break;
                 }
 
                 console.log(groupe_id);
                 currentEtat.value = index;
-                _context3.next = 13;
+                _context3.next = 12;
                 return axios__WEBPACK_IMPORTED_MODULE_0___default().post("api/getSome", {
                   "groupe_id": groupe_id,
                   "abs_id": abs_id
@@ -246,14 +249,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   currentAbsInfo.value.motif = motif.value[index].value;
                 });
 
-              case 13:
-                _context3.next = 16;
+              case 12:
+                _context3.next = 15;
                 break;
 
-              case 15:
+              case 14:
                 console.log("you can' send a Request ");
 
-              case 16:
+              case 15:
               case "end":
                 return _context3.stop();
             }
@@ -283,20 +286,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context4.sent;
                 console.log(response.data);
                 absenceRefs.value[index].style.display = "none";
-                /* currentEtatList.value =currentEtatList.value.filter((ele,ind)=>{
-                    return ind != index
-                }) */
 
-                editBtn.value.forEach(function (ele) {
-                  ele.disabled = false;
-                });
-                saveBtn.value.forEach(function (ele) {
-                  ele.disabled = false;
-                });
-                editMode.value = false;
-                currentEtat.value = null;
+                if (currentEtat.value == index) {
+                  editBtn.value.forEach(function (ele) {
+                    ele.disabled = false;
+                  });
+                  saveBtn.value.forEach(function (ele, ind) {
+                    if (index != ind) {
+                      ele.disabled = true;
+                    } else {
+                      ele.disabled = false;
+                    }
+                  });
+                }
 
-              case 9:
+              case 6:
               case "end":
                 return _context4.stop();
             }
@@ -353,7 +357,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       saveBtn: saveBtn,
       editBtn: editBtn,
       deleteBtn: deleteBtn,
-      editMode: editMode,
       editMotif: editMotif,
       updateEtat: updateEtat,
       sendUpdateRequest: sendUpdateRequest,
@@ -14383,7 +14386,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _editEtat_vue_vue_type_template_id_19592237_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editEtat.vue?vue&type=template&id=19592237&scoped=true */ "./resources/js/components/Admin/editEtat.vue?vue&type=template&id=19592237&scoped=true");
 /* harmony import */ var _editEtat_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editEtat.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/Admin/editEtat.vue?vue&type=script&setup=true&lang=js");
 /* harmony import */ var _editEtat_vue_vue_type_style_index_0_id_19592237_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./editEtat.vue?vue&type=style&index=0&id=19592237&scoped=true&lang=css */ "./resources/js/components/Admin/editEtat.vue?vue&type=style&index=0&id=19592237&scoped=true&lang=css");
-/* harmony import */ var C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
@@ -14391,7 +14394,7 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
-const __exports__ = /*#__PURE__*/(0,C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_editEtat_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_editEtat_vue_vue_type_template_id_19592237_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-19592237"],['__file',"resources/js/components/Admin/editEtat.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_editEtat_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_editEtat_vue_vue_type_template_id_19592237_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-19592237"],['__file',"resources/js/components/Admin/editEtat.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -14412,13 +14415,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _test_vue_vue_type_template_id_5b6abe5d__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./test.vue?vue&type=template&id=5b6abe5d */ "./resources/js/components/test.vue?vue&type=template&id=5b6abe5d");
 /* harmony import */ var _test_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./test.vue?vue&type=script&lang=js */ "./resources/js/components/test.vue?vue&type=script&lang=js");
-/* harmony import */ var C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_test_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_test_vue_vue_type_template_id_5b6abe5d__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/test.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_test_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_test_vue_vue_type_template_id_5b6abe5d__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/test.vue"]])
 /* hot reload */
 if (false) {}
 

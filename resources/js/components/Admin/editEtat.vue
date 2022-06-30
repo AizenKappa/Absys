@@ -221,7 +221,7 @@
     const editBtn =ref([]);
     const deleteBtn= ref([]);
     /* current Edit */
-    const editMode = ref(false)
+    
     onMounted(()=>{
         getData()
         
@@ -242,27 +242,7 @@
     }
     function updateEtat(abs_id,index){
         
-        editBtn.value.forEach((ele)=>{
-            
-                ele.disabled = false
-            
-            
-        })
-        saveBtn.value.forEach((ele)=>{
-            
-                ele.disabled = false
-            
-        })
-
-        motif.value.forEach((ele)=>{
-            
-                ele.disabled = true
-            
-        })
-        editBtn.value[index].classList.toggle("hidden")
-        saveBtn.value[index].classList.toggle("hidden")
-        editMode.value = false
-        currentEtat.value = null
+       
 
         
        
@@ -275,21 +255,48 @@
              motif.value[index].value != currentAbsInfo.value.motif   
             ){
                 console.log("something has Changed")
-                if(allAbs.value[index].motif){
+                if(motif.value[index].value){
                     allAbs.value[index].motif = motif.value[index].value
                 }
-                
-
-                sendUpdateRequest(abs_id,
+                if(date_abs.value[index].value == ""){
+                    alert("You need to select a Proper Date For the Request to be sent ")
+                }
+                else if( etat_jusitf.value[index].value == "J" && motif.value[index].value==""){
+                        alert("You need to type a Motif")
+                }else{
+                    sendUpdateRequest(abs_id,
                  prof.value[index].value,duration.value[index].value,
                  date_abs.value[index].value,seance.value[index].value,
                  etat_jusitf.value[index].value,motif.value[index].value,currentAbsInfo.value.duration_id)
+                  saveBtn.value.forEach((ele)=>{
+                        ele.disabled = false
+                    })
 
+                motif.value.forEach((ele)=>{
+                    
+                        ele.disabled = true
+                    
+                })
+                editBtn.value[index].classList.toggle("hidden")
+                saveBtn.value[index].classList.toggle("hidden")
+            
+                currentEtat.value = null
+                }
+
+                
+               
                  
                 
             }else{
                 console.log("no changes")
             }
+             editBtn.value.forEach((ele)=>{
+            
+                ele.disabled = false
+            
+            
+        })
+        
         
     }
 
@@ -349,7 +356,7 @@
         editBtn.value[index].classList.toggle("hidden")
         saveBtn.value[index].classList.toggle("hidden")
 
-        editMode.value = true
+        
         if(currentEtat.value != index){
             console.log(groupe_id)
             currentEtat.value = index
@@ -382,24 +389,21 @@
         })
         console.log(response.data)
         absenceRefs.value[index].style.display = "none"
-        /* currentEtatList.value =currentEtatList.value.filter((ele,ind)=>{
-            return ind != index
-        }) */
-   
-        editBtn.value.forEach((ele)=>{
+        if(currentEtat.value == index){
+             editBtn.value.forEach((ele)=>{
             
                 ele.disabled = false
-            
-            
-        })
-        saveBtn.value.forEach((ele)=>{
-            
+            })
+            saveBtn.value.forEach((ele,ind)=>{
+            if(index != ind){
+                ele.disabled = true
+            }else{
                 ele.disabled = false
-            
+            }
         })
 
-        editMode.value = false
-        currentEtat.value = null
+        }
+        
         
         
     }
