@@ -20,3 +20,8 @@
     cursor: pointer;
     color: gray;
   }
+
+  .swal2-title {
+    font-size: 1.2rem !important;
+    font-family: Georgia, serif;
+  }

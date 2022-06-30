@@ -108,7 +108,7 @@
                     </td>
 
                     <td class="px-6 py-4 text-left font-medium">
-                        <select class="w-28 scale-90 w-full font-medium h-[2rem] shadow-sm shadow-gray-300" ref="seance" :disabled="(index == currentEtat)? false:true"  >
+                        <select class="w-28 scale-90  font-medium h-[2rem] shadow-sm shadow-gray-300" ref="seance" :disabled="(index == currentEtat)? false:true"  >
                             <option  class="hidden" selected>{{ abs.seance }}</option>
                             <option value='Presentiel' >Presentiel</option>
                             <option value="distanciel" >Distanciel</option>>
@@ -131,7 +131,7 @@
                     <td class="px-6 py-4 text-left font-medium">
                         <input ref="motif"
                         :disabled="abs.etat_justif == 'NJ'" 
-                        class="w-full font-medium h-[2rem] shadow-sm shadow-gray-300 bg-transparent px-2 h-9 focus:outline-cyan-500" type="text"
+                        class="w-full font-medium h-[2rem] shadow-sm shadow-gray-300 bg-transparent px-2 focus:outline-cyan-500" type="text"
                         :value="abs.motif" size="6">
                     </td>
 
@@ -259,10 +259,11 @@
                     allAbs.value[index].motif = motif.value[index].value
                 }
                 if(date_abs.value[index].value == ""){
-                    alert("You need to select a Proper Date For the Request to be sent ")
+                    Swal.fire("You need to select a Proper Date For the Request to be sent ")
                 }
                 else if( etat_jusitf.value[index].value == "J" && motif.value[index].value==""){
-                        alert("You need to type a Motif")
+                      
+                        Swal.fire("You need to type a Motif")
                 }else{
                     sendUpdateRequest(abs_id,
                  prof.value[index].value,duration.value[index].value,
@@ -446,6 +447,11 @@
     *{
         box-sizing: border-box;
     }
+
+    .swal2-popup {
+    font-size: 1.6rem !important;
+    font-family: Georgia, serif;
+}
     
 
 </style>

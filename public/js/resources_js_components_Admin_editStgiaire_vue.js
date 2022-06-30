@@ -544,18 +544,23 @@ function useFilieres() {
   var addAbsence = function addAbsence(st_ids, prof_id, duration_id, seance, date_abs, reset) {
     // send a POST request
     console.log(duration_id);
-    axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/addAbsence', {
-      stagiaire_ids: st_ids,
-      prof_id: prof_id,
-      duration_id: duration_id,
-      seance: seance,
-      date_abs: date_abs
-    }).then(function (response) {
-      add_status.value = response.status;
-    })["catch"](function (error) {
-      console.log(error);
-    });
-    reset();
+
+    if (date_abs == "") {
+      Swal.fire("You Need To Choose A Correct Date ");
+    } else {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/addAbsence', {
+        stagiaire_ids: st_ids,
+        prof_id: prof_id,
+        duration_id: duration_id,
+        seance: seance,
+        date_abs: date_abs
+      }).then(function (response) {
+        add_status.value = response.status;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+      reset();
+    }
   };
 
   var addJustif = function addJustif(abs_ids, motif, manualle_motif) {

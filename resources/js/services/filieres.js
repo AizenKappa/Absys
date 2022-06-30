@@ -55,16 +55,21 @@ export default function useFilieres(){
     const addAbsence = (st_ids,prof_id,duration_id,seance,date_abs,reset) => {
         // send a POST request
         console.log(duration_id)
-        axios.post('/api/addAbsence', {
+        if(date_abs==""){
+            Swal.fire("You Need To Choose A Correct Date ")
+        }else{
+            axios.post('/api/addAbsence', {
             stagiaire_ids:st_ids,
             prof_id: prof_id,
             duration_id:duration_id,
             seance:seance,
             date_abs:date_abs
-        }).then((response) => {
+            }).then((response) => {
             add_status.value = response.status
-        }).catch((error) => {console.log(error);});
-        reset()
+            }).catch((error) => {console.log(error);});
+            reset()
+        }
+        
     }
 
     const addJustif = (abs_ids,motif,manualle_motif) => {

@@ -97,9 +97,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
 
         if (date_abs.value[index].value == "") {
-          alert("You need to select a Proper Date For the Request to be sent ");
+          Swal.fire("You need to select a Proper Date For the Request to be sent ");
         } else if (etat_jusitf.value[index].value == "J" && motif.value[index].value == "") {
-          alert("You need to type a Motif");
+          Swal.fire("You need to type a Motif");
         } else {
           sendUpdateRequest(abs_id, prof.value[index].value, duration.value[index].value, date_abs.value[index].value, seance.value[index].value, etat_jusitf.value[index].value, motif.value[index].value, currentAbsInfo.value.duration_id);
           reset(index);
@@ -787,7 +787,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ))], 8
     /* PROPS */
     , _hoisted_22)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
-      "class": "w-28 scale-90 w-full font-medium h-[2rem] shadow-sm shadow-gray-300",
+      "class": "w-28 scale-90 font-medium h-[2rem] shadow-sm shadow-gray-300",
       ref_for: true,
       ref: "seance",
       disabled: index == $setup.currentEtat ? false : true
@@ -811,7 +811,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       ref_for: true,
       ref: "motif",
       disabled: abs.etat_justif == 'NJ',
-      "class": "w-full font-medium h-[2rem] shadow-sm shadow-gray-300 bg-transparent px-2 h-9 focus:outline-cyan-500",
+      "class": "w-full font-medium h-[2rem] shadow-sm shadow-gray-300 bg-transparent px-2 focus:outline-cyan-500",
       type: "text",
       value: abs.motif,
       size: "6"
@@ -14341,7 +14341,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.activeLink[data-v-19592237]{\r\n        border-color: rgb(8, 91, 255);\r\n        transition: all .8s ease 0s;\n}\n*[data-v-19592237]{\r\n        box-sizing: border-box;\n}\r\n    \r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.activeLink[data-v-19592237]{\r\n        border-color: rgb(8, 91, 255);\r\n        transition: all .8s ease 0s;\n}\n*[data-v-19592237]{\r\n        box-sizing: border-box;\n}\n.swal2-popup[data-v-19592237] {\r\n    font-size: 1.6rem !important;\r\n    font-family: Georgia, serif;\n}\r\n    \r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
