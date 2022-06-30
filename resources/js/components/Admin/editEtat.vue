@@ -175,7 +175,9 @@
     import axios from 'axios';
     import {onMounted, ref} from "vue";
     import testVue from '../test.vue';
-    
+    import { useToast } from "vue-toastification";
+
+    const toast = useToast();
     const message = ref("Hello World")
     const selectedFil = ref("all")
     /*Start raw data */
@@ -197,6 +199,7 @@
 
     const absenceRefs = ref([])
     
+    const wait = ref(false)
    
     const date_abs = ref([]);
     const prof=ref([]);
@@ -406,7 +409,12 @@
 
                 }
         }).catch(error=>{
-            errorNet()
+            // Swal.fire({
+            //     icon: 'error',
+            //     title: 'Oops...',
+            //     text: 'Something went wrong!',
+            //     footer: '<a href="">Why do I have this issue?</a>'
+            //     })
             //error  Message
         })
         
@@ -450,10 +458,24 @@
             hideProgressBar: false,
         });
     }
-    
+    const callusers = () =>{
+        if (wait.value) {
+            return;
+        }
+
+        errorNet()
+        wait.value  = true;
+
+        setTimeout(function() {
+            wait.value = false;
+        }, 3000);
+    }
     /* Alert to confirme for delete user */
     const deleteEtatBox = (abs_id,index) => {
-        Swal.fire({
+        if(navigator.onLine ==false){
+           callusers()
+        }else{
+             Swal.fire({
             title: 'Êtes-vous sûr?',
             text: "Vou ne pourrez pas revenir en arriére!",
             icon: 'warning',
@@ -463,7 +485,9 @@
             cancelButtonColor: '#d33',
             confirmButtonText: 'Supprimer!'
         }).then((result) => {
+
             if (result.isConfirmed) {
+                
                deleteEtat(abs_id,index)
                 
                 Swal.fire(
@@ -472,7 +496,10 @@
                 'success'
                 )
             }
+            
         })
+        }
+       
     }
 </script>
 
