@@ -64,6 +64,10 @@ const router = createRouter({
           name: 'Update stagiares',
           component: () => import('../components/Admin/editStgiaire.vue')
         },
+        { path: '/settings',
+          name: 'Settings',
+          component: () => import('../components/Admin/settings.vue')
+        },
     ]
   })
   

@@ -62,11 +62,12 @@
                         <span>Update Stagiaiare</span>
                     </router-link>
                     
-                    <a href="#">ABORT EDU</a>
+                    <router-link to="/settings" @click="$emit('update:modelValue',check())">
+                        <fas icon="user-graduate" />
+                        <span>Settings</span>
+                    </router-link>
 
-                    <a href="#">ABORT EDU</a>
-
-                    <a href="#">ABORT EDU</a>
+                   
     
 
                 </div>
