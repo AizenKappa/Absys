@@ -28,6 +28,7 @@ __webpack_require__.r(__webpack_exports__);
     var avantExcel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("");
     var awrong = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var bwrong = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+    var loading = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
 
     function handleBase(event) {
       baseExcel.value = event.target.files[0];
@@ -53,6 +54,7 @@ __webpack_require__.r(__webpack_exports__);
 
           if (resultBase.includes('Stagiare en fomation')) {
             if (resultAvant.includes('Formateur Affecté Présentiel Actif')) {
+              loading.value = true;
               storeExcel();
             } else {
               error("Wrong avancement !!");
@@ -70,6 +72,7 @@ __webpack_require__.r(__webpack_exports__);
       data.append('avant', avantExcel.value);
       axios__WEBPACK_IMPORTED_MODULE_1___default().post('/storeExcel', data).then(function (response) {
         if (response.data.message == "success") {
+          loading.value = false;
           success("successeful");
         }
       })["catch"](function (error) {
@@ -107,6 +110,7 @@ __webpack_require__.r(__webpack_exports__);
       avantExcel: avantExcel,
       awrong: awrong,
       bwrong: bwrong,
+      loading: loading,
       handleBase: handleBase,
       handleAvant: handleAvant,
       handleSubmit: handleSubmit,
@@ -181,22 +185,46 @@ var _hoisted_10 = {
   key: 0,
   "class": "absolute top-4 right-5 text-red-500"
 };
+var _hoisted_11 = {
+  key: 0
+};
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  type: "submit",
-  "class": "bg-transparent hover:bg-blue-700 text-blue-700 font-semibold hover:text-white w-[8rem] py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-}, " Upload ", -1
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  role: "status",
+  "class": "inline w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300",
+  viewBox: "0 0 100 101",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  d: "M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z",
+  fill: "currentColor"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  d: "M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z",
+  fill: "currentFill"
+})], -1
 /* HOISTED */
 );
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "relative mt-10"
+var _hoisted_13 = [_hoisted_12];
+var _hoisted_14 = {
+  key: 1,
+  "class": "text-center"
+};
+var _hoisted_15 = {
+  key: 2,
+  "class": "text-center w-full"
+};
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "w-[40rem] rounded-sm bg-white mt-5 shadow-md shadow-slate-300 h-32 grid place-content-center"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "relative"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "checkPrent"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
   type: "checkbox",
   "class": "checkbox"
-})])], -1
+})])])], -1
 /* HOISTED */
 );
 
@@ -220,9 +248,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "file"
   }, null, 32
   /* HYDRATE_EVENTS */
-  ), $setup.awrong ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_10, "Wrong avant !!")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), _hoisted_11], 40
+  ), $setup.awrong ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_10, "Wrong avant !!")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button type=\"submit\" class=\"bg-transparent  font-semibold \r\n          py-2 px-4  rounded\">\r\n            Upload\r\n        </button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "submit",
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["rounded text-md px-5 py-2.5 mr-2 inline-flex items-center w-[8rem]", $setup.loading ? 'text-white bg-blue-700' : 'hover:bg-blue-600  text-blue-700 hover:text-white border border-blue-500 hover:border-transparent'])
+  }, [$setup.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_11, _hoisted_13)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_14, "Loading...")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$setup.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_15, "Upload")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
+  /* CLASS */
+  )], 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_2), _hoisted_12]);
+  , _hoisted_2), _hoisted_16]);
 }
 
 /***/ }),

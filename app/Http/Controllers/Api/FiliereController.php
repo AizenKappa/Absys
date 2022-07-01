@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PHPUnit\TextUI\XmlConfiguration\Group;
 use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Artisan;
 
 class FiliereController extends Controller
 {
@@ -629,6 +630,8 @@ class FiliereController extends Controller
         $insertFile = fopen(database_path("/sql/data.sql"),"w");
         fwrite($insertFile,$txt);
         
+
+       /*  Artisan::call('php artisan migrate:fresh --seed'); */
         return [
             "message"=> "success"
         ];
