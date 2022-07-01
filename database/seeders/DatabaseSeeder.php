@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
         ]);
         
 
-        $path = database_path("absysInsert/sql/insertFile.sql");
+        $path = database_path("sql/data.sql");
         DB::unprepared(file_get_contents($path));
         $this->command->info('Success');
     }

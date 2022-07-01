@@ -58,9 +58,14 @@ Route::post('/storeExcel',function(Request $request){
     $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($avantPath);
     $sheet = $spreadsheet->getSheet($spreadsheet->getFirstSheetIndex());
     $array_p = $sheet->toArray();
+
+
+    
+
    
     $filieres = [];
     $exFil=[];/* filiere that has been adde to $filiere */
+    
 $i=1;
 foreach ($array as $e) {
  

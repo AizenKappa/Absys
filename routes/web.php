@@ -83,9 +83,11 @@ Route::get('/authUser', [FiliereController::class, 'getAuthUser'])->middleware('
 Route::get('/updateStatus', [FiliereController::class, 'updateStatus'])->middleware('auth');
 Route::post('/updateStagiaire', [FiliereController::class, 'update_stagiaire'])->middleware('auth');
 
+Route::post('/storeExcel', [FiliereController::class, 'store_excel'])->middleware('auth');
 
+    
 
-
+    
 
 
 /* Route::get('/test',function(){
