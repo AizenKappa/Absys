@@ -89,31 +89,34 @@
 
     function handleSubmit(){
 
-       var resultBase = []
-       var resultAvant = []
+    //    var resultBase = []
+    //    var resultAvant = []
 
-        let readerBase = new FileReader();
-        readerBase.readAsText(baseExcel.value);
-        readerBase.onload = function() {
-        resultBase  = (readerBase.result).split(",")
+    //     let readerBase = new FileReader();
+    //     readerBase.readAsText(baseExcel.value);
+    //     readerBase.onload = function() {
+    //     resultBase  = readerBase.result
             
-            let readerAvant = new FileReader();
-            readerAvant.readAsText(avantExcel.value);
-            readerAvant.onload = function() {
-                resultAvant  = (readerAvant.result).split(",")
-                
-                if(resultBase.includes('Stagiare en fomation')){
-                    if(resultAvant.includes('Formateur Affecté Présentiel Actif')){
-                        loading.value = true
-                        storeExcel()
-                    }else{
-                        error("Wrong avancement !!")
-                    }
-                }else{
-                    error("Wrong baseplat !!")
-                }
-            };
-        }
+    //         let readerAvant = new FileReader();
+    //         readerAvant.readAsText(avantExcel.value);
+    //         readerAvant.onload = function() {
+    //             resultAvant  = readerAvant.result
+    //             //console.log(resultBase)
+    //             console.log(resultAvant)
+    //             if(resultBase.includes('Stagiare en fomation')){
+    //                 if(resultAvant.includes('Formateur Affecté Présentiel Actif')){
+    //                     loading.value = true
+    //                     storeExcel()
+    //                 }else{
+    //                     error("Wrong avancement !!")
+    //                 }
+    //             }else{
+    //                 error("Wrong baseplat !!")
+    //             }
+    //         };
+    //     }
+    loading.value = true
+    storeExcel()
     }
 
     function storeExcel()
@@ -127,8 +130,12 @@
                 loading.value = false
                 success("successeful")
             }
+            console.log(response)
         })
-        .catch((error) => { error("Something went wrong") })
+        .catch((erro) => { 
+             loading.value = false
+            error(`Something went wrong${erro}`) 
+            })
 
     }
             

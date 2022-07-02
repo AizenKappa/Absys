@@ -40,27 +40,20 @@ function getId($value, $array,string $col_name){
     }
 }
 Route::post('/storeExcel',function(Request $request){
-    // $baseExt = $request->file('base')->guessExtension();
-    // $avantExt = $request->file('avant')->guessExtension();
-    // return [
-    //     'base'=>$baseExt,
-    //     'avant'=>$avantExt
-    // ];
-    $request->file('base')->storeAs('excels',"base.csv");
-    $request->file('avant')->storeAs('excels',"avant.csv");
+    $baseExt = $request->file('base')->guessExtension();
+    $avantExt = $request->file('avant')->guessExtension();
+  
+    $request->file('base')->storeAs('excels',"base.".$baseExt);
+    $request->file('avant')->storeAs('excels',"avant.".$avantExt);
     
-    // $basePath = storage_path('/app/excels/base.csv');
-    $avantPath = storage_path('/app/excels/avant.csv');
-    $basePath= storage_path('/app/excels/base.csv');
+    $basePath= storage_path('/app/excels/base.'.$baseExt);
+    $avantPath = storage_path('/app/excels/avant.'.$avantExt);
     $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($basePath);
     $sheet = $spreadsheet->getSheet($spreadsheet->getFirstSheetIndex());
     $array = $sheet->toArray();
     $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($avantPath);
     $sheet = $spreadsheet->getSheet($spreadsheet->getFirstSheetIndex());
     $array_p = $sheet->toArray();
-
-
-    
 
    
     $filieres = [];

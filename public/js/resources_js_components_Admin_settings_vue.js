@@ -39,31 +39,32 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     function handleSubmit() {
-      var resultBase = [];
-      var resultAvant = [];
-      var readerBase = new FileReader();
-      readerBase.readAsText(baseExcel.value);
-
-      readerBase.onload = function () {
-        resultBase = readerBase.result.split(",");
-        var readerAvant = new FileReader();
-        readerAvant.readAsText(avantExcel.value);
-
-        readerAvant.onload = function () {
-          resultAvant = readerAvant.result.split(",");
-
-          if (resultBase.includes('Stagiare en fomation')) {
-            if (resultAvant.includes('Formateur Affecté Présentiel Actif')) {
-              loading.value = true;
-              storeExcel();
-            } else {
-              error("Wrong avancement !!");
-            }
-          } else {
-            error("Wrong baseplat !!");
-          }
-        };
-      };
+      //    var resultBase = []
+      //    var resultAvant = []
+      //     let readerBase = new FileReader();
+      //     readerBase.readAsText(baseExcel.value);
+      //     readerBase.onload = function() {
+      //     resultBase  = readerBase.result
+      //         let readerAvant = new FileReader();
+      //         readerAvant.readAsText(avantExcel.value);
+      //         readerAvant.onload = function() {
+      //             resultAvant  = readerAvant.result
+      //             //console.log(resultBase)
+      //             console.log(resultAvant)
+      //             if(resultBase.includes('Stagiare en fomation')){
+      //                 if(resultAvant.includes('Formateur Affecté Présentiel Actif')){
+      //                     loading.value = true
+      //                     storeExcel()
+      //                 }else{
+      //                     error("Wrong avancement !!")
+      //                 }
+      //             }else{
+      //                 error("Wrong baseplat !!")
+      //             }
+      //         };
+      //     }
+      loading.value = true;
+      storeExcel();
     }
 
     function storeExcel() {
@@ -75,8 +76,11 @@ __webpack_require__.r(__webpack_exports__);
           loading.value = false;
           success("successeful");
         }
-      })["catch"](function (error) {
-        error("Something went wrong");
+
+        console.log(response);
+      })["catch"](function (erro) {
+        loading.value = false;
+        error("Something went wrong".concat(erro));
       });
     }
 
@@ -272,13 +276,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _settings_vue_vue_type_template_id_0190a48e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./settings.vue?vue&type=template&id=0190a48e */ "./resources/js/components/Admin/settings.vue?vue&type=template&id=0190a48e");
 /* harmony import */ var _settings_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./settings.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/Admin/settings.vue?vue&type=script&setup=true&lang=js");
-/* harmony import */ var C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_settings_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_settings_vue_vue_type_template_id_0190a48e__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Admin/settings.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_settings_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_settings_vue_vue_type_template_id_0190a48e__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Admin/settings.vue"]])
 /* hot reload */
 if (false) {}
 

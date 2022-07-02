@@ -425,26 +425,72 @@ class FiliereController extends Controller
 
     public function store_excel(Request $request)
     {
-        $request->file('base')->storeAs('excels',"base.csv");
-        $request->file('avant')->storeAs('excels',"avant.csv");
+            // $request->file('base')->storeAs('excels',"base.csv");
+            // $request->file('avant')->storeAs('excels',"avant.csv");
         
-        $avantPath = storage_path('/app/excels/avant.csv');
-        $basePath= storage_path('/app/excels/base.csv');
-        
-            /* -------------------base-------------------- */
-            $array = [];
-            $handle = fopen($basePath, "r");
-            while (( $row = fgetcsv($handle)) !== false) {
-                $array[] = $row;
+       
+
+            // $avantPath = storage_path('/app/excels/avant.csv');
+            // $basePath= storage_path('/app/excels/base.csv');     
+            // /* -------------------base-------------------- */
+            // $array = [];
+            // $handle = fopen($basePath, "r");
+            // while (( $row = fgetcsv($handle)) !== false) {
+            //     $array[] = $row;
+            // }
+            // $array = mb_convert_encoding($array, "UTF-8", "auto");
+            // /* --------------------avant------------------------ */
+            // $array_p = [];
+            // $handle = fopen($avantPath, "r");
+            // while (( $row = fgetcsv($handle)) !== false) {
+            //     $array_p[] = $row;
+            // }
+            // $array_p = mb_convert_encoding($array_p, "UTF-8", "auto");
+            /* Getting the extension */
+            $baseExt = $request->file('base')->guessExtension();
+            $avantExt = $request->file('avant')->guessExtension();
+                /* storing the files */
+            $request->file('base')->storeAs('excels',"base.".$baseExt);
+            $request->file('avant')->storeAs('excels',"avant.".$avantExt);
+
+            /* Files Path */
+            $basePath= storage_path('/app/excels/base.'.$baseExt);
+            $avantPath = storage_path('/app/excels/avant.'.$avantExt);
+            if($baseExt == "csv"){
+
+                $array = [];
+                $handle = fopen($basePath, "r");
+                while (( $row = fgetcsv($handle)) !== false) {
+                    $array[] = $row;
+                }
+                $array = mb_convert_encoding($array, "UTF-8", "auto");
+
+            }else{
+                $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($basePath);
+                $sheet = $spreadsheet->getSheet($spreadsheet->getFirstSheetIndex());
+                $array = $sheet->toArray();
             }
-            $array = mb_convert_encoding($array, "UTF-8", "auto");
-            /* --------------------avant------------------------ */
-            $array_p = [];
-            $handle = fopen($avantPath, "r");
-            while (( $row = fgetcsv($handle)) !== false) {
-                $array_p[] = $row;
+
+            if($avantExt == "csv"){
+                $array_p = [];
+                $handle = fopen($avantPath, "r");
+                while (( $row = fgetcsv($handle)) !== false) {
+                    $array_p[] = $row;
+                }
+                $array_p = mb_convert_encoding($array_p, "UTF-8", "auto");
+
             }
-            $array_p = mb_convert_encoding($array_p, "UTF-8", "auto");
+            else{
+                $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($avantPath);
+                $sheet = $spreadsheet->getSheet($spreadsheet->getFirstSheetIndex());
+                $array_p = $sheet->toArray();
+            }
+            // return[
+            //     "base"=>$baseExt,
+            //     "avant"=>$avantExt,
+            // ];
+            
+    
     
         return $this->readAndInsert($array, $array_p);
 
@@ -631,7 +677,7 @@ class FiliereController extends Controller
         fwrite($insertFile,$txt);
         
 
-       /*  Artisan::call('php artisan migrate:fresh --seed'); */
+       Artisan::call('migrate:fresh --seed');
         return [
             "message"=> "success"
         ];
