@@ -1224,6 +1224,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .fill-gray-600 {
   fill: #4b5563;
 }
+.fill-blue-600 {
+  fill: #2563eb;
+}
 .p-3 {
   padding: 0.75rem;
 }
@@ -1528,6 +1531,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1;
   color: rgb(229 231 235 / var(--tw-text-opacity));
 }
+.text-teal-500 {
+  --tw-text-opacity: 1;
+  color: rgb(20 184 166 / var(--tw-text-opacity));
+}
 .antialiased {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -1546,6 +1553,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .opacity-\[1\] {
   opacity: 1;
+}
+.opacity-\[\] {
+  opacity: ;
 }
 .shadow-lg {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);

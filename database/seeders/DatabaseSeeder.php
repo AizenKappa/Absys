@@ -29,17 +29,20 @@ class DatabaseSeeder extends Seeder
             'title'=>"Toute la Journée",
             "h_debut"=>"08:30:00",
             "h_fin"=>"18:30:00",
+            "active" => "on"
         ]);
 
         Duration::create([
             'title'=>"La matinée",
             "h_debut"=>"08:30:00",
             "h_fin"=>"13:30:00",
+            "active" => "on"
         ]);
         Duration::create([
             'title'=>"L'après-midi",
             "h_debut"=>"13:30:00",
             "h_fin"=>"18:30:00",
+            "active" => "on"
         ]);
         
 
@@ -47,23 +50,74 @@ class DatabaseSeeder extends Seeder
             'title'=>"La Première Séance",
             "h_debut"=>"08:30:00",
             "h_fin"=>"11:00:00",
+            "active" => "on"
         ]);
         Duration::create([
             'title'=>"La Deuxième Séance",
             "h_debut"=>"11:00:00",
             "h_fin"=>"13:30:00",
+            "active" => "on"
         ]);
         Duration::create([
             'title'=>"La Troisième Séance",
             "h_debut"=>"13:30:00",
-            "h_fin"=>"18:30:00",
+            "h_fin"=>"16:00:00",
+            "active" => "on"
         ]);
         Duration::create([
             'title'=>"La Quatrième Séance",
             "h_debut"=>"16:00:00",
             "h_fin"=>"18:30:00",
+            "active" => "on"
         ]);
         
+
+
+        Duration::create([
+            'title'=>"Toute la Journée",
+            "h_debut"=>"08:30:00",
+            "h_fin"=>"16:30:00",
+            "active" => "off"
+        ]);
+
+        Duration::create([
+            'title'=>"La matinée",
+            "h_debut"=>"08:30:00",
+            "h_fin"=>"12:30:00",
+            "active" => "off"
+        ]);
+        Duration::create([
+            'title'=>"L'après-midi",
+            "h_debut"=>"12:30:00",
+            "h_fin"=>"16:30:00",
+            "active" => "off"
+        ]);
+        
+
+        Duration::create([
+            'title'=>"La Première Séance",
+            "h_debut"=>"08:30:00",
+            "h_fin"=>"10:30:00",
+            "active" => "off"
+        ]);
+        Duration::create([
+            'title'=>"La Deuxième Séance",
+            "h_debut"=>"10:30:00",
+            "h_fin"=>"12:30:00",
+            "active" => "off"
+        ]);
+        Duration::create([
+            'title'=>"La Troisième Séance",
+            "h_debut"=>"12:30:00",
+            "h_fin"=>"14:30:00",
+            "active" => "off"
+        ]);
+        Duration::create([
+            'title'=>"La Quatrième Séance",
+            "h_debut"=>"14:30:00",
+            "h_fin"=>"16:30:00",
+            "active" => "off"
+        ]);
 
         $path = database_path("sql/data.sql");
         DB::unprepared(file_get_contents($path));

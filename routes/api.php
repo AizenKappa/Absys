@@ -544,7 +544,7 @@ Route::post("/getSome",function(Request $request){
 
 
 Route::get("getDurations",function(){
-    $duration = Duration::all();
+    $duration = Duration::all()->where('active','on');
     return $duration;
 });
 

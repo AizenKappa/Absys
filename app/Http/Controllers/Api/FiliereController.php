@@ -683,6 +683,69 @@ class FiliereController extends Controller
         ];
     }
 
+    public function check_time()
+    {
+
+        $startTime = Carbon::parse(Duration::First()->updated_at);
+        $finishTime = Carbon::parse(Carbon::now());
+        $time = $finishTime->diffInSeconds($startTime);
+
+        if($time <  86400 ){
+            return [
+                "ready" => "no",
+                "time" => 86400 - $time,
+                "active" => Duration::First()->active
+            ];
+        }else{
+            return [
+                "ready" => "yes",
+                "active" => Duration::First()->active
+            ];
+        }
+        
+    }
+
+    public function update_time()
+    {
+
+            $startTime = Carbon::parse(Duration::First()->updated_at);
+            $finishTime = Carbon::parse(Carbon::now());
+
+            $time = $finishTime->diffInSeconds($startTime);
+
+            if($time >= 86400)
+            {
+
+                Duration::Where('active','off')
+                ->update([
+                    'active' => 'ready'
+                ]);
+
+                Duration::Where('active','on')
+                ->update([
+                    'active' => 'off'
+                ]);
+
+                Duration::Where('active','ready')
+                ->update([
+                    'active' => 'on'
+                ]);
+
+                return [
+                    "type" => "success",
+                    "message" => "Time Updated successful"
+                ];
+            }
+            
+            else
+            {
+                return [
+                    "type" => "wrong",
+                    "message" => "Vou devez attendre le temps ci-dessus"
+                ];
+            }
+    }
+
 }
 /* About carbon */
     // 'etat' => Stagiaire::find($this->id)->absences->where('etat_justif','NJ'),

@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('durations', function (Blueprint $table) {
             $table->id();
-            $table->string("title")->unique();
+            $table->string("title");
             $table->time("h_debut");
             $table->time("h_fin");
+            $table->string("active");
             $table->timestamps();
         });
     }
