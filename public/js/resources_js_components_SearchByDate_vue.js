@@ -27,10 +27,67 @@ __webpack_require__.r(__webpack_exports__);
     var selected_period = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("year");
     var period_debut = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     var period_fin = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+    var activeHoure = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('TT');
+    var gpId = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+
+    var periodChanged = function periodChanged() {
+      period_debut.value = null, period_fin.value = null;
+      getetats(selected_fil.value, selected_period.value, period_debut.value, period_fin.value);
+      activeHoure.value = 'TT';
+    };
+
+    var inputeDate = function inputeDate() {
+      if (period_debut.value != null && period_fin.value != null) {
+        getetats(selected_fil.value, selected_period.value, period_debut.value, period_fin.value);
+        activeHoure.value = 'TT';
+      }
+    };
+
+    var changeGp = function changeGp(event) {
+      document.querySelectorAll("a").forEach(function (element) {
+        element.classList.remove("activeLink");
+      });
+      event.target.classList.add("activeLink");
+      gpId.value = event.target.title;
+      activeHoure.value == 'TT' ? filterEtat() : filterEtat(activeHoure.value);
+    };
+
+    var filterEtat = function filterEtat() {
+      var hour = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+      if (gpId.value != null) {
+        if (hour == null) {
+          etats.value = allEtats.value.filter(function (e) {
+            return e.stagiaire.groupe_id == gpId.value;
+          });
+        } else {
+          etats.value = allEtats.value.filter(function (e) {
+            return e.stagiaire.groupe_id == gpId.value && e.etat_justif == hour;
+          });
+        }
+      } else {
+        if (hour == null) {
+          etats.value = allEtats.value.filter(function (e) {
+            return true;
+          });
+        } else {
+          console.log("yo");
+          etats.value = allEtats.value.filter(function (e) {
+            return e.etat_justif == hour;
+          });
+        }
+      }
+    };
+
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(function () {
+      return activeHoure.value;
+    }, function () {
+      if (activeHoure.value == 'NJ') filterEtat('NJ');else if (activeHoure.value == 'J') filterEtat('J');else if (activeHoure.value == 'TT') filterEtat();
+    });
     /* Call Api Groupes */
 
     var getcontents = function getcontents() {
-      selected_gp.value = "choose your groupe", getgroupes(selected.value);
+      selected_fil.value !== "Tous" ? getgroupes(selected_fil.value) : groupes.value = null, getetats(selected_fil.value, selected_period.value, period_debut.value, period_fin.value), activeHoure.value = 'TT';
     };
     /* Return all our functuons and variables from { services/filieres.js } to use here */
 
@@ -43,17 +100,25 @@ __webpack_require__.r(__webpack_exports__);
         groupes = _useFilieres.groupes,
         stagiaires = _useFilieres.stagiaires,
         getstagiaires = _useFilieres.getstagiaires,
+        allEtats = _useFilieres.allEtats,
         nom_gp = _useFilieres.nom_gp,
-        getetats = _useFilieres.getetats;
+        getetats = _useFilieres.getetats,
+        etats = _useFilieres.etats;
     /* On Mounted call Aoi Flieres */
 
 
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(getFilieres());
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(getFilieres(), getetats(selected_fil.value, selected_period.value, period_debut.value, period_fin.value));
     var __returned__ = {
       selected_fil: selected_fil,
       selected_period: selected_period,
       period_debut: period_debut,
       period_fin: period_fin,
+      activeHoure: activeHoure,
+      gpId: gpId,
+      periodChanged: periodChanged,
+      inputeDate: inputeDate,
+      changeGp: changeGp,
+      filterEtat: filterEtat,
       getcontents: getcontents,
       getFilieres: getFilieres,
       filieres: filieres,
@@ -62,9 +127,13 @@ __webpack_require__.r(__webpack_exports__);
       groupes: groupes,
       stagiaires: stagiaires,
       getstagiaires: getstagiaires,
+      allEtats: allEtats,
       nom_gp: nom_gp,
       getetats: getetats,
+      etats: etats,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
+      reactive: vue__WEBPACK_IMPORTED_MODULE_0__.reactive,
+      watch: vue__WEBPACK_IMPORTED_MODULE_0__.watch,
       useFilieres: _services_filieres_js__WEBPACK_IMPORTED_MODULE_1__["default"],
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted
     };
@@ -116,7 +185,7 @@ var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
 
 var _hoisted_5 = ["value"];
 var _hoisted_6 = {
-  "class": "w-full px-12 grid grid-cols-1 gap-6 lg:flex md:justify-between"
+  "class": "w-full px-10 grid grid-cols-1 gap-6 lg:flex md:justify-between"
 };
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<option value=\"year\" selected data-v-1a435450>L&#39;annee entiere</option><option value=\"week\" data-v-1a435450>Cette semaine</option><option value=\"subweek\" data-v-1a435450>La semain precedent</option><option value=\"month\" data-v-1a435450>Ce mois</option><option value=\"submonth\" data-v-1a435450>Le mois precedent</option><option value=\"limit\" data-v-1a435450>Limitation</option>", 6);
@@ -127,7 +196,110 @@ var _hoisted_14 = {
   "class": "sm:w-[28rem] w-[100%] place-items-center gap-4 grid grid-cols-1 sm:flex justify-between items-center"
 };
 var _hoisted_15 = {
-  "class": "grid place-content-end px-5 py-6"
+  key: 0,
+  "class": "w-full bg-white px-4 py-5 mt-6"
+};
+var _hoisted_16 = {
+  "class": "grid-cols-3 bg-slate-100 lg:scale-100 scale-75 rounded-lg grid sm:grid-cols-5 border-4 border-slate-100"
+};
+var _hoisted_17 = ["title"];
+var _hoisted_18 = {
+  "class": "sm:flex sm:justify-center px-10 sm:px-0 mt-10 lg:scale-100 md:scale-90 sm:scale-75 gap-5 place-content-center grid grid-cols-1 scale-90"
+};
+var _hoisted_19 = {
+  key: 1,
+  "class": "relative sm:p-5 scale-75 overflow-x-auto shadow-md sm:scale-90 lg:scale-100 s"
+};
+var _hoisted_20 = {
+  "class": "w-full text-sm text-left"
+};
+
+var _hoisted_21 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", {
+    "class": "text-xs text-white uppercase bg-cyan-500"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    scope: "col",
+    "class": "px-6 py-3"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "text-center"
+  }, "Nom")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    scope: "col",
+    "class": "px-6 py-3"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "text-center"
+  }, "Date")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    scope: "col",
+    "class": "px-6 py-3"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "text-center"
+  }, "Debut")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    scope: "col",
+    "class": "px-6 py-3"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "text-center"
+  }, "Fin")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    scope: "col",
+    "class": "px-6 py-3"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "text-center"
+  }, "Formateur")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    scope: "col",
+    "class": "px-6 py-3"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "text-center"
+  }, "Jutife")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    scope: "col",
+    "class": "px-6 py-3"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "text-center"
+  }, "Motif")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    scope: "col",
+    "class": "px-6 py-3"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "text-center"
+  }, "Seance")])])], -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_22 = {
+  "class": "p-4"
+};
+var _hoisted_23 = {
+  "class": "scale-90 w-full font-medium"
+};
+var _hoisted_24 = {
+  "class": "p-4"
+};
+var _hoisted_25 = {
+  "class": "scale-90 w-full font-medium"
+};
+var _hoisted_26 = {
+  "class": "p-4"
+};
+var _hoisted_27 = {
+  "class": "scale-90 font-medium"
+};
+var _hoisted_28 = {
+  "class": "px-6 py-4 text-left font-medium"
+};
+var _hoisted_29 = {
+  "class": "scale-90"
+};
+var _hoisted_30 = {
+  "class": "px-6 py-4 text-left scale-90 font-medium"
+};
+var _hoisted_31 = {
+  "class": "scale-90 font-medium"
+};
+var _hoisted_32 = {
+  "class": "text-center"
+};
+var _hoisted_33 = {
+  "class": "px-6 py-4 text-left scale-90 font-medium"
+};
+var _hoisted_34 = {
+  "class": "grid grid-cols-1 place-items-center gap-2 scale-90 font-medium"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_fas = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("fas");
@@ -153,25 +325,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   ))], 544
   /* HYDRATE_EVENTS, NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.selected_fil]])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
-    onChange: _cache[2] || (_cache[2] = function ($event) {
-      return $setup.period_debut = null, $setup.period_fin = null;
-    }),
-    "class": "w-[50%] md:w-[15rem] h-7",
-    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.selected_fil]])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Period_Select "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    onChange: $setup.periodChanged,
+    "class": "w-full sm:w-[50%] md:w-[15rem] h-7",
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $setup.selected_period = $event;
     })
   }, _hoisted_13, 544
   /* HYDRATE_EVENTS, NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.selected_period]]), $setup.selected_period == 'limit' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+    onChange: $setup.inputeDate,
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $setup.period_debut = $event;
     }),
     "class": "sm:w-[12rem] w-[60%] px-2",
     type: "date",
     required: ""
-  }, null, 512
-  /* NEED_PATCH */
+  }, null, 544
+  /* HYDRATE_EVENTS, NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.period_debut]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
     "class": "hidden sm:block",
     icon: "angles-right"
@@ -179,22 +350,73 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "block sm:hidden",
     icon: "angles-down"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+    onChange: $setup.inputeDate,
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $setup.period_fin = $event;
     }),
     "class": "sm:w-[12rem] w-[60%] px-2",
     type: "date",
     required: ""
-  }, null, 512
-  /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.period_fin]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    onClick: _cache[6] || (_cache[6] = function ($event) {
-      return $setup.getetats($setup.selected_fil, $setup.selected_period, $setup.period_debut, $setup.period_fin);
+  }, null, 544
+  /* HYDRATE_EVENTS, NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.period_fin]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Groupe_Select "), $setup.groupes != null && $setup.etats != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("nav", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.groupes, function (gp) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+      title: gp.id,
+      onClick: $setup.changeGp,
+      "class": "p-5 cursor-pointer bg-slate-100 text-center border-b-4 border-transparent",
+      key: gp.id
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(gp.nom_gp), 9
+    /* TEXT, PROPS */
+    , _hoisted_17);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Les Heures "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    onClick: _cache[5] || (_cache[5] = function ($event) {
+      return $setup.activeHoure = 'NJ';
     }),
-    "class": "text-2xl text-white rounded-full w-[3rem] h-[3rem] shadow-md shadow-bleu-500"
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
-    icon: "magnifying-glass"
-  })])])]);
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["px-6 py-2.5 text-white sm:w-auto w-[100%] font-medium text-xs uppercase rounded flex select-none items-center whitespace-nowrap cursor-pointer active:bg-blue-800 active:shadow-lg", $setup.activeHoure == 'NJ' ? 'bg-blue-800 shadow-lg' : 'bg-blue-600 shadow-md hover:bg-blue-700'])
+  }, " Les Heures non justifier ", 2
+  /* CLASS */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    onClick: _cache[6] || (_cache[6] = function ($event) {
+      return $setup.activeHoure = 'TT';
+    }),
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["px-6 py-2.5 text-white sm:w-auto w-[100%] font-medium text-xs uppercase rounded flex select-none items-center whitespace-nowrap cursor-pointer active:bg-blue-800 active:shadow-lg sm:mx-2 lg:mx-8", $setup.activeHoure == 'NJ' ? 'bg-blue-800 shadow-lg' : 'bg-blue-600 shadow-md hover:bg-blue-700'])
+  }, " Tous les Heures ", 2
+  /* CLASS */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    onClick: _cache[7] || (_cache[7] = function ($event) {
+      return $setup.activeHoure = 'J';
+    }),
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["px-6 py-2.5 sm:w-auto w-[100%] text-white font-medium text-xs uppercase rounded flex select-none items-center whitespace-nowrap cursor-pointer active:bg-blue-800 active:shadow-lg", $setup.activeHoure == 'J' ? 'bg-blue-800 shadow-lg' : 'bg-blue-600 shadow-md hover:bg-blue-700'])
+  }, " Les Heures justifier ", 2
+  /* CLASS */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Table Etats "), $setup.etats != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.etats, function (e, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
+      ref_for: true,
+      ref: "absenceRefs",
+      "class": "bg-white border-b select-none",
+      key: index
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.stagiaire.nom_st + " " + e.stagiaire.prenom_st), 1
+    /* TEXT */
+    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.date_abs), 1
+    /* TEXT */
+    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.duration.h_debut), 1
+    /* TEXT */
+    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.duration.h_fin), 1
+    /* TEXT */
+    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.prof.nom_prof), 1
+    /* TEXT */
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.etat_justif), 1
+    /* TEXT */
+    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.motif), 1
+    /* TEXT */
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.seance), 1
+    /* TEXT */
+    )])]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),
@@ -230,10 +452,11 @@ function useFilieres() {
   var groupes = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
   var stagiaires = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
   var profs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
-  var etats = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
+  var etats = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
   var add_status = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
   var justif_status = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
   var user = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)();
+  var allEtats = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
   var nom_gp = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
 
   var getFilieres = /*#__PURE__*/function () {
@@ -387,9 +610,10 @@ function useFilieres() {
             case 2:
               response = _context6.sent;
               etats.value = response.data.data;
-              console.log(etats);
+              allEtats.value = response.data.data;
+              console.log(etats.value);
 
-            case 5:
+            case 6:
             case "end":
               return _context6.stop();
           }
@@ -464,6 +688,7 @@ function useFilieres() {
     filieres: filieres,
     groupes: groupes,
     stagiaires: stagiaires,
+    allEtats: allEtats,
     getFilieres: getFilieres,
     profs: profs,
     getgroupes: getgroupes,
@@ -475,7 +700,8 @@ function useFilieres() {
     addAbsence: addAbsence,
     user: user,
     getuser: getuser,
-    add_status: add_status
+    add_status: add_status,
+    etats: etats
   };
 }
 
@@ -497,7 +723,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nbutton[data-v-1a435450]{\r\n        background-color: rgb(0, 143, 255);\r\n        border: 1px solid rgb(0, 143, 255);\n}\nbutton[data-v-1a435450]:hover{\r\n        background-color: rgb(0, 120, 255);\r\n        border: 1px solid rgb(0, 120, 255);\n}\nbutton[data-v-1a435450]:active{\r\n        background-color: rgb(0, 100, 255);\r\n        border: 1px solid rgb(0, 100, 255);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nbutton[data-v-1a435450]{\r\n        background-color: rgb(0, 143, 255);\r\n        border: 1px solid rgb(0, 143, 255);\n}\nbutton[data-v-1a435450]:hover{\r\n        background-color: rgb(0, 120, 255);\r\n        border: 1px solid rgb(0, 120, 255);\n}\nbutton[data-v-1a435450]:active{\r\n        background-color: rgb(0, 100, 255);\r\n        border: 1px solid rgb(0, 100, 255);\n}\n.activeLink[data-v-1a435450]{\r\n        border-color: rgb(8, 91, 255);\r\n        transition: all .8s ease 0s;\n}\n*[data-v-1a435450]{\r\n        box-sizing: border-box;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -546,7 +772,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SearchByDate_vue_vue_type_template_id_1a435450_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SearchByDate.vue?vue&type=template&id=1a435450&scoped=true */ "./resources/js/components/SearchByDate.vue?vue&type=template&id=1a435450&scoped=true");
 /* harmony import */ var _SearchByDate_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchByDate.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/SearchByDate.vue?vue&type=script&setup=true&lang=js");
 /* harmony import */ var _SearchByDate_vue_vue_type_style_index_0_id_1a435450_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SearchByDate.vue?vue&type=style&index=0&id=1a435450&scoped=true&lang=css */ "./resources/js/components/SearchByDate.vue?vue&type=style&index=0&id=1a435450&scoped=true&lang=css");
-/* harmony import */ var C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
@@ -554,7 +780,7 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
-const __exports__ = /*#__PURE__*/(0,C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_SearchByDate_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_SearchByDate_vue_vue_type_template_id_1a435450_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-1a435450"],['__file',"resources/js/components/SearchByDate.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_SearchByDate_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_SearchByDate_vue_vue_type_template_id_1a435450_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-1a435450"],['__file',"resources/js/components/SearchByDate.vue"]])
 /* hot reload */
 if (false) {}
 

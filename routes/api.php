@@ -32,13 +32,7 @@ Route::get('groupes/{id}', [FiliereController::class, 'getstagiaires']);
 Route::get('profs/{id}', [FiliereController::class, 'getprofs']);
 Route::get('etats/{id}/{period}/{selected_period_debut}/{selected_period_fin}', [FiliereController::class, 'getetats']);
 
-function getId($value, $array,string $col_name){
-    foreach($array as $el){
-        if($el[$col_name] == $value){
-            return $el["id"];
-        }
-    }
-}
+
 Route::post('/storeExcel',function(Request $request){
     $baseExt = $request->file('base')->guessExtension();
     $avantExt = $request->file('avant')->guessExtension();
