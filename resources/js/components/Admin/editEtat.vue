@@ -174,7 +174,7 @@
 <script setup>
     import axios from 'axios';
     import {onMounted, ref} from "vue";
-    import testVue from '../test.vue';
+
     import { useToast } from "vue-toastification";
 
     const toast = useToast();

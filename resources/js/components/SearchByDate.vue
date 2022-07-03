@@ -59,7 +59,7 @@
                 @click="activeHoure = 'TT'"
                 class="px-6 py-2.5 text-white sm:w-auto w-[100%]  font-medium text-xs uppercase rounded flex select-none
                 items-center whitespace-nowrap  cursor-pointer active:bg-blue-800 active:shadow-lg sm:mx-2 lg:mx-8"
-                :class="activeHoure == 'NJ'?'bg-blue-800 shadow-lg':'bg-blue-600 shadow-md hover:bg-blue-700'"
+                :class="activeHoure == 'TT'?'bg-blue-800 shadow-lg':'bg-blue-600 shadow-md hover:bg-blue-700'"
                 >
                 Tous les Heures
             </a>
