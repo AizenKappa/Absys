@@ -36,7 +36,9 @@
         <button v-on:click="getetats(selected_fil,selected_period,period_debut,period_fin)"
         class="text-2xl text-white rounded-full w-[3rem] h-[3rem] shadow-md shadow-bleu-500"><fas icon="magnifying-glass" /></button>
     </div>
-
+    <iframe src="/hello" frameborder="0" >
+       
+    </iframe>
 </section>
 </template>
 

@@ -10,7 +10,9 @@ use App\Models\Filiere;
 use App\Models\Groupe;
 use App\Models\User;
 use App\Models\Stagiaire;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +20,7 @@ use Illuminate\Support\Facades\Hash;
 use PHPUnit\TextUI\XmlConfiguration\Group;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Collection;
 
 class FiliereController extends Controller
 {
@@ -422,30 +425,16 @@ class FiliereController extends Controller
             ];
         }
     }
-
+    public function getId($value, $array,string $col_name){
+        foreach($array as $el){
+            if($el[$col_name] == $value){
+                return $el["id"];
+            }
+        }
+    }
     public function store_excel(Request $request)
     {
-            // $request->file('base')->storeAs('excels',"base.csv");
-            // $request->file('avant')->storeAs('excels',"avant.csv");
-        
-       
-
-            // $avantPath = storage_path('/app/excels/avant.csv');
-            // $basePath= storage_path('/app/excels/base.csv');     
-            // /* -------------------base-------------------- */
-            // $array = [];
-            // $handle = fopen($basePath, "r");
-            // while (( $row = fgetcsv($handle)) !== false) {
-            //     $array[] = $row;
-            // }
-            // $array = mb_convert_encoding($array, "UTF-8", "auto");
-            // /* --------------------avant------------------------ */
-            // $array_p = [];
-            // $handle = fopen($avantPath, "r");
-            // while (( $row = fgetcsv($handle)) !== false) {
-            //     $array_p[] = $row;
-            // }
-            // $array_p = mb_convert_encoding($array_p, "UTF-8", "auto");
+            
             /* Getting the extension */
             $baseExt = $request->file('base')->guessExtension();
             $avantExt = $request->file('avant')->guessExtension();
@@ -545,7 +534,7 @@ class FiliereController extends Controller
                 array_push($nom_grList,$nom_gr);
                 array_push($groupes,[
                     "id"=>$i++,
-                    "filiere_id"=>getId($code_fil,$filieres,"code_fil"),
+                    "filiere_id"=>$this->getId($code_fil,$filieres,"code_fil"),
                     "nom_gr"=>$nom_gr
                 ]);
             }
@@ -579,7 +568,7 @@ class FiliereController extends Controller
                 array_push($stagiaires, [
                     "nom_st" => $e[15],
                     "prenom_st" => $e[16],
-                    "groupe_id" => getId($e[7],$groupes,"nom_gr") ,
+                    "groupe_id" =>$this->getId($e[7],$groupes,"nom_gr") ,
                     "numero_personnelle" => $e[22],
                 ]);
                 array_push($mtr, $e[9]);
@@ -646,8 +635,8 @@ class FiliereController extends Controller
         $id_rel = [];
         foreach (array_slice($array_p,1) as $e) {
             $arrRel = [
-                "prof_id" =>getId($e[19],$profs,"id_tch") ,
-                "groupe_id" => getId($e[8],$groupes,"nom_gr")
+                "prof_id" =>$this->getId($e[19],$profs,"id_tch") ,
+                "groupe_id" => $this->getId($e[8],$groupes,"nom_gr")
             ];
             $test = preg_match('/[\s\w]{2,}/', $e[8]) && preg_match('/[\s\w]{2,}/',$e[19]);
             if(!in_array($arrRel,$relations) && $test){
@@ -745,7 +734,335 @@ class FiliereController extends Controller
                 ];
             }
     }
+    public function monthAbs(Collection $type){
+    
+        $currentYear = intval(date("Y"));
+        $currentMonth = intval(date("m"));
+        if($currentMonth>=9 && $currentMonth <=12){
+            $startYear = $currentYear;
+            $endYear = $currentYear+1;
+        }
+        else if($currentMonth>=1 && $currentMonth <=7){
+            $startYear = $currentYear-1;
+            $endYear = $currentYear;
+        }
+        
+        $months = [
+            $startYear."-09",$startYear."-10",
+            $startYear."-11",$startYear."-12",
+            $endYear."-01",$endYear."-02",
+            $endYear."-03",$endYear."-04",
+            $endYear."-05",$endYear."-06",
+            $endYear."-07"
+        ];
+        $result=[];
+        foreach($months as $month){
+            $thisMonthAbs = $type->whereBetween('date_abs',
+            [$month.'-01',$month.'-31']);
+            $oneMonthAbs = 0;
+            foreach($thisMonthAbs as $k ){
+                $startTime = Carbon::parse($k->duration['h_debut']);
+                $endTime = Carbon::parse($k->duration['h_fin']);
+                $oneMonthAbs += $endTime->diffInMinutes($startTime)/60;
+            }
+            array_push($result,$oneMonthAbs);
+        }
+        return $result;
+       
+    }
+    public function StagInfo($id){
+        $stag = Stagiaire::find($id);
+        $absenceStag =Etat::where('stagiaire_id',$id)->get(); 
+        
+        $groupe_id = $stag->groupe_id;
+        $gr = Groupe::find($groupe_id);
+        $groupe_name = $gr->nom_gp;
+        $stFullName = $stag->nom_st." ".$stag->prenom_st;
+        $st_total_abs = $stag->heure_absence_st;
+        $class_total_abs = $gr->stagiaires
+                ->where('id','<>',$id)
+                ->pluck("heure_absence_st")
+                ->reduce(function($carry,$element){
+                    return $carry + $element;
+                });
+        $absence_just =  $absenceStag->where('etat_justif','J');
 
+        foreach($absence_just as $k){
+            $startTime = Carbon::parse($k->duration['h_debut']);
+            $endTime = Carbon::parse($k->duration['h_fin']);
+            $k["nbAbs"] = $endTime->diffInMinutes($startTime)/60;
+            
+        }
+        
+        $absence_nj =  $absenceStag->where('etat_justif','NJ');
+        foreach($absence_nj as $k){
+            $startTime = Carbon::parse($k->duration['h_debut']);
+            $endTime = Carbon::parse($k->duration['h_fin']);
+            $k["nbAbs"] = $endTime->diffInMinutes($startTime)/60;
+            
+        }
+        $justData = $this->monthAbs($absence_just);
+        $njData = $this->monthAbs($absence_nj);
+                
+
+    /* absence par Prof by order*/
+    /*
+    [
+        'omar Hajoui'=>5,"Naji 
+    ] 
+    */
+    //   $prof=[];
+    $st_prof = $gr->profs;
+    $profs = [];
+    foreach($st_prof as $k){
+        array_push($profs,[
+            $k["nom_prof"] => 0
+        ]);
+    
+    }
+    $absProf = collect($profs)->collapse();
+    // dd($profs);
+
+
+    foreach($absenceStag as $k){
+        $startTime = Carbon::parse($k->duration['h_debut']);
+        $endTime = Carbon::parse($k->duration['h_fin']);
+        $k["nbAbs"] =floatval($endTime->diffInMinutes($startTime)/60) ;
+        $profName = (string)$k->prof->nom_prof;
+        $test = $absProf->get($profName);
+        
+        $absProf["$profName"] = floatval($test) + floatval($k["nbAbs"]);
+    }
+    $absProf = $absProf->sortDesc()->filter(function($item){
+        return $item > 0;
+    })->all();
+    $res=[];
+    foreach($absProf as $k=>$v){
+
+        array_push($res,[
+            "nom"=>$k,
+            "hours"=>$v
+        ]);
+    }
+    /*  */
+        return [
+            'absProf'=>$res,
+            'groupe_name'=>$groupe_name,
+            'groupe_id'=>$groupe_id,
+            'stFullName'=>$stFullName,
+            'class_total_abs'=>$class_total_abs,
+            'st_total_abs'=>$st_total_abs,
+            'monthly_abs'=>
+            [
+                "just"=> $justData,
+                "nj"=> $njData
+            ],
+
+            'just_abs' =>$absence_just,
+            'nj_abs'=>$absence_nj,
+            ];
+    }
+    public function details(Request $request){
+        $result = [
+        
+            "fillWithAbs"=>[],
+            "exist"=>false,
+            "info"=>[]
+        ];
+        $fillWithAbs = [];
+        $groupeWithAbs = [];//les groupes qui contient au moins une absence
+        
+        $etats_just = Etat::with("stagiaire.groupe.filiere")->where("etat_justif","J")->get();
+    //    dd($etats_just);
+        $etats_nj = Etat::with("stagiaire.groupe.filiere")->where("etat_justif","NJ")->get();
+        // dd($etats_nj);
+            $allEtat = Etat::with("stagiaire.groupe.filiere")->without("prof")->get()->all();
+            foreach($allEtat as $e){
+                $groupe = $e->stagiaire->groupe;
+                $fil = $e->stagiaire->groupe->filiere;
+                if(!in_array($groupe,$groupeWithAbs)){
+                    array_push($groupeWithAbs,$groupe);
+                }   
+                if(!in_array($fil,$fillWithAbs)){
+                    array_push($fillWithAbs,$fil);
+                } 
+             
+               
+            }
+            $result["fillWithAbs"] = $fillWithAbs;
+            
+            $result["groupesWithAbs"] = $groupeWithAbs;
+    
+            foreach($groupeWithAbs as $groupe){
+                            $nom_gp = $groupe->nom_gp;
+                            $just_abs = $this->monthAbs($etats_just->where("stagiaire.groupe.nom_gp","=",$nom_gp));
+                            $nj_abs = $this->monthAbs($etats_nj->where("stagiaire.groupe.nom_gp","=",$nom_gp));
+                           
+                            $total_h = 0;
+                            $nj_h=0;
+                            foreach($just_abs  as $el  ){
+                                $total_h +=$el;
+                                if($el > 0 ){
+                                    $result["exist"] = true;
+                                }
+                            }
+                            foreach($nj_abs  as $el  ){
+                                $total_h +=$el;
+                                $nj_h +=$el;
+                                if($el > 0 ){
+                                    $result["exist"] = true;
+                                }
+                            }
+                            
+                    array_push($result["info"],[
+                        "groupe" => $groupe,
+                        "just_abs"=>$just_abs,
+                        "nj_abs"=>$nj_abs,
+                        "show"=>true,
+                        "nj_h"=>$nj_h,
+                        "total_h"=>$total_h
+                                ]);
+                
+            }
+        return $result    ;
+    }
+    public function etatFil(){
+        $allEtat = Etat::with("stagiaire.groupe.filiere")->get()->all();
+        $allFil = Filiere::all();
+        $allDurations = Duration::all();
+        $allfill = $allFil->map(function($item){
+            $item->push([
+                "myGroupes"=>$item->groupes
+            ]);
+        });
+       
+        $allGroupes = Groupe::all();
+        $result = [
+            "allDurations"=>$allDurations,
+            "allFilWithGroupes" =>$allFil,
+            "allGroupes"=>$allGroupes,
+            "fillWithAbs"=>[],
+            "groupeWithAbs"=>[],
+            "allAbs"=> $allEtat
+            
+        ];
+        $fillWithAbs = [];
+        $groupeWithAbs = [];//les groupes qui contient au moins une absence
+        
+            foreach($allEtat as $e){
+                $groupe = $e->stagiaire->groupe;
+                $fil = $e->stagiaire->groupe->filiere;
+                if(!in_array($groupe,$groupeWithAbs)){
+                    array_push($groupeWithAbs,$groupe);
+                }   
+                if(!in_array($fil,$fillWithAbs)){
+                    
+                    array_push($fillWithAbs,$fil);
+                } 
+             
+               
+            }
+            $result["groupeWithAbs"] = $groupeWithAbs;
+            $result["fillWithAbs"] = $fillWithAbs;
+            return $result;
+    }
+
+    public function getSome(Request $request){
+        $groupe_id = $request->groupe_id;
+        $stagiaires = Groupe::find($groupe_id)->stagiaires;
+        $profs = Groupe::find($groupe_id)->profs;
+        return [
+           "Stagiaires" => $stagiaires,
+           "Profs" =>$profs
+        ];
+    }
+
+    public function updateEtat(Request $request){
+        $id = $request->id;
+   
+    $prof_id = $request->prof_id;
+    $duration_id = $request->duration_id;
+    $date_abs = $request->date_abs;
+    $seance = $request->seance;
+    $etat_justif = $request->etat_justif;
+    $motif = $request->motif;
+    $last_duration_id = $request->last_duration_id;
+
+    $etat = Etat::find($id);
+    
+    
+    $etat->update([
+        "prof_id"=>$prof_id,
+        "duration_id"=>$duration_id,
+        "date_abs"=>$date_abs,
+        "seance"=>$seance,
+        "etat_justif"=>$etat_justif,
+        "motif"=>$motif,
+    ]);
+
+    $newDuration = Duration::find($duration_id);
+    $lastDuration = Duration::find($last_duration_id);
+    $startTime = Carbon::parse($newDuration->h_debut);
+    $endTime = Carbon::parse($newDuration->h_fin);
+
+    $newHour =floatval($endTime->diffInMinutes($startTime)/60) ;
+
+    $startTime = Carbon::parse($lastDuration->h_debut);
+    $endTime = Carbon::parse($lastDuration->h_fin);
+    $lastHour=floatval($endTime->diffInMinutes($startTime)/60);
+
+    $result = $newHour - $lastHour;
+    //     >update([
+    //         "heure_absence_st" => + $heure_absence_st
+    //     ]);
+    
+    $stag = Stagiaire::find($etat->stagiaire_id);
+    $heure_absence_st = $stag->heure_absence_st;
+
+    $heure_absence_st = $heure_absence_st + $result;
+    $stag->heure_absence_st = $heure_absence_st;
+    $stag->save();
+   
+    return [
+        "data"=>$request->all(),
+        "test"=>"work"
+    ];
+    }
+
+    public function deleteEtat(Request $request){
+        $etat = Etat::find($request->id);
+        $stag = Stagiaire::find($etat->stagiaire_id);
+        $currentHour = floatval($stag->heure_absence_st);
+        $startTime = Carbon::parse($etat->duration['h_debut']);
+        $endTime = Carbon::parse($etat->duration['h_fin']);
+        $heure_absence_st =floatval($endTime->diffInMinutes($startTime)/60) ;
+        $stag->update([
+            "heure_absence_st" =>$currentHour - $heure_absence_st
+        ]);
+        $result = $etat->delete();
+
+        if($result){
+            return "Deleted Successfully";
+        }
+        else{
+            return "Something went Wrong";
+        }
+    }
+    public function loadPdf(Request $request)
+    {   
+        if($request->has("stag")){
+            $data = $this->StagInfo(intval($request->stag));
+            $pdf = Pdf::loadView('pdfs.stagPdf',compact("data"));
+            return $pdf->download($data["stFullName"].rand(1,50).'.pdf');
+            // return view('pdfs.stagPdf',[
+            //     "data"=>$data
+            // ]);
+        }else{
+            
+        }
+       
+    }
+    
 }
 /* About carbon */
     // 'etat' => Stagiaire::find($this->id)->absences->where('etat_justif','NJ'),

@@ -7,10 +7,13 @@ use App\Http\Resources\FiliereResource;
 use App\Models\Etat;
 use App\Models\Groupe;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Intervention\Image\ImageManagerStatic as Image;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +34,7 @@ Route::post('/login',[SessionController::class,'store']);
 Route::get('/logout',[SessionController::class,'destroy']);
 Route::post('/check_user',[SessionController::class,'check']);
 Route::post('/pwd_reset',[SessionController::class,'reset']);
+
 
 
 

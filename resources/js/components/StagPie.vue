@@ -80,6 +80,7 @@
                         }
                     }
             }
+          
             var pieData =
             {
                     labels: [groupe_name.value,stFullName.value],
@@ -96,6 +97,7 @@
             var pieConfig = {
             type:"pie",
             data:pieData,//object
+            plugins: [ChartDataLabels],
             options:pieOptions,//object
        //array
         }

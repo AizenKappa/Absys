@@ -129,6 +129,16 @@ var _hoisted_14 = {
 var _hoisted_15 = {
   "class": "grid place-content-end px-5 py-6"
 };
+
+var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("iframe", {
+    src: "/hello",
+    frameborder: "0"
+  }, "\r\n       \r\n    ", -1
+  /* HOISTED */
+  );
+});
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_fas = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("fas");
 
@@ -194,7 +204,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-2xl text-white rounded-full w-[3rem] h-[3rem] shadow-md shadow-bleu-500"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
     icon: "magnifying-glass"
-  })])])]);
+  })])]), _hoisted_16]);
 }
 
 /***/ }),
