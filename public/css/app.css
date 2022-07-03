@@ -1235,6 +1235,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
 }
+.bg-blue-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 64 175 / var(--tw-bg-opacity));
+}
+.bg-cyan-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(6 182 212 / var(--tw-bg-opacity));
+}
 .bg-clip-padding {
   background-clip: padding-box;
 }
@@ -1930,6 +1938,11 @@ Ensure the default browser behavior of the `hidden` attribute.
     margin-right: -1.5rem;
   }
 
+  .sm\:mx-2 {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
   .sm\:block {
     display: block;
   }
@@ -1962,9 +1975,23 @@ Ensure the default browser behavior of the `hidden` attribute.
     width: 30rem;
   }
 
+  .sm\:w-\[50\%\] {
+    width: 50%;
+  }
+
+  .sm\:w-auto {
+    width: auto;
+  }
+
   .sm\:scale-90 {
     --tw-scale-x: .9;
     --tw-scale-y: .9;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  .sm\:scale-75 {
+    --tw-scale-x: .75;
+    --tw-scale-y: .75;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 
@@ -1974,6 +2001,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .sm\:items-center {
     align-items: center;
+  }
+
+  .sm\:justify-center {
+    justify-content: center;
   }
 
   .sm\:justify-between {
@@ -1996,6 +2027,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   .sm\:px-10 {
     padding-left: 2.5rem;
     padding-right: 2.5rem;
+  }
+
+  .sm\:px-0 {
+    padding-left: 0px;
+    padding-right: 0px;
   }
 
   .sm\:font-normal {
@@ -2063,6 +2099,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .md\:w-\[14rem\] {
     width: 14rem;
+  }
+
+  .md\:scale-90 {
+    --tw-scale-x: .9;
+    --tw-scale-y: .9;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 
   .md\:grid-cols-2 {
@@ -2166,6 +2208,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   .lg\:-mx-8 {
     margin-left: -2rem;
     margin-right: -2rem;
+  }
+
+  .lg\:mx-8 {
+    margin-left: 2rem;
+    margin-right: 2rem;
   }
 
   .lg\:mr-6 {

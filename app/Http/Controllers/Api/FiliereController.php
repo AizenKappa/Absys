@@ -38,6 +38,7 @@ class FiliereController extends Controller
 
     public function getgroupes(Request $request)
     {
+        
         return FiliereResource::collection(Filiere::Find($request->id)->groupes);
     }
 

@@ -665,10 +665,11 @@ function useFilieres() {
   var groupes = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
   var stagiaires = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
   var profs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
-  var etats = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
+  var etats = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
   var add_status = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
   var justif_status = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
   var user = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)();
+  var allEtats = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
   var nom_gp = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
 
   var getFilieres = /*#__PURE__*/function () {
@@ -822,9 +823,10 @@ function useFilieres() {
             case 2:
               response = _context6.sent;
               etats.value = response.data.data;
-              console.log(etats);
+              allEtats.value = response.data.data;
+              console.log(etats.value);
 
-            case 5:
+            case 6:
             case "end":
               return _context6.stop();
           }
@@ -899,6 +901,7 @@ function useFilieres() {
     filieres: filieres,
     groupes: groupes,
     stagiaires: stagiaires,
+    allEtats: allEtats,
     getFilieres: getFilieres,
     profs: profs,
     getgroupes: getgroupes,
@@ -910,7 +913,8 @@ function useFilieres() {
     addAbsence: addAbsence,
     user: user,
     getuser: getuser,
-    add_status: add_status
+    add_status: add_status,
+    etats: etats
   };
 }
 
@@ -981,7 +985,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Just_vue_vue_type_template_id_c245d452_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Just.vue?vue&type=template&id=c245d452&scoped=true */ "./resources/js/components/Just.vue?vue&type=template&id=c245d452&scoped=true");
 /* harmony import */ var _Just_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Just.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/Just.vue?vue&type=script&setup=true&lang=js");
 /* harmony import */ var _Just_vue_vue_type_style_index_0_id_c245d452_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Just.vue?vue&type=style&index=0&id=c245d452&scoped=true&lang=css */ "./resources/js/components/Just.vue?vue&type=style&index=0&id=c245d452&scoped=true&lang=css");
-/* harmony import */ var C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
@@ -989,7 +993,7 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
-const __exports__ = /*#__PURE__*/(0,C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_Just_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Just_vue_vue_type_template_id_c245d452_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-c245d452"],['__file',"resources/js/components/Just.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_Just_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Just_vue_vue_type_template_id_c245d452_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-c245d452"],['__file',"resources/js/components/Just.vue"]])
 /* hot reload */
 if (false) {}
 

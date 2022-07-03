@@ -8,10 +8,11 @@ export default function useFilieres(){
     const groupes = ref(null)
     const stagiaires = ref(null)
     const profs = ref([])
-    const etats = ref([])
+    const etats = ref(null)
     const add_status = ref(false)
     const justif_status = ref(false)
     const user = ref()
+    const allEtats = ref(null)
 
     const nom_gp = ref(null)
 
@@ -50,7 +51,8 @@ export default function useFilieres(){
     const getetats = async (id, period , limitD , limitF) =>{
         let response = await axios.get(`/api/etats/${id}/${period}/${limitD}/${limitF}`)
         etats.value = response.data.data
-        console.log(etats)
+        allEtats.value = response.data.data
+        console.log(etats.value)
     };
 
     const addAbsence = (st_ids,prof_id,duration_id,seance,date_abs,reset,errorNet) => {
@@ -110,8 +112,8 @@ export default function useFilieres(){
     }
     
 
-    return { filieres , groupes , stagiaires , getFilieres , profs , getgroupes , justif_status , addJustif,
-            getstagiaires , nom_gp , getetats , addAbsence , user , getuser , add_status};
+    return { filieres , groupes , stagiaires, allEtats , getFilieres , profs , getgroupes , justif_status , addJustif,
+            getstagiaires , nom_gp , getetats , addAbsence , user , getuser , add_status, etats };
 
     
 }
