@@ -54,7 +54,7 @@
                 items-center whitespace-nowrap  cursor-pointer active:bg-blue-800 active:shadow-lg"
                 :class="activeHoure == 'NJ'?'bg-blue-800 shadow-lg':'bg-blue-600 shadow-md hover:bg-blue-700'"
                 >
-                Les Absences justifiées
+                Les Absences Non justifiées
             </a>
             <a
                 id="TT"
@@ -72,7 +72,7 @@
                 items-center whitespace-nowrap cursor-pointer active:bg-blue-800 active:shadow-lg"
                 :class="activeHoure == 'J'?'bg-blue-800 shadow-lg':'bg-blue-600 shadow-md hover:bg-blue-700'"
                 >
-                Les Absences Non justifiées
+                Les Absences  justifiées
             </a>
         </div>
 
@@ -163,7 +163,7 @@
                     <template v-else>
                         <tr class="bg-white"  v-cloak>
                         <th colspan="8" class="text-lg text-gray-900
-                                font-semibold px-6 py-4 whitespace-nowrap">
+                                font-semibold px-6 py-4 text-center whitespace-nowrap">
                             Aucune Absence 
                         </th>
                     </tr>
@@ -187,8 +187,7 @@
     import { ref, reactive, watch } from 'vue';
     import useFilieres from '../services/filieres.js'
     import { onMounted } from 'vue';
-    import { useRouter } from 'vue-router';
-    const router = useRouter()
+    
     /* Variables Help-us */
     const reboot  =ref(true)
     const selected_fil = ref("Tous")
@@ -237,7 +236,7 @@
                     }
                 table{
                     border-collapse: collapse;
-                    width:500px;  
+                    width:max-content;  
                     margin:auto
                 }
                 table ,th,td{
