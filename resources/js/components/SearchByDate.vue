@@ -2,7 +2,7 @@
 
 <template>
 
-    <section>
+    <section v-if="reboot">
 
         <!-- Filieres_Select -->
         <div class=" px-10">
@@ -20,11 +20,11 @@
         <!-- Period_Select -->
         <div class="w-full px-10 grid grid-cols-1 gap-6 lg:flex md:justify-between">
             <select v-on:change="periodChanged" class=" w-full sm:w-[50%] md:w-[15rem] h-7" v-model="selected_period">
-                <option value="year" selected>L'annee entiere</option>
-                <option value="week">Cette semaine</option>
-                <option value="subweek">La semain precedent</option>
-                <option value="month">Ce mois</option>
-                <option value="submonth">Le mois precedent</option>
+                <option id="year" value="year" selected>L'annee entiere</option>
+                <option id="week" value="week">Cette semaine</option>
+                <option id="subweek" value="subweek">La semain precedent</option>
+                <option id="month" value="month">Ce mois</option>
+                <option id="submonth" value="submonth">Le mois precedent</option>
                 <option value="limit">Limitation</option>
             </select>
             <div v-if="selected_period == 'limit'" class="sm:w-[28rem] w-[100%] place-items-center gap-4 grid grid-cols-1 sm:flex justify-between items-center">
@@ -48,33 +48,36 @@
         <!-- Les Heures -->
         <div class="sm:flex sm:justify-center px-10 sm:px-0 mt-10 lg:scale-100 md:scale-90 sm:scale-75 gap-5 place-content-center grid grid-cols-1 scale-90">
             <a
+                id="NJ"
                 @click="activeHoure = 'NJ'"
                 class="px-6 py-2.5 text-white sm:w-auto w-[100%]  font-medium text-xs uppercase rounded flex select-none
                 items-center whitespace-nowrap  cursor-pointer active:bg-blue-800 active:shadow-lg"
                 :class="activeHoure == 'NJ'?'bg-blue-800 shadow-lg':'bg-blue-600 shadow-md hover:bg-blue-700'"
                 >
-                Les Heures non justifier
+                Les Absences justifiées
             </a>
             <a
+                id="TT"
                 @click="activeHoure = 'TT'"
                 class="px-6 py-2.5 text-white sm:w-auto w-[100%]  font-medium text-xs uppercase rounded flex select-none
                 items-center whitespace-nowrap  cursor-pointer active:bg-blue-800 active:shadow-lg sm:mx-2 lg:mx-8"
                 :class="activeHoure == 'TT'?'bg-blue-800 shadow-lg':'bg-blue-600 shadow-md hover:bg-blue-700'"
                 >
-                Tous les Heures
+                Les Absences justifiées et Non justifiées
             </a>
             <a
+                id="J"
                 @click="activeHoure = 'J'"
                 class="px-6 py-2.5 sm:w-auto w-[100%] text-white font-medium text-xs uppercase rounded flex select-none
                 items-center whitespace-nowrap cursor-pointer active:bg-blue-800 active:shadow-lg"
                 :class="activeHoure == 'J'?'bg-blue-800 shadow-lg':'bg-blue-600 shadow-md hover:bg-blue-700'"
                 >
-                Les Heures justifier
+                Les Absences Non justifiées
             </a>
         </div>
 
         <!-- Table Etats -->
-        <div v-if="etats != null" class="relative sm:p-5 scale-75 overflow-x-auto shadow-md sm:scale-90 lg:scale-100 s">
+        <div id="printTable" v-if="etats != null" class="relative sm:p-5 scale-75 overflow-x-auto shadow-md sm:scale-90 lg:scale-100 s">
             <table class="w-full text-sm text-left">
                 <thead class="text-xs text-white uppercase bg-cyan-500">
                     <tr>
@@ -107,8 +110,8 @@
                 </thead>
 
                 <tbody>
-                    
-                    <tr ref="absenceRefs"  class="bg-white border-b select-none"
+                    <template v-if="(Object.keys(etats).length != 0)">
+                         <tr ref="absenceRefs"  class="bg-white border-b select-none"
                     v-for="(e,index) in etats" :key="index" >
 
                         <td class="p-4">
@@ -156,12 +159,26 @@
                         </td>
 
                     </tr>
+                    </template>
+                    <template v-else>
+                        <tr class="bg-white"  v-cloak>
+                        <th colspan="8" class="text-lg text-gray-900
+                                font-semibold px-6 py-4 whitespace-nowrap">
+                            Aucune Absence 
+                        </th>
+                    </tr>
+                    </template>
+                   
 
                 </tbody>
 
             </table>
         </div>
-
+        <button @click="printPdf" class="bg-yellow-200 ml-[50%] text-yellow-900 py-2 px-4
+            rounded shadow hover:shadow-xl
+            hover:bg-yellow-300 duration-300">
+            Print the report
+            </button>
     </section>
 
 </template>
@@ -170,9 +187,12 @@
     import { ref, reactive, watch } from 'vue';
     import useFilieres from '../services/filieres.js'
     import { onMounted } from 'vue';
-
+    import { useRouter } from 'vue-router';
+    const router = useRouter()
     /* Variables Help-us */
+    const reboot  =ref(true)
     const selected_fil = ref("Tous")
+    const selected_gp = ref(null)
     const selected_period = ref("year")
     const period_debut = ref(null)
     const period_fin = ref(null)
@@ -180,6 +200,74 @@
     const gpId = ref(null)
 
 
+    function printPdf(){
+        var oldCode =document.documentElement.innerHTML
+        var table = document.getElementById('printTable')
+        var nom_fil = ""
+        
+        var period=""
+        if(selected_fil.value == "Tous"){
+            console.log("entered")
+            nom_fil = "Tous les filieres"
+        }
+        else{
+            filieres.value.forEach((ele)=>{
+        
+                if(ele.id == selected_fil.value ){
+                    nom_fil = ele.nom_fil
+                    
+                }
+            })
+        }
+
+        if(selected_period.value != "limit"){
+            period = document.getElementById(`${selected_period.value}`).innerText
+        }
+        else if(period_debut.value != null && period_fin.value != null){
+            period = period_debut.value + " => " + period_fin.value
+        } 
+
+        var newCode =
+        `
+            <head>
+                <style>
+                    h3,h4{
+                    text-align: center
+       
+                    }
+                table{
+                    border-collapse: collapse;
+                    width:500px;  
+                    margin:auto
+                }
+                table ,th,td{
+                    border:1px solid black;
+                    text-align: center
+                }
+                *{
+                    text-align:center
+                }
+                </style>
+            </head>
+            <body>
+                
+            <body>
+        `
+            var houreType = document.getElementById(`${activeHoure.value}`).innerText
+            document.documentElement.innerHTML = newCode
+            document.body.innerHTML +=`<h2>${houreType}</h2>`
+            document.body.innerHTML +=`<h3>${nom_fil}</h3>`
+            document.body.innerHTML +=`<h4>${period}</h4>`
+            if(selected_gp.value != null){
+                 document.body.innerHTML +=`<h2>${selected_gp.value}</h2>`
+            }
+            document.body.innerHTML+=table.innerHTML
+            window.print()
+            location.reload()
+            // reboot.value = false
+            // reboot.value = true
+            // document.documentElement.innerHTML = oldCode
+    }
 
     const periodChanged = () => {
         period_debut.value = null , period_fin.value = null
@@ -200,6 +288,7 @@
             element.classList.remove("activeLink")
         });
         event.target.classList.add("activeLink")
+        selected_gp.value = event.target.innerHTML
         gpId.value = event.target.title
         activeHoure.value == 'TT' ? filterEtat() : filterEtat(activeHoure.value)
         
@@ -240,7 +329,7 @@
 
     /* Call Api Groupes */
     const getcontents = () =>  {  selected_fil.value !== "Tous" ? getgroupes(selected_fil.value) : groupes.value = null,
-    getetats(selected_fil.value,selected_period.value,period_debut.value,period_fin.value), activeHoure.value = 'TT'}
+    getetats(selected_fil.value,selected_period.value,period_debut.value,period_fin.value), activeHoure.value = 'TT',selected_gp.value=null}
     /* Return all our functuons and variables from { services/filieres.js } to use here */
     const { getFilieres , filieres , profs , getgroupes , groupes , stagiaires, getstagiaires , allEtats , nom_gp , getetats, etats } = useFilieres();
     /* On Mounted call Aoi Flieres */

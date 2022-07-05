@@ -24,11 +24,52 @@ __webpack_require__.r(__webpack_exports__);
     var expose = _ref.expose;
     expose();
     var selected_fil = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("Tous");
+    var selected_gp = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     var selected_period = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("year");
     var period_debut = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     var period_fin = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     var activeHoure = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('TT');
     var gpId = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+
+    function printPdf() {
+      var oldCode = document.documentElement.innerHTML;
+      var table = document.getElementById('printTable');
+      var nom_fil = "";
+      var nom_gb = "";
+      var period = "";
+
+      if (selected_fil.value == "Tous") {
+        console.log("entered");
+        nom_fil = "Tous les filieres";
+      } else {
+        filieres.value.forEach(function (ele) {
+          if (ele.id == selected_fil.value) {
+            nom_fil = ele.nom_fil;
+          }
+        });
+      }
+
+      if (selected_period.value != "limit") {
+        period = document.getElementById("".concat(selected_period.value)).innerText;
+      } else if (period_debut.value != null && period_fin.value != null) {
+        period = period_debut.value + " => " + period_fin.value;
+      }
+
+      var newCode = "\n            <head>\n                <style>\n                    h3,h4{\n                    text-align: center\n       \n                    }\n                table{\n                    border-collapse: collapse;\n                    width:500px;  \n                    margin:auto\n                }\n                table ,th,td{\n                    border:1px solid black;\n                    text-align: center\n                }\n                *{\n                    text-align:center\n                }\n                </style>\n            </head>\n            <body>\n                \n            <body>\n        ";
+      var houreType = document.getElementById("".concat(activeHoure.value)).innerText;
+      document.documentElement.innerHTML = newCode;
+      document.body.innerHTML += "<h2>".concat(houreType, "</h2>");
+      document.body.innerHTML += "<h3>".concat(nom_fil, "</h3>");
+      document.body.innerHTML += "<h4>".concat(period, "</h4>");
+
+      if (selected_gp.value != null) {
+        document.body.innerHTML += "<h2>".concat(selected_gp.value, "</h2>");
+      }
+
+      document.body.innerHTML += table.innerHTML;
+      window.print();
+      document.documentElement.innerHTML = oldCode;
+    }
 
     var periodChanged = function periodChanged() {
       period_debut.value = null, period_fin.value = null;
@@ -48,6 +89,7 @@ __webpack_require__.r(__webpack_exports__);
         element.classList.remove("activeLink");
       });
       event.target.classList.add("activeLink");
+      selected_gp.value = event.target.innerHTML;
       gpId.value = event.target.title;
       activeHoure.value == 'TT' ? filterEtat() : filterEtat(activeHoure.value);
     };
@@ -87,7 +129,7 @@ __webpack_require__.r(__webpack_exports__);
     /* Call Api Groupes */
 
     var getcontents = function getcontents() {
-      selected_fil.value !== "Tous" ? getgroupes(selected_fil.value) : groupes.value = null, getetats(selected_fil.value, selected_period.value, period_debut.value, period_fin.value), activeHoure.value = 'TT';
+      selected_fil.value !== "Tous" ? getgroupes(selected_fil.value) : groupes.value = null, getetats(selected_fil.value, selected_period.value, period_debut.value, period_fin.value), activeHoure.value = 'TT', selected_gp.value = null;
     };
     /* Return all our functuons and variables from { services/filieres.js } to use here */
 
@@ -110,11 +152,13 @@ __webpack_require__.r(__webpack_exports__);
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(getFilieres(), getetats(selected_fil.value, selected_period.value, period_debut.value, period_fin.value));
     var __returned__ = {
       selected_fil: selected_fil,
+      selected_gp: selected_gp,
       selected_period: selected_period,
       period_debut: period_debut,
       period_fin: period_fin,
       activeHoure: activeHoure,
       gpId: gpId,
+      printPdf: printPdf,
       periodChanged: periodChanged,
       inputeDate: inputeDate,
       changeGp: changeGp,
@@ -188,7 +232,7 @@ var _hoisted_6 = {
   "class": "w-full px-10 grid grid-cols-1 gap-6 lg:flex md:justify-between"
 };
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<option value=\"year\" selected data-v-1a435450>L&#39;annee entiere</option><option value=\"week\" data-v-1a435450>Cette semaine</option><option value=\"subweek\" data-v-1a435450>La semain precedent</option><option value=\"month\" data-v-1a435450>Ce mois</option><option value=\"submonth\" data-v-1a435450>Le mois precedent</option><option value=\"limit\" data-v-1a435450>Limitation</option>", 6);
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<option id=\"year\" value=\"year\" selected data-v-1a435450>L&#39;annee entiere</option><option id=\"week\" value=\"week\" data-v-1a435450>Cette semaine</option><option id=\"subweek\" value=\"subweek\" data-v-1a435450>La semain precedent</option><option id=\"month\" value=\"month\" data-v-1a435450>Ce mois</option><option id=\"submonth\" value=\"submonth\" data-v-1a435450>Le mois precedent</option><option value=\"limit\" data-v-1a435450>Limitation</option>", 6);
 
 var _hoisted_13 = [_hoisted_7];
 var _hoisted_14 = {
@@ -208,6 +252,7 @@ var _hoisted_18 = {
 };
 var _hoisted_19 = {
   key: 1,
+  id: "printTable",
   "class": "relative sm:p-5 scale-75 overflow-x-auto shadow-md sm:scale-90 lg:scale-100 s"
 };
 var _hoisted_20 = {
@@ -301,6 +346,21 @@ var _hoisted_33 = {
 var _hoisted_34 = {
   "class": "grid grid-cols-1 place-items-center gap-2 scale-90 font-medium"
 };
+var _hoisted_35 = {
+  key: 1,
+  "class": "bg-white"
+};
+
+var _hoisted_36 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    colspan: "6",
+    "class": "text-lg text-gray-900 font-semibold px-6 py-4 whitespace-nowrap"
+  }, " Aucune Absence ", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_37 = [_hoisted_36];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_fas = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("fas");
 
@@ -371,27 +431,32 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), 128
   /* KEYED_FRAGMENT */
   ))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Les Heures "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    id: "NJ",
     onClick: _cache[5] || (_cache[5] = function ($event) {
       return $setup.activeHoure = 'NJ';
     }),
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["px-6 py-2.5 text-white sm:w-auto w-[100%] font-medium text-xs uppercase rounded flex select-none items-center whitespace-nowrap cursor-pointer active:bg-blue-800 active:shadow-lg", $setup.activeHoure == 'NJ' ? 'bg-blue-800 shadow-lg' : 'bg-blue-600 shadow-md hover:bg-blue-700'])
-  }, " Les Heures non justifier ", 2
+  }, " Les Absences justifiées ", 2
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    id: "TT",
     onClick: _cache[6] || (_cache[6] = function ($event) {
       return $setup.activeHoure = 'TT';
     }),
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["px-6 py-2.5 text-white sm:w-auto w-[100%] font-medium text-xs uppercase rounded flex select-none items-center whitespace-nowrap cursor-pointer active:bg-blue-800 active:shadow-lg sm:mx-2 lg:mx-8", $setup.activeHoure == 'TT' ? 'bg-blue-800 shadow-lg' : 'bg-blue-600 shadow-md hover:bg-blue-700'])
-  }, " Tous les Heures ", 2
+  }, " Les Absences justifiées et Non justifiées ", 2
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    id: "J",
     onClick: _cache[7] || (_cache[7] = function ($event) {
       return $setup.activeHoure = 'J';
     }),
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["px-6 py-2.5 sm:w-auto w-[100%] text-white font-medium text-xs uppercase rounded flex select-none items-center whitespace-nowrap cursor-pointer active:bg-blue-800 active:shadow-lg", $setup.activeHoure == 'J' ? 'bg-blue-800 shadow-lg' : 'bg-blue-600 shadow-md hover:bg-blue-700'])
-  }, " Les Heures justifier ", 2
+  }, " Les Absences Non justifiées ", 2
   /* CLASS */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Table Etats "), $setup.etats != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.etats, function (e, index) {
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Table Etats "), $setup.etats != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [Object.keys($setup.etats).length != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 0
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.etats, function (e, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
       ref_for: true,
       ref: "absenceRefs",
@@ -416,7 +481,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     )])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", _hoisted_35, _hoisted_37))])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: $setup.printPdf,
+    "class": "bg-yellow-200 ml-[50%] text-yellow-900 py-2 px-4 rounded shadow hover:shadow-xl hover:bg-yellow-300 duration-300"
+  }, " Print the report ")]);
 }
 
 /***/ }),
