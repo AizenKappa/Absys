@@ -81,6 +81,7 @@ Route::post("/updateEtat",[FiliereController::class, 'updateEtat']);
 
 Route::post("/deleteEtat",[FiliereController::class, 'deleteEtat']);
 
+Route::post('/loadPdf',[FiliereController::class, 'loadSearchPdf']);
 Route::get('/loadPdf',[FiliereController::class, 'loadPdf']);/* function(){
     $pdf = Pdf::loadView('pdfs.stagPdf');
     return $pdf->download('hakim.pdf');

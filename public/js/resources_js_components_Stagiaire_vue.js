@@ -624,6 +624,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", _hoisted_45, _hoisted_47))])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: '/api/loadPdf?stag=' + $setup.studentId,
+    target: "_blank",
     "class": "bg-yellow-200 ml-[50%] text-yellow-900 py-2 px-4 rounded shadow hover:shadow-xl hover:bg-yellow-300 duration-300"
   }, "Print the report", 8
   /* PROPS */

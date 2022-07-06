@@ -187,6 +187,7 @@
     import { ref, reactive, watch } from 'vue';
     import useFilieres from '../services/filieres.js'
     import { onMounted } from 'vue';
+    import axios from 'axios';
     
     /* Variables Help-us */
     const reboot  =ref(true)
@@ -198,13 +199,79 @@
     const activeHoure = ref('TT')
     const gpId = ref(null)
 
-
-    function printPdf(){
-        var oldCode =document.documentElement.innerHTML
-        var table = document.getElementById('printTable')
-        var nom_fil = ""
+    // first method 
+    // function printPdf(){
+    //     var oldCode =document.documentElement.innerHTML
+    //     var table = document.getElementById('printTable')
+    //     var nom_fil = ""
         
-        var period=""
+    //     var period=""
+    //     if(selected_fil.value == "Tous"){
+    //         console.log("entered")
+    //         nom_fil = "Tous les filieres"
+    //     }
+    //     else{
+    //         filieres.value.forEach((ele)=>{
+        
+    //             if(ele.id == selected_fil.value ){
+    //                 nom_fil = ele.nom_fil
+                    
+    //             }
+    //         })
+    //     }
+
+    //     if(selected_period.value != "limit"){
+    //         period = document.getElementById(`${selected_period.value}`).innerText
+    //     }
+    //     else if(period_debut.value != null && period_fin.value != null){
+    //         period = period_debut.value + " => " + period_fin.value
+    //     } 
+
+    //     var newCode =
+    //     `
+    //         <head>
+    //             <style>
+    //                 h3,h4{
+    //                 text-align: center
+       
+    //                 }
+    //             table{
+    //                 border-collapse: collapse;
+    //                 width:max-content;  
+    //                 margin:auto
+    //             }
+    //             table ,th,td{
+    //                 border:1px solid black;
+    //                 text-align: center
+    //             }
+    //             *{
+    //                 text-align:center
+    //             }
+    //             </style>
+    //         </head>
+    //         <body>
+                
+    //         <body>
+    //     `
+    //         var houreType = document.getElementById(`${activeHoure.value}`).innerText
+    //         document.documentElement.innerHTML = newCode
+    //         document.body.innerHTML +=`<h2>${houreType}</h2>`
+    //         document.body.innerHTML +=`<h3>${nom_fil}</h3>`
+    //         document.body.innerHTML +=`<h4>${period}</h4>`
+    //         if(selected_gp.value != null){
+    //              document.body.innerHTML +=`<h2>${selected_gp.value}</h2>`
+    //         }
+    //         document.body.innerHTML+=table.innerHTML
+    //         window.print()
+    //         location.reload()
+    //         // reboot.value = false
+    //         // reboot.value = true
+    //         // document.documentElement.innerHTML = oldCode
+    // }
+    
+
+    async function printPdf(){
+        var nom_fil = ""
         if(selected_fil.value == "Tous"){
             console.log("entered")
             nom_fil = "Tous les filieres"
@@ -218,56 +285,37 @@
                 }
             })
         }
-
+        var nom_gp = null
+            if(selected_gp.value != null){
+                nom_gp =  selected_gp.value
+            }
+        var houreType =  document.getElementById(`${activeHoure.value}`).innerText
+        var period=null
         if(selected_period.value != "limit"){
             period = document.getElementById(`${selected_period.value}`).innerText
         }
         else if(period_debut.value != null && period_fin.value != null){
             period = period_debut.value + " => " + period_fin.value
         } 
-
-        var newCode =
-        `
-            <head>
-                <style>
-                    h3,h4{
-                    text-align: center
-       
-                    }
-                table{
-                    border-collapse: collapse;
-                    width:max-content;  
-                    margin:auto
-                }
-                table ,th,td{
-                    border:1px solid black;
-                    text-align: center
-                }
-                *{
-                    text-align:center
-                }
-                </style>
-            </head>
-            <body>
-                
-            <body>
-        `
-            var houreType = document.getElementById(`${activeHoure.value}`).innerText
-            document.documentElement.innerHTML = newCode
-            document.body.innerHTML +=`<h2>${houreType}</h2>`
-            document.body.innerHTML +=`<h3>${nom_fil}</h3>`
-            document.body.innerHTML +=`<h4>${period}</h4>`
-            if(selected_gp.value != null){
-                 document.body.innerHTML +=`<h2>${selected_gp.value}</h2>`
+        await axios("/api/loadPdf",{
+            method:"POST",
+            responseType: 'blob',
+            data:{
+                absence:etats.value,
+                fil:nom_fil,
+                groupe:nom_gp,
+                houreType:houreType,
+                period:period
             }
-            document.body.innerHTML+=table.innerHTML
-            window.print()
-            location.reload()
-            // reboot.value = false
-            // reboot.value = true
-            // document.documentElement.innerHTML = oldCode
+            
+        }).then((response)=>{
+            const file = new Blob([response.data],{type:"application/pdf"})
+            const fileURL = URL.createObjectURL(file);
+            window.open(fileURL);
+            console.log(response.data)
+        })
+        
     }
-
     const periodChanged = () => {
         period_debut.value = null , period_fin.value = null
         getetats(selected_fil.value,selected_period.value,period_debut.value,period_fin.value)

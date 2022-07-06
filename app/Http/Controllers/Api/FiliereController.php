@@ -15,6 +15,7 @@ use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PHPUnit\TextUI\XmlConfiguration\Group;
@@ -1051,16 +1052,32 @@ class FiliereController extends Controller
     }
     public function loadPdf(Request $request)
     {   
-        if($request->has("stag")){
-            $data = $this->StagInfo(intval($request->stag));
-            $pdf = Pdf::loadView('pdfs.stagPdf',compact("data"));
-            return $pdf->download($data["stFullName"].rand(1,50).'.pdf');
-            // return view('pdfs.stagPdf',[
-            //     "data"=>$data
-            // ]);
-        }else{
-            
-        }
+       
+        $data = $this->StagInfo(intval($request->stag));
+        $pdf = Pdf::loadView('pdfs.stagPdf',compact("data"));
+        return $pdf->stream($data["stFullName"].rand(1,50).'.pdf');
+                
+       
+     }
+    public function loadSearchPdf(Request $request)
+    {   
+        
+        $absences = $request->absence;
+        $nom_fil = $request->fil;
+        $groupe = $request->groupe;
+        $houreType = $request->houreType;
+        $period = $request->period;
+        $data = [
+            "nom_fil" => $nom_fil,
+            "absences"=>$absences,
+            "groupe"=>$groupe,
+            "period"=>$period,
+            "houreType"=>$houreType
+        ];
+        $pdf = Pdf::loadView('pdfs.datePdf',compact("data"));
+        return Response($pdf->output(),200,[
+            'Content-Type' => 'application/pdf',
+        ]);
        
     }
     

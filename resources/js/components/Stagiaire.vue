@@ -287,7 +287,7 @@
 
 
 </div>
-<a :href="'/api/loadPdf?stag='+studentId" class="bg-yellow-200 ml-[50%] text-yellow-900 py-2 px-4
+<a :href="'/api/loadPdf?stag='+studentId" target="_blank" class="bg-yellow-200 ml-[50%] text-yellow-900 py-2 px-4
  rounded shadow hover:shadow-xl
   hover:bg-yellow-300 duration-300">Print the report</a>
 </section>
