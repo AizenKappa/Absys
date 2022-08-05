@@ -5,7 +5,7 @@
 
     <div id="helper">
         <!-- -- SideBar -- -->
-        <div v-if="dash" class="md:block md:h-screen md:w-[14rem] w-[96%] md:mx-0 mt-3 md:mt-0 bg-white md:overflow-y-scroll md:fixed fixed z-50">
+        <div v-if="dash" class="print:hidden md:block md:h-screen md:w-[14rem] w-[96%] md:mx-0 mt-3 md:mt-0 bg-white md:overflow-y-scroll md:fixed fixed z-50">
             <div id="dashboard-header" class="flex justify-between mt-8 mb-10 mx-6">
                 <h1 class=" text-sm uppercase font-bold">{{ fullName }}</h1>
                 <span @click="dash=false" class="w-8 h-8 flex justify-center text-lg rounded-sm items-center active:border-[3px] active:border-zinc-900 md:hidden cursor-pointer"><fas icon="xmark" /></span>
@@ -21,7 +21,7 @@
             <div class="md:h-[20rem] h-[30rem] bg-sky-600">
             <div id="contents" class="absolute top-0 w-full h-full z-30">
                 <!-- -- Navbar  -- -->
-                <div class="w-full h-20 md:px-14 md:pt-4 bg-blue-50 md:bg-sky-600 flex justify-between px-6 pt-5 ">
+                <div class="print:hidden w-full h-20 md:px-14 md:pt-4 bg-blue-50 md:bg-sky-600 flex justify-between px-6 pt-5 ">
                     <span class="hidden md:block mt-3 font-bold text-white uppercase text-sm">{{title}}</span>
                     <span @click="dash=true" class="w-10 h-10 flex justify-center rounded-sm items-center text-xl active:border-[3px] active:border-zinc-900 md:hidden cursor-pointer"><fas icon="bars" /></span>
                         <img id="profile"
