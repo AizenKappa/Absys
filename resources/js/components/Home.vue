@@ -5,7 +5,7 @@
 <section v-if="shallwe" class="h-screen relative">
 
   <!-- Recherche and lines -->
-    <div class="w-full grid grid-col-1 gap-4 sm:flex sm:justify-between mb-3 mt-12 px-10">
+    <div class="w-full grid grid-col-1 gap-4 sm:flex sm:justify-between mb-3 mt-12 px-2 lg:px-6">
 
         <div class="relative w-[15rem]">
             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -13,6 +13,7 @@
             </div>
             <input @keyup="stagBySearch" v-model="search" type="text" placeholder="Recherche des stagiaire" class=" text-sm rounded-md focus:outline-2 outline-slate-600 block w-full pl-10 p-2.5  ">
         </div>
+        
 
         <div  class="max-w-max max-h-max relative">
             <select  @click="dash=!dash" v-model="stagPerPage" @change="changePage" class="cursor-pointer
@@ -22,114 +23,107 @@
                 <option value="50">50</option>
                 <option value="100">100</option>
             </select>
-            <span   @change="changePage" class="absolute cursor-pointer 
-            top-[7px] right-1 text-slate-700 pr-2 bg-white">
-                <fas v-if="dash == false" icon="angle-down" />
-                <fas v-if="dash == true" icon="angle-up" />
-            </span>
         </div>
         
 
     </div>
 
+
    <!-- Stagiaires Tables -->
-    <div class="flex justify-center">
-        <div class=" 
-        w-full overflow-y-scroll lg:w-[90%] mt-10  rounded-md">
-            <table  class="bg-white md:p-2 select-none w-full  rounded-md">
+    <div class="flex justify-center overflow-x-auto relative px-2 lg:px-6">
 
-                <tr class="border-b p-0 md:h-[3rem] bg-slate-100 rounded-md">
+        <div class=" w-full mt-10  overflow-x-auto relative shadow-lg shadow-gray-300 rounded-md">
+            <table class="bg-white md:p-2 select-none w-full">
 
-                        <th class="p-0 border-r border-gray-400" >
-                            <div data-column="id"  @click="sortTable" class="
-                            cursor-pointer flex flex-col-reverse md:flex-row items-center justify-center
-                             md:gap-2 md:p-2" >
-                                <div  class="text-gray-300 flex p-0">
+                <tr class="border-b-2 border-gray-300 p-0 h-[2.4rem] md:h-[3rem] bg-slate-100">
+
+                        <th class="p-0" >
+                            <div data-column="id"  @click="sortTable" class=" 
+                            cursor-pointer flex items-center ml-5" >
+                             <span class="text-xs font-medium mr-2 md:mr-3
+                            sm:text-md lg:text-base md:font-semibold">Matricule</span>
+                                <div  class="text-gray-300 flex p-0 text-xs md:text-base">
                                     <fas :class="(sort.type =='id' &&
                                     sort.option =='asc')? 'text-black':''"  size="xs" icon="arrow-up" />
                                     <fas :class="(sort.type =='id' &&
                                     sort.option =='desc')? 'text-black':''" size="xs" icon="arrow-down" />
                                 </div>
-                            <span class="text-xs font-light
-                            sm:text-md sm:font-normal md:text-lg md:font-semibold">Id</span>
                             </div> 
                         </th>
 
-                        <th class="p-0 border-r border-gray-400">
-                            <div data-column="nom_st" @click="sortTable" class="flex
-                            flex-col-reverse md:flex-row
-                            cursor-pointer  items-center justify-center
-                             md:gap-2 md:p-2" >
-                                <div  class="text-gray-300 flex p-0">
+                        <th class="p-0">
+                            <div data-column="nom_st" @click="sortTable" class="flex cursor-pointer  items-center ml-5" >
+                                <span class="text-xs font-medium mr-2 md:mr-3
+                            sm:text-md lg:text-base md:font-semibold">Nom</span>
+
+                                <div class="text-gray-300 flex p-0 text-xs md:text-base">
                                     <fas :class="(sort.type =='nom_st' &&
                                     sort.option =='asc')? 'text-black':''"  size="xs" icon="arrow-up" />
                                     <fas :class="(sort.type =='nom_st' &&
                                     sort.option =='desc')? 'text-black':''" size="xs" icon="arrow-down" />
                                 </div>
-                            <span class="text-xs font-normal sm:text-md sm:font-normal md:text-lg  md:font-semibold">Nom</span>
                             </div> 
                         </th>
 
-                        <th class="p-0 border-r border-gray-400">
-                            <div data-column="prenom_st"  @click="sortTable" class="
-                            cursor-pointer flex
-                            flex-col-reverse md:flex-row
-                             items-center justify-center
-                             md:gap-2 md:p-2" >
-                                <div class=" flex p-0 text-gray-300">
+                        <th class="p-0">
+                            <div data-column="prenom_st"  @click="sortTable" class="cursor-pointer flex items-center ml-5" >
+                            
+                            <span class="text-xs font-medium mr-2 md:mr-3
+                            sm:text-md lg:text-base md:font-semibold">Prenom</span>
+
+                                <div class=" flex p-0 text-gray-300 text-xs md:text-base">
                                 <fas :class="(sort.type =='prenom_st' &&
                                     sort.option =='asc')? 'text-black':''"  size="xs" icon="arrow-up" />
                                     <fas :class="(sort.type =='prenom_st' &&
                                     sort.option =='desc')? 'text-black':''" size="xs" icon="arrow-down" />
                             </div>
-                            <span class="text-xs font-light sm:text-md sm:font-normal md:text-lg  md:font-semibold">Prenom</span>
                             </div> 
                         </th>
 
-                        <th class="p-0 border-r border-gray-400">
+                        <th class="p-0">
                             <div  @click="sortTable"
-                            data-column="groupe" class="cursor-pointer flex
-                            flex-col-reverse md:flex-row items-center
-                             justify-center md:gap-2 md:p-2" >
-                                <div class=" flex p-0  text-gray-300">
+                            data-column="groupe" class="cursor-pointer flex items-center ml-5" >
+                                <span class="text-xs font-medium mr-2 md:mr-3
+                            sm:text-md lg:text-base md:font-semibold">Groupe</span>
+
+                                <div class=" flex p-0  text-gray-300 text-xs md:text-base">
                                     <fas :class="(sort.type =='groupe' &&
                                     sort.option =='asc')? 'text-black':''"  size="xs" icon="arrow-up" />
                                     <fas :class="(sort.type =='groupe' &&
                                     sort.option =='desc')? 'text-black':''" size="xs" icon="arrow-down" />
                                 </div>
-                                <span class="text-xs font-light sm:text-md sm:font-normal md:text-lg  md:font-semibold">Groupe</span>
                             </div> 
                         </th>
 
-                        <th class="p-0 border-r border-gray-400">
+                        <th class="p-0">
                             <div  @click="sortTable" 
                             data-column="heure_absence_st" class="cursor-pointer
-                             flex flex-col-reverse md:flex-row
-                              items-center  justify-center 
-                             md:gap-2 md:p-2" >
-                                <div class=" flex p-0 text-gray-300">
-                                <fas :class="(sort.type =='heure_absence_st' &&
+                             flex items-center ml-5" >
+                            <span class="text-xs font-medium mr-2 md:mr-3
+                            sm:text-md lg:text-base md:font-semibold">Heures</span>
+
+                                <div class=" flex p-0 text-gray-300 text-xs md:text-base">
+                                    <fas :class="(sort.type =='heure_absence_st' &&
                                     sort.option =='asc')? 'text-black':''"  size="xs" icon="arrow-up" />
                                     <fas :class="(sort.type =='heure_absence_st' &&
                                     sort.option =='desc')? 'text-black':''" size="xs" icon="arrow-down" />
-                            </div>
-                            <span class="text-xs font-light sm:text-md sm:font-normal
-                             md:text-lg  md:font-semibold text-wrap w-11">Heure Absence</span>
+                                </div>
+                            
                             </div> 
                         </th>
 
-                        <th class="p-0 border-r border-gray-400" >
+                        <th class="p-0" >
                             <div  @click="sortTable" 
-                            data-column="numero_personnelle" class="cursor-pointer flex
-                            flex-col-reverse md:flex-row items-center justify-center 
-                            md:gap-2 md:p-2" >
-                                <div class="flex p-0 text-gray-300">
+                            data-column="numero_personnelle" class="cursor-pointer flex items-center ml-5" >
+                                <span class="text-xs font-medium mr-2 md:mr-3
+                            sm:text-md lg:text-base md:font-semibold">Tel N°</span>
+
+                                <div class="flex p-0 text-gray-300 text-xs md:text-base">
                                 <fas :class="(sort.type =='numero_personnelle' &&
                                     sort.option =='asc')? 'text-black':''"  size="xs" icon="arrow-up" />
                                     <fas :class="(sort.type =='numero_personnelle' &&
                                     sort.option =='desc')? 'text-black':''" size="xs" icon="arrow-down" />
                             </div>
-                            <span class="text-xs font-light sm:text-md sm:font-normal md:text-lg  md:font-semibold">Tel N°</span>
                             </div> 
                         </th >
 
@@ -143,34 +137,29 @@
                 </tr>
 
                 <tr @click="studentInfo(st.id)"  v-show="!searchFailed" class="
-                md:p-4 cursor-pointer active:bg-slate-300 border-b hover:bg-slate-200 h-14 transition-colors"  
+                cursor-pointer active:bg-slate-300 border-b hover:bg-slate-200 h-10 md:h-14 transition-colors"  
                     v-for="st in stagIntoPages[currentPage]" :key="st.id">
                     <td class="text-xs
-                    md:text-md
-                     lg:text-lg  md:font-semibold text-center text-slate-900">{{st.id}}</td>
+                     lg:text-sm opacity-100  font-bold text-left text-slate-900"><div class="ml-5">{{st.matricule_st}}</div></td>
                     <td class="text-xs
-                    md:text-md
-                     lg:text-lg md:font-semibold text-center text-slate-500">{{st.nom_st}}</td>
+                     lg:text-sm opacity-90 font-semibold text-left text-slate-600"><div class="ml-5">{{st.nom_st}}</div></td>
                     <td class="text-xs
-                    md:text-md
-                     lg:text-lg md:font-semibold text-center text-slate-500">{{st.prenom_st}}</td>
+                     lg:text-sm opacity-90 font-semibold text-left text-slate-600"><div class="ml-5">{{st.prenom_st}}</div></td>
                     <td class="text-xs 
-                    md:text-md
-                    lg:text-lg md:font-semibold text-center text-slate-500">{{st.groupe.nom_gp}}</td>
+                 lg:text-sm opacity-90 font-semibold text-left text-slate-600"><div class="ml-5">{{st.groupe.nom_gp}}</div></td>
                     <td class="text-xs 
-                    md:text-md
-                    lg:text-lg md:font-semibold text-center text-slate-500">{{st.heure_absence_st}}</td>
+                 lg:text-sm opacity-90 font-semibold text-left text-slate-600"><div class="ml-5">{{st.heure_absence_st}}</div></td>
                     <td class="text-xs 
-                    md:text-md
-                    lg:text-lg md:font-semibold text-center text-slate-500">{{st.numero_personnelle}}</td>
+                 lg:text-sm opacity-90 font-semibold text-left text-slate-600"><div class="ml-5">{{st.numero_personnelle}}</div></td>
                 </tr>
 
             </table>
         </div>
+
     </div>
 
     <!-- Next-Previous btns -->
-    <div v-show="!searchFailed" class="flex justify-between xl:px-20 md:px-10 px-5 py-10">
+    <div v-show="!searchFailed" class="flex justify-between xl:px-20 md:px-10 px-6 py-10">
         <!-- previos-btn -->
         <div class="page-item"><a
             :class="currentPage == 0 ? 'opacity-[0.5] cursor-default hover:bg-transparent':'cursor-pointer'"
@@ -209,6 +198,7 @@
 
 
     </div>
+    
 
 
 </section>
@@ -225,7 +215,8 @@
     const currentPage=ref(0)
     const search = ref("")
     const shallwe = ref(false)
-    const dash = ref(false)
+    const dropdown = ref(false)
+    const headDrop = ref("Choos Option")
     
     const router = useRouter()
     function studentInfo(id){
@@ -243,7 +234,10 @@
         
     onBeforeMount(()=>{ getSt() })
 
-       
+    const handleDrop = (event) => {
+        dropdown.value = false
+        headDrop.value = event.target.innerHTML
+    }
    
     function stagBySearch(){
         
@@ -277,7 +271,7 @@
     }
 
     const getSt = async () =>{
-        let response = await axios.get("/api/stagiaires")
+        let response = await axios.get("/stagiaires")
         stagiaires.value = response.data
         stagiaires.value.sort((a, b) => (a['heure_absence_st'] < b['heure_absence_st']) ? 1 : -1)
         stagIntoPages.value = arrayChunk(stagiaires.value,Number(stagPerPage.value),search.value)

@@ -46,11 +46,12 @@
                 </router-link>
 
                 <div>  <hr> </div>
-                    
-                <div class="px-4 py-3 hover:text-slate-600 active:bg-slate-300">
-                    <a href="/logout">Logout</a>
-                </div>
 
+                <a href="/logout">
+                    <div class="px-4 py-3 hover:text-slate-600 active:bg-slate-300">
+                        Logout
+                    </div>
+                </a>
             </div>
         </div>
     </div>
@@ -60,7 +61,7 @@
 
 <script setup>
 
-    import { ref, onMounted, watch, onBeforeMount } from 'vue';
+    import { ref, watch, onBeforeMount } from 'vue';
     import { useRoute } from 'vue-router';
     import axios from "axios";
 

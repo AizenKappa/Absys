@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             'password' => "anas123",
             'role' => "admin"
         ]);
+        
         Duration::create([
             'title'=>"Toute la Journée",
             "h_debut"=>"08:30:00",
@@ -119,8 +120,8 @@ class DatabaseSeeder extends Seeder
             "active" => "off"
         ]);
 
-        $path = database_path("sql/data.sql");
-        DB::unprepared(file_get_contents($path));
+/*         $path = database_path("sql/data.sql");
+        DB::unprepared(file_get_contents($path)); */
         $this->command->info('Success');
     }
 }

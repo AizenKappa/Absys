@@ -47,7 +47,7 @@
 
                 <form @submit.prevent>
                     <!-- Password -->
-                    <div class="py-8 px-5 mb-10">
+                    <div class="pt-8 px-5 mb-10">
                         <div class="grid grid-cols-1">
                             <label for="pwd" class="mb-2 text-sm text-slate-600 font-bold">PASSWORD</label>
                             <span class="text-sm text-slate-400">// Entrez le mot de pass pour enregistrer les modifications</span>
@@ -60,7 +60,10 @@
                         </div>
                     </div>
                     <!-- Button -->
-                    <div class="absolute bottom-5 right-5">
+                    <div class="flex justify-between pb-5 px-3 sm:px-5 items-center">
+                        <div
+                        @click="Model"
+                        class=" hover:text-blue-700 text-sm font-semibold cursor-pointer text-blue-600">Changer votre mot de pass ?</div>
                         <button
                         v-on:click="checkuser()"
                         class="bg-transparent active:bg-blue-500 text-blue-700 font-semibold active:text-white py-2 px-6 border border-blue-500 active:border-transparent rounded">
@@ -110,6 +113,58 @@
             </div>
 
         </div>
+
+    <!-- Model update password -->
+    <div id="Model" class="fixed top-0 w-full hidden h-full z-40 place-content-center rounded-md">
+        <div class="absolute bg-slate-300 w-full h-full rounded-md opacity-50 z-10"></div>
+
+            <div class=" lg:w-[35rem] sm:w-[28rem] w-[22rem] pb-5 bg-white absolute z-20 translate-y-[-50%] translate-x-[-50%]  md:translate-x-[-70%] top-[50%] left-[50%] grid place-content-center rounded-md ">
+            <form @submit.prevent>
+                <div class="lg:w-[35rem] sm:w-[28rem] w-[22rem] flex justify-between px-5 pt-5 pb-3">
+                    <span></span>
+                    <span 
+                    class="hover:text-sky-700 text-gray-400 cursor-pointer" 
+                    @click="Model"><fas size="xl" icon="fa-xmark" /></span>
+                </div>
+                <div class="lg:w-[35rem] sm:w-[28rem] w-[22rem] text-center uppercase text-slate-800 font-bold text-xl py-3">
+                    Changement de mot de passe
+                </div>
+                <div class="grid gap-6 px-14 py-8 lg:w-[35rem] sm:w-[28rem] w-[22rem]">
+                    <label class="w-full">
+                        <div class="mb-2 text-sm text-slate-500 font-semibold">votre mot de passe actuelle</div>
+                        <input
+                        v-on:input="checkPwdInpute"
+                        :class="!UpPwd.curPwd.check ?'inpute-error':''" title="curPwd" v-model="UpPwd.curPwd.text" class="shadow-md rounded-md py-6 px-3 outline-2 outline-neutral-400 shadow-gray-300 w-[100%] h-[2rem]" placeholder="Mot de passe" type="password" required>
+                        <span class="error_message" v-if="!UpPwd.curPwd.check">Mot de passe incorecte !</span>
+                    </label>
+                    <label class="w-full">
+                        <div class="mb-2 text-sm text-slate-500 font-semibold">Nouveau mot de passe</div>
+                        <input
+                        v-on:input="checkPwdInpute"
+                        :class="!UpPwd.newPwd.check ?'inpute-error':''" title="newPwd" v-model="UpPwd.newPwd.text" class="shadow-md rounded-md py-6 px-3 outline-2 outline-neutral-400 shadow-gray-300 w-[100%] h-[2rem]" placeholder="Nouveau mot de passe" type="password" required>
+                        <span class="error_message" v-if="!UpPwd.newPwd.check">Mot de pass faible 5 caractères au minimum !!</span>
+                    </label>
+                    <label class="w-full">
+                        <div class="mb-2 text-sm text-slate-500 font-semibold">Répéter Nouveau mot depass</div>
+                        <input
+                        v-on:input="checkPwdInpute"
+                        :class="!UpPwd.rePwd.check ?'inpute-error':''" title="rePwd" v-model="UpPwd.rePwd.text" class="shadow-md rounded-md py-6 px-3 outline-2 outline-neutral-400 shadow-gray-300 w-[100%] h-[2rem]" placeholder="Répéter Nouveau mot depass" type="password" required>
+                        <span class="error_message" v-if="!UpPwd.rePwd.check">Les mots de passe ne correspondent pas</span>
+                    </label>
+                </div>
+                <div class="flex justify-between items-center pb-3 px-3 sm:px-5">
+                    <span></span>
+                    <button
+                        type="submit"
+                        v-on:click="checkPwd()"
+                        
+                        class="bg-transparent active:bg-blue-500 text-blue-700 font-semibold active:text-white py-2 px-6 border border-blue-500 active:border-transparent rounded">
+                            Save
+                    </button>
+                </div>
+            </form>
+            </div>
+    </div>
         
         
     </section>
@@ -130,7 +185,8 @@
     const done = ref(false)
     const show = ref(false)
     const input = ref(null)
-    
+    const start = ref(false)
+
     const cinError = ref("Cin invalide")
     const emailError = ref("E-mail invalide")
     const pwdError = ref("")
@@ -149,6 +205,12 @@
         email : { text: "", check: true, reg: /^[\w\.\-]{5,}@[\w\-]+\.[\w]+$/i },
         pwd : { text: "", check:true},
         image: { path: "", check:true}
+    })
+
+    const UpPwd = reactive({
+        curPwd : { text : "", check:true },
+        newPwd : { text: "", check: true, reg: /^.{5,}$/i },
+        rePwd : { text: "", check: true },
     })
 
     /* On change inpute file : new image */
@@ -320,12 +382,65 @@
         getuser()
     }
 
+    const Model = () => {
+        document.getElementById("Model").classList.toggle('hidden')
+    }
+
+    const checkPwdInpute = (event) => {
+        if(start.value){
+            if(event.target.title == "curPwd"){
+                UpPwd.curPwd.check = true
+            }else if(event.target.title == "newPwd"){
+                UpPwd.newPwd.check = UpPwd.newPwd.reg.test(UpPwd.newPwd.text)
+            }else if(event.target.title == "rePwd"){
+                UpPwd.rePwd.check = UpPwd.rePwd.text ==  UpPwd.newPwd.text
+            }
+        }
+    }
+
+    const checkPwd = () => {
+
+        if(UpPwd.newPwd.text.length == 0 || UpPwd.curPwd.text.length == 0 || UpPwd.rePwd.text.length == 0){
+            return
+        }
+
+        var testThis = false
+        if(UpPwd.newPwd.check = UpPwd.newPwd.reg.test(UpPwd.newPwd.text)){
+            UpPwd.rePwd.check = UpPwd.rePwd.text ==  UpPwd.newPwd.text
+        }
+        
+        
+        for(let e in  UpPwd){
+            if(!UpPwd[e].check){
+                testThis = false
+                break
+            }else testThis = true 
+        }
+
+        if(testThis){
+            sendPwd(UpPwd.curPwd.text, UpPwd.newPwd.text)
+        }else{
+            start.value = true
+        }
+    }
+
+    const sendPwd = async (password, newPassword) => {
+
+        let response = await axios.post("/updatePwdProfile", { password: password, newPassword : newPassword})
+
+        if(response.data.check == false){
+            UpPwd.curPwd.check = false
+            start.value = true
+        }else{
+            success("Mot de passe modifieé avec successée")
+        }
+    }
 </script>
 
 
 <style scoped>
     .inpute-error{
-        outline: 3px solid red;
+        outline: 2px solid rgba(255, 0, 0, 0.761);
     }
     .error_message{
         color: red;

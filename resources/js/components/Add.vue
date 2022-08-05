@@ -69,26 +69,22 @@
         </div>       
 
     <!-- Aboute absence -->
-        <div v-if="nom_gp != null" class="w-full grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 place-items-center gap-y-8">
-            <select v-model="prof_id" name="prof" class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300">
+        <div v-if="nom_gp != null"
+        :class="admin?'lg:grid-cols-4':'lg:grid-cols-3'"
+        class="w-full grid grid-cols-1 md:grid-cols-2 place-items-center gap-y-8">
+       
+            <select v-if="admin"
+            v-model="prof_id" name="prof" class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300">
                 <option class="hidden" :value="null" selected >Le formateur</option>
                 <option :value="prof.id" v-for="prof in profs" :key="prof.id">{{prof.nom_prof}}</option>
             </select>
-                <select   v-model="duration_id" name="duration_id" class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300">
-                    <option class="hidden" :value='null'  >La période d'absence</option>
+                <select v-model="duration_id" name="duration_id" class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300">
+                    <option class="hidden" :value='null'  selected>La période d'absence</option>
                     <template v-for="duration in durations" :key="duration.id">
 
                         <option :value="duration.id" >{{duration.title}}</option>
 
                     </template>
-                    
-                    <!-- <option value='allDay'  >Toute La Journée</option>
-                    <option value='matin' :selected="hourMinute < 13.5" >La Matinée</option>
-                    <option value='midi' :selected="hourMinute > 13.5" >L'après-midi</option>
-                    <option value='seance-1' >La Première Séance</option>
-                    <option value='seance-2' >La Deuxième Séance</option>
-                    <option value='seance-3' >La Troisième Séance</option>
-                    <option value='seance-4' >La Quatrième Séance</option> -->
                     
                 </select>
             <select  v-model="seance" name="seanceType" class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300">
@@ -96,7 +92,7 @@
                 <option value='Presentiel' >Presentiel</option>
                 <option value="distanciel" >Distanciel</option>
             </select>
-            <input v-model="date_abs"   class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300"
+            <input @change="getDuration(selected_gp)" v-model="date_abs"   class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300"
             type="date"  name="date_abs" />
         </div>
         
@@ -116,14 +112,14 @@
 
 <script setup>
     import { useToast } from "vue-toastification";
-    import { ref } from 'vue';
+    import { ref, watch } from 'vue';
     import useFilieres from '../services/filieres.js'
     import { onMounted,onUpdated } from 'vue';
     import axios from 'axios';
     /* some Logic Variables */
     const st_inputs = ref([])
     /* Inputs to send  */
-    const prof_id = ref(null);
+
     const seance = ref(null);
     const date_abs = ref(new Date().toISOString().slice(0, 19).split('T')[0])/* return the date of today  */
     const isStdChecked = ref(false)/* return true if a student is selected False if not */
@@ -135,10 +131,13 @@
     const durations = ref([])
     window.scrollTo(0, 0)
 
-    async function getDuration(){
-        let response = await axios.get("/api/getDurations")
-       durations.value = response.data;
+    async function getDuration(gp){
+        let response = await axios.post("/api/getDurations",{ date : date_abs.value, gp: gp})
+        durations.value = response.data;
+        duration_id.value = null;
+        console.log(durations.value)
     }
+
     const checkStd = () => {
         isStdChecked.value = false
         student_ids.value = [];
@@ -159,14 +158,17 @@
     }
 
     const formCheck = () => {
-        if(isStdChecked.value == false ||  prof_id.value == null || seance.value == null ||duration_id.value == null ) return false;
+        if(isStdChecked.value == false || prof_id == null
+        || seance.value == null ||duration_id.value == null ) return false;
         return true;
     }
 
     const reset = (message) => {
-        prof_id.value = seance.value = duration_id.value= null;
+        prof_id.value = seance.value = duration_id.value = null;
+        date_abs.value = new Date().toISOString().slice(0, 19).split('T')[0]
         isStdChecked.value = false 
         st_inputs.value.forEach(e => e.checked = false);
+        getDuration(selected_gp.value)
         success(message)
     }
 
@@ -177,11 +179,15 @@
     /* Call Api Groupes */
     const getcontents = () =>  { selected_gp.value = "choose your groupe" , getgroupes(selected.value)}
     /* Return all our functuons and variables from { services/filieres.js } to use here */
-    const { getFilieres , filieres , profs , getgroupes , groupes , addAbsence ,stagiaires, getstagiaires , nom_gp , add_status } = useFilieres();
+    const { getFilieres, prof_id , admin , filieres , profs , getgroupes , groupes , addAbsence ,stagiaires, getstagiaires , nom_gp } = useFilieres();
     /* On Mounted call Aoi Flieres */
     onMounted(()=>{
-        getDuration()
         getFilieres()
+
+    })
+
+    watch(() => selected_gp.value, () => {
+        getDuration(selected_gp.value);
     })
 
     const success = (message) => {

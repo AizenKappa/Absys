@@ -1,3 +1,5 @@
+
+
 <x-loginLayout>
     <div class="h-screen overflow-hidden login-bg grid place-items-center">
         <div class="p-6 rounded-lg shadow-lg bg-white max-w-md">
@@ -7,10 +9,9 @@
             <h1 class="text-xl text-center mb-5">Verification</h1>
             <form method="POST" action="/check_user">
                 @csrf
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <x-contents.inpute type='text' value="{{old('firstname')}}" name='firstname' placeholder="First name"/>
-                    <x-contents.inpute type='text' value="{{old('lastname')}}" name='lastname' placeholder="Last name"/>
-                    <x-contents.inpute type='text' value="{{old('cin')}}" name='cin' placeholder="CIN" class="mb-5 col-span-2"/>
+                <div class="sm:w-[24.5rem] w-[18rem] grid grid-cols-1 gap-4">
+                    <x-contents.inpute type='text' value="{{old('cin')}}" class="w-full" name='cin' placeholder="CIN"/>
+                    <x-contents.inpute type='text' value="{{old('email')}}" class="w-full mb-5" name='email' placeholder="E-mail"/>
                 </div>
                 <x-contents.button type='submit'/>
                     @if ($errors->any())

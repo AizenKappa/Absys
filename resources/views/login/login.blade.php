@@ -47,7 +47,7 @@
               <label class="form-check-label inline-block text-gray-800" for="Check">Remember me</label>
             </div>
             <a href="/user_info"
-              class="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out">Forgot
+              class="text-blue-600 hover:text-blue-800 focus:text-blue-700 transition duration-200 ease-in-out">Forgot
               password?</a>
           </div>
           <x-contents.button type='submit'/>

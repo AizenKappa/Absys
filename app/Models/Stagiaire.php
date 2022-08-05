@@ -19,7 +19,7 @@ class Stagiaire extends Model
 
     public function absences()
     {
-        return $this->hasMany(Etat::class);
+        return $this->hasMany(Etat20212022::class, 'foreign_key', 'stagiaire_id');
     }
     
 }

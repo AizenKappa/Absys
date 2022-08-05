@@ -15,11 +15,18 @@ class Prof extends Model
 
     public function groupes()
     {
-        return $this->belongsToMany(Groupe::class,'relations');
+        return $this->belongsToMany(Groupe::class,'groupe_profs');
     }
 
     public function absences()
     {
-        return $this->hasMany(Etat::class);
+        $year = Absysyear::Where('active','on')->first()->year;
+        $Model = 'App\Models\Etat'.$year;
+        return $this->hasMany($Model);
+    }
+
+    public function modules()
+    {
+        return $this->belongsToMany(module::class,'prof_modules');
     }
 }

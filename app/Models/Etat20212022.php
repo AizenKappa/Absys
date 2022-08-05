@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Etat extends Model
+class Etat20212022 extends Model
 {
     use HasFactory;
     public $timestamps = false;
     protected $guarded = [];
 
 
-    protected $with = ['prof','duration','stagiaire'];
+    protected $with = ['prof','duration','stagiaire.groupe'];
     public function stagiaire()
     {
         return $this->belongsTo(Stagiaire::class);
@@ -26,5 +26,6 @@ class Etat extends Model
     {
         return $this->belongsTo(Duration::class);
     }
-    /* Etat::with('stagiaire','stagiaire.groupe')->first()->stagiaire->groupe->filiere_id */
 }
+
+

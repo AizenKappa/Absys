@@ -39,7 +39,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var st_inputs = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
     /* Inputs to send  */
 
-    var prof_id = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
     var seance = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
     var date_abs = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(new Date().toISOString().slice(0, 19).split('T')[0]);
     /* return the date of today  */
@@ -56,25 +55,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var durations = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
     window.scrollTo(0, 0);
 
-    function getDuration() {
+    function getDuration(_x) {
       return _getDuration.apply(this, arguments);
     }
 
     function _getDuration() {
-      _getDuration = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      _getDuration = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(gp) {
         var response;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default().get("/api/getDurations");
+                return axios__WEBPACK_IMPORTED_MODULE_3___default().post("/api/getDurations", {
+                  date: date_abs.value,
+                  gp: gp
+                });
 
               case 2:
                 response = _context.sent;
                 durations.value = response.data;
+                duration_id.value = null;
+                console.log(durations.value);
 
-              case 4:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -109,16 +113,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
 
     var formCheck = function formCheck() {
-      if (isStdChecked.value == false || prof_id.value == null || seance.value == null || duration_id.value == null) return false;
+      if (isStdChecked.value == false || prof_id == null || seance.value == null || duration_id.value == null) return false;
       return true;
     };
 
     var reset = function reset(message) {
       prof_id.value = seance.value = duration_id.value = null;
+      date_abs.value = new Date().toISOString().slice(0, 19).split('T')[0];
       isStdChecked.value = false;
       st_inputs.value.forEach(function (e) {
         return e.checked = false;
       });
+      getDuration(selected_gp.value);
       success(message);
     };
     /* Variables Help-us */
@@ -136,6 +142,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     var _useFilieres = (0,_services_filieres_js__WEBPACK_IMPORTED_MODULE_2__["default"])(),
         getFilieres = _useFilieres.getFilieres,
+        prof_id = _useFilieres.prof_id,
+        admin = _useFilieres.admin,
         filieres = _useFilieres.filieres,
         profs = _useFilieres.profs,
         getgroupes = _useFilieres.getgroupes,
@@ -143,14 +151,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         addAbsence = _useFilieres.addAbsence,
         stagiaires = _useFilieres.stagiaires,
         getstagiaires = _useFilieres.getstagiaires,
-        nom_gp = _useFilieres.nom_gp,
-        add_status = _useFilieres.add_status;
+        nom_gp = _useFilieres.nom_gp;
     /* On Mounted call Aoi Flieres */
 
 
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
-      getDuration();
       getFilieres();
+    });
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(function () {
+      return selected_gp.value;
+    }, function () {
+      getDuration(selected_gp.value);
     });
 
     var success = function success(message) {
@@ -179,7 +190,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     var __returned__ = {
       st_inputs: st_inputs,
-      prof_id: prof_id,
       seance: seance,
       date_abs: date_abs,
       isStdChecked: isStdChecked,
@@ -197,6 +207,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       selected_gp: selected_gp,
       getcontents: getcontents,
       getFilieres: getFilieres,
+      prof_id: prof_id,
+      admin: admin,
       filieres: filieres,
       profs: profs,
       getgroupes: getgroupes,
@@ -205,11 +217,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       stagiaires: stagiaires,
       getstagiaires: getstagiaires,
       nom_gp: nom_gp,
-      add_status: add_status,
       success: success,
       errorNet: errorNet,
       useToast: vue_toastification__WEBPACK_IMPORTED_MODULE_0__.useToast,
       ref: vue__WEBPACK_IMPORTED_MODULE_1__.ref,
+      watch: vue__WEBPACK_IMPORTED_MODULE_1__.watch,
       useFilieres: _services_filieres_js__WEBPACK_IMPORTED_MODULE_2__["default"],
       onMounted: vue__WEBPACK_IMPORTED_MODULE_1__.onMounted,
       onUpdated: vue__WEBPACK_IMPORTED_MODULE_1__.onUpdated,
@@ -342,12 +354,8 @@ var _hoisted_24 = {
   "class": "p-2 whitespace-nowrap"
 };
 var _hoisted_25 = ["name"];
-var _hoisted_26 = {
-  key: 1,
-  "class": "w-full grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 place-items-center gap-y-8"
-};
 
-var _hoisted_27 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_26 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     "class": "hidden",
     value: null,
@@ -357,20 +365,21 @@ var _hoisted_27 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_28 = ["value"];
+var _hoisted_27 = ["value"];
 
-var _hoisted_29 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_28 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     "class": "hidden",
-    value: null
+    value: null,
+    selected: ""
   }, "La période d'absence", -1
   /* HOISTED */
   );
 });
 
-var _hoisted_30 = ["value"];
+var _hoisted_29 = ["value"];
 
-var _hoisted_31 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_30 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     "class": "hidden",
     selected: "",
@@ -380,7 +389,7 @@ var _hoisted_31 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_32 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_31 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: "Presentiel"
   }, "Presentiel", -1
@@ -388,7 +397,7 @@ var _hoisted_32 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_33 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_32 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: "distanciel"
   }, "Distanciel", -1
@@ -396,12 +405,12 @@ var _hoisted_33 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_34 = [_hoisted_31, _hoisted_32, _hoisted_33];
-var _hoisted_35 = {
+var _hoisted_33 = [_hoisted_30, _hoisted_31, _hoisted_32];
+var _hoisted_34 = {
   key: 2,
   "class": "w-full md:pl-[90%] pl-[85%] h-[6rem] flex items-center"
 };
-var _hoisted_36 = ["disabled"];
+var _hoisted_35 = ["disabled"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_fas = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("fas");
 
@@ -471,39 +480,43 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , _hoisted_25)])])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])])])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Aboute absence "), $setup.nom_gp != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  ))])])])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Aboute absence "), $setup.nom_gp != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+    key: 1,
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.admin ? 'lg:grid-cols-4' : 'lg:grid-cols-3', "w-full grid grid-cols-1 md:grid-cols-2 place-items-center gap-y-8"])
+  }, [$setup.admin ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("select", {
+    key: 0,
     "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $setup.prof_id = $event;
     }),
     name: "prof",
     "class": "w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300"
-  }, [_hoisted_27, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.profs, function (prof) {
+  }, [_hoisted_26, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.profs, function (prof) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: prof.id,
       key: prof.id
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(prof.nom_prof), 9
     /* TEXT, PROPS */
-    , _hoisted_28);
+    , _hoisted_27);
   }), 128
   /* KEYED_FRAGMENT */
   ))], 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.prof_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  )), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.prof_id]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
       return $setup.duration_id = $event;
     }),
     name: "duration_id",
     "class": "w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300"
-  }, [_hoisted_29, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.durations, function (duration) {
+  }, [_hoisted_28, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.durations, function (duration) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       key: duration.id,
       value: duration.id
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(duration.title), 9
     /* TEXT, PROPS */
-    , _hoisted_30);
+    , _hoisted_29);
   }), 128
   /* KEYED_FRAGMENT */
-  )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <option value='allDay'  >Toute La Journée</option>\r\n                    <option value='matin' :selected=\"hourMinute < 13.5\" >La Matinée</option>\r\n                    <option value='midi' :selected=\"hourMinute > 13.5\" >L'après-midi</option>\r\n                    <option value='seance-1' >La Première Séance</option>\r\n                    <option value='seance-2' >La Deuxième Séance</option>\r\n                    <option value='seance-3' >La Troisième Séance</option>\r\n                    <option value='seance-4' >La Quatrième Séance</option> ")], 512
+  ))], 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.duration_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
@@ -511,20 +524,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     name: "seanceType",
     "class": "w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300"
-  }, _hoisted_34, 512
+  }, _hoisted_33, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.seance]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
+    onChange: _cache[8] || (_cache[8] = function ($event) {
+      return $setup.getDuration($setup.selected_gp);
+    }),
+    "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
       return $setup.date_abs = $event;
     }),
     "class": "w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300",
     type: "date",
     name: "date_abs"
-  }, null, 512
-  /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.date_abs]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Button "), $setup.nom_gp != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, null, 544
+  /* HYDRATE_EVENTS, NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.date_abs]])], 2
+  /* CLASS */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Button "), $setup.nom_gp != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     disabled: $setup.submitBtn == false,
-    onClick: _cache[9] || (_cache[9] = function ($event) {
+    onClick: _cache[10] || (_cache[10] = function ($event) {
       return $setup.addAbsence($setup.student_ids, $setup.prof_id, $setup.duration_id, $setup.seance, $setup.date_abs, $setup.reset, $setup.errorNet);
     }),
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.submitBtn == true ? 'button-on' : 'button-off', "text-2xl text-white rounded-full w-[3rem] h-[3rem] cursor-pointer"])
@@ -532,7 +550,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     icon: "arrow-right"
   })], 10
   /* CLASS, PROPS */
-  , _hoisted_36)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  , _hoisted_35)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),
@@ -573,7 +591,9 @@ function useFilieres() {
   var justif_status = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
   var user = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)();
   var allEtats = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+  var admin = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
   var nom_gp = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+  var prof_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
 
   var getFilieres = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -583,13 +603,14 @@ function useFilieres() {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/filieres");
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/filieres");
 
             case 2:
               response = _context.sent;
               filieres.value = response.data.data;
+              response.data.prof_id ? prof_id.value = response.data.prof_id : admin.value = true;
 
-            case 4:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -630,7 +651,7 @@ function useFilieres() {
   }();
 
   var getstagiaires = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(groupe_id) {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(groupe_id, clean) {
       var response;
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) {
@@ -642,11 +663,21 @@ function useFilieres() {
             case 2:
               response = _context3.sent;
               stagiaires.value = response.data.data;
+              console.log(clean);
               nom_gp.value = stagiaires.value[0].nom_gp;
-              console.log(stagiaires.value);
-              getprofs(groupe_id);
 
-            case 7:
+              if (clean) {
+                stagiaires.value = stagiaires.value.filter(function (e) {
+                  return e.Nj > 0;
+                });
+                console.log(stagiaires.value);
+              }
+
+              if (prof_id.value == null) {
+                getprofs(groupe_id);
+              }
+
+            case 8:
             case "end":
               return _context3.stop();
           }
@@ -654,7 +685,7 @@ function useFilieres() {
       }, _callee3);
     }));
 
-    return function getstagiaires(_x2) {
+    return function getstagiaires(_x2, _x3) {
       return _ref3.apply(this, arguments);
     };
   }();
@@ -681,7 +712,7 @@ function useFilieres() {
       }, _callee4);
     }));
 
-    return function getprofs(_x3) {
+    return function getprofs(_x4) {
       return _ref4.apply(this, arguments);
     };
   }();
@@ -721,13 +752,13 @@ function useFilieres() {
           switch (_context6.prev = _context6.next) {
             case 0:
               _context6.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/etats/".concat(id, "/").concat(period, "/").concat(limitD, "/").concat(limitF));
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/etats/".concat(id, "/").concat(period, "/").concat(limitD, "/").concat(limitF));
 
             case 2:
               response = _context6.sent;
               etats.value = response.data.data;
               allEtats.value = response.data.data;
-              console.log(etats.value);
+              console.log(allEtats.value);
 
             case 6:
             case "end":
@@ -737,15 +768,13 @@ function useFilieres() {
       }, _callee6);
     }));
 
-    return function getetats(_x4, _x5, _x6, _x7) {
+    return function getetats(_x5, _x6, _x7, _x8) {
       return _ref6.apply(this, arguments);
     };
   }();
 
   var addAbsence = function addAbsence(st_ids, prof_id, duration_id, seance, date_abs, reset, errorNet) {
     // send a POST request
-    console.log(duration_id);
-
     if (date_abs == "") {
       Swal.fire("You Need To Choose A Correct Date ");
     } else {
@@ -802,6 +831,8 @@ function useFilieres() {
 
   return {
     filieres: filieres,
+    prof_id: prof_id,
+    admin: admin,
     groupes: groupes,
     stagiaires: stagiaires,
     allEtats: allEtats,

@@ -37,6 +37,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var done = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var show = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var input = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+    var start = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var cinError = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("Cin invalide");
     var emailError = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("E-mail invalide");
     var pwdError = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("");
@@ -75,6 +76,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       },
       image: {
         path: "",
+        check: true
+      }
+    });
+    var UpPwd = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
+      curPwd: {
+        text: "",
+        check: true
+      },
+      newPwd: {
+        text: "",
+        check: true,
+        reg: /^.{5,}$/i
+      },
+      rePwd: {
+        text: "",
         check: true
       }
     });
@@ -324,12 +340,90 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       getuser();
     };
 
+    var Model = function Model() {
+      document.getElementById("Model").classList.toggle('hidden');
+    };
+
+    var checkPwdInpute = function checkPwdInpute(event) {
+      if (start.value) {
+        if (event.target.title == "curPwd") {
+          UpPwd.curPwd.check = true;
+        } else if (event.target.title == "newPwd") {
+          UpPwd.newPwd.check = UpPwd.newPwd.reg.test(UpPwd.newPwd.text);
+        } else if (event.target.title == "rePwd") {
+          UpPwd.rePwd.check = UpPwd.rePwd.text == UpPwd.newPwd.text;
+        }
+      }
+    };
+
+    var checkPwd = function checkPwd() {
+      if (UpPwd.newPwd.text.length == 0 || UpPwd.curPwd.text.length == 0 || UpPwd.rePwd.text.length == 0) {
+        return;
+      }
+
+      var testThis = false;
+
+      if (UpPwd.newPwd.check = UpPwd.newPwd.reg.test(UpPwd.newPwd.text)) {
+        UpPwd.rePwd.check = UpPwd.rePwd.text == UpPwd.newPwd.text;
+      }
+
+      for (var e in UpPwd) {
+        if (!UpPwd[e].check) {
+          testThis = false;
+          break;
+        } else testThis = true;
+      }
+
+      if (testThis) {
+        sendPwd(UpPwd.curPwd.text, UpPwd.newPwd.text);
+      } else {
+        start.value = true;
+      }
+    };
+
+    var sendPwd = /*#__PURE__*/function () {
+      var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(password, newPassword) {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().post("/updatePwdProfile", {
+                  password: password,
+                  newPassword: newPassword
+                });
+
+              case 2:
+                response = _context6.sent;
+
+                if (response.data.check == false) {
+                  UpPwd.curPwd.check = false;
+                  start.value = true;
+                } else {
+                  success("Mot de passe modifieé avec successée");
+                }
+
+              case 4:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }));
+
+      return function sendPwd(_x2, _x3) {
+        return _ref7.apply(this, arguments);
+      };
+    }();
+
     var __returned__ = {
       emit: emit,
       toast: toast,
       done: done,
       show: show,
       input: input,
+      start: start,
       cinError: cinError,
       emailError: emailError,
       pwdError: pwdError,
@@ -338,6 +432,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       resetCinError: resetCinError,
       disablePwd: disablePwd,
       user: user,
+      UpPwd: UpPwd,
       inputeload: inputeload,
       getuser: getuser,
       checkinpute: checkinpute,
@@ -348,6 +443,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       getprofile: getprofile,
       deletprofile: deletprofile,
       success: success,
+      Model: Model,
+      checkPwdInpute: checkPwdInpute,
+      checkPwd: checkPwd,
+      sendPwd: sendPwd,
       reactive: vue__WEBPACK_IMPORTED_MODULE_0__.reactive,
       onBeforeMount: vue__WEBPACK_IMPORTED_MODULE_0__.onBeforeMount,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
@@ -474,7 +573,7 @@ var _hoisted_17 = {
   "class": "error_message"
 };
 var _hoisted_18 = {
-  "class": "py-8 px-5 mb-10"
+  "class": "pt-8 px-5 mb-10"
 };
 var _hoisted_19 = {
   "class": "grid grid-cols-1"
@@ -503,7 +602,7 @@ var _hoisted_23 = {
   "class": "error_message"
 };
 var _hoisted_24 = {
-  "class": "absolute bottom-5 right-5"
+  "class": "flex justify-between pb-5 px-3 sm:px-5 items-center"
 };
 var _hoisted_25 = {
   "class": "h-[20rem] w-[15rem] relative row-start-1 row-end-2"
@@ -552,6 +651,101 @@ var _hoisted_31 = /*#__PURE__*/_withScopeId(function () {
 });
 
 var _hoisted_32 = [_hoisted_30, _hoisted_31];
+var _hoisted_33 = {
+  id: "Model",
+  "class": "fixed top-0 w-full hidden h-full z-40 place-content-center rounded-md"
+};
+
+var _hoisted_34 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "absolute bg-slate-300 w-full h-full rounded-md opacity-50 z-10"
+  }, null, -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_35 = {
+  "class": "lg:w-[35rem] sm:w-[28rem] w-[22rem] pb-5 bg-white absolute z-20 translate-y-[-50%] translate-x-[-50%] md:translate-x-[-70%] top-[50%] left-[50%] grid place-content-center rounded-md"
+};
+var _hoisted_36 = {
+  "class": "lg:w-[35rem] sm:w-[28rem] w-[22rem] flex justify-between px-5 pt-5 pb-3"
+};
+
+var _hoisted_37 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, null, -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_38 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "lg:w-[35rem] sm:w-[28rem] w-[22rem] text-center uppercase text-slate-800 font-bold text-xl py-3"
+  }, " Changement de mot de passe ", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_39 = {
+  "class": "grid gap-6 px-14 py-8 lg:w-[35rem] sm:w-[28rem] w-[22rem]"
+};
+var _hoisted_40 = {
+  "class": "w-full"
+};
+
+var _hoisted_41 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "mb-2 text-sm text-slate-500 font-semibold"
+  }, "votre mot de passe actuelle", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_42 = {
+  key: 0,
+  "class": "error_message"
+};
+var _hoisted_43 = {
+  "class": "w-full"
+};
+
+var _hoisted_44 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "mb-2 text-sm text-slate-500 font-semibold"
+  }, "Nouveau mot de passe", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_45 = {
+  key: 0,
+  "class": "error_message"
+};
+var _hoisted_46 = {
+  "class": "w-full"
+};
+
+var _hoisted_47 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "mb-2 text-sm text-slate-500 font-semibold"
+  }, "Répéter Nouveau mot depass", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_48 = {
+  key: 0,
+  "class": "error_message"
+};
+var _hoisted_49 = {
+  "class": "flex justify-between items-center pb-3 px-3 sm:px-5"
+};
+
+var _hoisted_50 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, null, -1
+  /* HOISTED */
+  );
+});
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_fas = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("fas");
 
@@ -620,7 +814,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* CLASS, PROPS, HYDRATE_EVENTS */
   , _hoisted_22), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.user.pwd.text]]), !$setup.user.pwd.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.pwdError), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Button "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Button "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: $setup.Model,
+    "class": "hover:text-blue-700 text-sm font-semibold cursor-pointer text-blue-600"
+  }, "Changer votre mot de pass ?"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[5] || (_cache[5] = function ($event) {
       return $setup.checkuser();
     }),
@@ -678,7 +875,59 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* NEED_PATCH */
   )], 32
   /* HYDRATE_EVENTS */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Model update password "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [_hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+    onSubmit: _cache[17] || (_cache[17] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {}, ["prevent"]))
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [_hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "hover:text-sky-700 text-gray-400 cursor-pointer",
+    onClick: $setup.Model
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
+    size: "xl",
+    icon: "fa-xmark"
+  })])]), _hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_40, [_hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    onInput: $setup.checkPwdInpute,
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([!$setup.UpPwd.curPwd.check ? 'inpute-error' : '', "shadow-md rounded-md py-6 px-3 outline-2 outline-neutral-400 shadow-gray-300 w-[100%] h-[2rem]"]),
+    title: "curPwd",
+    "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
+      return $setup.UpPwd.curPwd.text = $event;
+    }),
+    placeholder: "Mot de passe",
+    type: "password",
+    required: ""
+  }, null, 34
+  /* CLASS, HYDRATE_EVENTS */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.UpPwd.curPwd.text]]), !$setup.UpPwd.curPwd.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_42, "Mot de passe incorecte !")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_43, [_hoisted_44, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    onInput: $setup.checkPwdInpute,
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([!$setup.UpPwd.newPwd.check ? 'inpute-error' : '', "shadow-md rounded-md py-6 px-3 outline-2 outline-neutral-400 shadow-gray-300 w-[100%] h-[2rem]"]),
+    title: "newPwd",
+    "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
+      return $setup.UpPwd.newPwd.text = $event;
+    }),
+    placeholder: "Nouveau mot de passe",
+    type: "password",
+    required: ""
+  }, null, 34
+  /* CLASS, HYDRATE_EVENTS */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.UpPwd.newPwd.text]]), !$setup.UpPwd.newPwd.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_45, "Mot de pass faible 5 caractères au minimum !!")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_46, [_hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    onInput: $setup.checkPwdInpute,
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([!$setup.UpPwd.rePwd.check ? 'inpute-error' : '', "shadow-md rounded-md py-6 px-3 outline-2 outline-neutral-400 shadow-gray-300 w-[100%] h-[2rem]"]),
+    title: "rePwd",
+    "onUpdate:modelValue": _cache[15] || (_cache[15] = function ($event) {
+      return $setup.UpPwd.rePwd.text = $event;
+    }),
+    placeholder: "Répéter Nouveau mot depass",
+    type: "password",
+    required: ""
+  }, null, 34
+  /* CLASS, HYDRATE_EVENTS */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.UpPwd.rePwd.text]]), !$setup.UpPwd.rePwd.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_48, "Les mots de passe ne correspondent pas")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [_hoisted_50, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "submit",
+    onClick: _cache[16] || (_cache[16] = function ($event) {
+      return $setup.checkPwd();
+    }),
+    "class": "bg-transparent active:bg-blue-500 text-blue-700 font-semibold active:text-white py-2 px-6 border border-blue-500 active:border-transparent rounded"
+  }, " Save ")])], 32
+  /* HYDRATE_EVENTS */
+  )])])]);
 }
 
 /***/ }),
@@ -699,7 +948,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.inpute-error[data-v-74e78a0e]{\r\n        outline: 3px solid red;\n}\n.error_message[data-v-74e78a0e]{\r\n        color: red;\n}\nprofile-div[data-v-74e78a0e]{\r\n        background-image: url('https://source.unsplash.com/random/500x500/?face');\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.inpute-error[data-v-74e78a0e]{\r\n        outline: 2px solid rgba(255, 0, 0, 0.761);\n}\n.error_message[data-v-74e78a0e]{\r\n        color: red;\n}\nprofile-div[data-v-74e78a0e]{\r\n        background-image: url('https://source.unsplash.com/random/500x500/?face');\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

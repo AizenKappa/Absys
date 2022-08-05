@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('filieres', function (Blueprint $table) {
             $table->id();
             $table->string("code_fil")->unique();
-            $table->string("nom_fil");
+            $table->string("nom_fil")->unique();
         });
     }
 

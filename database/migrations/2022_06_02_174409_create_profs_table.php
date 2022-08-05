@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('profs', function (Blueprint $table) {
             $table->id();
+            $table->string("code_prof")->unique();
             $table->string("nom_prof");
         });
     }

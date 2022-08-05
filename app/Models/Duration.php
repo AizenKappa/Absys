@@ -11,6 +11,9 @@ class Duration extends Model
     protected $guarded = [];
     public function etats()
     {
-        return $this->hasMany(Etat::class);
+        $year = Absysyear::Where('active','on')->first()->year;
+        $Model = 'App\Models\Etat'.$year;
+
+        return $this->hasMany($Model);
     }
 }

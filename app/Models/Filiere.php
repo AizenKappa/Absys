@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Module;
 
 
 class Filiere extends Model
@@ -17,5 +18,4 @@ class Filiere extends Model
     {
         return $this->hasMany(Groupe::class);
     }
-    
 }

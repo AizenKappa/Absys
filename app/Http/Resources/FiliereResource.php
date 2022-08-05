@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Etat;
 use App\Models\Groupe;
-use App\Models\Stagiaire;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Models\Absysyear;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -22,7 +21,9 @@ class FiliereResource extends JsonResource
      */
     public function toArray($request)
     {
-        
+
+        $year = Absysyear::Where('active','on')->first()->year;
+        $model = 'App\Models\Etat'.$year;
         // $timeIn = Carbon::parse('9:30:00');
         // $timeOut = Carbon::parse('12:00:00');
 
@@ -31,8 +32,9 @@ class FiliereResource extends JsonResource
         if($this->nom_st !== null){
             $nom_gp = Groupe::find($this->groupe_id)->nom_gp;
 
-            $etats = Etat::Where('stagiaire_id',$this->id)->get()->where('etat_justif','NJ');
+            $etats = $model::Where('stagiaire_id',$this->id)->get()->where('etat_justif','NJ');
             $sum = 0;
+            
             foreach($etats as $etat){
                 $startTime = Carbon::parse($etat->duration->h_debut);
                 $finishTime = Carbon::parse($etat->duration->h_fin);

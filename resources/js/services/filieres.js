@@ -13,12 +13,15 @@ export default function useFilieres(){
     const justif_status = ref(false)
     const user = ref()
     const allEtats = ref(null)
-
+    const admin = ref(false)
     const nom_gp = ref(null)
+    const prof_id = ref(null)
 
     const getFilieres = async () => {
-        let response = await axios.get("/api/filieres")
+        let response = await axios.get("/filieres")
         filieres.value = response.data.data
+        response.data.prof_id ? prof_id.value = response.data.prof_id : admin.value = true
+
     };
 
     const getgroupes = async (filiere_id) =>{
@@ -26,12 +29,19 @@ export default function useFilieres(){
         groupes.value = response.data.data
     };
 
-    const getstagiaires = async (groupe_id) =>{
+    const getstagiaires = async (groupe_id,clean) =>{
         let response = await axios.get(`/api/groupes/${groupe_id}`)
         stagiaires.value = response.data.data
+        console.log(clean)
+
         nom_gp.value = stagiaires.value[0].nom_gp
-        console.log(stagiaires.value)
-        getprofs(groupe_id)
+
+        if(clean){
+            stagiaires.value = stagiaires.value.filter((e) => e.Nj > 0);
+            console.log(stagiaires.value)
+        }
+        
+        if(prof_id.value ==  null ){ getprofs(groupe_id) }
         
     };
     
@@ -49,15 +59,14 @@ export default function useFilieres(){
     };
 
     const getetats = async (id, period , limitD , limitF) =>{
-        let response = await axios.get(`/api/etats/${id}/${period}/${limitD}/${limitF}`)
+        let response = await axios.get(`/etats/${id}/${period}/${limitD}/${limitF}`)
         etats.value = response.data.data
         allEtats.value = response.data.data
-        console.log(etats.value)
+        console.log(allEtats.value)
     };
 
     const addAbsence = (st_ids,prof_id,duration_id,seance,date_abs,reset,errorNet) => {
         // send a POST request
-        console.log(duration_id)
         if(date_abs==""){
             Swal.fire("You Need To Choose A Correct Date ")
         }else{
@@ -70,8 +79,6 @@ export default function useFilieres(){
             }).then((response) => {
             reset(response.data.message)
             }).catch((error) => { errorNet() });
-    
-
         }
         
     }
@@ -112,7 +119,7 @@ export default function useFilieres(){
     }
     
 
-    return { filieres , groupes , stagiaires, allEtats , getFilieres , profs , getgroupes , justif_status , addJustif,
+    return { filieres , prof_id , admin , groupes , stagiaires, allEtats , getFilieres , profs , getgroupes , justif_status , addJustif,
             getstagiaires , nom_gp , getetats , addAbsence , user , getuser , add_status, etats };
 
     

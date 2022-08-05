@@ -324,7 +324,7 @@
         /* Pie Context */
             const pieCtx = document.getElementById('pie');
                     pieChart = new Chart(pieCtx,pieConfig);
-                    })
+            })
 
 
             

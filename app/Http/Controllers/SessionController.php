@@ -6,6 +6,10 @@ use App\Models\User;
 use App\Rules\vpassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\NotifyMail;
+
+use Illuminate\Support\Facades\Mail;
+
 
 class SessionController extends Controller
 {
@@ -43,24 +47,81 @@ class SessionController extends Controller
     }
 
     public function check(Request $request){
+
         $attr = $request->validate([
-            'firstname' => 'bail|required|exists:users,firstname',
-            'lastname' => 'bail|required|exists:users,lastname',
-            'cin' => 'bail|required|exists:users,cin'
+            'cin' => 'bail|required|exists:users,cin',
+            'email' => 'bail|required|exists:users,email'
         ]);
-        session(['user_cin' => $attr["cin"]]);
-        return redirect('/pwd_reset');
+
+        $code = rand(10000,99999);
+
+
+
+        session([
+            'user_cin' => $attr["cin"],
+            'code' => $code,
+            'email'=>$attr['email']
+        ]);
+
+        $user = User::Where('cin',$attr["cin"])->first();
+
+        /* $attr['email'] */
+
+        $mail = Mail::to('hakimassim2015@gmail.com')->send(new NotifyMail($code,$user->firstname,$user->lastname));
+
+        if($mail instanceof \Illuminate\Mail\SentMessage)
+        {
+            return redirect('/sendEmail')->with(['email' => $attr["email"]]);
+
+        }else{
+            dd("Failed");
+        }
+
     }
 
-    public function reset(Request $request){
-        $attr = $request->validate([
-            'cin' => 'exists:users,cin',
-            'pwd' => 'required',
-            'rpwd' => 'bail|required|same:pwd'
-        ]);
-        $user = User::where('cin',$request->input('cin'))->firstOrfail();
+    public function codeVerification(Request $request)
+    {
 
-        $user["password"] = $attr["rpwd"];
+        $codeGiven = (int)$request->codeVerification;
+        $codeMail = session('code');
+
+        
+
+        if($codeGiven != $codeMail){
+
+            return redirect('/sendEmail')
+            ->with([
+                'email' => session('email'),
+                'error' => true
+            ]);
+        }
+        
+        $user = User::where('cin',session('user_cin'))->firstOrfail();
+
+        return redirect('/pwdReset')->with([
+            'img' => $user->picture_path,
+            'name' => $user->firstname.' '.$user->lastname
+        ]);
+
+    }
+
+    public function reset(Request $request)
+    {
+
+        $user = User::where('cin',session('user_cin'))->firstOrfail();
+
+        if($request->pwd != $request->rpwd){
+
+            return redirect('/pwdReset')->with([
+                'img' => $user->picture_path,
+                'name' => $user->firstname.' '.$user->lastname,
+                'error' => true
+            ]);
+        }
+
+        
+
+        $user["password"] = $request->rpwd;
         $user->save();
         auth()->login($user);
         return redirect('/home');

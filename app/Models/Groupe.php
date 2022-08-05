@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Absysyear;
+use App\Models\Module;
+use App\Models\Stagiaire;
 
 class Groupe extends Model
 {
@@ -20,11 +22,17 @@ class Groupe extends Model
 
     public function profs()
     {
-        return $this->belongsToMany(Prof::class,'relations');
+        return $this->belongsToMany(Prof::class,'groupe_profs');
     }
 
     public function stagiaires()
     {
         return $this->hasMany(Stagiaire::class);
     }
+ 
+    public function modules()
+    {
+        return $this->belongsToMany(module::class,'groupe_modules');
+    }
 }
+

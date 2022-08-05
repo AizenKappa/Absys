@@ -240,34 +240,9 @@
 
     function handleSubmit(){
 
-    //    var resultBase = []
-    //    var resultAvant = []
-
-    //     let readerBase = new FileReader();
-    //     readerBase.readAsText(baseExcel.value);
-    //     readerBase.onload = function() {
-    //     resultBase  = readerBase.result
-            
-    //         let readerAvant = new FileReader();
-    //         readerAvant.readAsText(avantExcel.value);
-    //         readerAvant.onload = function() {
-    //             resultAvant  = readerAvant.result
-    //             //console.log(resultBase)
-    //             console.log(resultAvant)
-    //             if(resultBase.includes('Stagiare en fomation')){
-    //                 if(resultAvant.includes('Formateur Affecté Présentiel Actif')){
-    //                     loading.value = true
-    //                     storeExcel()
-    //                 }else{
-    //                     error("Wrong avancement !!")
-    //                 }
-    //             }else{
-    //                 error("Wrong baseplat !!")
-    //             }
-    //         };
-    //     }
-    loading.value = true
-    storeExcel()
+        loading.value = true
+        storeExcel()
+        
     }
 
     function storeExcel()
@@ -276,12 +251,12 @@
         data.append('base',baseExcel.value)
         data.append('avant',avantExcel.value)
         axios.post('/storeExcel',data)
-        .then((response)=>{ 
+        .then((response)=>{
             if(response.data.message == "success"){
                 loading.value = false
                 success("successeful")
             }
-            console.log(response)
+            console.log(response.data)
         })
         .catch((erro) => { 
              loading.value = false

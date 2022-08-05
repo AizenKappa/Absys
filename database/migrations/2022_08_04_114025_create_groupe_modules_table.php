@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('relations', function (Blueprint $table) {
+        Schema::create('groupe_modules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('prof_id');
+            $table->foreignId('module_id');
             $table->foreignId('groupe_id');
+            $table->string("year")->default(date("Y").'-'.((string)((int)date("Y"))+1));
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('relations');
+        Schema::dropIfExists('groupe_modules');
     }
 };

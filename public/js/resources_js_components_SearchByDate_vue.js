@@ -95,13 +95,9 @@ __webpack_require__.r(__webpack_exports__);
     var _useFilieres = (0,_services_filieres_js__WEBPACK_IMPORTED_MODULE_1__["default"])(),
         getFilieres = _useFilieres.getFilieres,
         filieres = _useFilieres.filieres,
-        profs = _useFilieres.profs,
         getgroupes = _useFilieres.getgroupes,
         groupes = _useFilieres.groupes,
-        stagiaires = _useFilieres.stagiaires,
-        getstagiaires = _useFilieres.getstagiaires,
         allEtats = _useFilieres.allEtats,
-        nom_gp = _useFilieres.nom_gp,
         getetats = _useFilieres.getetats,
         etats = _useFilieres.etats;
     /* On Mounted call Aoi Flieres */
@@ -122,17 +118,12 @@ __webpack_require__.r(__webpack_exports__);
       getcontents: getcontents,
       getFilieres: getFilieres,
       filieres: filieres,
-      profs: profs,
       getgroupes: getgroupes,
       groupes: groupes,
-      stagiaires: stagiaires,
-      getstagiaires: getstagiaires,
       allEtats: allEtats,
-      nom_gp: nom_gp,
       getetats: getetats,
       etats: etats,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
-      reactive: vue__WEBPACK_IMPORTED_MODULE_0__.reactive,
       watch: vue__WEBPACK_IMPORTED_MODULE_0__.watch,
       useFilieres: _services_filieres_js__WEBPACK_IMPORTED_MODULE_1__["default"],
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted
@@ -208,7 +199,7 @@ var _hoisted_18 = {
 };
 var _hoisted_19 = {
   key: 1,
-  "class": "relative sm:p-5 scale-75 overflow-x-auto shadow-md sm:scale-90 lg:scale-100 s"
+  "class": "relative mt-7 sm:mt-0 sm:p-5 scale-x-75 overflow-x-auto shadow-md sm:scale-x-90 lg:scale-x-100"
 };
 var _hoisted_20 = {
   "class": "w-full text-sm text-left"
@@ -242,7 +233,9 @@ var _hoisted_21 = /*#__PURE__*/_withScopeId(function () {
     "class": "px-6 py-3"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "text-center"
-  }, "Formateur")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+  }, "Formateur")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "text-center"
+  }, "Groupe")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
     scope: "col",
     "class": "px-6 py-3"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -266,41 +259,41 @@ var _hoisted_22 = {
   "class": "p-4"
 };
 var _hoisted_23 = {
-  "class": "scale-90 w-full font-medium"
+  "class": "p-4"
 };
 var _hoisted_24 = {
   "class": "p-4"
 };
 var _hoisted_25 = {
-  "class": "scale-90 w-full font-medium"
-};
-var _hoisted_26 = {
-  "class": "p-4"
-};
-var _hoisted_27 = {
-  "class": "scale-90 font-medium"
-};
-var _hoisted_28 = {
-  "class": "px-6 py-4 text-left font-medium"
-};
-var _hoisted_29 = {
   "class": "scale-90"
 };
-var _hoisted_30 = {
-  "class": "px-6 py-4 text-left scale-90 font-medium"
-};
-var _hoisted_31 = {
-  "class": "scale-90 font-medium"
-};
-var _hoisted_32 = {
+var _hoisted_26 = {
   "class": "text-center"
 };
-var _hoisted_33 = {
-  "class": "px-6 py-4 text-left scale-90 font-medium"
+var _hoisted_27 = {
+  key: 2,
+  "class": "w-full flex justify-center items-center h-[17rem]"
 };
-var _hoisted_34 = {
-  "class": "grid grid-cols-1 place-items-center gap-2 scale-90 font-medium"
-};
+
+var _hoisted_28 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+    role: "status",
+    "class": "inline w-14 h-14 mr-2 text-transparent animate-spin fill-blue-500",
+    viewBox: "0 0 100 101",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+    d: "M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+    d: "M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z",
+    fill: "currentFill"
+  })], -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_29 = [_hoisted_28];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_fas = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("fas");
 
@@ -381,7 +374,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[6] || (_cache[6] = function ($event) {
       return $setup.activeHoure = 'TT';
     }),
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["px-6 py-2.5 text-white sm:w-auto w-[100%] font-medium text-xs uppercase rounded flex select-none items-center whitespace-nowrap cursor-pointer active:bg-blue-800 active:shadow-lg sm:mx-2 lg:mx-8", $setup.activeHoure == 'NJ' ? 'bg-blue-800 shadow-lg' : 'bg-blue-600 shadow-md hover:bg-blue-700'])
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["px-6 py-2.5 text-white sm:w-auto w-[100%] font-medium text-xs uppercase rounded flex select-none items-center whitespace-nowrap cursor-pointer active:bg-blue-800 active:shadow-lg sm:mx-2 lg:mx-8", $setup.activeHoure == 'TT' ? 'bg-blue-800 shadow-lg' : 'bg-blue-600 shadow-md hover:bg-blue-700'])
   }, " Tous les Heures ", 2
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
@@ -397,26 +390,50 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       ref: "absenceRefs",
       "class": "bg-white border-b select-none",
       key: index
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.stagiaire.nom_st + " " + e.stagiaire.prenom_st), 1
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["scale-90 w-full font-medium", e.etat_justif == 'NJ' ? 'text-red-600' : 'text-green-700'])
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.stagiaire.nom_st + " " + e.stagiaire.prenom_st), 3
+    /* TEXT, CLASS */
+    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["scale-90 w-full font-medium", e.etat_justif == 'NJ' ? 'text-red-600' : 'text-green-700'])
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.date_abs), 3
+    /* TEXT, CLASS */
+    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["scale-90 font-medium", e.etat_justif == 'NJ' ? 'text-red-600' : 'text-green-700'])
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.duration.h_debut), 3
+    /* TEXT, CLASS */
+    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["px-6 py-4 text-left font-medium", e.etat_justif == 'NJ' ? 'text-red-600' : 'text-green-700'])
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.duration.h_fin), 1
     /* TEXT */
-    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.date_abs), 1
+    )], 2
+    /* CLASS */
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["px-6 py-4 text-left scale-90 font-medium", e.etat_justif == 'NJ' ? 'text-red-600' : 'text-green-700'])
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.prof.nom_prof), 3
+    /* TEXT, CLASS */
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["px-6 py-4 text-left scale-90 font-medium", e.etat_justif == 'NJ' ? 'text-red-600' : 'text-green-700'])
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.stagiaire.groupe.nom_gp), 3
+    /* TEXT, CLASS */
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["scale-90 font-medium", e.etat_justif == 'NJ' ? 'text-red-600' : 'text-green-700'])
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.etat_justif), 1
     /* TEXT */
-    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.duration.h_debut), 1
-    /* TEXT */
-    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.duration.h_fin), 1
-    /* TEXT */
-    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.prof.nom_prof), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.etat_justif), 1
-    /* TEXT */
-    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.motif), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.seance), 1
-    /* TEXT */
+    )], 2
+    /* CLASS */
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["px-6 py-4 text-left scale-90 font-medium", e.etat_justif == 'NJ' ? 'text-red-600' : 'text-green-700'])
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.motif), 3
+    /* TEXT, CLASS */
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["grid grid-cols-1 place-items-center gap-2 scale-90 font-medium", e.etat_justif == 'NJ' ? 'text-red-600' : 'text-green-700'])
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.seance), 3
+    /* TEXT, CLASS */
     )])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  ))])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.etats == null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_27, _hoisted_29)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),
@@ -457,7 +474,9 @@ function useFilieres() {
   var justif_status = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
   var user = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)();
   var allEtats = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+  var admin = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
   var nom_gp = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+  var prof_id = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
 
   var getFilieres = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -467,13 +486,14 @@ function useFilieres() {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/filieres");
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/filieres");
 
             case 2:
               response = _context.sent;
               filieres.value = response.data.data;
+              response.data.prof_id ? prof_id.value = response.data.prof_id : admin.value = true;
 
-            case 4:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -514,7 +534,7 @@ function useFilieres() {
   }();
 
   var getstagiaires = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(groupe_id) {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(groupe_id, clean) {
       var response;
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) {
@@ -526,11 +546,21 @@ function useFilieres() {
             case 2:
               response = _context3.sent;
               stagiaires.value = response.data.data;
+              console.log(clean);
               nom_gp.value = stagiaires.value[0].nom_gp;
-              console.log(stagiaires.value);
-              getprofs(groupe_id);
 
-            case 7:
+              if (clean) {
+                stagiaires.value = stagiaires.value.filter(function (e) {
+                  return e.Nj > 0;
+                });
+                console.log(stagiaires.value);
+              }
+
+              if (prof_id.value == null) {
+                getprofs(groupe_id);
+              }
+
+            case 8:
             case "end":
               return _context3.stop();
           }
@@ -538,7 +568,7 @@ function useFilieres() {
       }, _callee3);
     }));
 
-    return function getstagiaires(_x2) {
+    return function getstagiaires(_x2, _x3) {
       return _ref3.apply(this, arguments);
     };
   }();
@@ -565,7 +595,7 @@ function useFilieres() {
       }, _callee4);
     }));
 
-    return function getprofs(_x3) {
+    return function getprofs(_x4) {
       return _ref4.apply(this, arguments);
     };
   }();
@@ -605,13 +635,13 @@ function useFilieres() {
           switch (_context6.prev = _context6.next) {
             case 0:
               _context6.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/etats/".concat(id, "/").concat(period, "/").concat(limitD, "/").concat(limitF));
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/etats/".concat(id, "/").concat(period, "/").concat(limitD, "/").concat(limitF));
 
             case 2:
               response = _context6.sent;
               etats.value = response.data.data;
               allEtats.value = response.data.data;
-              console.log(etats.value);
+              console.log(allEtats.value);
 
             case 6:
             case "end":
@@ -621,15 +651,13 @@ function useFilieres() {
       }, _callee6);
     }));
 
-    return function getetats(_x4, _x5, _x6, _x7) {
+    return function getetats(_x5, _x6, _x7, _x8) {
       return _ref6.apply(this, arguments);
     };
   }();
 
   var addAbsence = function addAbsence(st_ids, prof_id, duration_id, seance, date_abs, reset, errorNet) {
     // send a POST request
-    console.log(duration_id);
-
     if (date_abs == "") {
       Swal.fire("You Need To Choose A Correct Date ");
     } else {
@@ -686,6 +714,8 @@ function useFilieres() {
 
   return {
     filieres: filieres,
+    prof_id: prof_id,
+    admin: admin,
     groupes: groupes,
     stagiaires: stagiaires,
     allEtats: allEtats,

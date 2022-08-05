@@ -14,10 +14,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('etats', function (Blueprint $table) {
+        Schema::create('etat20212022s', function (Blueprint $table) {
             $table->id();
             $table->foreignId("stagiaire_id");
-            
             $table->foreignId("prof_id");
             $table->foreignId("duration_id");
             $table->date("date_abs");
@@ -35,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('etats');
+        Schema::dropIfExists('etat20212022s');
     }
 };

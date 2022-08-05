@@ -68,7 +68,11 @@ const router = createRouter({
           name: 'Settings',
           component: () => import('../components/Admin/settings.vue')
         },
+        { path: '/addStag',
+          name: 'Ajouter stagiaire',
+          component: () => import('../components/Admin/addStag.vue')
+        },
     ]
-  })
+})
   
-  export default router
+export default router

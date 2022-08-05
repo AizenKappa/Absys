@@ -1,5 +1,6 @@
 
 <template>
+
 <section>
     <div class="w-full px-5 my-12">
         <select name="filiere" id="filieres_select" v-model="selected" class="w-full font-medium h-[2rem]" v-on:change="getgroupes(selected)">
@@ -19,62 +20,74 @@
         </div>
     </nav>
 
+    <div v-if="stagiaires" class="mt-4 flex w-full relative h-12 sm:scale-x-90 lg:scale-x-100 scale-x-75" >
+        <router-link to="/addStag">
+            <div class="inline-flex items-center px-5 py-3  text-base font-semibold text-white absolute right-5
+                justify-around select-none bg-blue-600 rounded-md cursor-pointer w-[10rem] hover:bg-blue-700">
+                Add stagiaire
+                <fas icon="plus" />
+            </div>
+        </router-link>
 
-    <div v-if="stagiaires" class="relative sm:p-5 scale-75 overflow-x-auto shadow-md sm:scale-90 lg:scale-100 s">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-white uppercase bg-sky-600">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    Nom
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Prenom
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Numero personnelle
-                </th>
-                <th  scope="col" class="px-6 py-3">
-                    Etat
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Edit
-                </th>
-            </tr>
-        </thead>
+    </div>
+    
 
-        <tbody>
-            
-            <tr v-for="st in stagiaires" :key="st.id" class="bg-white border-b select-none"
-            :class="st.status != 'Active'?' bg-red-100':''"
-            >
-                <td  class="px-6 py-4">
-                    <input :disabled = "true" class="bg-transparent px-2 h-9 focus:outline-cyan-500" type="text" :value="st.nom_st">
-                </td>
-                <td class="px-6 py-4">
-                    <input :disabled = "true" class="bg-transparent px-2 h-9 focus:outline-cyan-500" type="text" :value="st.prenom_st ">
-                </td>
-                <td class="px-6 py-4">
-                    <input :disabled = "true" class="bg-transparent px-2 h-9 focus:outline-cyan-500" type="text" :value=" st.num">
-                </td>
-                <td class="px-6 py-4 text-left font-medium">
-                    <select :disabled = "true" class="py-2 px-1">
-                        <option class="hidden" selected>{{ st.status }}</option>
-                        <option>Active</option>
-                        <option>Abondonné</option>
+    <div v-if="stagiaires" class="relative sm:p-5 scale-x-75 overflow-x-auto shadow-md sm:scale-x-90 lg:scale-x-100">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-white uppercase bg-sky-600">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Nom
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Prenom
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Numero personnelle
+                    </th>
+                    <th  scope="col" class="px-6 py-3">
+                        Etat
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Edit
+                    </th>
+                </tr>
+            </thead>
 
-                    </select>
-                </td>
-                <td class="px-6 py-4 text-left font-medium">
-                    <div @click="editThis" class="w-8 cursor-pointer text-blue-600 hover:underline">Edit</div>
-                    <div :id="st.id" @click="saveThis" class="w-8 cursor-pointer text-green-600 hover:underline hidden">Save</div>
-                </td>
-            </tr>
-        </tbody>
+            <tbody>
+                
+                <tr v-for="st in stagiaires" :key="st.id" class="bg-white border-b select-none"
+                :class="st.status != 'Active'?' bg-red-100':''"
+                >
+                    <td  class="px-6 py-4">
+                        <input :disabled = "true" class="bg-transparent px-2 h-9 focus:outline-cyan-500" type="text" :value="st.nom_st">
+                    </td>
+                    <td class="px-6 py-4">
+                        <input :disabled = "true" class="bg-transparent px-2 h-9 focus:outline-cyan-500" type="text" :value="st.prenom_st ">
+                    </td>
+                    <td class="px-6 py-4">
+                        <input :disabled = "true" class="bg-transparent px-2 h-9 focus:outline-cyan-500" type="text" :value=" st.num">
+                    </td>
+                    <td class="px-6 py-4 text-left font-medium">
+                        <select :disabled = "true" class="py-2 px-1">
+                            <option class="hidden" selected>{{ st.status }}</option>
+                            <option>Active</option>
+                            <option>Abondonné</option>
 
-    </table>
+                        </select>
+                    </td>
+                    <td class="px-6 py-4 text-left font-medium">
+                        <div @click="editThis" class="w-8 cursor-pointer text-blue-600 hover:underline">Edit</div>
+                        <div :id="st.id" @click="saveThis" class="w-8 cursor-pointer text-green-600 hover:underline hidden">Save</div>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
     </div>
 
-</section>       
+</section>
+
 </template>
 
 <script setup>
@@ -86,6 +99,7 @@
     import { onMounted } from 'vue';
 
     const idFill = ref("")
+
     
     const { getFilieres , filieres , getgroupes , groupes , stagiaires, getstagiaires  } = useFilieres();
 

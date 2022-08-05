@@ -15,19 +15,23 @@
                     <span>Dashboard</span>
                 </router-link>
 
-                <router-link to="/add" @click="$emit('update:modelValue',check())">
-                    <fas icon="user-graduate" />
-                    <span>Ajouter l'absence</span>
-                </router-link>
-
-                <router-link to="/just" @click="$emit('update:modelValue',check())">
-                    <fas icon="user-graduate" />
-                    <span>Justifier l'absence</span>
-                </router-link>
+                <template v-if="boolean">
+                    <router-link to="/add" @click="$emit('update:modelValue',check())">
+                        <fas icon="user-graduate" />
+                        <span>Ajouter l'absence</span>
+                    </router-link>
+                
+                    <template v-if="adminSection">
+                        <router-link to="/just" @click="$emit('update:modelValue',check())">
+                            <fas icon="user-graduate" />
+                            <span>Justifier l'absence</span>
+                        </router-link>
+                    </template>
+                </template>
 
                 <router-link to="/SearchByDate" @click="$emit('update:modelValue',check())">
                     <fas icon="user-graduate" />
-                    <span class="text-center ">Recherche par Date</span>
+                    <span class="text-center ">Les Absences</span>
                 </router-link>
                 <router-link to="/detail" @click="$emit('update:modelValue',check())">
                     <fas icon="user-graduate" />
@@ -40,7 +44,7 @@
 
     <!-- --second card -->
 
-        <template v-if="adminSection">
+        <template v-if="adminSection && boolean">
 
             <div class="card">
                 <hr class="px-16 my-5 mt-7">
@@ -90,6 +94,8 @@
     
     const adminSection = ref(false)
 
+    const boolean = ref(false);
+
 
     const getuser = async () =>{
         let response = await axios.get(`/authUser`)
@@ -100,7 +106,13 @@
 
     };
 
+    const getyear = async () =>{
+        let response = await axios.get(`/absysYear`)
+        boolean.value = response.data
+    };
+
     onBeforeMount(() => {
+        getyear()
         getuser()
     })
 

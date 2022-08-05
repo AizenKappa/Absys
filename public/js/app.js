@@ -36921,6 +36921,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     expose();
     var adminSection = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
 
+    var _boolean = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+
     var getuser = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         var response;
@@ -36951,7 +36953,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       };
     }();
 
+    var getyear = /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/absysYear");
+
+              case 2:
+                response = _context2.sent;
+                _boolean.value = response.data;
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      return function getyear() {
+        return _ref3.apply(this, arguments);
+      };
+    }();
+
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onBeforeMount)(function () {
+      getyear();
       getuser();
     });
 
@@ -36963,7 +36993,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     var __returned__ = {
       adminSection: adminSection,
+      "boolean": _boolean,
       getuser: getuser,
+      getyear: getyear,
       check: check,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
       onBeforeMount: vue__WEBPACK_IMPORTED_MODULE_0__.onBeforeMount,
@@ -37105,7 +37137,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       getuser: getuser,
       updateStatus: updateStatus,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
-      onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       watch: vue__WEBPACK_IMPORTED_MODULE_0__.watch,
       onBeforeMount: vue__WEBPACK_IMPORTED_MODULE_0__.onBeforeMount,
       useRoute: vue_router__WEBPACK_IMPORTED_MODULE_2__.useRoute,
@@ -37188,7 +37219,7 @@ var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "text-center"
-  }, "Recherche par Date", -1
+  }, "Les Absences", -1
   /* HOISTED */
   );
 });
@@ -37269,7 +37300,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  }), $setup["boolean"] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 0
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: "/add",
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return _ctx.$emit('update:modelValue', $setup.check());
@@ -37283,7 +37316,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  }), $setup.adminSection ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
+    key: 0,
     to: "/just",
     onClick: _cache[2] || (_cache[2] = function ($event) {
       return _ctx.$emit('update:modelValue', $setup.check());
@@ -37297,7 +37331,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64
+  /* STABLE_FRAGMENT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: "/SearchByDate",
     onClick: _cache[3] || (_cache[3] = function ($event) {
       return _ctx.$emit('update:modelValue', $setup.check());
@@ -37325,7 +37361,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" --second card "), $setup.adminSection ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, [_hoisted_12, _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" --second card "), $setup.adminSection && $setup["boolean"] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, [_hoisted_12, _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: "/User",
     onClick: _cache[5] || (_cache[5] = function ($event) {
       return _ctx.$emit('update:modelValue', $setup.check());
@@ -37451,11 +37487,11 @@ var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "px-4 py-3 hover:text-slate-600 active:bg-slate-300"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   href: "/logout"
-}, "Logout")], -1
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "px-4 py-3 hover:text-slate-600 active:bg-slate-300"
+}, " Logout ")], -1
 /* HOISTED */
 );
 
@@ -37657,6 +37693,12 @@ var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_0__.createRouter)({
     name: 'Settings',
     component: function component() {
       return __webpack_require__.e(/*! import() */ "resources_js_components_Admin_settings_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/Admin/settings.vue */ "./resources/js/components/Admin/settings.vue"));
+    }
+  }, {
+    path: '/addStag',
+    name: 'Ajouter stagiaire',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_components_Admin_addStag_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/Admin/addStag.vue */ "./resources/js/components/Admin/addStag.vue"));
     }
   }]
 });
@@ -48067,7 +48109,7 @@ var src_default = VueToastificationPlugin;
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_Home_vue":1,"resources_js_components_Add_vue":1,"resources_js_components_Just_vue":1,"resources_js_components_SearchByDate_vue":1,"resources_js_components_detail_vue":1,"resources_js_components_Admin_profile_vue":1,"resources_js_components_Admin_aboutUsers_vue":1,"resources_js_components_Admin_addUser_vue":1,"resources_js_components_Admin_editUser_vue":1,"resources_js_components_Stagiaire_vue":1,"resources_js_components_Admin_editEtat_vue":1,"resources_js_components_Admin_editStgiaire_vue":1,"resources_js_components_Admin_settings_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_Home_vue":1,"resources_js_components_Add_vue":1,"resources_js_components_Just_vue":1,"resources_js_components_SearchByDate_vue":1,"resources_js_components_detail_vue":1,"resources_js_components_Admin_profile_vue":1,"resources_js_components_Admin_aboutUsers_vue":1,"resources_js_components_Admin_addUser_vue":1,"resources_js_components_Admin_editUser_vue":1,"resources_js_components_Stagiaire_vue":1,"resources_js_components_Admin_editEtat_vue":1,"resources_js_components_Admin_editStgiaire_vue":1,"resources_js_components_Admin_settings_vue":1,"resources_js_components_Admin_addStag_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

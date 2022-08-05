@@ -76,3 +76,36 @@
   .checkbox:checked::before{
     left: 40px;
   }
+.dropdown-head{
+  height: 2.3rem;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  padding: 0 .5rem;
+  justify-content: space-between;
+  color: rgb(55 65 81);
+  cursor: pointer;
+  align-items: center;
+}
+/* .dropdown-head:hover{
+  background-color:rgb(236, 236, 236);;
+} */
+.dropdown-body{
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: .5rem 0;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-color: #94a3b8;
+  border-radius: 0.125rem;
+  background-color: white;
+  position: absolute;
+}
+.dropdown-body li {
+  padding: .5rem 0 .5rem .75rem;
+}
+.dropdown-body li:hover {
+  background-color: rgb(226 232 240);
+  color: #0ea5e9;
+}
+/* class="py-2 pl-3 hover:bg-slate-200 hover:text-sky-500" */
+

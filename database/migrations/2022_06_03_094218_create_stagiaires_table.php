@@ -15,15 +15,16 @@ return new class extends Migration
     {
         Schema::create('stagiaires', function (Blueprint $table) {
             $table->id();
+            $table->string("matricule_st")->unique();
             $table->string("nom_st");
             $table->string("prenom_st");
             $table->foreignId("groupe_id");
+            $table->string("year")->default(date("Y").'-'.((string)((int)date("Y"))+1));
             $table->string("status")->default("Active");
             $table->float("heure_absence_st")->default(0);
             $table->string("numero_personnelle")->default("-----");
         });
     }
-
     /**
      * Reverse the migrations.
      *

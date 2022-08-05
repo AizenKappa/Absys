@@ -42,7 +42,7 @@
                                 <th class="p-2 whitespace-nowrap">
                                     <div class="font-semibold text-left">Prenom</div>
                                 </th>
-                                <th class="p-2 whitespace-nowrap">
+                                <th class="p-2">
                                     <div class="font-semibold text-left">Nombre d'heures d'absences NJ</div>
                                 </th>
                             </tr>
@@ -58,10 +58,13 @@
                                     <div class="text-left">{{st.prenom_st}}</div>
                                 </td>
                                     <td class="p-2 whitespace-nowrap">
-                                    <div>
+                                    <div class="sm:pl-[5rem] pl-[2rem]">
                                        {{ st.Nj+" h" }}
                                     </div>
                                 </td>
+                            </tr>
+                            <tr v-if="stagiaires.length == 0">
+                                <th class="h-[10rem] text-center font-semibold text-lg text-sky-800" colspan="3" >Aucune absence pour le justifier</th>
                             </tr>
                         </tbody>
                     </table>
@@ -205,7 +208,10 @@
     const { getFilieres , filieres , profs , getgroupes , groupes , stagiaires, getstagiaires , nom_gp , addJustif , justif_status } = useFilieres();
     /* On Mounted call Aoi Flieres */
     onMounted(getFilieres())
-    const getstContents = () => { getstagiaires(selected_gp.value) , list_etats.value = false ,show_error.value = false }
+    const getstContents = () => { 
+        getstagiaires(selected_gp.value,true) 
+        list_etats.value = false ,show_error.value = false 
+    }
     /* This function hide stagiaires table and show Justif table */
     window.scrollTo(0, 0)
     const id_st = ref(0)
@@ -228,7 +234,7 @@
     }
     const getsts = () => {
         
-        getstagiaires(selected_gp.value)
+        getstagiaires(selected_gp.value,true)
         show_etats.value = false
         show_error.value = false
     }

@@ -59,7 +59,7 @@
                 @click="activeHoure = 'TT'"
                 class="px-6 py-2.5 text-white sm:w-auto w-[100%]  font-medium text-xs uppercase rounded flex select-none
                 items-center whitespace-nowrap  cursor-pointer active:bg-blue-800 active:shadow-lg sm:mx-2 lg:mx-8"
-                :class="activeHoure == 'NJ'?'bg-blue-800 shadow-lg':'bg-blue-600 shadow-md hover:bg-blue-700'"
+                :class="activeHoure == 'TT'?'bg-blue-800 shadow-lg':'bg-blue-600 shadow-md hover:bg-blue-700'"
                 >
                 Tous les Heures
             </a>
@@ -74,7 +74,7 @@
         </div>
 
         <!-- Table Etats -->
-        <div v-if="etats != null" class="relative sm:p-5 scale-75 overflow-x-auto shadow-md sm:scale-90 lg:scale-100 s">
+        <div v-if="etats != null" class="relative mt-7 sm:mt-0 sm:p-5 scale-x-75 overflow-x-auto shadow-md sm:scale-x-90 lg:scale-x-100">
             <table class="w-full text-sm text-left">
                 <thead class="text-xs text-white uppercase bg-cyan-500">
                     <tr>
@@ -92,6 +92,9 @@
                         </th>
                         <th scope="col" class="px-6 py-3">
                             <div class="text-center">Formateur</div>
+                        </th>
+                        <th>
+                            <div class="text-center">Groupe</div>
                         </th>
                         <th  scope="col" class="px-6 py-3">
                             <div class="text-center">Jutife</div>
@@ -112,45 +115,57 @@
                     v-for="(e,index) in etats" :key="index" >
 
                         <td class="p-4">
-                            <div class="scale-90 w-full font-medium">
+                            <div class="scale-90 w-full font-medium"
+                            :class="e.etat_justif =='NJ'?'text-red-600':'text-green-700'">
                                 {{ e.stagiaire.nom_st +" " + e.stagiaire.prenom_st}}
                             </div>             
                         </td>
 
                         <td class="p-4" >
-                            <div class="scale-90 w-full font-medium">
+                            <div class="scale-90 w-full font-medium"
+                            :class="e.etat_justif =='NJ'?'text-red-600':'text-green-700'">
                                 {{e.date_abs}}
                             </div> 
                         </td>
 
                         <td class="p-4">
-                            <div class="scale-90 font-medium">
+                            <div class="scale-90 font-medium"
+                            :class="e.etat_justif =='NJ'?'text-red-600':'text-green-700'">
                                 {{e.duration.h_debut}}
                             </div>          
                         </td>
 
-                        <td class="px-6 py-4 text-left font-medium">
+                        <td class="px-6 py-4 text-left font-medium"
+                        :class="e.etat_justif =='NJ'?'text-red-600':'text-green-700'">
                             <div class="scale-90">
-                            {{e.duration.h_fin}}
+                                {{e.duration.h_fin}}
                             </div>
                         </td>
 
-                        <td class="px-6 py-4 text-left scale-90 font-medium">
+                        <td class="px-6 py-4 text-left scale-90 font-medium"
+                        :class="e.etat_justif =='NJ'?'text-red-600':'text-green-700'">
                             {{e.prof.nom_prof}}
                         </td>
 
+                        <td class="px-6 py-4 text-left scale-90 font-medium"
+                        :class="e.etat_justif =='NJ'?'text-red-600':'text-green-700'">
+                            {{e.stagiaire.groupe.nom_gp}}
+                        </td>
 
-                        <td class=" scale-90 font-medium">
-                        <div class="text-center">{{e.etat_justif}}</div>
+                        <td class=" scale-90 font-medium"
+                        :class="e.etat_justif =='NJ'?'text-red-600':'text-green-700'">
+                            <div class="text-center">{{e.etat_justif}}</div>
                         </td>
 
 
-                        <td class="px-6 py-4 text-left scale-90 font-medium">
-                        {{e.motif}}
+                        <td class="px-6 py-4 text-left scale-90 font-medium"
+                        :class="e.etat_justif =='NJ'?'text-red-600':'text-green-700'">
+                            {{e.motif}}
                         </td>
 
                         <td>
-                            <div class="grid grid-cols-1 place-items-center gap-2 scale-90 font-medium">
+                            <div class="grid grid-cols-1 place-items-center gap-2 scale-90 font-medium"
+                            :class="e.etat_justif =='NJ'?'text-red-600':'text-green-700'">
                                 {{e.seance}}
                             </div>
                         </td>
@@ -162,12 +177,21 @@
             </table>
         </div>
 
+        <template v-if="etats == null">
+            <div class="w-full  flex justify-center items-center h-[17rem]">
+                <svg role="status" class="inline w-14 h-14 mr-2 text-transparent animate-spin fill-blue-500" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                </svg>
+            </div>
+        </template>
+
     </section>
 
 </template>
 
 <script setup>
-    import { ref, reactive, watch } from 'vue';
+    import { ref, watch } from 'vue';
     import useFilieres from '../services/filieres.js'
     import { onMounted } from 'vue';
 
@@ -242,7 +266,7 @@
     const getcontents = () =>  {  selected_fil.value !== "Tous" ? getgroupes(selected_fil.value) : groupes.value = null,
     getetats(selected_fil.value,selected_period.value,period_debut.value,period_fin.value), activeHoure.value = 'TT'}
     /* Return all our functuons and variables from { services/filieres.js } to use here */
-    const { getFilieres , filieres , profs , getgroupes , groupes , stagiaires, getstagiaires , allEtats , nom_gp , getetats, etats } = useFilieres();
+    const { getFilieres , filieres , getgroupes , groupes , allEtats , getetats, etats } = useFilieres();
     /* On Mounted call Aoi Flieres */
     onMounted(getFilieres(),getetats(selected_fil.value,selected_period.value,period_debut.value,period_fin.value))
     
