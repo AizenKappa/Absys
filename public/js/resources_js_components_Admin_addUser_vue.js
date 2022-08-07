@@ -212,13 +212,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     var addUser = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var response;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().post("/addNewUser", {
+                axios__WEBPACK_IMPORTED_MODULE_1___default().post("/addNewUser", {
                   first: newUser.nom.text,
                   last: newUser.prenom.text,
                   cin: newUser.cin.text,
@@ -227,31 +225,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   curpwd: AuthPwd.text,
                   role: newUser.role.text,
                   modules: slectedMdIds.value
+                }).then(function (response) {
+                  if (response.data.message !== "user added successe") {
+                    if (response.data.champ == "email") {
+                      newUser.email.check = false;
+                      emailError.value = response.data.message;
+                      resetEmailError.value = true;
+                    } else if (response.data.champ == "cin") {
+                      newUser.cin.check = false;
+                      cinError.value = response.data.message;
+                      resetCinError.value = true;
+                    } else if (response.data.champ == "password") {
+                      AuthPwd.check = true;
+                      AuthPwd.error = response.data.message;
+                    }
+                  } else {
+                    success(response.data.message);
+                    resetInputes();
+                  }
+                })["catch"](function (error) {
+                  Error();
                 });
 
-              case 2:
-                response = _context.sent;
-
-                /* console.log(response.data) */
-                if (response.data.message !== "user added successe") {
-                  if (response.data.champ == "email") {
-                    newUser.email.check = false;
-                    emailError.value = response.data.message;
-                    resetEmailError.value = true;
-                  } else if (response.data.champ == "cin") {
-                    newUser.cin.check = false;
-                    cinError.value = response.data.message;
-                    resetCinError.value = true;
-                  } else if (response.data.champ == "password") {
-                    AuthPwd.check = true;
-                    AuthPwd.error = response.data.message;
-                  }
-                } else {
-                  success(response.data.message);
-                  resetInputes();
-                }
-
-              case 4:
+              case 1:
               case "end":
                 return _context.stop();
             }
@@ -576,6 +572,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     };
 
+    var Error = function Error() {
+      toast.error('Something went wrong', {
+        position: "bottom-right",
+        timeout: 3000,
+        closeOnClick: true,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        icon: true,
+        hideProgressBar: false
+      });
+    };
+
     var __returned__ = {
       toast: toast,
       newUser: newUser,
@@ -623,6 +631,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       addModel: addModel,
       prepareThis: prepareThis,
       checkmodules: checkmodules,
+      Error: Error,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       reactive: vue__WEBPACK_IMPORTED_MODULE_0__.reactive,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
@@ -1446,7 +1455,6 @@ function useFilieres() {
                 stagiaires.value = stagiaires.value.filter(function (e) {
                   return e.Nj > 0;
                 });
-                console.log(stagiaires.value);
               }
 
               if (prof_id.value == null) {
@@ -1594,7 +1602,7 @@ function useFilieres() {
   };
 
   var errorNet = function errorNet() {
-    toast.error("Error network", {
+    toast.error("Something went wrong", {
       position: "bottom-right",
       timeout: 3000,
       closeOnClick: true,
@@ -1642,13 +1650,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _addUser_vue_vue_type_template_id_205bb6f1__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./addUser.vue?vue&type=template&id=205bb6f1 */ "./resources/js/components/Admin/addUser.vue?vue&type=template&id=205bb6f1");
 /* harmony import */ var _addUser_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./addUser.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/Admin/addUser.vue?vue&type=script&setup=true&lang=js");
-/* harmony import */ var C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_addUser_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_addUser_vue_vue_type_template_id_205bb6f1__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Admin/addUser.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_addUser_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_addUser_vue_vue_type_template_id_205bb6f1__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Admin/addUser.vue"]])
 /* hot reload */
 if (false) {}
 

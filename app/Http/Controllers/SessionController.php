@@ -26,6 +26,15 @@ class SessionController extends Controller
             'cin' => '',
             'password' => ['bail','required',new vpassword($result['cin'])]
         ]);
+
+        if(!User::Where('cin', $result['cin'])->first()->active){
+
+            return redirect('/')->with('suspended','Account suspended for this moment');
+
+            /* return view('login.login',[
+                'error' => 'Account suspended for this moment',
+            ]); */
+        }
         
         $remember_me  = ( !empty( $request->input('check')) )? TRUE : FALSE;
 

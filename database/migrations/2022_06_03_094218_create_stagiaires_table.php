@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('stagiaires', function (Blueprint $table) {
             $table->id();
-            $table->string("matricule_st")->unique();
+            $table->string("matricule_st");
             $table->string("nom_st");
             $table->string("prenom_st");
             $table->foreignId("groupe_id");

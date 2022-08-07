@@ -97,6 +97,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       error: ""
     });
     var inputePwd_two = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+    var UserId = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     var errorContent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("");
     var send = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var nameModule = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("");
@@ -114,13 +115,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var currentCin = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     var spinloading = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var GroupeIndex = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
-    var groupeUserCopie = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
-    var result = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var AllgroupesUser = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
     var FiliereModel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     var listGroupes = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
     var modules = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
     var copieModules = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
+    var groupesUser = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
+    var groupeUserCopie = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onBeforeMount)(function () {
       getThisUser(route.params.id);
     });
@@ -177,9 +178,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       };
     }();
 
-    var copieUser = [];
-    var groupesUser = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
-
     var getUserGroupes = /*#__PURE__*/function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(userId) {
         var response;
@@ -192,27 +190,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 response = _context2.sent;
-                _context2.next = 5;
-                return response.data;
-
-              case 5:
-                groupesUser.value = _context2.sent;
-                _context2.next = 8;
-                return response.data;
-
-              case 8:
-                groupeUserCopie.value = _context2.sent;
-                _context2.next = 11;
-                return response.data;
-
-              case 11:
-                copieUser = _context2.sent;
+                groupesUser.value = response.data;
+                groupeUserCopie.value = response.data;
                 groupesUser.value.forEach(function (groupe) {
                   AllgroupesUser.value.push(groupe.nom_gp);
                 });
-                console.log(groupesUser.value);
 
-              case 14:
+              case 6:
               case "end":
                 return _context2.stop();
             }
@@ -299,7 +283,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         id: Number(id),
         nom_module: nom
       };
-      groupesUser.value[GroupeIndex.value].modules.push(newModule);
+      var _boolean = false;
+      groupesUser.value[GroupeIndex.value].modules.forEach(function (element) {
+        if (element.id == newModule.id) {
+          _boolean = true;
+          return;
+        }
+      });
+
+      if (_boolean == false) {
+        groupesUser.value[GroupeIndex.value].modules.push(newModule);
+      }
+
       FiliereModel.value = null;
       search.value = "";
     };
@@ -367,7 +362,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 currentEmail.value = response.data.email;
 
                 if (response.data.formateur_id != -1) {
-                  getUserGroupes(response.data.formateur_id);
+                  getUserGroupes(UserId.value = response.data.formateur_id);
                 }
 
               case 12:
@@ -426,30 +421,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     var editUser = /*#__PURE__*/function () {
       var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
-        var response;
         return _regeneratorRuntime().wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                /* groupeUserCopie.value != groupesUser.value ? result.value = groupesUser.value : result.value = false */
-                console.log(copieUser);
-                _context6.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().post("/editThisUser", {
+                axios__WEBPACK_IMPORTED_MODULE_1___default().post("/editThisUser", {
                   id: user.id.value,
                   first: user.nom.text,
                   last: user.prenom.text,
                   cin: user.cin.text.toLowerCase() == currentCin.value.toLowerCase() ? null : user.cin.text,
                   email: user.email.text.toLowerCase() == currentEmail.value.toLowerCase() ? null : user.email.text,
                   password: AuthPwd_one.text,
-                  groupes: groupesUser.value,
-                  copie: copieUser
+                  groupes: groupesUser.value
+                }).then(function (response) {
+                  if (response.data.message !== "user edited successe") {
+                    if (response.data.champ == "password") {
+                      AuthPwd_one.check = true;
+                      AuthPwd_one.error = response.data.message;
+                      inputePwd_one.value.focus();
+                    } else if (response.data.champ == "email") {
+                      user.email.check = false;
+                      emailError.value = response.data.message;
+                      resetEmailError.value = true;
+                    } else if (response.data.champ == "cin") {
+                      user.cin.check = false;
+                      cinError.value = response.data.message;
+                      resetCinError.value = true;
+                    }
+                  } else {
+                    success(response.data.message);
+                    AuthPwd_one.text = "";
+                  }
+                })["catch"](function (error) {
+                  Error();
                 });
 
-              case 3:
-                response = _context6.sent;
-                return _context6.abrupt("return");
-
-              case 6:
+              case 1:
               case "end":
                 return _context6.stop();
             }
@@ -544,6 +551,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     };
 
+    var Error = function Error() {
+      toast.error('Something went wrong', {
+        position: "bottom-right",
+        timeout: 3000,
+        closeOnClick: true,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        icon: true,
+        hideProgressBar: false
+      });
+    };
+
     var __returned__ = {
       getFilieres: getFilieres,
       filieres: filieres,
@@ -556,6 +575,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       inputePwd_one: inputePwd_one,
       AuthPwd_two: AuthPwd_two,
       inputePwd_two: inputePwd_two,
+      UserId: UserId,
       errorContent: errorContent,
       send: send,
       nameModule: nameModule,
@@ -573,18 +593,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       currentCin: currentCin,
       spinloading: spinloading,
       GroupeIndex: GroupeIndex,
-      groupeUserCopie: groupeUserCopie,
-      result: result,
       AllgroupesUser: AllgroupesUser,
       FiliereModel: FiliereModel,
       listGroupes: listGroupes,
       modules: modules,
       copieModules: copieModules,
+      groupesUser: groupesUser,
+      groupeUserCopie: groupeUserCopie,
       checkinpute: checkinpute,
       Model2: Model2,
       addModel: addModel,
-      copieUser: copieUser,
-      groupesUser: groupesUser,
       getUserGroupes: getUserGroupes,
       deletMd: deletMd,
       deletGp: deletGp,
@@ -602,6 +620,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       Model: Model,
       ModelX: ModelX,
       success: success,
+      Error: Error,
       reactive: vue__WEBPACK_IMPORTED_MODULE_0__.reactive,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
@@ -1255,7 +1274,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $setup.deletMd(index + '*' + indx);
         }
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
-        size: "l",
+        size: "lg",
         icon: "fa-xmark"
       })], 8
       /* PROPS */
@@ -1488,7 +1507,6 @@ function useFilieres() {
                 stagiaires.value = stagiaires.value.filter(function (e) {
                   return e.Nj > 0;
                 });
-                console.log(stagiaires.value);
               }
 
               if (prof_id.value == null) {
@@ -1636,7 +1654,7 @@ function useFilieres() {
   };
 
   var errorNet = function errorNet() {
-    toast.error("Error network", {
+    toast.error("Something went wrong", {
       position: "bottom-right",
       timeout: 3000,
       closeOnClick: true,
@@ -1684,13 +1702,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _editUser_vue_vue_type_template_id_693ce860__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editUser.vue?vue&type=template&id=693ce860 */ "./resources/js/components/Admin/editUser.vue?vue&type=template&id=693ce860");
 /* harmony import */ var _editUser_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editUser.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/Admin/editUser.vue?vue&type=script&setup=true&lang=js");
-/* harmony import */ var C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_editUser_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_editUser_vue_vue_type_template_id_693ce860__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Admin/editUser.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_editUser_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_editUser_vue_vue_type_template_id_693ce860__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Admin/editUser.vue"]])
 /* hot reload */
 if (false) {}
 

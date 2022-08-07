@@ -38,7 +38,6 @@ export default function useFilieres(){
 
         if(clean){
             stagiaires.value = stagiaires.value.filter((e) => e.Nj > 0);
-            console.log(stagiaires.value)
         }
         
         if(prof_id.value ==  null ){ getprofs(groupe_id) }
@@ -107,7 +106,7 @@ export default function useFilieres(){
     }
 
     const errorNet = () => {
-        toast.error("Error network" , {
+        toast.error("Something went wrong" , {
             position: "bottom-right",
             timeout: 3000,
             closeOnClick: true,

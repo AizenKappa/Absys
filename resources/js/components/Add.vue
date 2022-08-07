@@ -158,13 +158,23 @@
     }
 
     const formCheck = () => {
-        if(isStdChecked.value == false || prof_id == null
-        || seance.value == null ||duration_id.value == null ) return false;
+        if(isStdChecked.value == false || seance.value == null ||duration_id.value == null )
+        {
+            return false;
+        }
+        if(admin.value && prof_id == null)
+        {
+            return false;
+        }
+         
         return true;
     }
 
     const reset = (message) => {
-        prof_id.value = seance.value = duration_id.value = null;
+        if(admin.value){
+            prof_id.value = null
+        }
+        seance.value = duration_id.value = null;
         date_abs.value = new Date().toISOString().slice(0, 19).split('T')[0]
         isStdChecked.value = false 
         st_inputs.value.forEach(e => e.checked = false);
@@ -204,7 +214,7 @@
     }
 
     const errorNet = () => {
-        toast.error("Error network" , {
+        toast.error("Something went wrong" , {
             position: "bottom-right",
             timeout: 3000,
             closeOnClick: true,

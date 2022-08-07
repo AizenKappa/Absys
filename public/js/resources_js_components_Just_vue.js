@@ -767,7 +767,6 @@ function useFilieres() {
                 stagiaires.value = stagiaires.value.filter(function (e) {
                   return e.Nj > 0;
                 });
-                console.log(stagiaires.value);
               }
 
               if (prof_id.value == null) {
@@ -915,7 +914,7 @@ function useFilieres() {
   };
 
   var errorNet = function errorNet() {
-    toast.error("Error network", {
+    toast.error("Something went wrong", {
       position: "bottom-right",
       timeout: 3000,
       closeOnClick: true,

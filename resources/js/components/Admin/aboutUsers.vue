@@ -50,6 +50,9 @@
                                 <th class="p-2 whitespace-nowrap">
                                     <div class="font-semibold text-left">Delet</div>
                                 </th>
+                                <th class="p-2 whitespace-nowrap">
+                                    <div class="font-semibold">Active</div>
+                                </th>
                             </tr>
 
                         </thead>
@@ -101,6 +104,14 @@
                                         </svg>
                                     </div>
                                 </td>
+                                <td>
+                                    <!-- active btn -->
+                                    <div class="relative flex justify-center items-center">
+                                        <div class="checkPrent flex justify-center items-center">
+                                            <input :checked="user.active" :value="user.id" @click="activeEvent" type="checkbox" class="checkbox">
+                                        </div>  
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -119,9 +130,12 @@
 <script setup>
     import { ref, onMounted } from "vue"
     import axios from "axios";
+    import { useToast } from "vue-toastification";
 
     const users = ref(null)
     const wait =ref(false)
+    const toast = useToast();
+
     
 
     onMounted(()=>{
@@ -160,12 +174,37 @@
         getusers()
     }
 
+    const updateActive = async (id,element) => 
+    {
+        axios.post('/updateActive',{ id: id , active: !element.checked})
+        .then((response) => {
+            element.checked = !element.checked
+            Swal.fire(
+                'Suprimé!',
+                'Le compte a été supprimé.',
+                'success'
+            )
+            
+        }).catch((error) => {  Error() });
+
+        
+    }
+
     const deletUserById = async (id) =>{
         
         let response = await axios.get(`/allUsers/${id}`)
         console.log(response.data)
  
     };
+
+    const activeEvent = (event) => {
+        event.target.checked = !event.target.checked
+
+        var id = event.target.value
+        /* var active = event.target.checked */
+        sweetactive(id,event.target)
+    }
+
 
     /* For refresh btn and we set timout for spam click :D */
     const callusers = () =>{
@@ -203,6 +242,34 @@
                 )
             }
         })
+    }
+    const sweetactive = (id,element) => {
+        Swal.fire({
+            title: 'Êtes-vous sûr?',
+            text: "Vou ne pourrez pas revenir en arriére!",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText:"Annuler",
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Supprimer!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                updateActive(id,element)
+            }
+        })
+    }
+
+    const Error = () => {
+         toast.error('Something went wrong', {
+            position: "bottom-right",
+            timeout: 3000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            icon: true,
+            hideProgressBar: false,
+        });
     }
 
 </script>

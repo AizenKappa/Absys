@@ -154,9 +154,9 @@
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <select v-model="selected_motif" class="w-[10rem] h-7 font-medium shadow-lg shadow-gray-300" v-on:change="selected_motif_autre = null">
                 <option class="hidden">Motif</option>
-                <option>Examen</option>
-                <option>Maladie</option>
-                <option>V</option>
+                <option>A.....</option>
+                <option>B.....</option>
+                <option>C.....</option>
                 <option value="autre">Autre</option>
             </select>
             <input placeholder="Ecrire Le Motif" class="h-7 px-2 w-[10rem] shadow-lg shadow-gray-300" v-if="selected_motif == 'autre'" type="text" v-model="selected_motif_autre" >

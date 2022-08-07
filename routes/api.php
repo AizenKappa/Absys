@@ -28,6 +28,7 @@ use App\Models\Module;
 
 Route::get('filieres/{id}', [FiliereController::class, 'getgroupes']);
 Route::get('groupes/{id}', [FiliereController::class, 'getstagiaires']);
+Route::get('stagsGroupe/{id}', [FiliereController::class, 'stagsGroupe']);
 Route::get('profs/{id}', [FiliereController::class, 'getprofs']);
 Route::get('stagiaire/{id}',[FiliereController::class, 'getstByid']);
 Route::post('getMostStAbs',[FiliereController::class, 'getMostStAbs']);

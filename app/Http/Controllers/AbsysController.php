@@ -16,18 +16,20 @@ class AbsysController extends Controller
         return view('home');
     }
 
-    public function addYear()
-    { 
-    
-        $newYear = Carbon::now()->format('Y').(int)Carbon::now()->format('Y')+1;
+    public function addYear($controller, $array , $array_p , $year)
+    {
 
-
+        $newYear = $year[0].$year[1];
+        
+        
         Absysyear::create([
-            "year" => $newYear,
-            "active" => "off",
-            "current" => false,
+            'year' => $year[0].'-'.$year[1],
+            'active' => "off",
+            'current' => false
         ]);
+        
 
+        
         Artisan::call('make:model Etat'.$newYear.' -m');
 
 
@@ -49,7 +51,7 @@ class Etat".$newYear." extends Model
     protected \$with = ['prof','duration','stagiaire.groupe'];
     public function stagiaire()
     {
-        return \$this->belongsTo(Stagiaire".$newYear."::class);
+        return \$this->belongsTo(Stagiaire::class);
     }
             
     public function prof()
@@ -125,7 +127,10 @@ return new class extends Migration
         $insertFile = fopen(app_path("Models/Etat".$newYear.".php"),"w");
         fwrite($insertFile,$etModelContent);
 
+
+
         Artisan::call('migrate');
+    
         
         
         Absysyear::Where('active','on')->update([
@@ -133,11 +138,14 @@ return new class extends Migration
             "current" => false,
         ]);
 
+        $newYear = $year[0].'-'.$year[1];
+
         Absysyear::Where('year',$newYear)->update([
             "active" => "on",
             "current" => true,
         ]);
 
+        return $controller->insertData($array_p,$array,$newYear);
     }
 
 }

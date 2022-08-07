@@ -15,6 +15,7 @@ use App\Models\Stagiaire;
 use App\Models\Groupe;
 use App\Models\User;
 use App\Models\Absysyear;
+use App\Http\Controllers\AbsysController;
 use App\Models\GroupeModule;
 use App\Models\ProfModule;
 use Carbon\Carbon;
@@ -29,7 +30,11 @@ use Illuminate\Support\Str;
 
 class FiliereController extends Controller
 {
-
+    public function test()
+    {
+        dd("test methode");
+    }
+    
     public function index_filieres()
     {   
         if(Auth::user()->formateur_id == -1){
@@ -50,16 +55,16 @@ class FiliereController extends Controller
     public function index_stagiaires()
     {
         $user_id = Auth::user()->formateur_id;
-
+        $year = Absysyear::Where('active','on')->first()->year;
         
         if($user_id == -1){
-            return Stagiaire::With('groupe')->get();
+            return Stagiaire::Where('year',$year)->With('groupe')->get();
         }else{
             
 
             $result = collect([]);
 
-            $Stagiaires = Stagiaire::With('groupe.profs')->get();
+            $Stagiaires = Stagiaire::Where('year',$year)->With('groupe.profs')->get();
 
             $Stagiaires->each(function($st)use($result,$user_id){
                 if( in_array($user_id, $st->groupe->profs->pluck('id')->toArray()) ){
@@ -80,6 +85,11 @@ class FiliereController extends Controller
 
 
     public function getstagiaires(Request $request)
+    {
+        return FiliereResource::collection(Groupe::Find($request->id)->stagiaires->where('status','Active')  );
+    }
+
+    public function stagsGroupe(Request $request)
     {
         return FiliereResource::collection(Groupe::Find($request->id)->stagiaires);
     }
@@ -144,7 +154,7 @@ class FiliereController extends Controller
 
 
                 if($user->role == 'Formateur'){
-                    return $this->updateGroupesProf($user->formateur_id, $request->groupes, $request->copie);
+                    return $this->updateGroupesProf($user->formateur_id, $request->groupes);
                 }
                 else{
                     return [
@@ -164,98 +174,52 @@ class FiliereController extends Controller
         }
     }
 
-    public function updateGroupesProf($idP,$groupes,$copie)
+
+
+    public function updateGroupesProf($idP,$groupes)
     {
-        /* GroupeModule::where('groupe_id',$groupe_id)->where('module_id',$module['id'])->first()->delete(); */
-        return $copie;
-
-        $delete_array = [];
+        //delete all relations related with this prof
+        $currentGroupes = GroupeProf::Where('prof_id',$idP)->delete();
+        $currentModules = ProfModule::Where('prof_id',$idP)->delete();
         
-        foreach ($copie as $gp)
-        {
-            $idg = Groupe::Where('nom_gp',$gp['nom_gp'])->first()->id;
-            foreach($gp['modules'] as $module){
-                $delete_array[] = [
-                    'module_id' => $module['id'],
-                    'groupe_id' => $idg
-                ];
-            }
-        }
-        
-        return $delete_array;
-
-        $currentGroupes = GroupeProf::Where('prof_id',$idP)->get();
-        $currentModules = ProfModule::Where('prof_id',$idP)->get();
-
+        $groupeModel = Groupe::all(); $GpModel = GroupeModule::all();
         $array_gm = $array_gp = $array_pm = [];
-
-        foreach($currentGroupes as $curentgp){
-            $curentgp->delete();
-        }
-
-        foreach($currentModules as $curentmd){
-            $curentmd->delete();
-        }
-        
-
-        $groupeModel = Groupe::all();
-        
-        foreach ($groupes as $groupe) {
-
+        foreach ($groupes as $groupe) 
+        {
             $groupe_id = $groupeModel->where('nom_gp',$groupe['nom_gp'])->first()->id;
-
-            $array = [
-                'prof_id' => $idP,
-                'groupe_id' => $groupe_id
-            ];
-            
-            
-            if(!in_array($array,$array_gp))
-                $array_gp[] = $array;
-            
-            foreach($groupe['modules'] as $module){
-
-                $array = [
-                    'module_id' => $module['id'],
-                    'groupe_id' => $groupe_id
-                ];
-                if(!in_array($array,$array_gm))
-                    $array_gm[] = $array;
-
+            //New GroupeProf relations
+            $array = [ 'prof_id' => $idP, 'groupe_id' => $groupe_id ];
+            if(!in_array($array,$array_gp)) $array_gp[] = $array;
                 
-                $array = [
-                    'prof_id' => $idP,
-                    'module_id' => $module['id']
-                ];
-                if(!in_array($array,$array_pm))
-                    $array_pm[] = $array;
+            foreach($groupe['modules'] as $module)
+            {
+                //New GroupeModule relations
+                if(!$GpModel->where('module_id',$module['id'])->where('groupe_id',$groupe_id)->first())
+                {
+                    $array = [ 'module_id' => $module['id'], 'groupe_id' => $groupe_id ];
+                    if(!in_array($array,$array_gm)) $array_gm[] = $array;
+                    
+                }
+                //New ProfModule relations
+                $array = [ 'prof_id' => $idP, 'module_id' => $module['id'] ];
+                
+                if(!in_array($array,$array_pm)) $array_pm[] = $array;
             }
         }
 
-
-        /* return [
-            'array_gp' => $array_gp,
-            'array_gm' => $array_gm,
-            'array_pm' => $array_pm
-        ]; */
-
-        GroupeProf::insert($array_gp);
-        ProfModule::insert($array_pm);
-        GroupeModule::insert($array_gm);
-
-
-        return [
-            'message' => 'user edited successe'
-        ];
-
+        GroupeProf::insert($array_gp); ProfModule::insert($array_pm); GroupeModule::insert($array_gm);
+        return [ 'message' => 'user edited successe' ];
     }
 
     public function deletuser(Request $request)
     {
-        
+        $user = User::Find($request->id);
+        $id = $user->formateur_id;
+        $user->delete();
 
-        User::Find($request->id)
-            ->delete();
+        if($id != -1){
+            Prof::Find($id)->delete();
+        }
 
         return [
             'message' => 'delet successe'
@@ -305,7 +269,8 @@ class FiliereController extends Controller
 
         $id = $request->id;
         $boolean = (int)Absysyear::Where('active','on')->first()->current;
-        $year = Absysyear::Where('active','on')->first()->year;
+        $year = explode('-', Absysyear::Where('active','on')->first()->year);
+        $year =  $year[0].$year[1];
         $model = 'App\Models\Etat'.$year;
 
         if($boolean == 0)
@@ -403,8 +368,9 @@ class FiliereController extends Controller
         
     }
 
-    public function getUserGroupes(Request $request,)
+    public function getUserGroupes(Request $request)
     {
+
         $groupes = Prof::Find($request->id)->groupes->all();
 
         $result = [];
@@ -439,26 +405,66 @@ class FiliereController extends Controller
                 array_push($existGp,$groupe);
     
             }
-                
         }
+        return $result; 
+    }
+
+    public function getThisGroupes($id_prof)
+    {
+        $groupes = Prof::Find($id_prof)->groupes->all();
+
+        $result = [];
+        $existGp = [];
+        $ModelGP = Groupe::all();
     
+        $profModules = Prof::Find($id_prof)->modules->pluck('nom_module')->all();
     
+        foreach($groupes as $gp){
+            $groupe = (object)[
+                'id' => $gp->id,
+                'nom_gp' => $gp->nom_gp,
+            ];
     
+            if(!in_array($groupe,$existGp)){
+    
+                $prepare = [];
+                $modules = Groupe::Find($groupe->id)->modules->whereIn('nom_module',$profModules);
+                             
+                foreach( $modules as $module ){
+                    $prepare[] = (object)[
+                        'id' => $module->id,
+                        'nom_module' => $module->nom_module
+                    ];
+                }
+    
+                $result[] = [
+                    'nom_gp' => $groupe->nom_gp,
+                    'modules' => $prepare
+                ];
+    
+                array_push($existGp,$groupe);
+    
+            }
+        }
         return $result; 
     }
 
     public function getDetails()
     {
         
-        $year = Absysyear::Where('active','on')->first()->year;
+        
+
+        $year = explode('-', Absysyear::Where('active','on')->first()->year);
+        $year =  $year[0].$year[1];
         $model = 'App\Models\Etat'.$year;
 
+        $year = Absysyear::Where('active','on')->first()->year;
 
         $result = [
             "fillWithAbs"=>[],
             "exist"=>false,
             "info"=>[
-                "totalHoursAbs" => Stagiaire::Wherenot('heure_absence_st',0)->get()->pluck('heure_absence_st')->sum(),
+                "totalHoursAbs" => Stagiaire::Where('year',$year)->where('status','Active')->Wherenot('heure_absence_st',0)->get()->pluck('heure_absence_st')->sum(),
                 "info" => []
             ]
         ];
@@ -473,9 +479,13 @@ class FiliereController extends Controller
         $user_id = Auth::user()->formateur_id;
 
         if($user_id == -1){
-            $allEtat = $model::with("stagiaire.groupe.filiere")->without("prof")->get();
+
+            $allEtat = $model::with("stagiaire.groupe.filiere")->without("prof")->get()
+            ->Filter( function($e) { return $e->stagiaire->status == 'Active'; });
+            
         }else{
-            $allEtat = $model::with("stagiaire.groupe.filiere")->without("prof")->where('prof_id',$user_id)->get();
+            $allEtat = $model::with("stagiaire.groupe.filiere")->without("prof")->where('prof_id',$user_id)->get()
+            ->Filter( function($e) { return $e->stagiaire->statuts == 'Active'; });
         }
     
         foreach($allEtat as $e){
@@ -495,9 +505,11 @@ class FiliereController extends Controller
     
         foreach($groupeWithAbs as $groupe){
                     
-            $id_gp = $groupe->id;                
+            $id_gp = $groupe->id;
+
+            $nj_abs = $this->monthAbs($etats_nj->where("stagiaire.groupe.id","=",$id_gp));        
             $just_abs = $this->monthAbs($etats_just->where("stagiaire.groupe.id","=",$id_gp));
-            $nj_abs = $this->monthAbs($etats_nj->where("stagiaire.groupe.id","=",$id_gp));    
+
             $total_h = 0;
             $nj_h=0;
 
@@ -522,23 +534,11 @@ class FiliereController extends Controller
     }
 
     public function monthAbs($type)
-    {
-    
-        /* $currentYear = intval(date("Y"));
-        $currentMonth = intval(date("m"));
-
-        if($currentMonth>=9 && $currentMonth <=12){
-            $startYear = $currentYear;
-            $endYear = $currentYear+1;
-        }
-        else if($currentMonth>=1 && $currentMonth <=7){
-            $startYear = $currentYear-1;
-            $endYear = $currentYear;
-        } */
+    {   
 
         $year = Absysyear::Where('active','on')->first()->year;
         $startYear = $year[0].$year[1].$year[2].$year[3];
-        $endYear = $year[4].$year[5].$year[6].$year[7];
+        $endYear = $year[5].$year[6].$year[7].$year[8];
         
         $months = [
             $startYear."-09",$startYear."-10",
@@ -546,8 +546,9 @@ class FiliereController extends Controller
             $endYear."-01",$endYear."-02",
             $endYear."-03",$endYear."-04",
             $endYear."-05",$endYear."-06",
-            $endYear."-07"
+            $endYear."-07",$endYear."-08",
         ];
+
         $result=[];
         foreach($months as $month){
             $thisMonthAbs = $type->whereBetween('date_abs',
@@ -560,12 +561,16 @@ class FiliereController extends Controller
             }
             array_push($result,$oneMonthAbs);
         }
+
         return $result;
        
     }
 
     public function getstByid(Request $request)
     {
+        $year = explode('-', Absysyear::Where('active','on')->first()->year);
+        $year =  $year[0].$year[1];
+        $model = 'App\Models\Etat'.$year;
 
         $id = $request->id;
         $stag = Stagiaire::find($id);
@@ -650,7 +655,8 @@ class FiliereController extends Controller
 
     public function getEtatFil()
     {
-        $year = Absysyear::Where('active','on')->first()->year;
+        $year = explode('-', Absysyear::Where('active','on')->first()->year);
+        $year =  $year[0].$year[1];
         $model = 'App\Models\Etat'.$year;
 
         $allEtat = $model::with("stagiaire.groupe.filiere")->get()->all();
@@ -695,7 +701,8 @@ class FiliereController extends Controller
 
     public function updateEtat(Request $request)
     {
-        $year = Absysyear::Where('active','on')->first()->year;
+        $year = explode('-', Absysyear::Where('active','on')->first()->year);
+        $year =  $year[0].$year[1];
         $model = 'App\Models\Etat'.$year;
 
         $id = $request->id;
@@ -751,7 +758,8 @@ class FiliereController extends Controller
 
     public function deleteEtat(Request $request)
     {
-        $year = Absysyear::Where('active','on')->first()->year;
+        $year = explode('-', Absysyear::Where('active','on')->first()->year);
+        $year =  $year[0].$year[1];
         $model = 'App\Models\Etat'.$year;
 
         $etat = $model::find($request->id);
@@ -776,14 +784,23 @@ class FiliereController extends Controller
     public function addUpAbsence(Request $request)
     {
         
+        
 
-        $year = Absysyear::Where('active','on')->first()->year;
+        $year = explode('-', Absysyear::Where('active','on')->first()->year);
+        $year =  $year[0].$year[1];
         $model = 'App\Models\Etat'.$year;
 
+        /* $ThisUser = Auth::user();
 
+        if($ThisUser->formateur_id != -1){
+            $prof_id = $ThisUser->formateur_id;
+        }else{
+            
+        } */
+        $prof_id = $request->prof_id;
 
         $stagiaire_ids = $request->stagiaire_ids;
-        $prof_id = $request->prof_id;
+
         $duration_id = $request->duration_id;
         $seance = $request->seance;
         $date_abs = $request->date_abs;
@@ -806,7 +823,7 @@ class FiliereController extends Controller
             
             $currentAbsence = Stagiaire::find($v)->heure_absence_st;
     
-            Stagiaire::Where('id', $v)->update(['heure_absence_st' => ($currentAbsence + $hours)]);
+            Stagiaire::Find($v)->update(['heure_absence_st' => ($currentAbsence + $hours)]);
         }
 
         
@@ -840,7 +857,8 @@ class FiliereController extends Controller
 
     public function addJustif(Request $request)
     {
-        $year = Absysyear::Where('active','on')->first()->year;
+        $year = explode('-', Absysyear::Where('active','on')->first()->year);
+        $year =  $year[0].$year[1];
         $model = 'App\Models\Etat'.$year;
 
        $absences_ids = $request->absences_ids;
@@ -1058,9 +1076,10 @@ class FiliereController extends Controller
         }
     }
 
-    public function store_excel(Request $request)
+    public function store_excel(Request $request, AbsysController $absysClass)
     {
 
+        
         $baseExt = $request->file('base')->guessExtension();
         $avantExt = $request->file('avant')->guessExtension();
 
@@ -1072,6 +1091,9 @@ class FiliereController extends Controller
         $basePath= storage_path('/app/excels/base.'.$baseExt);
         $avantPath = storage_path('/app/excels/avant.'.$avantExt);
 
+
+        $basePath= storage_path('/app/excels/base.csv');
+        $avantPath = storage_path('/app/excels/avant.csv');
 
         if($baseExt == "csv"){
 
@@ -1087,7 +1109,13 @@ class FiliereController extends Controller
             $sheet = $spreadsheet->getSheet($spreadsheet->getFirstSheetIndex());
             $array = $sheet->toArray();
         }
-
+        
+        if($array[0][9] != "Numéro stagiaire" || $array[0][11] != "Stagiare en fomation" || $array[0][14] != "Code massar"){
+            return [
+                'message' => 'error',
+                'text' => 'invalide base plate'
+            ];
+        }
 
 
         if($avantExt == "csv"){
@@ -1105,12 +1133,20 @@ class FiliereController extends Controller
             $array_p = $sheet->toArray();
         }
 
-        return $this->insertData($array, $array_p);
+        if($array_p[0][19] != "Mle Affecté Présentiel Actif" || $array_p[0][20] != "Formateur Affecté Présentiel Actif" 
+        || $array_p[0][16] != "Code Module"){
+            return [
+                'message' => 'error',
+                'text' => 'invalide avancement'
+            ];
+        }
+        return $absysClass->addYear($this, $array, $array_p, [$request->dyear, $request->fyear]);
 
     }
 
-    public function insertData($array, $array_p)
+    public function insertData($array_p,$array,$year)
     {
+        
         
         // ----------------------------------Filiere TABLE-------------------------------------
         $Filieres = Filiere::all()->pluck('nom_fil')->toArray();
@@ -1159,16 +1195,17 @@ class FiliereController extends Controller
                     "nom_st" => $e[15],
                     "prenom_st" => $e[16],
                     "groupe_id" => $allgroupes->Where('nom_gp',$e[7])->first()->id,
-                    "numero_personnelle" => $e[22],
+                    "year" => $year,
+                    "numero_personnelle" => $e[22]
+
                 ];
 
                 array_push($matricules, $e[9]);
             }
         }
-
+      
         Stagiaire::insert($stagiaires);
-
-        
+   
         // -----------------------------FORMATEURS TABLE && MODULE TABLE---------------------------
         $Formateurs = Prof::all()->pluck('nom_prof')->toArray();
         $Modules = Module::all()->pluck('nom_module')->toArray();
@@ -1203,6 +1240,10 @@ class FiliereController extends Controller
         Prof::insert($array_profs);
         Module::insert($array_modules);
 
+
+        GroupeProf::query()->truncate();
+        GroupeModule::query()->truncate();
+        ProfModule::query()->truncate();
 
 
         // ----------------------------------RELATIONS-----------------------------------------------
@@ -1329,12 +1370,14 @@ class FiliereController extends Controller
     public function addStag(Request $request)
     {   
 
+        $year = Absysyear::Where('active','on')->first()->year;
+
 
         $password = User::Find(Auth::user()->id)->password;
 
         if (Hash::check($request->curpwd , $password)){
 
-            $search = Stagiaire::Where('matricule',$request->mat)->count();
+            $search = Stagiaire::Where('year',$year)->Where('matricule',$request->mat)->count();
 
             if($search > 0) { return ['champ' => 'mat' ,'message' => 'Cet Matricule déja existe']; }
 
@@ -1365,7 +1408,8 @@ class FiliereController extends Controller
         $ids = [];
         $pass = false;
 
-        $year = Absysyear::Where('active','on')->first()->year;
+        $year = explode('-', Absysyear::Where('active','on')->first()->year);
+        $year =  $year[0].$year[1];
         $model = 'App\Models\Etat'.$year;
 
         $all =  $model::Where('date_abs',$date)->get();
@@ -1404,8 +1448,10 @@ class FiliereController extends Controller
 
     public function getMostStAbs(Request $request){
 
+        $year = Absysyear::Where('active','on')->first()->year;
+
         $id_gp = $request->id;
-        $stagiaires = Stagiaire::where('groupe_id',$id_gp)->get();
+        $stagiaires = Stagiaire::Where('year',$year)->where('groupe_id',$id_gp)->get();
         $id = 0;
         $hours = 0;
         foreach ( $stagiaires as $st ){
@@ -1445,8 +1491,9 @@ class FiliereController extends Controller
     public function getFilhours(Request $request) 
     {
         $id = $request->id;
+        $year = Absysyear::Where('active','on')->first()->year;
     
-        $filHours = Stagiaire::with('groupe.filiere')->get()
+        $filHours = Stagiaire::Where('year',$year)->with('groupe.filiere')->get()
         ->where("groupe.filiere.id","=",Groupe::Find($id)->filiere_id)
         ->where('heure_absence_st',"!=",0)->pluck('heure_absence_st')->sum();
 
@@ -1456,6 +1503,8 @@ class FiliereController extends Controller
     }
     
 }
+
+
 /* About carbon */
     // 'etat' => Stagiaire::find($this->id)->absences->where('etat_justif','NJ'),
     // 'start last week' => Carbon::now()->subWeek()->startOfWeek()->format('Y-m-d'),
@@ -1464,6 +1513,31 @@ class FiliereController extends Controller
     // 'start current week' => Carbon::now()->startOfWeek()->format('Y-m-d'),
     // 'end current week' => Carbon::now()->endOfWeek()->format('Y-m-d'),
     // 'timediff' => $timeOut->diffInMinutes($timeIn) / 60
+
+
+/* GroupeModule::where('groupe_id',$groupe_id)->where('module_id',$module['id'])->first()->delete(); */
+
+        /* $copieData =  $this->getThisGroupes($idP); */
+        
+        /* $delete_array = [];
+        
+        foreach ($copieData as $gp)
+        {
+            
+            $idg = Groupe::Where('nom_gp',$gp['nom_gp'])->first()->id;
+            
+            foreach($gp['modules'] as $module){
+                $delete_array[] = (object)[
+                    'module_id' => $module->id,
+                    'groupe_id' => $idg
+                ];
+                
+            }
+        }
+        foreach($delete_array as $rel){
+            GroupeModule::Where('module_id',$rel->module_id)->where('groupe_id',$rel->groupe_id)->first()->delete();
+        } 
+                */
 
 
 

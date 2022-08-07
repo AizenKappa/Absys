@@ -33,20 +33,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     expose();
     var toast = (0,vue_toastification__WEBPACK_IMPORTED_MODULE_2__.useToast)();
     var baseExcel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("");
+    var readyPlates = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var avantExcel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("");
     var awrong = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
-    var spin = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+    var dyear = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)();
+    var fyear = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)();
     var bwrong = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var loading = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
-    var ramdanTime = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
-    var time = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
-    var checked = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
-    var BoxHours = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
-    var BoxMinutes = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
-    var BoxSeconds = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
-    var intervalID = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     var wait = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
-    var shallWe = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+    var Error = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("");
 
     function handleBase(event) {
       baseExcel.value = event.target.files[0];
@@ -56,26 +51,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       avantExcel.value = event.target.files[0];
     }
 
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onBeforeMount)(function () {
-      chekckTime();
-    });
-
-    var updateTime = /*#__PURE__*/function () {
+    var checkyearinpute = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                axios__WEBPACK_IMPORTED_MODULE_1___default().get('updateTime').then(function (response) {
-                  if (response.data.type == "success") {
-                    chekckTime();
-                    success(response.data.message);
-                  } else if (response.data.type == "wrong") {
-                    error(response.data.message);
-                  }
-                })["catch"](function () {
-                  rerror("Something went wrong try again !!");
-                });
+                if (dyear.value != "" && dyear.value > 2020) {
+                  checkyear();
+                }
 
               case 1:
               case "end":
@@ -85,67 +69,41 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }));
 
-      return function updateTime() {
+      return function checkyearinpute() {
         return _ref2.apply(this, arguments);
       };
     }();
 
-    var conterSpam = function conterSpam() {
-      ramdanTime.value.checked = checked.value;
-
-      if (wait.value) {
-        return;
-      }
-
-      if (BoxSeconds.value != null) {
-        wait.value = true;
-        error("Vou devez attendre le temps ci-dessus");
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(function () {
+      return dyear.value;
+    }, function () {
+      if (dyear.value > 2020) {
+        fyear.value = dyear.value + 1;
       } else {
-        sweetalert();
+        fyear.value = "";
       }
+    });
 
-      setTimeout(function () {
-        wait.value = false;
-      }, 5000);
-    };
-
-    var change = function change() {
-      updateTime();
-    };
-
-    var chekckTime = /*#__PURE__*/function () {
+    var checkyear = /*#__PURE__*/function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var response;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('checkTime');
+                axios__WEBPACK_IMPORTED_MODULE_1___default().post('/checkNewYear', {
+                  debut: dyear.value,
+                  fin: dyear.value + 1
+                }).then(function (response) {
+                  if (response.data.message == true) {
+                    readyPlates.value = true;
+                  } else {
+                    Error.value = "On a déja une version avec cet année";
+                  }
+                })["catch"](function (e) {
+                  error("Something went wrong");
+                });
 
-              case 2:
-                response = _context2.sent;
-
-                if (response.data.active == "on") {
-                  ramdanTime.value.checked = true;
-                  checked.value = true;
-                } else {
-                  ramdanTime.value.checked = false;
-                  checked.value = false;
-                }
-
-                shallWe.value = true;
-
-                if (response.data.ready == "no") {
-                  time.value = response.data.time;
-                  spin.value = true;
-                  intervalID.value = setInterval(showTime, 1000);
-                } else {
-                  /* shallWe.value = true */
-                  ramdanTime.value.disabled = false;
-                }
-
-              case 6:
+              case 1:
               case "end":
                 return _context2.stop();
             }
@@ -153,54 +111,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }));
 
-      return function chekckTime() {
+      return function checkyear() {
         return _ref3.apply(this, arguments);
       };
     }();
 
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(function () {
-      return time.value;
-    }, function () {
-      if (time.value < 0) {
-        stop();
-        BoxSeconds.value = null;
-        wait.value = false;
-      }
-    });
-
-    var showTime = function showTime() {
-      var reverse = true;
-      var floathour = time.value / 3600;
-      var hour = parseInt(floathour);
-      var floatmin = (floathour - hour) * 60;
-      var minute = parseInt(floatmin);
-      var floatSec = (floatmin - minute) * 60;
-      var second = Math.ceil(floatSec);
-      hour >= 10 ? hour = hour : hour = "0" + hour;
-      minute >= 10 ? minute = minute : minute = "0" + minute;
-      second >= 10 ? second = second : second = "0" + second;
-      BoxHours.value = hour;
-      BoxMinutes.value = minute;
-      BoxSeconds.value = second;
-      time.value -= 1;
-
-      if (reverse) {
-        spin.value = false;
-        /* shallWe.value = true */
-
-        ramdanTime.value.disabled = false;
-        reverse = false;
-      }
-    };
-
-    function stop() {
-      clearInterval(intervalID.value);
-    }
-
     var sweetalert = function sweetalert() {
       Swal.fire({
         title: 'Êtes-vous sûr?',
-        text: "Vou devrez attendre 24 heures pour le changer!",
+        text: "Une nouvelle anne\xE9 va commencer ".concat(dyear.value, "-").concat(fyear.value, " !"),
         icon: 'warning',
         showCancelButton: true,
         cancelButtonText: "Annuler",
@@ -209,8 +128,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         confirmButtonText: 'Valider!'
       }).then(function (result) {
         if (result.isConfirmed) {
-          change();
-          wait.value = true;
+          handleSubmit();
         }
       });
     };
@@ -224,20 +142,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var data = new FormData();
       data.append('base', baseExcel.value);
       data.append('avant', avantExcel.value);
+      data.append('dyear', dyear.value);
+      data.append('fyear', fyear.value);
       axios__WEBPACK_IMPORTED_MODULE_1___default().post('/storeExcel', data).then(function (response) {
         if (response.data.message == "success") {
           loading.value = false;
           success("successeful");
+        } else if (response.data.message == "error") {
+          loading.value = false;
+          warning(response.data.text);
         }
-
-        console.log(response.data);
       })["catch"](function (erro) {
         loading.value = false;
-        error("Something went wrong".concat(erro));
+        error("Something went wrong");
       });
     }
 
-    var error = function error(message) {
+    var warning = function warning(message) {
       toast.warning(message, {
         position: "bottom-right",
         timeout: 3000,
@@ -261,7 +182,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     };
 
-    var rerror = function rerror(message) {
+    var error = function error(message) {
       toast.error(message, {
         position: "bottom-right",
         timeout: 3000,
@@ -276,36 +197,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var __returned__ = {
       toast: toast,
       baseExcel: baseExcel,
+      readyPlates: readyPlates,
       avantExcel: avantExcel,
       awrong: awrong,
-      spin: spin,
+      dyear: dyear,
+      fyear: fyear,
       bwrong: bwrong,
       loading: loading,
-      ramdanTime: ramdanTime,
-      time: time,
-      checked: checked,
-      BoxHours: BoxHours,
-      BoxMinutes: BoxMinutes,
-      BoxSeconds: BoxSeconds,
-      intervalID: intervalID,
       wait: wait,
-      shallWe: shallWe,
+      Error: Error,
       handleBase: handleBase,
       handleAvant: handleAvant,
-      updateTime: updateTime,
-      conterSpam: conterSpam,
-      change: change,
-      chekckTime: chekckTime,
-      showTime: showTime,
-      stop: stop,
+      checkyearinpute: checkyearinpute,
+      checkyear: checkyear,
       sweetalert: sweetalert,
       handleSubmit: handleSubmit,
       storeExcel: storeExcel,
-      error: error,
+      warning: warning,
       success: success,
-      rerror: rerror,
+      error: error,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
-      onBeforeMount: vue__WEBPACK_IMPORTED_MODULE_0__.onBeforeMount,
       watch: vue__WEBPACK_IMPORTED_MODULE_0__.watch,
       axios: (axios__WEBPACK_IMPORTED_MODULE_1___default()),
       useToast: vue_toastification__WEBPACK_IMPORTED_MODULE_2__.useToast
@@ -333,52 +244,55 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "grid place-items-center mt-[2rem]"
+  "class": "grid place-items-center mt-[2rem] scale-75 md:scale-100"
 };
-var _hoisted_2 = ["onSubmit"];
+var _hoisted_2 = {
+  "class": "bg-white p-5 grid grid-cols-1 gap-4 place-items-center w-[40rem] rounded-sm shadow-md shadow-slate-300"
+};
+var _hoisted_3 = ["onSubmit"];
 
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "uppercase font-bold"
 }, "Changer les fichiers excel", -1
 /* HOISTED */
 );
 
-var _hoisted_4 = {
+var _hoisted_5 = {
   "class": "grid place-items-center gap-5 w-[33rem]"
 };
-var _hoisted_5 = {
+var _hoisted_6 = {
   "class": "relative w-full"
 };
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "font-semibold text-xs ml-2"
 }, "Entrez la baseplate", -1
 /* HOISTED */
 );
 
-var _hoisted_7 = {
+var _hoisted_8 = {
   key: 0,
   "class": "absolute top-4 right-5 text-red-500"
 };
-var _hoisted_8 = {
+var _hoisted_9 = {
   "class": "relative w-full"
 };
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "font-semibold text-xs ml-2"
 }, "Entrez l'avancement", -1
 /* HOISTED */
 );
 
-var _hoisted_10 = {
+var _hoisted_11 = {
   key: 0,
   "class": "absolute top-4 right-5 text-red-500"
 };
-var _hoisted_11 = {
+var _hoisted_12 = {
   key: 0
 };
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
   role: "status",
   "class": "inline w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300",
   viewBox: "0 0 100 101",
@@ -394,54 +308,46 @@ var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_13 = [_hoisted_12];
-var _hoisted_14 = {
+var _hoisted_14 = [_hoisted_13];
+var _hoisted_15 = {
   key: 1,
   "class": "text-center"
 };
-var _hoisted_15 = {
+var _hoisted_16 = {
   key: 2,
   "class": "text-center w-full"
 };
-var _hoisted_16 = {
-  "class": "w-[40rem] rounded-sm bg-white mt-5 shadow-md shadow-slate-300 h-32 grid place-content-center"
-};
-var _hoisted_17 = {
-  "class": "relative"
-};
-var _hoisted_18 = {
-  key: 0,
-  "class": "mt-10"
-};
 
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
-  role: "status",
-  "class": "w-6 h-6 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600",
-  viewBox: "0 0 100 101",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
-  d: "M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z",
-  fill: "currentColor"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
-  d: "M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z",
-  fill: "currentFill"
-})], -1
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-2xl font-bold text-slate-700 text-center mb-10 underline"
+}, "Nouvelle Anneé", -1
 /* HOISTED */
 );
 
-var _hoisted_20 = [_hoisted_19];
-var _hoisted_21 = {
-  key: 1
+var _hoisted_18 = {
+  "class": "flex justify-around w-[40rem] px-[2rem]"
 };
-var _hoisted_22 = {
-  "class": "mt-10 font-semibold text-teal-500"
+var _hoisted_19 = {
+  "class": "text-xl font-semibold text-blue-700"
+};
+
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Année scolaire : ");
+
+var _hoisted_21 = {
+  "class": "text-sky-700"
+};
+var _hoisted_22 = ["value"];
+var _hoisted_23 = {
+  "class": "text-md font-semibold text-red-500"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-    "class": "bg-white p-5 grid grid-cols-1 gap-4 place-items-center w-[40rem] rounded-sm shadow-md shadow-slate-300",
-    onSubmit: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($setup.handleSubmit, ["prevent"])
-  }, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  var _component_fas = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("fas");
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Choose school year "), $setup.readyPlates ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
+    key: 0,
+    "class": "bg-white p-5 grid grid-cols-1 gap-4 place-items-center w-[40rem] rounded-sm",
+    onSubmit: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($setup.sweetalert, ["prevent"])
+  }, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     id: "custome_inpute",
     onChange: $setup.handleBase,
     required: "",
@@ -449,7 +355,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "file"
   }, null, 32
   /* HYDRATE_EVENTS */
-  ), $setup.bwrong ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_7, "Wrong baseplate !!")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  ), $setup.bwrong ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_8, "Wrong baseplate !!")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     id: "custome_inpute",
     required: "",
     onChange: $setup.handleAvant,
@@ -457,30 +363,50 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "file"
   }, null, 32
   /* HYDRATE_EVENTS */
-  ), $setup.awrong ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_10, "Wrong avant !!")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button type=\"submit\" class=\"bg-transparent  font-semibold \r\n          py-2 px-4  rounded\">\r\n            Upload\r\n        </button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  ), $setup.awrong ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_11, "Wrong avant !!")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "submit",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["rounded text-md px-5 py-2.5 mr-2 inline-flex items-center w-[8rem]", $setup.loading ? 'text-white bg-blue-700' : 'hover:bg-blue-600  text-blue-700 hover:text-white border border-blue-500 hover:border-transparent'])
-  }, [$setup.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_11, _hoisted_13)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_14, "Loading...")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$setup.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_15, "Upload")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
+  }, [$setup.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_12, _hoisted_14)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_15, "Loading...")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$setup.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, "Upload")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
   /* CLASS */
   )], 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_2), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.BoxSeconds == null ? 'opacity-[1]' : 'opacity-[0.5]', "checkPrent"])
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    disabled: true,
-    onClick: $setup.conterSpam,
-    ref: "ramdanTime",
-    type: "checkbox",
-    "class": "checkbox"
-  }, null, 512
-  /* NEED_PATCH */
-  )], 2
-  /* CLASS */
-  )]), $setup.spin ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_18, _hoisted_20)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.BoxSeconds != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.BoxHours) + " : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.BoxMinutes) + " : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.BoxSeconds), 1
+  , _hoisted_3)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 1
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Upload base plates "), _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
+    icon: "user-graduate"
+  }), _hoisted_20]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return $setup.dyear = $event;
+    }),
+    onInput: _cache[1] || (_cache[1] = function ($event) {
+      return $setup.Error = '';
+    }),
+    "class": "py-1 w-32 px-2 shadow-md shadow-gray-300 rounded-sm outline-2 outline-sky-700",
+    placeholder: "Debut anneé",
+    type: "number",
+    min: "2021"
+  }, null, 544
+  /* HYDRATE_EVENTS, NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.dyear]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
+    size: "lg",
+    icon: "fa-arrow-right"
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    readonly: "",
+    value: $setup.fyear,
+    "class": "py-1 px-2 w-32 shadow-md shadow-gray-300 rounded-sm outline-2 outline-sky-700",
+    placeholder: "Fin anneé",
+    type: "number",
+    min: "2022"
+  }, null, 8
+  /* PROPS */
+  , _hoisted_22)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.Error), 1
   /* TEXT */
-  )])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 512
-  /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $setup.shallWe]])]);
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: $setup.checkyearinpute,
+    "class": "text-white rounded-md bg-sky-500 hover:bg-blue-500 active:bg-sky-600 mt-1 cursor-pointer font-bold px-6 py-2 shadow-sm shadow-slate-100"
+  }, "Suivant")], 64
+  /* STABLE_FRAGMENT */
+  ))])]);
 }
 
 /***/ }),
@@ -497,13 +423,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _settings_vue_vue_type_template_id_0190a48e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./settings.vue?vue&type=template&id=0190a48e */ "./resources/js/components/Admin/settings.vue?vue&type=template&id=0190a48e");
 /* harmony import */ var _settings_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./settings.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/Admin/settings.vue?vue&type=script&setup=true&lang=js");
-/* harmony import */ var C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_settings_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_settings_vue_vue_type_template_id_0190a48e__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Admin/settings.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_settings_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_settings_vue_vue_type_template_id_0190a48e__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Admin/settings.vue"]])
 /* hot reload */
 if (false) {}
 

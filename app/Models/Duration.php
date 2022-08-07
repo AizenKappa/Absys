@@ -13,7 +13,7 @@ class Duration extends Model
     {
         $year = Absysyear::Where('active','on')->first()->year;
         $Model = 'App\Models\Etat'.$year;
-
+        
         return $this->hasMany($Model);
     }
 }

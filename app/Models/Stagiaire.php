@@ -19,7 +19,8 @@ class Stagiaire extends Model
 
     public function absences()
     {
-        return $this->hasMany(Etat20212022::class, 'foreign_key', 'stagiaire_id');
+        $year = Absysyear::Where('active','on')->first()->year;
+        return $this->hasMany(Etat::class, 'foreign_key', 'stagiaire_id')->where('year',$year);
     }
     
 }

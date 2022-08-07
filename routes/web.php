@@ -7,6 +7,7 @@ use App\Http\Resources\FiliereResource;
 use App\Models\Groupe;
 use App\Models\Absysyear;
 use App\Models\Prof;
+use App\Models\User;
 use App\Models\Relation;
 use App\Models\Module;
 use App\Models\Filiere;
@@ -33,6 +34,7 @@ use App\Mail\NotifyMail;
 Route::view('/user_info','login.user_info')->middleware('guest');
 
 Route::get('/',[SessionController::class,'create'])->middleware('guest');
+
 Route::post('/login',[SessionController::class,'store']);
 Route::get('/logout',[SessionController::class,'destroy']);
 Route::post('/check_user',[SessionController::class,'check']);
@@ -147,6 +149,23 @@ Route::post('/getFilieresProf', function(Request $request){
 
 });
 
+Route::post('/updateActive', function(Request $request){
+
+    User::Find((int)$request->id)->update(['active' => $request->active]);
+    return [
+        'message' => 'success'
+    ];
+});
+
+Route::post('/checkNewYear', function(Request $request){
+
+    $year = $request->debut.'-'.$request->fin;
+    $check = Absysyear::Where('year',$year)->count() == 0;
+
+    if($check)
+        return ['message' => true];
+    return ['message' => false, 'year' => $year];
+});
 
 
 

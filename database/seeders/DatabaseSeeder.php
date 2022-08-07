@@ -6,6 +6,7 @@ use App\Models\Duration;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Absysyear;
 use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
@@ -118,6 +119,12 @@ class DatabaseSeeder extends Seeder
             "h_debut"=>"14:30:00",
             "h_fin"=>"16:30:00",
             "active" => "off"
+        ]);
+
+        Absysyear::create([
+            'year' => '20212022',
+            'active' => 'on',
+            'current' => true
         ]);
 
 /*         $path = database_path("sql/data.sql");

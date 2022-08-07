@@ -22,7 +22,9 @@ class FiliereResource extends JsonResource
     public function toArray($request)
     {
 
-        $year = Absysyear::Where('active','on')->first()->year;
+
+        $year = explode('-', Absysyear::Where('active','on')->first()->year);
+        $year =  $year[0].$year[1];
         $model = 'App\Models\Etat'.$year;
         // $timeIn = Carbon::parse('9:30:00');
         // $timeOut = Carbon::parse('12:00:00');
@@ -70,6 +72,7 @@ class FiliereResource extends JsonResource
                 'firstname'=> $this->firstname,
                 'lastname'=> $this->lastname,
                 'email' => $this->email,
+                'active' =>$this->active,
                 "picture_path" => asset('/images/'.$this->picture_path),
                 "status" => $status
             ];

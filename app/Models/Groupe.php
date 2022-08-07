@@ -27,7 +27,8 @@ class Groupe extends Model
 
     public function stagiaires()
     {
-        return $this->hasMany(Stagiaire::class);
+        $year = Absysyear::Where('active','on')->first()->year;
+        return $this->hasMany(Stagiaire::class)->where('year',$year);
     }
  
     public function modules()

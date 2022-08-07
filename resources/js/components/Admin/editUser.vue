@@ -176,7 +176,7 @@
                                             <div v-for="(md,indx) in groupe.modules" >
                                                 <div :for="md.id">
                                                     <span class="hover:text-gray-800 mx-2 text-gray-400 cursor-pointer" @click="deletMd(index+'*'+indx)">
-                                                        <fas size="l" icon="fa-xmark" />
+                                                        <fas size="lg" icon="fa-xmark" />
                                                     </span>
                                                     {{ md.nom_module }}
                                                 </div>
@@ -382,7 +382,7 @@
     })
     const inputePwd_two = ref(null)
 
-
+    const UserId = ref(null)
 
     const errorContent = ref("")
     const send = ref(false)
@@ -402,8 +402,7 @@
     const currentCin = ref(null)
     const spinloading = ref(false)
     const GroupeIndex = ref(null)
-    const groupeUserCopie = ref([])
-    const result = ref(false)
+
     const AllgroupesUser = ref([])
 
     const FiliereModel = ref(null)
@@ -413,6 +412,8 @@
     const modules = ref([])
     const copieModules = ref([])
 
+    const groupesUser = ref([])
+    const groupeUserCopie = ref([])
 
     onBeforeMount(()=>{
         
@@ -473,21 +474,14 @@
     }
 
 
-    
-    let copieUser = []
-    const groupesUser = ref([])
-
     const getUserGroupes = async (userId) => {
         let response = await axios.get("/getUserGroupes/"+userId)
-        groupesUser.value = await response.data
-        groupeUserCopie.value = await response.data
-        copieUser = await response.data
 
+        groupesUser.value = response.data
+        groupeUserCopie.value = response.data 
         groupesUser.value.forEach(groupe => {
             AllgroupesUser.value.push(groupe.nom_gp)
         });
-
-        console.log(groupesUser.value)
     }
 
     const deletMd = (indexs) => {
@@ -535,8 +529,20 @@
     }
 
     const addModuleUser = (id,nom) => {
-        var newModule = {id:Number(id), nom_module:nom};
-        groupesUser.value[GroupeIndex.value].modules.push(newModule)
+        var  newModule = {id:Number(id), nom_module:nom};
+        var boolean = false
+
+        groupesUser.value[GroupeIndex.value].modules.forEach(function(element){
+            if(element.id == newModule.id){
+                boolean = true
+                return
+            }
+        })
+
+        if(boolean == false){
+            groupesUser.value[GroupeIndex.value].modules.push(newModule)
+        }
+
         FiliereModel.value = null
         search.value = ""
     }
@@ -558,8 +564,6 @@
             return module.nom_module.toLowerCase().includes(search.value.toLowerCase())
         });
     }
-
-
     
     /* Get The User we want to update */
     const getThisUser = async (id) =>{
@@ -575,7 +579,7 @@
         currentEmail.value = response.data.email
 
         if(response.data.formateur_id != -1){
-            getUserGroupes(response.data.formateur_id)
+            getUserGroupes(UserId.value = response.data.formateur_id)
         }
     };
 
@@ -630,45 +634,40 @@
 
 
     const editUser = async () => {
-
-        /* groupeUserCopie.value != groupesUser.value ? result.value = groupesUser.value : result.value = false */
-
-        console.log(copieUser)
-
-        let response = await axios.post(`/editThisUser`,{
+        axios.post(`/editThisUser`,{
             id: user.id.value ,first:user.nom.text,last:user.prenom.text,
             cin: user.cin.text.toLowerCase() == currentCin.value.toLowerCase() ?  null : user.cin.text , 
             email: user.email.text.toLowerCase() == currentEmail.value.toLowerCase() ?  null : user.email.text ,
-            password:AuthPwd_one.text,groupes:groupesUser.value,copie:copieUser
+            password:AuthPwd_one.text,groupes:groupesUser.value,})
+        .then((response) => {  
+
+            if(response.data.message !== "user edited successe" ){
+
+                if(response.data.champ == "password"){
+
+                    AuthPwd_one.check = true
+                    AuthPwd_one.error = response.data.message
+                    inputePwd_one.value.focus()
+                }
+
+                else if(response.data.champ == "email"){
+
+                    user.email.check = false
+                    emailError.value = response.data.message
+                    resetEmailError.value = true
+                    
+                }else if (response.data.champ == "cin"){
+
+                    user.cin.check = false
+                    cinError.value = response.data.message
+                    resetCinError.value = true
+                }
+            }else{
+                success(response.data.message)
+                AuthPwd_one.text = ""
+            }
         })
-
-        return
-
-        if(response.data.message !== "user edited successe" ){
-
-            if(response.data.champ == "password"){
-
-                AuthPwd_one.check = true
-                AuthPwd_one.error = response.data.message
-                inputePwd_one.value.focus()
-            }
-
-            else if(response.data.champ == "email"){
-
-                user.email.check = false
-                emailError.value = response.data.message
-                resetEmailError.value = true
-                
-            }else if (response.data.champ == "cin"){
-
-                user.cin.check = false
-                cinError.value = response.data.message
-                resetCinError.value = true
-            }
-        }else{
-            success(response.data.message)
-            AuthPwd_one.text = ""
-        }
+        .catch((error) => {  Error() });
 
     }
 
@@ -722,6 +721,19 @@
     const success = (message) => {
 
         toast.success(message, {
+            position: "bottom-right",
+            timeout: 3000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            icon: true,
+            hideProgressBar: false,
+        });
+    }
+
+    const Error = () => {
+
+         toast.error('Something went wrong', {
             position: "bottom-right",
             timeout: 3000,
             closeOnClick: true,

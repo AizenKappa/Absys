@@ -506,37 +506,38 @@
     /* Add new user */
     const addUser = async () =>
     {
-        let response = await axios.post(`/addNewUser`,{
+        axios.post(`/addNewUser`,{
             first:newUser.nom.text,last:newUser.prenom.text,
             cin:newUser.cin.text, email:newUser.email.text,
             pwd:newUser.password.text,curpwd:AuthPwd.text,
-            role:newUser.role.text,modules:slectedMdIds.value
+            role:newUser.role.text,modules:slectedMdIds.value,})
+        .then((response) => {  
+
+            if(response.data.message !== "user added successe" ){
+                if(response.data.champ == "email"){
+
+                    newUser.email.check = false
+                    emailError.value = response.data.message
+                    resetEmailError.value = true
+                    
+                }else if (response.data.champ == "cin"){
+
+                    newUser.cin.check = false
+                    cinError.value = response.data.message
+                    resetCinError.value = true
+                }else if (response.data.champ == "password"){
+                    
+                    AuthPwd.check = true
+                    AuthPwd.error = response.data.message
+                }
+
+            }else{
+                success(response.data.message)
+                resetInputes()
+            }
         })
 
-        /* console.log(response.data) */
-
-        if(response.data.message !== "user added successe" ){
-            if(response.data.champ == "email"){
-
-                newUser.email.check = false
-                emailError.value = response.data.message
-                resetEmailError.value = true
-                
-            }else if (response.data.champ == "cin"){
-
-                newUser.cin.check = false
-                cinError.value = response.data.message
-                resetCinError.value = true
-            }else if (response.data.champ == "password"){
-                
-                AuthPwd.check = true
-                AuthPwd.error = response.data.message
-            }
-
-        }else{
-            success(response.data.message)
-            resetInputes()
-        }
+        .catch((error) => {  Error() });
     };
 
     /* Alert successe message */
@@ -722,6 +723,19 @@
         }
 
         
+    }
+
+    const Error = () => {
+
+         toast.error('Something went wrong', {
+            position: "bottom-right",
+            timeout: 3000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            icon: true,
+            hideProgressBar: false,
+        });
     }
 
 </script>

@@ -69,7 +69,7 @@
                         <input :disabled = "true" class="bg-transparent px-2 h-9 focus:outline-cyan-500" type="text" :value=" st.num">
                     </td>
                     <td class="px-6 py-4 text-left font-medium">
-                        <select :disabled = "true" class="py-2 px-1">
+                        <select :disabled = "true" :class="st.status != 'Active'?' bg-red-100':''" class="py-2 px-1">
                             <option class="hidden" selected>{{ st.status }}</option>
                             <option>Active</option>
                             <option>Abondonné</option>
@@ -94,26 +94,35 @@
 
     import { ref } from 'vue';
     import axios from 'axios';
+    import { useToast } from "vue-toastification";
 
     import useFilieres from '../../services/filieres.js'
     import { onMounted } from 'vue';
 
     const idFill = ref("")
+    const stagiaires = ref(false)
+    const toast = useToast();
+    
+
+    const getstags = async (groupe_id) =>{
+        let response = await axios.get(`/api/stagsGroupe/${groupe_id}`)
+        stagiaires.value = response.data.data
+    };
 
     
-    const { getFilieres , filieres , getgroupes , groupes , stagiaires, getstagiaires  } = useFilieres();
+    const { getFilieres , filieres , getgroupes , groupes } = useFilieres();
 
     onMounted(getFilieres())
 
     const selected = ref("Choisis la classe")
 
     const check = (event) =>{
+
         document.querySelectorAll("a").forEach(element => {
             element.classList.remove("activeLink")
         });
         event.target.classList.add("activeLink")
-        getstagiaires(event.target.title)
-        console.log(stagiaires.value)
+        getstags(event.target.title)
         idFill.value = event.target.title
     }
 
@@ -132,7 +141,7 @@
 
     }
 
-    const saveThis = (event) => {
+    const saveThis = async (event) => {
 
         var keep = true
         var tds = event.currentTarget.parentNode.parentNode.childNodes
@@ -154,6 +163,16 @@
             return
         }
 
+
+
+        await saveSt(
+            event.target.id,
+            tds[0].childNodes[0].value, 
+            tds[1].childNodes[0].value,
+            tds[2].childNodes[0].value,
+            tds[3].childNodes[0].value
+        )
+
         tds.forEach(element => {
             element.childNodes[0].disabled = true
             element.childNodes[0].classList.remove('text-black')
@@ -161,24 +180,29 @@
 
         event.currentTarget.classList.add("hidden")
         event.currentTarget.previousSibling.classList.remove("hidden")
+    }
+    const Error = () => {
 
-        saveSt(
-            event.target.id,
-            tds[0].childNodes[0].value, 
-            tds[1].childNodes[0].value,
-            tds[2].childNodes[0].value,
-            tds[3].childNodes[0].value
-        )
+         toast.error('Something went wrong', {
+            position: "bottom-right",
+            timeout: 3000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            icon: true,
+            hideProgressBar: false,
+        });
     }
 
     const saveSt = async (id, first, last, num, status) =>  {
-        
-        let response = await axios.post('updateStagiaire',
-        { id: id, first : first , last: last , num : num , status: status})
-        console.log(response.data)
-        getstagiaires(idFill.value)
+        axios.post('updateStagiaire',{ id: id, first : first , last: last , num : num , status: status})
+        .then((response) => {
+            getstags(idFill.value) 
+        }).catch((error) => {  Error() });
 
     }
+
+
 
 </script>
 

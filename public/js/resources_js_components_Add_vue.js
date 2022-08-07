@@ -113,12 +113,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
 
     var formCheck = function formCheck() {
-      if (isStdChecked.value == false || prof_id == null || seance.value == null || duration_id.value == null) return false;
+      if (isStdChecked.value == false || seance.value == null || duration_id.value == null) {
+        return false;
+      }
+
+      if (admin.value && prof_id == null) {
+        return false;
+      }
+
       return true;
     };
 
     var reset = function reset(message) {
-      prof_id.value = seance.value = duration_id.value = null;
+      if (admin.value) {
+        prof_id.value = null;
+      }
+
+      seance.value = duration_id.value = null;
       date_abs.value = new Date().toISOString().slice(0, 19).split('T')[0];
       isStdChecked.value = false;
       st_inputs.value.forEach(function (e) {
@@ -177,7 +188,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
 
     var errorNet = function errorNet() {
-      toast.error("Error network", {
+      toast.error("Something went wrong", {
         position: "bottom-right",
         timeout: 3000,
         closeOnClick: true,
@@ -670,7 +681,6 @@ function useFilieres() {
                 stagiaires.value = stagiaires.value.filter(function (e) {
                   return e.Nj > 0;
                 });
-                console.log(stagiaires.value);
               }
 
               if (prof_id.value == null) {
@@ -818,7 +828,7 @@ function useFilieres() {
   };
 
   var errorNet = function errorNet() {
-    toast.error("Error network", {
+    toast.error("Something went wrong", {
       position: "bottom-right",
       timeout: 3000,
       closeOnClick: true,
@@ -919,7 +929,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Add_vue_vue_type_template_id_5d764ff4_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Add.vue?vue&type=template&id=5d764ff4&scoped=true */ "./resources/js/components/Add.vue?vue&type=template&id=5d764ff4&scoped=true");
 /* harmony import */ var _Add_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Add.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/Add.vue?vue&type=script&setup=true&lang=js");
 /* harmony import */ var _Add_vue_vue_type_style_index_0_id_5d764ff4_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Add.vue?vue&type=style&index=0&id=5d764ff4&scoped=true&lang=css */ "./resources/js/components/Add.vue?vue&type=style&index=0&id=5d764ff4&scoped=true&lang=css");
-/* harmony import */ var C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
@@ -927,7 +937,7 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
-const __exports__ = /*#__PURE__*/(0,C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_Add_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Add_vue_vue_type_template_id_5d764ff4_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-5d764ff4"],['__file',"resources/js/components/Add.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_Add_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Add_vue_vue_type_template_id_5d764ff4_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-5d764ff4"],['__file',"resources/js/components/Add.vue"]])
 /* hot reload */
 if (false) {}
 

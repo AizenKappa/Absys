@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->boolean('active')->default(true);
             $table->string('cin')->unique();
             $table->integer('formateur_id')->default(-1);
             $table->string('firstname');

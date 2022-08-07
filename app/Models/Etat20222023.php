@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
             
-class Etat20212022 extends Model
+class Etat20222023 extends Model
 {
     use HasFactory;
     public $timestamps = false;

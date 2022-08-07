@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('groupe_profs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('prof_id');
-            $table->foreignId('groupe_id');
+            $table->foreignId('prof_id')->references('id')->on('profs')->onDelete('cascade');
+            $table->foreignId('groupe_id')->references('id')->on('groupes')->onDelete('cascade');
             $table->string("year")->default(date("Y").'-'.((string)((int)date("Y"))+1));
         });
     }

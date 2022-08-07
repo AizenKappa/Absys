@@ -1,12 +1,12 @@
 <template>
-<section >
+<section>
 <div class="flex flex-col lg:flex-row mt-2 gap-2 items-center justify-around lg:justify-center  md:grid-cols-2
   ">
-    <div id="pieChart" class="print:hidden p-4 w-[300px] h-[300px]  shadow-lg rounded bg-[#334155] mx-auto ">   
+    <div class=" p-4 w-[300px] h-[300px]  shadow-lg rounded bg-[#334155] mx-auto ">   
          <canvas class="relateive z-20" id="pie"></canvas>
     </div>
 
-    <div id="monthChart" class="print:hidden h-[260px] max-w-[450px]  mx-auto  w-full md:w-full md:justify-self-end  md:h-[316px]
+    <div class="h-[260px] max-w-[450px]  mx-auto  w-full md:w-full md:justify-self-end  md:h-[316px]
     shadow-lg rounded bg-[#334155] " >   
          <canvas id="monthly"></canvas>
     </div>
@@ -19,20 +19,20 @@
     <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
       <div class="overflow-x-auto">
         <table class="min-w-full rounded-sm">
-          <thead class=" ">
+          <thead class="border-b border-2 ">
 
-                <tr class="bg-[#26d0ce] print:bg-white">
+                <tr class="bg-[#26d0ce]">
                     <th colspan="7"><h1 class="text-black text-sm py-2 md:text-2xl font-bold
                     text-center w-full">Les Absences justifiées</h1>
                     </th>
                 </tr>
             </thead>
-            <tbody class="bg-gray-600 print:bg-white print:text-black">
+            <tbody class="bg-gray-600">
                 <tr class="border text-white">
                     <th scope="col" class="
                     text-md border border-black
                     font-medium  md:px-2 md:py-1 text-center">
-                        <span class="print:text-black"> Date</span>   
+                        Date
                     </th>
                     <th scope="col" class="text-md border border-black
                     font-medium  md:px-2 md:py-1 text-center ">
@@ -64,48 +64,48 @@
                 
           
           <tbody >
-            <template v-if="(Object.keys(just_abs).length != 0)">
+            <template v-if="just_abs.length > 0">
                 <tr v-for="abs in just_abs" :key="abs.id" class="border-b bg-white">
-                    <td class="border text-sm text-gray-900 print:text-black print:border-black
-                    font-medium px-6 py-4 whitespace-nowrap
-                     border-gray-500">{{abs.date_abs}}</td>
                     <td class="text-sm text-gray-900
                     font-medium px-6 py-4 whitespace-nowrap
-                    border border-gray-500 text-center print:text-black print:border-black">
+                    border border-gray-500">{{abs.date_abs}}</td>
+                    <td class="text-sm text-gray-900
+                    font-medium px-6 py-4 whitespace-nowrap
+                    border border-gray-500 text-center">
                         {{abs.duration.h_debut.slice(0,5)}}
                     </td>
                     <td class="text-sm text-gray-900
                     font-medium px-6 py-4 whitespace-nowrap
-                    border border-gray-500 text-center print:text-black print:border-black">
+                    border border-gray-500 text-center">
                         {{abs.duration.h_fin.slice(0,5)}}
                     </td>
                     <td class="text-sm text-gray-900
                     font-medium px-6 py-4 whitespace-nowrap
-                    border border-gray-500 text-center print:text-black print:border-black">
+                    border border-gray-500 text-center">
                         {{abs.nbAbs}}
                     </td>
                     <td class="text-sm text-gray-900
                     font-medium px-6 py-4 border border-gray-500
-                     whitespace-nowrap text-center print:text-black print:border-black">
+                     whitespace-nowrap text-center">
                     
                         {{abs.prof.nom_prof}}
                     </td>
                     <td class="text-sm text-gray-900
                     font-medium px-6 py-4 whitespace-nowrap
-                    border border-gray-500 text-center print:text-black print:border-black">
+                    border border-gray-500 text-center">
                         {{abs.seance}}
                     </td>
                     <td class="text-sm text-gray-900
                     font-medium px-6 py-4 whitespace-nowrap
-                    border border-gray-500 text-center print:text-black print:border-black">
+                    border border-gray-500 text-center">
                         {{abs.motif}}
                     </td>
                 </tr>
             </template>
             
             <template v-else>
-                <tr class="bg-white border border-black"  v-cloak>
-                    <th colspan="7" class="text-lg text-gray-900 print:text-black print:border-black
+                <tr class="bg-white"  v-cloak>
+                    <th colspan="7" class="text-lg text-gray-900
                     font-semibold px-6 py-4 whitespace-nowrap">
                         Aucune Absence justifiées
                     </th>
@@ -121,7 +121,7 @@
 
 
 </div>
-
+</section>
 
 <!-- no justifée -->
 <div class="flex flex-col max-w-[800px]  mx-auto" v-cloak>
@@ -169,35 +169,28 @@
             </tr>
           </tbody>
           <tbody>
-            <template v-if="(Object.keys(nj_abs).length != 0)">
+            <template v-if="nj_abs.length > 0">
                 <tr v-for="abs in nj_abs" :key="abs.id" class="border border-black">
                     <td class="md:px-2 md:py-1  whitespace-nowrap
-                    text-sm font-medium text-gray-900 text-center border border-gray-500
-                    print:text-black print:border-black">{{abs.date_abs}}</td>
-                    
+                    text-sm font-medium text-gray-900 text-center border border-gray-500">{{abs.date_abs}}</td>
                     <td class="text-sm text-gray-900 text-center border border-gray-500
-                    font-medium md:px-2 md:py-1 whitespace-nowrap
-                    print:text-black print:border-black">
+                    font-medium md:px-2 md:py-1 whitespace-nowrap">
                         {{abs.duration.h_debut.slice(0,5)}}
                     </td>
                     <td class="text-sm text-gray-900 text-center border border-gray-500
-                    font-medium md:px-2 md:py-1 whitespace-nowrap
-                    print:text-black print:border-black">
+                    font-medium md:px-2 md:py-1 whitespace-nowrap">
                         {{abs.duration.h_fin.slice(0,5)}}
                     </td>
                     <td class="text-sm text-gray-900 text-center border border-gray-500
-                    font-medium md:px-2 md:py-1 whitespace-nowrap
-                    print:text-black print:border-black">
+                    font-medium md:px-2 md:py-1 whitespace-nowrap">
                         {{abs.nbAbs}}
                     </td>
                     <td class="text-sm text-gray-900 text-center border border-gray-500
-                    font-medium md:px-2 md:py-1 whitespace-nowrap
-                    print:text-black print:border-black">
+                    font-medium md:px-2 md:py-1 whitespace-nowrap">
                         {{abs.prof.nom_prof}}
                     </td>
                     <td class="text-sm text-gray-900 text-center border border-gray-500
-                    font-medium md:px-2 md:py-1 whitespace-nowrap
-                    print:text-black print:border-black">
+                    font-medium md:px-2 md:py-1 whitespace-nowrap">
                         {{abs.seance}}
                     </td>
                 </tr>
@@ -207,7 +200,6 @@
             <template v-else>
                 <tr class="bg-white"  v-cloak>
                     <th colspan="6" class="text-lg text-gray-900
-                    print:text-black print:border-black
                     font-semibold px-6 py-4 whitespace-nowrap">
                         Aucune Absence justifiées
                     </th>
@@ -220,81 +212,7 @@
   </div>
 
 
-
 </div>
-
-<!-- no justifée -->
-<div class="flex flex-col max-w-[800px]  mx-auto" v-cloak>
-  <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-      <div class="overflow-x-auto">
-        <table class="min-w-full bg-white">
-          <thead class="border-b ">
-
-                <tr class="bg-[#19d869]">
-                    <th colspan="7">
-                        <h1 class="text-black py-2 text-sm    md:text-2xl font-bold
-                    text-center w-full">
-                        Les Absences Par Prof
-                        </h1>
-                    </th>
-                </tr>
-          </thead>
-          <tbody class="bg-gray-600">
-            <tr class="border text-white">
-              <th scope="col" class="text-sm md:text-md border border-black
-               font-medium  md:px-2 md:py-1 text-center">
-                Prof
-              </th>
-              <th scope="col" class="text-sm md:text-md border border-black
-               font-medium  md:px-2 md:py-1 text-center">
-               Heure total
-              </th>
-             
-            </tr>
-          </tbody>
-          <tbody>
-            <template v-if="(Object.keys(absProf).length != 0)">
-                <tr v-for="abs in absProf" :key="abs.id" class="border border-black print:border-black">
-                    <td class="md:px-2 md:py-1  whitespace-nowrap
-                    text-sm font-medium text-gray-900
-                     text-center border border-gray-500">{{abs.nom}}</td>
-                    <td class="text-sm text-gray-900 text-center border border-gray-500  print:border-black
-                    print:text-black
-                    font-medium md:px-2 md:py-1 whitespace-nowrap">
-                    <span class="print:text-black">{{abs.hours}}</span>
-                        
-                    </td>
-                    
-                </tr>
-            </template>
-            
-
-            <template v-else>
-                <tr class="bg-white"  v-cloak>
-                    <th colspan="6" class="text-lg text-gray-900
-                    font-semibold px-6 py-4 whitespace-nowrap">
-                        Aucune Absence 
-                    </th>
-                </tr>
-            </template>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-
-
-</div>
-<a :href="'/api/loadPdf?stag='+studentId" target="_blank" class="bg-yellow-200 ml-[50%] text-yellow-900 py-2 px-4
- rounded shadow hover:shadow-xl
-  hover:bg-yellow-300 duration-300">Print the report</a>
-</section>
-
-
-
-
 </template>
 
 
@@ -333,17 +251,11 @@
     const nj_abs = ref([])
     
     const absProf =  ref({})
-
-
-    // function genPdf(){
-    //     axios
-    // }
-
-   onBeforeMount(async()=>{
+    onMounted(async()=>{
        
         await axios.get(`/api/stagiaire/${studentId.value}`).then((response) =>
         {
-            
+            // console.log(response.data)
             studentInfo.value = response.data;
             stFullName.value = studentInfo.value.stFullName
             groupe_name.value= studentInfo.value.groupe_name
@@ -354,9 +266,9 @@
             monthly_abs_nj.value =studentInfo.value.monthly_abs.nj
             
             
-            just_abs.value = studentInfo.value.just_abs
+            just_abs.value =studentInfo.value.just_abs 
             nj_abs.value =studentInfo.value.nj_abs
-            console.log(just_abs.value)
+            
             absProf.value =studentInfo.value.absProf 
             // console.log(st_total_abs.value)
             // console.log(groupe_total_abs.value)
@@ -557,15 +469,6 @@
     [v-cloak] {
     display: none;
     }
-
-    @media print{
-        *{
-            color:black;
-            background-color: white;
-            overflow: hidden;
-        }
-    }
-    
 </style>
 
 
