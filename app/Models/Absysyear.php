@@ -11,4 +11,5 @@ class Absysyear extends Model
     protected $guarded = [];
     
     use HasFactory;
+
 }

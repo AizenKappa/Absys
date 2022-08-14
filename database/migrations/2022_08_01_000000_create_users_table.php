@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Absysyear;
 
 return new class extends Migration
 {
@@ -11,6 +12,12 @@ return new class extends Migration
      *
      * @return void
      */
+
+    /* public function getYear()
+    {
+        return Absysyear::Where('current',true)->first()->id;
+    } */
+
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
@@ -21,6 +28,7 @@ return new class extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->string('password');
+            $table->foreignId("year");
             $table->string('email');
             $table->string('role')->default('Formateur');
             $table->string('picture_path')->default("undefindedUser.png");

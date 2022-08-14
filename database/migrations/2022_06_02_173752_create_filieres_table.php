@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string("code_fil")->unique();
             $table->string("nom_fil")->unique();
+            $table->string("niveau");
         });
     }
 

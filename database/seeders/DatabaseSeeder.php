@@ -18,11 +18,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Absysyear::create([
+            'year' => '2021-2022',
+            'current' => true
+        ]);
+
         User::create([
             'cin' => "B123456",
             'firstname' => "najil",
             'lastname' => "kamal",
             'email' => 'najil.kamal@ofppt-edu.ma',
+            'year' => 1,
             'password' => "anas123",
             'role' => "admin"
         ]);
@@ -121,11 +127,7 @@ class DatabaseSeeder extends Seeder
             "active" => "off"
         ]);
 
-        Absysyear::create([
-            'year' => '20212022',
-            'active' => 'on',
-            'current' => true
-        ]);
+
 
 /*         $path = database_path("sql/data.sql");
         DB::unprepared(file_get_contents($path)); */

@@ -105,7 +105,7 @@
     
 
     const getstags = async (groupe_id) =>{
-        let response = await axios.get(`/api/stagsGroupe/${groupe_id}`)
+        let response = await axios.get(`/stagsGroupe/${groupe_id}`)
         stagiaires.value = response.data.data
     };
 

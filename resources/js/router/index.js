@@ -6,7 +6,7 @@ const router = createRouter({
     routes: [
       {
         path: '/home',
-        name: 'add absences',
+        name: 'dashboard',
         component: () => import('../components/Home.vue')
       },
       {
@@ -71,6 +71,10 @@ const router = createRouter({
         { path: '/addStag',
           name: 'Ajouter stagiaire',
           component: () => import('../components/Admin/addStag.vue')
+        },
+        { path: '/impressions',
+          name: 'impressions',
+          component: () => import('../components/Admin/impressions.vue')
         },
     ]
 })

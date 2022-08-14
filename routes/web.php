@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AbsysController;
+use App\Http\Controllers\PrintController;
 use App\Http\Controllers\Api\FiliereController;
 use App\Http\Controllers\SessionController;
 use App\Http\Resources\FiliereResource;
@@ -31,56 +32,31 @@ use App\Mail\NotifyMail;
 |
 */
 
+    /* login functions */
 Route::view('/user_info','login.user_info')->middleware('guest');
-
 Route::get('/',[SessionController::class,'create'])->middleware('guest');
-
 Route::post('/login',[SessionController::class,'store']);
 Route::get('/logout',[SessionController::class,'destroy']);
 Route::post('/check_user',[SessionController::class,'check']);
 Route::post('/pwd_reset',[SessionController::class,'reset']);
-
 Route::get('/sendEmail', function(Request $request){
-
     $request->session()->keep(['email']);
-    
     return view("Email.verification");
-
 });
-
 Route::get('/pwdReset', function(Request $request){
-
     $request->session()->keep(['img','name']);
-    
     return view("login.pwd_reset");
-
 })->middleware("isvalidreset");
-
-
 Route::post('/checkCode', [SessionController::class,'codeVerification'])->middleware('guest');
-
-
+//--------------------------------------------------------------------------------
 
 
     /* Definition of Vue routes */
-Route::get('/home',function(){
-    return view('home');
-})->middleware('auth');
-
-Route::get('/just', function(){
-    return view('home');
-})->middleware('auth');
-
-
+Route::view('/home','home')->middleware('auth');
+Route::view('/just','home')->middleware('auth');
 Route::view('/add','home')->middleware('auth');
 Route::view('/detail','home')->middleware('auth');
 Route::view('/stagiaire/{id}',"home")->middleware('auth');
-
-Route::get('filieres', [FiliereController::class, 'index_filieres']);
-
-
-
-    /*!!--Admin section --!!*/
 Route::view('/editUser/{id}',"home")->middleware('auth');
 Route::view('/Profile','home')->middleware('auth');
 Route::view('/User',"home")->middleware('auth');
@@ -91,13 +67,11 @@ Route::view('/editEtat',"home")->middleware('auth');
 Route::view('/settings',"home")->middleware('auth');
 Route::view('/addStag',"home")->middleware('auth');
 Route::view('/test',"home")->middleware('auth');
+Route::view('/impressions',"home")->middleware('auth');
+//------------------------------------------------------------
 
-
-
-
+    
     /* CRUD USER -----> */
-Route::post('/profile', [FiliereController::class, 'getprofile'])->middleware('auth');
-Route::get('/deletPicture', [FiliereController::class, 'deletPicture'])->middleware('auth');
 Route::get('/allUsers', [FiliereController::class, 'index_users'])->middleware('auth');
 Route::post('/userById', [FiliereController::class, 'userById'])->middleware('auth');
 Route::post('/addNewUser', [FiliereController::class, 'addUser'])->middleware('auth');
@@ -108,159 +82,59 @@ Route::get('/allUsers/{id}', [FiliereController::class, 'deletuser'])->middlewar
 Route::get('/authUser', [FiliereController::class, 'getAuthUser'])->middleware('auth');
 Route::get('/updateStatus', [FiliereController::class, 'updateStatus'])->middleware('auth');
 Route::post('/updateStagiaire', [FiliereController::class, 'update_stagiaire'])->middleware('auth');
-
 Route::post('/storeExcel', [FiliereController::class, 'store_excel'])->middleware('auth');
-
-Route::get('/checkTime', [FiliereController::class, 'check_time'])->middleware('auth');
-Route::get('/updateTime', [FiliereController::class, 'update_time'])->middleware('auth');
-
-Route::post('/addNewStag', [FiliereController::class, 'addstag'])->middleware('auth');
-
+Route::post('/updateEtat',[FiliereController::class, 'updateEtat']);
+Route::post('/addNewStag', [FiliereController::class, 'addStag'])->middleware('auth');
 Route::post('/updatePwdProfile', [FiliereController::class, 'updatePwdProfile'])->middleware('auth');
+Route::post('/deleteEtat',[FiliereController::class, 'deleteEtat']);
+Route::get('/addModule/{name}', [FiliereController::class, 'addModule']);
+Route::post('/updateActive', [FiliereController::class, 'updateActive']);
+Route::get('/updateyear/{id}', function(Request $request) { Auth::user()->update([ 'year' => $request->id ]); });
+//--------------------------------------------------------------------------------
 
-Route::get('/getFilHours/{id}',[FiliereController::class, 'getFilhours'])->middleware('auth');
-
-Route::post('/getGroupesProf', function(Request $request){
-
-    $id = $request->id;
-
-    $groupes = Groupe::Where('filiere_id',$id)->get();
-    $nomFil =  Filiere::Find($id)->nom_fil;
-
-
-    $result = [ "nomFil" => $nomFil, "groupes" => $groupes];
-
-    return $result;
-});
-
-Route::post('/getFilieresProf', function(Request $request){
-
-    $array = $request->list;
-    $result = [];
-
-
-    foreach ($array as $id){
-        $groupes =  Groupe::Where('filiere_id',$id)->get()->toArray();
-        $nomFil =  Filiere::Find($id)->nom_fil;
-        $result[] = [ "nomFil" => $nomFil, "groupes" => $groupes];
-    }
-
-    return $result;
-
-});
-
-Route::post('/updateActive', function(Request $request){
-
-    User::Find((int)$request->id)->update(['active' => $request->active]);
-    return [
-        'message' => 'success'
-    ];
-});
-
-Route::post('/checkNewYear', function(Request $request){
-
-    $year = $request->debut.'-'.$request->fin;
-    $check = Absysyear::Where('year',$year)->count() == 0;
-
-    if($check)
-        return ['message' => true];
-    return ['message' => false, 'year' => $year];
-});
-
-
-
-    
-
-Route::get('/getUserGroupes/{id}', [FiliereController::class, 'getUserGroupes'])->middleware('auth');
-
-
-Route::get('absysYear', [FiliereController::class, 'getAbsysYear']);
-
-    
+    /* Main functions */
+Route::get('/getModules',[FiliereController::class, 'getModules']);
+Route::get('/etatFil',[FiliereController::class, 'getEtatFil']);
+Route::get('filieres/{id}', [FiliereController::class, 'getgroupes']);
+Route::get('groupes/{id}', [FiliereController::class, 'getstagiaires']);
+Route::post('getDurations',[FiliereController::class, 'getDurations']);
+Route::post('/profile', [FiliereController::class, 'getprofile'])->middleware('auth');
+Route::get('/deletPicture', [FiliereController::class, 'deletPicture'])->middleware('auth');
 Route::get('etats/{id}/{period}/{selected_period_debut}/{selected_period_fin}', [FiliereController::class, 'getetats']);
+Route::get('filieres', [FiliereController::class, 'index_filieres']);
+Route::get('/getFilHours/{id}',[FiliereController::class, 'getFilhours'])->middleware('auth');
+Route::get('profs/{id}', [FiliereController::class, 'getprofs']);
+Route::get('/getUserGroupes/{id}', [FiliereController::class, 'getUserGroupes'])->middleware('auth');
 Route::get('/details', [FiliereController::class, 'getDetails']);
 Route::get('stagiaires', [FiliereController::class, 'index_stagiaires']);
-
-Route::get('/test', [AbsysController::class, 'addYear']);
-
-Route::get('/testinsert', [FiliereController::class, 'store_excel']);
-
-
-
-Route::get('/getModulesFil', function()
-{
-    return Module::all();
-   
-});
-
-Route::get('/addModule/{name}', function(Request $request)
-{
-    return Module::create([
-        'nom_module' => $request->name
-    ]);
-   
-});
-
-
-
-/* Route::get('/testuser', [FiliereController::class, 'addUser']); */
-
-
+Route::get('/settings/download/{year}', [FiliereController::class, 'export']);
+Route::get('absysYear', [FiliereController::class, 'getAbsysYear']);
+Route::post("/getSome",[FiliereController::class, 'getSome']);
+Route::post('addAbsence',[FiliereController::class, 'addUpabsence']);
+Route::post('addJustif',[FiliereController::class, 'addJustif']);
+Route::get('stagsGroupe/{id}', [FiliereController::class, 'stagsGroupe']);
+Route::get('stagiaireAbs/{id}',[FiliereController::class, 'getstByid']);
+Route::post('getMostStAbs',[FiliereController::class, 'getMostStAbs']);
+Route::get('/absysyears', function() { return Absysyear::all(); });
+Route::get('/absysyearss', function(){ return [ 'data' => Absysyear::all(), 'active' => Auth::user()->year];});
+Route::get('/getModulesFil', function() { return Module::all(); });
+Route::post('/getFilieresProf', [FiliereController::class, 'getFilieresProf']);
+Route::post('/checkNewYear', [FiliereController::class, 'checkNewYear']);
+Route::post('/getGroupesProf',[FiliereController::class, 'getGroupesProf']);
 
 //--------------------------------------------------------------------------------
-/* $Filieres = explode(",",$request->list);
-$model = Module::all();
-$filiere = Filiere::all();
-$result = [];
-
-foreach($Filieres as $Fil)
-{
-    $Modules = Relation::Where('filiere_id',(int)$Fil)->get()->toArray();
-    $filModules = [];
-    $existModules = [];
-    foreach($Modules as $md)
-    {
-        $string = $md['filiere_id'].$model->where('id',$md['module_id'])->first()->nom_module;
-
-        if(!in_array($string,$existModules)){
-            $filModules[] = [
-                "module_id" => $md['module_id'],
-                "nom_module" => $model->where('id',$md['module_id'])->first()->nom_module,
-            ];
-            array_push($existModules,$string);
-        }
-    }
-    $result[] = [
-        "nom_fil" => $filiere->where('id',(int)$Fil)->first()->nom_fil,
-        "Modules" => $filModules
-    ];
-}
-return $result; */
-// -------------------------------------------------------------------------------
-
-/* Route::get('/test',function(){
-
-    $result = collect([]);
-    
-    $allGroupes = Groupe::all();
-    $allGroupes->each(function($groupe)use($result){
-        $stagNb = $groupe->stagiaires->count();
-        if($stagNb != 0){
-            $result->push($groupe);
-        }
-        
-    });
-    dd($result);
 
 
-}); */
+//test insert data
+Route::get('/testinsert', [FiliereController::class, 'store_excel']);/* store_excel_users */
 
 
+//impressions
+Route::post('/envParModule', [PrintController::class, 'envParModule']);
+Route::post('/envParProf', [PrintController::class, 'envParProf']);
+Route::post('/loadSearchPdf',[PrintController::class, 'loadSearchPdf']);
+Route::post('/loadStagPdf',[PrintController::class, 'loadStagPdf']);
+Route::post('/loadPresencePdf',[PrintController::class, 'loadPresencePdf']);
 
-// Route::get('/test',function(){
-//     $filtered = Etat::with('stagiaire.groupe')->get()->filter(function($value){
-
-//             return $value->toArray()['stagiaire']['groupe']['filiere_id'] == 1;
-//     });
-//     dump($filtered->all());
-// });
+Route::get('/getModules',[FiliereController::class, 'modules']);
+Route::get('/getProfs',[FiliereController::class, 'profs']);

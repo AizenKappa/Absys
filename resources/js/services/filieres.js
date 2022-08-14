@@ -25,12 +25,12 @@ export default function useFilieres(){
     };
 
     const getgroupes = async (filiere_id) =>{
-        let response = await axios.get(`/api/filieres/${filiere_id}`)
+        let response = await axios.get(`/filieres/${filiere_id}`)
         groupes.value = response.data.data
     };
 
     const getstagiaires = async (groupe_id,clean) =>{
-        let response = await axios.get(`/api/groupes/${groupe_id}`)
+        let response = await axios.get(`/groupes/${groupe_id}`)
         stagiaires.value = response.data.data
         console.log(clean)
 
@@ -46,7 +46,7 @@ export default function useFilieres(){
     
 
     const getprofs = async (groupe_id) =>{
-        let response = await axios.get(`/api/profs/${groupe_id}`)
+        let response = await axios.get(`/profs/${groupe_id}`)
         profs.value = response.data.data
 
     };
@@ -69,7 +69,7 @@ export default function useFilieres(){
         if(date_abs==""){
             Swal.fire("You Need To Choose A Correct Date ")
         }else{
-            axios.post('/api/addAbsence', {
+            axios.post('/addAbsence', {
             stagiaire_ids:st_ids,
             prof_id: prof_id,
             duration_id:duration_id,
@@ -84,7 +84,7 @@ export default function useFilieres(){
 
     const addJustif = (abs_ids,motif,manualle_motif,reset) => {
         // send a POST request
-        axios.post('/api/addJustif', {
+        axios.post('/addJustif', {
             absences_ids:abs_ids,
             motif: motif,
             manualle_motif:manualle_motif,})

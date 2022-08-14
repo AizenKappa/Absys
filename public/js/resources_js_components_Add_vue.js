@@ -67,7 +67,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default().post("/api/getDurations", {
+                return axios__WEBPACK_IMPORTED_MODULE_3___default().post("/getDurations", {
                   date: date_abs.value,
                   gp: gp
                 });
@@ -117,7 +117,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return false;
       }
 
-      if (admin.value && prof_id == null) {
+      if (admin.value && prof_id.value == null) {
         return false;
       }
 
@@ -642,7 +642,7 @@ function useFilieres() {
           switch (_context2.prev = _context2.next) {
             case 0:
               _context2.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/filieres/".concat(filiere_id));
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/filieres/".concat(filiere_id));
 
             case 2:
               response = _context2.sent;
@@ -669,7 +669,7 @@ function useFilieres() {
           switch (_context3.prev = _context3.next) {
             case 0:
               _context3.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/groupes/".concat(groupe_id));
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/groupes/".concat(groupe_id));
 
             case 2:
               response = _context3.sent;
@@ -708,7 +708,7 @@ function useFilieres() {
           switch (_context4.prev = _context4.next) {
             case 0:
               _context4.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/profs/".concat(groupe_id));
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/profs/".concat(groupe_id));
 
             case 2:
               response = _context4.sent;
@@ -788,7 +788,7 @@ function useFilieres() {
     if (date_abs == "") {
       Swal.fire("You Need To Choose A Correct Date ");
     } else {
-      axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/addAbsence', {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().post('/addAbsence', {
         stagiaire_ids: st_ids,
         prof_id: prof_id,
         duration_id: duration_id,
@@ -804,7 +804,7 @@ function useFilieres() {
 
   var addJustif = function addJustif(abs_ids, motif, manualle_motif, reset) {
     // send a POST request
-    axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/addJustif', {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().post('/addJustif', {
       absences_ids: abs_ids,
       motif: motif,
       manualle_motif: manualle_motif
@@ -929,7 +929,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Add_vue_vue_type_template_id_5d764ff4_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Add.vue?vue&type=template&id=5d764ff4&scoped=true */ "./resources/js/components/Add.vue?vue&type=template&id=5d764ff4&scoped=true");
 /* harmony import */ var _Add_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Add.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/Add.vue?vue&type=script&setup=true&lang=js");
 /* harmony import */ var _Add_vue_vue_type_style_index_0_id_5d764ff4_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Add.vue?vue&type=style&index=0&id=5d764ff4&scoped=true&lang=css */ "./resources/js/components/Add.vue?vue&type=style&index=0&id=5d764ff4&scoped=true&lang=css");
-/* harmony import */ var C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
@@ -937,7 +937,7 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
-const __exports__ = /*#__PURE__*/(0,C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_Add_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Add_vue_vue_type_template_id_5d764ff4_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-5d764ff4"],['__file',"resources/js/components/Add.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_Add_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Add_vue_vue_type_template_id_5d764ff4_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-5d764ff4"],['__file',"resources/js/components/Add.vue"]])
 /* hot reload */
 if (false) {}
 

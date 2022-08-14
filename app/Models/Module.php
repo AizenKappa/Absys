@@ -13,13 +13,23 @@ class Module extends Model
     public $timestamps = false;
     protected $guarded = [];
 
-    public function profs()
+/*     public function profs()
     {
         return $this->belongsToMany(Prof::class,'prof_modules');
+    } */
+
+    public function profs()
+    {
+        return $this->belongsToMany(Prof::class,'relations');
     }
+
+/*     public function groupes()
+    {
+        return $this->belongsToMany(Groupe::class,'groupe_modules');
+    } */
 
     public function groupes()
     {
-        return $this->belongsToMany(Groupe::class,'groupe_modules');
+        return $this->belongsToMany(Groupe::class,'relations');
     }
 }

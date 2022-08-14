@@ -446,69 +446,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }();
 
     var prepareThis = function prepareThis() {
+      console.log(listGroupes.value);
+      /* console.log(modulesIds.value) */
+
+      /* console.log(groupesIds.value) */
+
       modelModel.value = "groupeModule";
       selectedGroupes.value = [];
+      selectedGroupes.value = groupesIds.value;
+      /*  for(let element of listGroupes.value){
+           for(let gp of element.groupes){
+               if(groupesIds.value.includes(gp.nom_gp)){
+                   selectedGroupes.value.push(gp.nom_gp)
+               }
+           }
+       } */
 
-      var _iterator2 = _createForOfIteratorHelper(listGroupes.value),
+      /* console.log(selectedGroupes.value) */
+
+      selectedModules.value = [];
+
+      var _iterator2 = _createForOfIteratorHelper(modulesIds.value),
           _step2;
 
       try {
         for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-          var element = _step2.value;
+          var id = _step2.value;
 
-          var _iterator4 = _createForOfIteratorHelper(element.groupes),
-              _step4;
-
-          try {
-            for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-              var gp = _step4.value;
-
-              if (groupesIds.value.includes(gp.nom_gp)) {
-                selectedGroupes.value.push(gp.nom_gp);
-              }
-            }
-          } catch (err) {
-            _iterator4.e(err);
-          } finally {
-            _iterator4.f();
-          }
-        }
-      } catch (err) {
-        _iterator2.e(err);
-      } finally {
-        _iterator2.f();
-      }
-
-      selectedModules.value = [];
-
-      var _iterator3 = _createForOfIteratorHelper(modulesIds.value),
-          _step3;
-
-      try {
-        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-          var id = _step3.value;
-
-          var _iterator5 = _createForOfIteratorHelper(copieModules.value),
-              _step5;
+          var _iterator3 = _createForOfIteratorHelper(copieModules.value),
+              _step3;
 
           try {
-            for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
-              var md = _step5.value;
+            for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+              var md = _step3.value;
 
               if (md.id == id) {
                 selectedModules.value.push(md);
               }
             }
           } catch (err) {
-            _iterator5.e(err);
+            _iterator3.e(err);
           } finally {
-            _iterator5.f();
+            _iterator3.f();
           }
         }
       } catch (err) {
-        _iterator3.e(err);
+        _iterator2.e(err);
       } finally {
-        _iterator3.f();
+        _iterator2.f();
       }
     };
 
@@ -533,19 +518,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return false;
       }
 
-      var _iterator6 = _createForOfIteratorHelper(selectedGroupes.value),
-          _step6;
+      var _iterator4 = _createForOfIteratorHelper(selectedGroupes.value),
+          _step4;
 
       try {
-        for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
-          var gp = _step6.value;
+        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+          var gp = _step4.value;
 
-          var _iterator7 = _createForOfIteratorHelper(slectedMdIds.value),
-              _step7;
+          var _iterator5 = _createForOfIteratorHelper(slectedMdIds.value),
+              _step5;
 
           try {
-            for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
-              var md = _step7.value;
+            for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+              var md = _step5.value;
 
               if (gp == md.split("*$*")[1]) {
                 i += 1;
@@ -554,15 +539,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               }
             }
           } catch (err) {
-            _iterator7.e(err);
+            _iterator5.e(err);
           } finally {
-            _iterator7.f();
+            _iterator5.f();
           }
         }
       } catch (err) {
-        _iterator6.e(err);
+        _iterator4.e(err);
       } finally {
-        _iterator6.f();
+        _iterator4.f();
       }
 
       if (length == i) {
@@ -782,14 +767,14 @@ var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_30 = {
-  "class": "lg:w-[35rem] sm:w-[28rem] w-[22rem] pb-5 bg-white absolute z-20 translate-y-[-50%] translate-x-[-50%] md:translate-x-[-70%] top-[50%] left-[50%] grid place-content-center rounded-md"
+  "class": "lg:w-[40rem] sm:w-[32rem] w-[25rem] pb-5 bg-white absolute z-20 translate-y-[-50%] translate-x-[-50%] md:translate-x-[-70%] top-[50%] left-[50%] grid place-content-center rounded-md"
 };
 var _hoisted_31 = {
-  "class": "lg:w-[35rem] sm:w-[28rem] w-[22rem] flex justify-between px-5 pt-5 pb-3"
+  "class": "lg:w-[40rem] sm:w-[32rem] w-[25rem] flex justify-between px-5 pt-5 pb-3"
 };
 
 var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "lg:w-[35rem] sm:w-[28rem] w-[22rem] text-center uppercase lg:text-lg text-slate-800 font-bold sm:text-base py-3"
+  "class": "lg:w-[40rem] sm:w-[32rem] w-[25rem] text-center uppercase lg:text-lg text-slate-800 font-bold sm:text-base py-3"
 }, " les Groupes et les module de ce Formateur ", -1
 /* HOISTED */
 );
@@ -949,10 +934,10 @@ var _hoisted_75 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_76 = {
-  "class": "lg:w-[35rem] sm:w-[28rem] w-[22rem] pb-5 bg-white absolute z-20 translate-y-[-50%] translate-x-[-50%] md:translate-x-[-70%] top-[50%] left-[50%] grid place-content-center rounded-md"
+  "class": "lg:w-[40rem] sm:w-[32rem] w-[25rem] pb-5 bg-white absolute z-20 translate-y-[-50%] translate-x-[-50%] md:translate-x-[-70%] top-[50%] left-[50%] grid place-content-center rounded-md"
 };
 var _hoisted_77 = {
-  "class": "lg:w-[35rem] sm:w-[28rem] w-[22rem] flex justify-between px-5 pt-5 pb-3"
+  "class": "lg:w-[40rem] sm:w-[32rem] w-[25rem] flex justify-between px-5 pt-5 pb-3"
 };
 
 var _hoisted_78 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, null, -1
@@ -960,7 +945,7 @@ var _hoisted_78 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_79 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "lg:w-[35rem] sm:w-[28rem] w-[22rem] text-center uppercase text-slate-800 font-bold text-xl py-3"
+  "class": "lg:w-[40rem] sm:w-[32rem] w-[25rem] text-center uppercase text-slate-800 font-bold text-xl py-3"
 }, " Ajouter un module ", -1
 /* HOISTED */
 );
@@ -1416,7 +1401,7 @@ function useFilieres() {
           switch (_context2.prev = _context2.next) {
             case 0:
               _context2.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/filieres/".concat(filiere_id));
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/filieres/".concat(filiere_id));
 
             case 2:
               response = _context2.sent;
@@ -1443,7 +1428,7 @@ function useFilieres() {
           switch (_context3.prev = _context3.next) {
             case 0:
               _context3.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/groupes/".concat(groupe_id));
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/groupes/".concat(groupe_id));
 
             case 2:
               response = _context3.sent;
@@ -1482,7 +1467,7 @@ function useFilieres() {
           switch (_context4.prev = _context4.next) {
             case 0:
               _context4.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/profs/".concat(groupe_id));
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/profs/".concat(groupe_id));
 
             case 2:
               response = _context4.sent;
@@ -1562,7 +1547,7 @@ function useFilieres() {
     if (date_abs == "") {
       Swal.fire("You Need To Choose A Correct Date ");
     } else {
-      axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/addAbsence', {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().post('/addAbsence', {
         stagiaire_ids: st_ids,
         prof_id: prof_id,
         duration_id: duration_id,
@@ -1578,7 +1563,7 @@ function useFilieres() {
 
   var addJustif = function addJustif(abs_ids, motif, manualle_motif, reset) {
     // send a POST request
-    axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/addJustif', {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().post('/addJustif', {
       absences_ids: abs_ids,
       motif: motif,
       manualle_motif: manualle_motif
@@ -1650,13 +1635,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _addUser_vue_vue_type_template_id_205bb6f1__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./addUser.vue?vue&type=template&id=205bb6f1 */ "./resources/js/components/Admin/addUser.vue?vue&type=template&id=205bb6f1");
 /* harmony import */ var _addUser_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./addUser.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/Admin/addUser.vue?vue&type=script&setup=true&lang=js");
-/* harmony import */ var C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_addUser_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_addUser_vue_vue_type_template_id_205bb6f1__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Admin/addUser.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_addUser_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_addUser_vue_vue_type_template_id_205bb6f1__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Admin/addUser.vue"]])
 /* hot reload */
 if (false) {}
 

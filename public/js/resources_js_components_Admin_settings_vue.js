@@ -38,9 +38,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var awrong = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var dyear = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)();
     var fyear = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)();
+    var absysyear = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
     var bwrong = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var loading = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
-    var wait = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+    var etatYear = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     var Error = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("");
 
     function handleBase(event) {
@@ -51,17 +52,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       avantExcel.value = event.target.files[0];
     }
 
-    var checkyearinpute = /*#__PURE__*/function () {
+    var checkyearinpute = function checkyearinpute() {
+      if (dyear.value != "" && dyear.value > 2020) {
+        checkyear();
+      }
+    };
+
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
+      getAbsysyear();
+    });
+
+    var downloadExcel = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var year;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (dyear.value != "" && dyear.value > 2020) {
-                  checkyear();
+                if (!(etatYear.value == null)) {
+                  _context.next = 3;
+                  break;
                 }
 
-              case 1:
+                warning("choose année scolaire");
+                return _context.abrupt("return");
+
+              case 3:
+                year = etatYear.value.split("-");
+                year = year[0] + year[1];
+                location.href = location.href + '/download/' + year;
+
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -69,8 +90,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }));
 
-      return function checkyearinpute() {
+      return function downloadExcel() {
         return _ref2.apply(this, arguments);
+      };
+    }();
+
+    var getAbsysyear = /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/absysyears');
+
+              case 2:
+                response = _context2.sent;
+                absysyear.value = response.data;
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      return function getAbsysyear() {
+        return _ref3.apply(this, arguments);
       };
     }();
 
@@ -85,10 +133,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     });
 
     var checkyear = /*#__PURE__*/function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 axios__WEBPACK_IMPORTED_MODULE_1___default().post('/checkNewYear', {
                   debut: dyear.value,
@@ -105,14 +153,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }));
 
       return function checkyear() {
-        return _ref3.apply(this, arguments);
+        return _ref4.apply(this, arguments);
       };
     }();
 
@@ -202,13 +250,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       awrong: awrong,
       dyear: dyear,
       fyear: fyear,
+      absysyear: absysyear,
       bwrong: bwrong,
       loading: loading,
-      wait: wait,
+      etatYear: etatYear,
       Error: Error,
       handleBase: handleBase,
       handleAvant: handleAvant,
       checkyearinpute: checkyearinpute,
+      downloadExcel: downloadExcel,
+      getAbsysyear: getAbsysyear,
       checkyear: checkyear,
       sweetalert: sweetalert,
       handleSubmit: handleSubmit,
@@ -218,6 +269,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       error: error,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
       watch: vue__WEBPACK_IMPORTED_MODULE_0__.watch,
+      onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       axios: (axios__WEBPACK_IMPORTED_MODULE_1___default()),
       useToast: vue_toastification__WEBPACK_IMPORTED_MODULE_2__.useToast
     };
@@ -319,7 +371,7 @@ var _hoisted_16 = {
 };
 
 var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "text-2xl font-bold text-slate-700 text-center mb-10 underline"
+  "class": "text-xl font-bold uppercase text-black text-center mb-10"
 }, "Nouvelle Anneé", -1
 /* HOISTED */
 );
@@ -340,6 +392,35 @@ var _hoisted_22 = ["value"];
 var _hoisted_23 = {
   "class": "text-md font-semibold text-red-500"
 };
+var _hoisted_24 = {
+  "class": "mt-10 rounded-sm shadow-md shadow-slate-300"
+};
+var _hoisted_25 = ["onSubmit"];
+
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "uppercase font-bold"
+}, "Download Stagiaire Absences", -1
+/* HOISTED */
+);
+
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  "class": "hidden",
+  value: null
+}, "Choisie l'anneé scolaire", -1
+/* HOISTED */
+);
+
+var _hoisted_28 = ["value"];
+
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "submit",
+  "class": "text-white rounded-md bg-sky-500 hover:bg-blue-500 active:bg-sky-600 mt-1 cursor-pointer font-bold px-6 py-2 shadow-sm shadow-slate-100"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-center w-full"
+}, "Download")], -1
+/* HOISTED */
+);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_fas = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("fas");
 
@@ -406,7 +487,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-white rounded-md bg-sky-500 hover:bg-blue-500 active:bg-sky-600 mt-1 cursor-pointer font-bold px-6 py-2 shadow-sm shadow-slate-100"
   }, "Suivant")], 64
   /* STABLE_FRAGMENT */
-  ))])]);
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+    onSubmit: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($setup.downloadExcel, ["prevent"]),
+    "class": "bg-white p-5 grid grid-cols-1 gap-4 place-items-center w-[40rem] rounded-sm"
+  }, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    "class": "p-2 my-3 shadow-md shadow-slate-300 text-sm font-semibold text-slate-700 w-[13rem] outline-2 focus:outline-sky-500 rounded-sm",
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $setup.etatYear = $event;
+    }),
+    required: ""
+  }, [_hoisted_27, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.absysyear, function (year) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+      value: year.year
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(year.year), 9
+    /* TEXT, PROPS */
+    , _hoisted_28);
+  }), 256
+  /* UNKEYED_FRAGMENT */
+  ))], 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.etatYear]]), _hoisted_29], 40
+  /* PROPS, HYDRATE_EVENTS */
+  , _hoisted_25)])]);
 }
 
 /***/ }),
@@ -423,13 +525,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _settings_vue_vue_type_template_id_0190a48e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./settings.vue?vue&type=template&id=0190a48e */ "./resources/js/components/Admin/settings.vue?vue&type=template&id=0190a48e");
 /* harmony import */ var _settings_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./settings.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/Admin/settings.vue?vue&type=script&setup=true&lang=js");
-/* harmony import */ var C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_settings_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_settings_vue_vue_type_template_id_0190a48e__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Admin/settings.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_Users_hulk_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_settings_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_settings_vue_vue_type_template_id_0190a48e__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Admin/settings.vue"]])
 /* hot reload */
 if (false) {}
 

@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Absysyear;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Auth;
+
 
 class AbsysController extends Controller
 {
@@ -16,21 +19,24 @@ class AbsysController extends Controller
         return view('home');
     }
 
+
+
     public function addYear($controller, $array , $array_p , $year)
     {
 
         $newYear = $year[0].$year[1];
+
+
         
-        
-        Absysyear::create([
+        $newAbsys = Absysyear::create([
             'year' => $year[0].'-'.$year[1],
-            'active' => "off",
             'current' => false
         ]);
         
 
+        Artisan::call("make:model Etat".$newYear." -m");
         
-        Artisan::call('make:model Etat'.$newYear.' -m');
+        
 
 
         $etModelContent =
@@ -108,6 +114,7 @@ return new class extends Migration
 };
 ";
 
+
         $filesName = \File::files(base_path().'\database\migrations\\');
 
         foreach ($filesName as $file) {
@@ -127,24 +134,27 @@ return new class extends Migration
         $insertFile = fopen(app_path("Models/Etat".$newYear.".php"),"w");
         fwrite($insertFile,$etModelContent);
 
-
-
-        Artisan::call('migrate');
     
         
+        Artisan::call('migrate');
         
-        Absysyear::Where('active','on')->update([
-            "active" => "off",
-            "current" => false,
+
+        User::Find(Auth::user()->id)->update([
+            'year' => $newAbsys->id
         ]);
 
+        
         $newYear = $year[0].'-'.$year[1];
 
-        Absysyear::Where('year',$newYear)->update([
-            "active" => "on",
-            "current" => true,
+        Absysyear::Where('current',true)->update([
+            'current' => false
         ]);
 
+        Absysyear::Where('year',$newYear)->update([
+            'current' => true
+        ]);
+
+        
         return $controller->insertData($array_p,$array,$newYear);
     }
 

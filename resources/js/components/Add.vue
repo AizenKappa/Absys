@@ -132,7 +132,7 @@
     window.scrollTo(0, 0)
 
     async function getDuration(gp){
-        let response = await axios.post("/api/getDurations",{ date : date_abs.value, gp: gp})
+        let response = await axios.post("/getDurations",{ date : date_abs.value, gp: gp})
         durations.value = response.data;
         duration_id.value = null;
         console.log(durations.value)
@@ -162,7 +162,7 @@
         {
             return false;
         }
-        if(admin.value && prof_id == null)
+        if(admin.value && prof_id.value == null)
         {
             return false;
         }

@@ -23,9 +23,13 @@
     }
 </style>
 <body>
-    <h3>{{$data["stFullName"]}}<br>{{$data["groupe_name"]}}</h3>
+    <section style="max-height: 1090px;border:1px solid transparent">
+        <div >
+            <img src="{{public_path("/img/testHeader.png")}}" style="height:120px;">
+        </div>
+        <h3>{{$dataa["info"]["stFullName"]}}<br>{{ $dataa["info"]["groupe_name"] }}</h3>
 
-   
+    
     <table >
         <tr>
             <th colspan="6" style="padding:6px">Les absences Non justifiées</th>
@@ -38,8 +42,8 @@
             <th>Prof</th>
             <th>Type Seance</th>
         </tr>
-    @if(count($data["nj_abs"]))
-        @foreach($data["nj_abs"] as $abs)
+    @if(count($dataa["info"]["nj_abs"]))
+        @foreach($dataa["info"]["nj_abs"] as $abs)
         <tr>
             <td>{{$abs["date_abs"]}}</td>
             <td>{{substr($abs["duration"]["h_debut"],0,5)}}</td>
@@ -68,8 +72,8 @@
             <th>Type Seance</th>
             <th>Motif</th>
         </tr>
-    @if(count($data["just_abs"]))
-        @foreach($data["just_abs"] as $abs)
+    @if(count($dataa["info"]["just_abs"]))
+        @foreach($dataa["info"]["just_abs"] as $abs)
         <tr>
             <td>{{$abs["date_abs"]}}</td>
             <td>{{substr($abs["duration"]["h_debut"],0,6)}}</td>
@@ -97,8 +101,8 @@
             <th>Heure Total</th>
            
         </tr>
-    @if(count($data["absProf"]))
-        @foreach($data["absProf"] as $abs)
+    @if(count($dataa["info"]["absProf"]))
+        @foreach($dataa["info"]["absProf"] as $abs)
         <tr>
            
             <td>{{$abs["nom"]}}</td>
@@ -111,5 +115,11 @@
     </tr>
     @endif
     </table>
+    <div style="position: absolute;top:960px;left:43px;">
+        <img src="{{public_path("/img/footer.png")}}" style="height:90px;">
+    </div>
+    </section>
+   
+    
 </body>
 </html>

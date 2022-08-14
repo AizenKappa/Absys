@@ -13,7 +13,6 @@ import Swal from 'sweetalert2'
 window.Swal = Swal
 
 import { createApp } from 'vue';
-import { RouterLink , RouterView } from 'vue-router';
 import router from './router'
 
 import cards from './components/contents/cards.vue'
