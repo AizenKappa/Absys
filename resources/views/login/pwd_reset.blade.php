@@ -1,30 +1,36 @@
-<x-layout>
+<x-loginLayout>
     <div class="h-screen overflow-hidden login-bg grid place-items-center">
         <div class="p-6 rounded-lg shadow-lg bg-white max-w-md lg:w-[400px]">
+
+            <h2 class="mb-6 mt-3 text-center text-lg font-semibold">Compte 
+                <span class="font-semibold">ABSYS OFPPT</span> 
+            </h2>
+
             <div class="grid place-items-center my-2">
-                <img src="{{ asset('img/logo_ofppt.png') }}" class="rounded-full w-24">
+                <img src="{{ asset('images/'. session('img') ) }}" class="rounded-full w-24">
             </div>
-            <h1 class="text-xl text-center mb-5">Password Reset</h1>
+            <h1 class="text-lg font-semibold text-slate-800 text-center mb-5">{{ session('name') }}</h1>
             {{-- @if(session()->has("user_cin"))
                 {{session(['user_cin' => session("user_cin")]);}}
             @endif --}}
             <form method="POST" action="/pwd_reset">
                 @csrf
+                <p class="px-2 text-sm font-semibold mb-3 mt-8">
+                    Créez un mot de passe sécurisé
+                </p>
                 
                 <div  class="grid grid-cols-1 gap-4 mb-5">
-                    
-                    <x-inpute type='text' name='pwd' placeholder="new password" />
-                    <x-inpute type='text' name='rpwd' placeholder="repete password" />
+                    <x-contents.inpute type='password' name='pwd' placeholder="Nouveau mot de passe" required/>
+                    <x-contents.inpute type='password' name='rpwd' placeholder="Confirmer" required/>
                 </div>
-                <x-button type='submit'/>
-                    @if ($errors->any())
+                <x-contents.button type='submit'/>
+                    @if (session()->has('error'))
                         <div class="w-full text-center bg-red-100 py-2 mt-3 rounded-md text-md text-red-500">
-                            Les donnees sont incorecte         
+                            Mot de passe incorrect         
                         </div>
                     @endif
                 </div>
-                <input type="hidden" name='cin' value="{{session("user_cin")}}">
             </form>
         </div>
     </div>
-</x-layout>
+</x-loginLayout>
