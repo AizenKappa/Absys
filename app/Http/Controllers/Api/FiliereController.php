@@ -1153,7 +1153,7 @@ class FiliereController extends Controller
                 Filiere::create([
                     "code_fil" => $e[4],
                     "nom_fil" => $e[5],
-                    "niveau"=>$e[3]
+                    "niveau"=> $e[3]
                 ]);
                 $Filieres = $this->filieres()->pluck('nom_fil')->toArray();
             }
