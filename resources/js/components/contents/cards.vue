@@ -51,28 +51,30 @@
                 <h2 class="px-6 mb-4 text-gray-500 text-xs uppercase font-bold ">Admin section</h2>
                 <div class="grid gap-5 px-6 text-gray-400">
 
-                <router-link to="/User" @click="$emit('update:modelValue',check())">
-                    <fas icon="user-graduate" />
-                    <span>Update Users</span>
-                </router-link>
-                
-                <router-link to="/editEtat" @click="$emit('update:modelValue',check())">
-                    <fas icon="user-graduate" />
-                    <span>Update Absence</span>
-                </router-link>
+                    <router-link to="/impressions" @click="$emit('update:modelValue',check())">
+                        <fas icon="user-graduate" />
+                        <span>Impressions</span>
+                    </router-link>
+
+                    <router-link to="/User" @click="$emit('update:modelValue',check())">
+                        <fas icon="user-graduate" />
+                        <span>Update Users</span>
+                    </router-link>
+                    
+                    <router-link to="/editEtat" @click="$emit('update:modelValue',check())">
+                        <fas icon="user-graduate" />
+                        <span>Update Absence</span>
+                    </router-link>
 
                     <router-link to="/Estg" @click="$emit('update:modelValue',check())">
                         <fas icon="user-graduate" />
                         <span>Update Stagiaiare</span>
                     </router-link>
-                    
+                        
                     <router-link to="/settings" @click="$emit('update:modelValue',check())">
                         <fas icon="user-graduate" />
                         <span>Settings</span>
                     </router-link>
-
-                   
-    
 
                 </div>
             </div>

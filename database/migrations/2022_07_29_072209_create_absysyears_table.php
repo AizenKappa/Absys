@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('absysyears', function (Blueprint $table) {
             $table->id();
             $table->string("year")->unique();
-            $table->string("active")->default("off");
-            $table->string("current")->default(false);
+            $table->boolean("current")->default(false);
             $table->timestamps();
         });
     }

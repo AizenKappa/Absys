@@ -132,13 +132,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     function _sendUpdateRequest() {
       _sendUpdateRequest = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(abs_id, prof_id, duration_id, date_abs, seance, etat_justif, motif, last_duration_id) {
-        var response;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/updateEtat", {
+                axios__WEBPACK_IMPORTED_MODULE_0___default().post("/updateEtat", {
                   id: abs_id,
                   prof_id: prof_id,
                   duration_id: duration_id,
@@ -147,13 +145,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   etat_justif: etat_justif,
                   motif: motif,
                   last_duration_id: last_duration_id
+                }).then(function (response) {})["catch"](function (e) {
+                  Error();
                 });
 
-              case 2:
-                response = _context.sent;
-                console.log(response);
-
-              case 4:
+              case 1:
               case "end":
                 return _context.stop();
             }
@@ -175,7 +171,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default()("/api/etatFil");
+                return axios__WEBPACK_IMPORTED_MODULE_0___default()("/etatFil");
 
               case 2:
                 response = _context2.sent;
@@ -231,14 +227,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 saveBtn.value[index].classList.toggle("hidden");
 
                 if (!(currentEtat.value != index)) {
-                  _context3.next = 14;
+                  _context3.next = 13;
                   break;
                 }
 
-                console.log(groupe_id);
                 currentEtat.value = index;
-                _context3.next = 12;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default().post("api/getSome", {
+                _context3.next = 11;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/getSome", {
                   "groupe_id": groupe_id,
                   "abs_id": abs_id
                 }).then(function (response) {
@@ -253,14 +248,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   currentAbsInfo.value.motif = motif.value[index].value;
                 });
 
-              case 12:
-                _context3.next = 15;
+              case 11:
+                _context3.next = 14;
                 break;
 
-              case 14:
+              case 13:
                 console.log("you can' send a Request ");
 
-              case 15:
+              case 14:
               case "end":
                 return _context3.stop();
             }
@@ -281,7 +276,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/deleteEtat", {
+                return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/deleteEtat", {
                   id: abs_id
                 }).then(function (response) {
                   absenceRefs.value[index].style.display = "none";
@@ -294,13 +289,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       ele.disabled = false;
                     });
                   }
-                })["catch"](function (error) {// Swal.fire({
-                  //     icon: 'error',
-                  //     title: 'Oops...',
-                  //     text: 'Something went wrong!',
-                  //     footer: '<a href="">Why do I have this issue?</a>'
-                  //     })
-                  //error  Message
+                })["catch"](function (error) {
+                  Error();
                 });
 
               case 2:
@@ -382,6 +372,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     };
 
+    var Error = function Error() {
+      toast.error('Something went wrong', {
+        position: "bottom-right",
+        timeout: 3000,
+        closeOnClick: true,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        icon: true,
+        hideProgressBar: false
+      });
+    };
+
     var __returned__ = {
       toast: toast,
       selectedFil: selectedFil,
@@ -421,6 +423,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       errorNet: errorNet,
       callusers: callusers,
       deleteEtatBox: deleteEtatBox,
+      Error: Error,
       axios: (axios__WEBPACK_IMPORTED_MODULE_0___default()),
       onMounted: vue__WEBPACK_IMPORTED_MODULE_1__.onMounted,
       ref: vue__WEBPACK_IMPORTED_MODULE_1__.ref,

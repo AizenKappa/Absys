@@ -213,6 +213,76 @@
 
 
 </div>
+
+<div class="flex flex-col max-w-[800px]  mx-auto" v-cloak>
+  <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+          <thead class="border-b ">
+
+                <tr class="bg-[#19d869]">
+                    <th colspan="7">
+                        <h1 class="text-black py-2 text-sm    md:text-2xl font-bold
+                    text-center w-full">
+                        Les Absences Par Prof
+                        </h1>
+                    </th>
+                </tr>
+          </thead>
+          <tbody class="bg-gray-600">
+            <tr class="border text-white">
+              <th scope="col" class="text-sm md:text-md border border-black
+               font-medium  md:px-2 md:py-1 text-center">
+                Prof
+              </th>
+              <th scope="col" class="text-sm md:text-md border border-black
+               font-medium  md:px-2 md:py-1 text-center">
+               Heure total
+              </th>
+             
+            </tr>
+          </tbody>
+          <tbody>
+            <template v-if="(Object.keys(absProf).length != 0)">
+                <tr v-for="abs in absProf" :key="abs.id" class="border border-black print:border-black">
+                    <td class="md:px-2 md:py-1  whitespace-nowrap
+                    text-sm font-medium text-gray-900
+                     text-center border border-gray-500">{{abs.nom}}</td>
+                    <td class="text-sm text-gray-900 text-center border border-gray-500  print:border-black
+                    print:text-black
+                    font-medium md:px-2 md:py-1 whitespace-nowrap">
+                    <span class="print:text-black">{{abs.hours}}</span>
+                        
+                    </td>
+                    
+                </tr>
+            </template>
+            
+
+            <template v-else>
+                <tr class="bg-white"  v-cloak>
+                    <th colspan="6" class="text-lg text-gray-900
+                    font-semibold px-6 py-4 whitespace-nowrap">
+                        Aucune Absence 
+                    </th>
+                </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+
+<button @click="loadStagPdf" target="_blank" class="bg-yellow-200 ml-[50%] text-yellow-900 py-2 px-4
+ rounded shadow hover:shadow-xl
+hover:bg-yellow-300 duration-300">Print the report</button>
+
+
 </template>
 
 
@@ -222,8 +292,7 @@
     import Chart from 'chart.js/auto';
     import { useRouter, useRoute } from 'vue-router';
   
-   
-    const router = useRouter();
+
     const route = useRoute();
 
     const  studentId= ref(route.params.id)
@@ -251,9 +320,10 @@
     const nj_abs = ref([])
     
     const absProf =  ref({})
-    onMounted(async()=>{
+    onMounted(async()=>
+    {
        
-        await axios.get(`/api/stagiaire/${studentId.value}`).then((response) =>
+        await axios.get(`/stagiaireAbs/${studentId.value}`).then((response) =>
         {
             // console.log(response.data)
             studentInfo.value = response.data;
@@ -302,6 +372,7 @@
                         },
                     }
             }
+
             var pieData =
             {
                     labels: [groupe_name.value,stFullName.value],
@@ -320,7 +391,7 @@
             data:pieData,//object
             options:pieOptions,//object
        //array
-        }
+            }
         /* Pie Context */
             const pieCtx = document.getElementById('pie');
                     pieChart = new Chart(pieCtx,pieConfig);
@@ -421,7 +492,7 @@
                     }                                   
                     
                 }
-                
+
             var monthlyData = 
             {
                     labels: ['Septembre', 'Octobre', 'Novembre', 'Décembre',
@@ -459,6 +530,22 @@
             const monthlyCtx = document.getElementById('monthly');
                     monthlyChart = new Chart(monthlyCtx,monthlyConfig);
     })
+
+    async function loadStagPdf(){
+         await axios("/loadStagPdf",{
+            method:"POST",
+            responseType: 'blob',
+            data:{
+                stag_id:studentId.value,
+            }
+            
+        }).then((response)=>{
+            const file = new Blob([response.data],{type:"application/pdf"})
+            const fileURL = URL.createObjectURL(file);
+            window.open(fileURL);
+            console.log(response.data)
+        })
+    }
       
 </script>
 

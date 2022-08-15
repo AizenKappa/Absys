@@ -19,6 +19,6 @@
 
     </tr>
    </table>
-   <button onclick="window.print()">print</button>
+   <button>print</button>
 </body>
 </html>

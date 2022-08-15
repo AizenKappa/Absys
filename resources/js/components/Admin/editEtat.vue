@@ -311,15 +311,9 @@
                     currentEtat.value = null
     }
         
-        
-    
-
-    
     async function sendUpdateRequest(abs_id,prof_id,duration_id,date_abs,seance,etat_justif,motif,last_duration_id){
-        let response = await axios.post("/api/updateEtat",
-            {
-        id:abs_id,
-        
+       axios.post("/updateEtat",
+        { id:abs_id,
         prof_id:prof_id,
         duration_id:duration_id,
         date_abs:date_abs,
@@ -327,13 +321,12 @@
         etat_justif:etat_justif,
         motif:motif,
         last_duration_id:last_duration_id
-
-    })
-    console.log(response)
+        }).then((response) => {}).catch((e) => { Error() })
+    
     }
     async function getData(){
 
-        let response = await axios("/api/etatFil");
+        let response = await axios("/etatFil");
 
         data.value = response.data
         allFilWithGroupes.value = data.value.allFilWithGroupes
@@ -373,9 +366,8 @@
 
         
         if(currentEtat.value != index){
-            console.log(groupe_id)
             currentEtat.value = index
-            await axios.post("api/getSome",{
+            await axios.post("/getSome",{
                 "groupe_id":groupe_id,
                 "abs_id":abs_id
             }).then((response)=>{
@@ -399,7 +391,7 @@
     }
 
     async function deleteEtat(abs_id,index){
-       await axios.post("/api/deleteEtat",{
+       await axios.post("/deleteEtat",{
             id:abs_id
         }).then((response)=>{
                     absenceRefs.value[index].style.display = "none"
@@ -416,13 +408,7 @@
 
                 }
         }).catch(error=>{
-            // Swal.fire({
-            //     icon: 'error',
-            //     title: 'Oops...',
-            //     text: 'Something went wrong!',
-            //     footer: '<a href="">Why do I have this issue?</a>'
-            //     })
-            //error  Message
+            Error()
         })
         
         
@@ -482,7 +468,7 @@
         if(navigator.onLine ==false){
            callusers()
         }else{
-             Swal.fire({
+            Swal.fire({
             title: 'Êtes-vous sûr?',
             text: "Vou ne pourrez pas revenir en arriére!",
             icon: 'warning',
@@ -507,6 +493,19 @@
         })
     }
        
+    }
+
+    const Error = () => {
+
+         toast.error('Something went wrong', {
+            position: "bottom-right",
+            timeout: 3000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            icon: true,
+            hideProgressBar: false,
+        });
     }
 </script>
 

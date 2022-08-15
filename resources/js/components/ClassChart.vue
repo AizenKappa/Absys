@@ -320,7 +320,7 @@
     }
 
     const mostAbs = async (groupe_id) => {
-        let response = await axios.post("/api/getMostStAbs", {id: groupe_id})
+        let response = await axios.post("/getMostStAbs", {id: groupe_id})
         router.push('/stagiaire/'+response.data.id)
     }
 

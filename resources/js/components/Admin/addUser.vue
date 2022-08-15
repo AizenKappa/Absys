@@ -117,9 +117,9 @@
     <div id="Model" class="fixed top-0 w-full hidden h-full z-40 place-content-center rounded-md">
         <div class="absolute bg-slate-300 w-full h-full rounded-md opacity-50 z-10"></div>
 
-            <div class=" lg:w-[35rem] sm:w-[28rem] w-[22rem] pb-5 bg-white absolute z-20 translate-y-[-50%] translate-x-[-50%]  md:translate-x-[-70%] top-[50%] left-[50%] grid place-content-center rounded-md ">
+            <div class=" lg:w-[40rem] sm:w-[32rem] w-[25rem] pb-5 bg-white absolute z-20 translate-y-[-50%] translate-x-[-50%]  md:translate-x-[-70%] top-[50%] left-[50%] grid place-content-center rounded-md ">
             <form @submit.prevent>
-               <div class="lg:w-[35rem] sm:w-[28rem] w-[22rem] flex justify-between px-5 pt-5 pb-3">
+               <div class="lg:w-[40rem] sm:w-[32rem] w-[25rem] flex justify-between px-5 pt-5 pb-3">
                     <span class="text-gray-400 hover:text-sky-700 cursor-pointer"
                     v-show="modelModel == 'module'" @click="modelModel = 'groupe'"><fas size="xl" icon="fa-arrow-left" /></span>
 
@@ -133,7 +133,7 @@
                     class="hover:text-sky-700 text-gray-400 cursor-pointer" 
                     @click="Model"><fas size="xl" icon="fa-xmark" /></span>
                 </div>
-                <div class="lg:w-[35rem] sm:w-[28rem] w-[22rem] text-center uppercase lg:text-lg text-slate-800 font-bold sm:text-base py-3">
+                <div class="lg:w-[40rem] sm:w-[32rem] w-[25rem] text-center uppercase lg:text-lg text-slate-800 font-bold sm:text-base py-3">
                     les Groupes et les module de ce Formateur
                 </div>
                 
@@ -294,16 +294,16 @@
     <div id="Model2" class="fixed top-0 w-full h-full z-40 hidden place-content-center rounded-md">
         <div class="absolute bg-slate-300 w-full h-full rounded-md opacity-50 z-10"></div>
 
-            <div class=" lg:w-[35rem] sm:w-[28rem] w-[22rem] pb-5 bg-white absolute z-20 translate-y-[-50%] translate-x-[-50%]  md:translate-x-[-70%] top-[50%] left-[50%] grid place-content-center rounded-md ">
+            <div class=" lg:w-[40rem] sm:w-[32rem] w-[25rem] pb-5 bg-white absolute z-20 translate-y-[-50%] translate-x-[-50%]  md:translate-x-[-70%] top-[50%] left-[50%] grid place-content-center rounded-md ">
             <form @submit.prevent>
-               <div class="lg:w-[35rem] sm:w-[28rem] w-[22rem] flex justify-between px-5 pt-5 pb-3">
+               <div class="lg:w-[40rem] sm:w-[32rem] w-[25rem] flex justify-between px-5 pt-5 pb-3">
                     <span></span>
                     <span 
                     class="hover:text-sky-700 text-gray-400 cursor-pointer" 
                     @click="Model2"><fas size="xl" icon="fa-xmark" /></span>
                     
                 </div>
-                <div class="lg:w-[35rem] sm:w-[28rem] w-[22rem] text-center uppercase text-slate-800 font-bold text-xl py-3">
+                <div class="lg:w-[40rem] sm:w-[32rem] w-[25rem] text-center uppercase text-slate-800 font-bold text-xl py-3">
                     Ajouter un module
                 </div>
                 
@@ -667,16 +667,25 @@
 
     const prepareThis = () => {
 
+        console.log(listGroupes.value)
+        /* console.log(modulesIds.value) */
+
+        /* console.log(groupesIds.value) */
+
         modelModel.value = "groupeModule";
         selectedGroupes.value = []
-        for(let element of listGroupes.value){
+        selectedGroupes.value = groupesIds.value
+
+       /*  for(let element of listGroupes.value){
             for(let gp of element.groupes){
                 if(groupesIds.value.includes(gp.nom_gp)){
                     selectedGroupes.value.push(gp.nom_gp)
                 }
             }
-        }
-        
+        } */
+
+
+        /* console.log(selectedGroupes.value) */
         selectedModules.value = []
         for(let id of modulesIds.value){
             for(let md of copieModules.value){
@@ -685,6 +694,8 @@
                 }
             }
         }
+
+
     }
 
     watch(() => slectedMdIds.value, () => {

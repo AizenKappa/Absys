@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 
 class Prof extends Model
@@ -13,9 +14,13 @@ class Prof extends Model
     public $timestamps = false;
     protected $guarded = [];
 
-    public function groupes()
+/*     public function groupes()
     {
         return $this->belongsToMany(Groupe::class,'groupe_profs');
+    } */
+    public function groupes()
+    {
+        return $this->belongsToMany(Groupe::class,'relations');
     }
 
     public function absences()
@@ -25,8 +30,9 @@ class Prof extends Model
         return $this->hasMany($Model);
     }
 
+
     public function modules()
     {
-        return $this->belongsToMany(module::class,'prof_modules');
+        return $this->belongsToMany(module::class,'relations');
     }
 }

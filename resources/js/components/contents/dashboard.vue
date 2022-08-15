@@ -24,6 +24,12 @@
                 <div class="w-full h-20 md:px-14 md:pt-4 bg-blue-50 md:bg-sky-600 flex justify-between px-6 pt-5 ">
                     <span class="hidden md:block mt-3 font-bold text-white uppercase text-sm">{{title}}</span>
                     <span @click="dash=true" class="w-10 h-10 flex justify-center rounded-sm items-center text-xl active:border-[3px] active:border-zinc-900 md:hidden cursor-pointer"><fas icon="bars" /></span>
+                    
+                    <select  @change="updateActiveYear" 
+                    class="p-2 my-3 bg-transparent font-bold text-lg text-zinc-800 w-[13rem] outline-2 focus:outline-sky-500 rounded-sm" v-model="activeYear">
+                        <option v-for="year in absysyear" :value=year.id>{{year.year}}</option>
+                    </select>
+
                         <img id="profile"
                         v-if="imageUser"
                         v-on:click="show=!show"
@@ -45,11 +51,6 @@
                     <div class="px-4 py-3 hover:text-slate-600 active:bg-slate-300">View profile</div>
                 </router-link>
 
-                <router-link to="/settings">
-                    <div class="px-4 cursor-pointer py-3 hover:text-slate-600 active:bg-slate-300">Add Year</div>
-                </router-link> 
-                
-
                 <div>  <hr> </div>
 
                 <a href="/logout">
@@ -67,21 +68,40 @@
 <script setup>
 
     import { ref, watch, onBeforeMount } from 'vue';
-    import { useRoute } from 'vue-router';
+    import { useRoute , useRouter } from 'vue-router';
+    
     import axios from "axios";
 
     const show = ref(false)
     const dash = ref(null)
     const title = ref(null)
     const route = useRoute();
+    const router = useRouter();
     const imageUser = ref(false)
     const fullName = ref("")
+    const activeYear = ref(null)
+    const absysyear = ref([])
 
     onBeforeMount(()=>{
         getuser()
         updateStatus()
-
+        getAbsysyear()
     })
+
+    const getAbsysyear = async () => {
+        let response =  await axios.get('/absysyearss')
+        absysyear.value = response.data.data
+        activeYear.value = response.data.active
+    }
+
+    const updateActiveYear = async () => {
+        let response =  await axios.get('/updateyear/'+activeYear.value)
+        /*         await route.push('/home') */
+        window.location = 'http://127.0.0.1:8000/home'
+    }
+
+    
+
 
     
     //on resize

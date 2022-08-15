@@ -476,7 +476,7 @@
 
     const getUserGroupes = async (userId) => {
         let response = await axios.get("/getUserGroupes/"+userId)
-
+        console.log(response.data)
         groupesUser.value = response.data
         groupeUserCopie.value = response.data 
         groupesUser.value.forEach(groupe => {
@@ -549,7 +549,7 @@
 
 
     const FilieresModules = async (index) => {
-        let response = await axios.get("/api/getModules")
+        let response = await axios.get("/getModules")
         modules.value = response.data
         copieModules.value = response.data
         FiliereModel.value = 'Module'
@@ -634,13 +634,15 @@
 
 
     const editUser = async () => {
+
         axios.post(`/editThisUser`,{
             id: user.id.value ,first:user.nom.text,last:user.prenom.text,
             cin: user.cin.text.toLowerCase() == currentCin.value.toLowerCase() ?  null : user.cin.text , 
             email: user.email.text.toLowerCase() == currentEmail.value.toLowerCase() ?  null : user.email.text ,
             password:AuthPwd_one.text,groupes:groupesUser.value,})
-        .then((response) => {  
-
+        .then((response) => { 
+            console.log(response.data)
+            return
             if(response.data.message !== "user edited successe" ){
 
                 if(response.data.champ == "password"){
