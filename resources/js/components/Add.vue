@@ -9,7 +9,7 @@
                 <!-- Filieres_Select -->
                 <div class="w-full lg:w-[45%] my-12">
                     <select name="filiere" id="filieres_select" v-model="selected" class="w-full font-medium h-[2rem]" v-on:change="getcontents()">
-                        <option class="hidden">choose your class</option>
+                        <option class="hidden">Filière</option>
                         <option  :value="fil.id" v-for="fil in filieres" :key="fil.id">{{fil.nom_fil}}</option>
                     </select>
                 </div>
@@ -18,7 +18,7 @@
                     <select name="groupe" v-if="selected != 'choose your class'" class="w-full font-medium h-[2rem]"
                     v-model="selected_gp"
                     v-on:change="getstagiaires(selected_gp)">
-                        <option class="hidden">choose your groupe</option>
+                        <option class="hidden">Groupe</option>
                         <option :value="gp.id" v-for="gp in groupes" :key="gp.id">{{gp.nom_gp}}</option>
                     </select>
                 </div>
@@ -38,10 +38,10 @@
                         <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
                             <tr>
                                 <th class="p-2 whitespace-nowrap">
-                                    <div class="font-semibold text-left">Name</div>
+                                    <div class="font-semibold text-left">Nom</div>
                                 </th>
                                 <th class="p-2 whitespace-nowrap">
-                                    <div class="font-semibold text-left">Prenom</div>
+                                    <div class="font-semibold text-left">Prénom</div>
                                 </th>
                                 <th class="p-2 whitespace-nowrap">
                                     <div class="font-semibold text-left">Absence</div>
@@ -89,7 +89,7 @@
                 </select>
             <select  v-model="seance" name="seanceType" class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300">
                 <option class="hidden" selected :value="null" >La seance</option>
-                <option value='Presentiel' >Presentiel</option>
+                <option value='Presentiel' >Présentiel</option>
                 <option value="distanciel" >Distanciel</option>
             </select>
             <input @change="getDuration(selected_gp)" v-model="date_abs"   class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300"
@@ -183,11 +183,11 @@
     }
 
     /* Variables Help-us */
-    const selected = ref("choose your class")
-    const selected_gp = ref("choose your groupe")
+    const selected = ref("Filière")
+    const selected_gp = ref("Groupe")
 
     /* Call Api Groupes */
-    const getcontents = () =>  { selected_gp.value = "choose your groupe" , getgroupes(selected.value)}
+    const getcontents = () =>  { selected_gp.value = "Groupe" , getgroupes(selected.value)}
     /* Return all our functuons and variables from { services/filieres.js } to use here */
     const { getFilieres, prof_id , admin , filieres , profs , getgroupes , groupes , addAbsence ,stagiaires, getstagiaires , nom_gp } = useFilieres();
     /* On Mounted call Aoi Flieres */

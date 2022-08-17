@@ -94,7 +94,7 @@
 <body>
     
     @foreach($data as $data)
-    <section style="padding:10px 25px 0px 25px;max-height: 1099px;">
+    <section style="padding:10px 25px 0px 25px;max-height: 1099px;height: 1098px;">
             {{-- <div class="header">
                 <img class="logo" src="{{public_path("/img/logo.png")}}"  style="height: 100%;" alt="">
 
@@ -137,13 +137,13 @@
                     <td>
                         <p class="text-center underline text-semibold">Type Examen : &#x25A2; CC N° ….......... &#x25A2; EFM (R/L) ; ….............................</p>
                         @if($data["type"] == "feuille_de_presence")
-                        <p class="text-center underline text-semibold" >Feuille de Présence</p>
+                        <p class="text-center underline text-semibold">Feuille de Présence</p>
                         @endif
                         @if($data['type']=="pv_de_notes")
-                        <p class="text-center underline text-semibold" >PV de Notes EFM</p>
+                        <p class="text-center underline text-semibold">PV de Notes EFM</p>
                         @endif
                         @if($data['type']=="grille_de_notation")
-                        <p class="text-center underline text-semibold" >Grille de Notation</p>
+                        <p class="text-center underline text-semibold">Grille de Notation</p>
                         @endif
                     </td>
                 </tr>

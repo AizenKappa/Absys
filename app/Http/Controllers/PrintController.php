@@ -7,6 +7,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Api\FiliereController;
+use App\Models\Absysyear;
 use App\Models\Groupe;
 use App\Models\Relation;
 use App\Models\Stagiaire;
@@ -54,7 +55,7 @@ class PrintController extends Controller
         $groupe_id_arr = $request->groupes;
         $type= $request->type;
         $DR = "DRCS";
-        $anneeScolaire = "2021-2022";
+        $anneeScolaire = Absysyear::where("current",1)->get("year")[0]["year"];
         $complexe = "CF ANFA";
         $institut = "ISTA EL HANK CASABLANCA";
         $data = [];

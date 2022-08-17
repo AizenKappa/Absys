@@ -141,12 +141,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     /* Variables Help-us */
 
 
-    var selected = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)("choose your class");
-    var selected_gp = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)("choose your groupe");
+    var selected = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)("Filière");
+    var selected_gp = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)("Groupe");
     /* Call Api Groupes */
 
     var getcontents = function getcontents() {
-      selected_gp.value = "choose your groupe", getgroupes(selected.value);
+      selected_gp.value = "Groupe", getgroupes(selected.value);
     };
     /* Return all our functuons and variables from { services/filieres.js } to use here */
 
@@ -281,7 +281,7 @@ var _hoisted_4 = {
 var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     "class": "hidden"
-  }, "choose your class", -1
+  }, "Filière", -1
   /* HOISTED */
   );
 });
@@ -294,7 +294,7 @@ var _hoisted_7 = {
 var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     "class": "hidden"
-  }, "choose your groupe", -1
+  }, "Groupe", -1
   /* HOISTED */
   );
 });
@@ -333,11 +333,11 @@ var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
     "class": "p-2 whitespace-nowrap"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "font-semibold text-left"
-  }, "Name")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+  }, "Nom")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
     "class": "p-2 whitespace-nowrap"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "font-semibold text-left"
-  }, "Prenom")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+  }, "Prénom")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
     "class": "p-2 whitespace-nowrap"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "font-semibold text-left"
@@ -403,7 +403,7 @@ var _hoisted_30 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_31 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: "Presentiel"
-  }, "Presentiel", -1
+  }, "Présentiel", -1
   /* HOISTED */
   );
 });
