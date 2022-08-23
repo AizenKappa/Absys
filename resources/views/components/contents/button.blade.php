@@ -7,7 +7,7 @@
 
 @endphp
 
-<button {{ $attributes->merge(['class' => $class]) }}>Sign in</button>
+<button {{ $attributes->merge(['class' => $class]) }}>Se connecter</button>
         
 
            

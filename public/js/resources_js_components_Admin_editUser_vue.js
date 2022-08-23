@@ -435,9 +435,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   password: AuthPwd_one.text,
                   groupes: groupesUser.value
                 }).then(function (response) {
-                  console.log(response.data);
-                  return;
-
                   if (response.data.message !== "user edited successe") {
                     if (response.data.champ == "password") {
                       AuthPwd_one.check = true;

@@ -12,11 +12,11 @@
 
     {{-- form --}}
     <div class="block p-6 rounded-lg shadow-lg bg-white w-full">
-      <h1 class="text-2xl text-center mb-3">Login</h1>
+      <h1 class="text-2xl text-center mb-3">Connexion</h1>
         <form method="POST" action="/login" >
           @csrf
           <div class="form-group mb-6">
-            <label for="username" class="form-label inline-block mb-2 text-gray-700">Username</label>
+            <label for="username" class="form-label inline-block mb-2 text-gray-700">Identifiant</label>
             <x-contents.inpute type='text' name='cin' value="{{old('cin')}}"/>
           </div>
 
@@ -24,7 +24,7 @@
 
 
 
-        <label for="Password" class="form-label inline-block mb-2 text-gray-700">Password</label>
+        <label for="Password" class="form-label inline-block mb-2 text-gray-700">Mot de passe</label>
 
         <div id="login" class="relative" >
 
@@ -47,8 +47,7 @@
               <label class="form-check-label inline-block text-gray-800" for="Check">Remember me</label>
             </div>
             <a href="/user_info"
-              class="text-blue-600 hover:text-blue-800 focus:text-blue-700 transition duration-200 ease-in-out">Forgot
-              password?</a>
+              class="text-blue-600 hover:text-blue-800 focus:text-blue-700 transition duration-200 ease-in-out">Mot de passe oublié ?</a>
           </div>
           <x-contents.button type='submit'/>
         </form>

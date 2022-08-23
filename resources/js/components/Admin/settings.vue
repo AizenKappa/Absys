@@ -92,6 +92,7 @@
     import { ref, watch, onMounted } from "vue";
     import axios from "axios";
     import { useToast } from "vue-toastification";
+    import {useRouter} from "vue-router"
     const toast = useToast();
 
     const baseExcel = ref("");
@@ -105,7 +106,7 @@
     const loading = ref(false)
     const etatYear = ref(null)
     const Error = ref("")
-
+    const router = useRouter();
     function handleBase(event){ baseExcel.value = event.target.files[0] }
 
     
@@ -199,6 +200,8 @@
             if(response.data.message == "success"){
                 loading.value = false
                 success("successeful")
+                //here type ur shit
+                router.go({ path: '/home' })
             }else if(response.data.message == "error"){
                 loading.value = false
                 warning(response.data.text)

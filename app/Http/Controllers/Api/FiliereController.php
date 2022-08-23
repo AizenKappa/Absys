@@ -1051,6 +1051,7 @@ class FiliereController extends Controller
                 
         }
         $array = mb_convert_encoding($array, "UTF-8", "auto");
+        $year = Absysyear::Where('current',true)->first()->id;
 
         foreach($array as $user){
             $name = explode(" ",$user['nom_prof']);
@@ -1059,6 +1060,7 @@ class FiliereController extends Controller
                 'firstname' => $name[0],
                 'lastname' => $name[1],
                 'password' => 'anas123',
+                'year' => $year,
                 'formateur_id' => Prof::Where('code_prof',$user['id'])->first()->id,
                 'email' => $user['email']
             ]);

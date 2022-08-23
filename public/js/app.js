@@ -37580,7 +37580,7 @@ var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   href: "/logout"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "px-4 py-3 hover:text-slate-600 active:bg-slate-300"
-}, " Logout ")], -1
+}, " Se déconnecter ")], -1
 /* HOISTED */
 );
 

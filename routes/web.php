@@ -127,6 +127,7 @@ Route::post('/getGroupesProf',[FiliereController::class, 'getGroupesProf']);
 
 //test insert data
 Route::get('/testinsert', [FiliereController::class, 'store_excel']);/* store_excel_users */
+Route::get('/insertusers', [FiliereController::class, 'store_excel_users']);
 
 
 //impressions

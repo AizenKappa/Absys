@@ -6,7 +6,7 @@
             <div class="grid place-items-center my-2">
                 <img src="{{ asset('img/logo_ofppt.png') }}" class="rounded-full w-24">
             </div>
-            <h1 class="text-xl text-center mb-5">Verification</h1>
+            <h1 class="text-xl text-center mb-5">Vérification</h1>
             <form method="POST" action="/check_user">
                 @csrf
                 <div class="sm:w-[24.5rem] w-[18rem] grid grid-cols-1 gap-4">

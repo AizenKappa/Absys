@@ -76,7 +76,7 @@ class SessionController extends Controller
 
         /* $attr['email'] */
 
-        $mail = Mail::to('hakimassim2015@gmail.com')->send(new NotifyMail($code,$user->firstname,$user->lastname));
+        $mail = Mail::to('anasdabibe98@gmail.com')->send(new NotifyMail($code,$user->firstname,$user->lastname));
 
         if($mail instanceof \Illuminate\Mail\SentMessage)
         {

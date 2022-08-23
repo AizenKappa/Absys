@@ -641,8 +641,7 @@
             email: user.email.text.toLowerCase() == currentEmail.value.toLowerCase() ?  null : user.email.text ,
             password:AuthPwd_one.text,groupes:groupesUser.value,})
         .then((response) => { 
-            console.log(response.data)
-            return
+
             if(response.data.message !== "user edited successe" ){
 
                 if(response.data.champ == "password"){

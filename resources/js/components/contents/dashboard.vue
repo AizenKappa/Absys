@@ -55,7 +55,7 @@
 
                 <a href="/logout">
                     <div class="px-4 py-3 hover:text-slate-600 active:bg-slate-300">
-                        Logout
+                        Se déconnecter
                     </div>
                 </a>
             </div>
