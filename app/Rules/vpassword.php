@@ -13,9 +13,9 @@ class vpassword implements Rule
      *
      * @return void
      */
-    public function __construct(public string $cin)
+    public function __construct(public string $cin_email)
     {
-        $this->cin = $cin;
+        $this->cin_email = $cin_email;
     }
 
     /**
@@ -27,7 +27,7 @@ class vpassword implements Rule
      */
     public function passes($attribute, $value)
     {
-        $user = User::where('cin',$this->cin)->firstOrfail();
+        $user =User::where('cin',$this->cin_email)->orWhere('email',$this->cin_email)->firstOrfail();
         return Hash::check($value, $user->$attribute);
     }
 
@@ -38,6 +38,6 @@ class vpassword implements Rule
      */
     public function message()
     {
-        return 'The password is invalid';
+        return 'Mot de passe Incorrect';
     }
 }

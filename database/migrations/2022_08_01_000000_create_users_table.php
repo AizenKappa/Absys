@@ -29,11 +29,11 @@ return new class extends Migration
             $table->string('lastname');
             $table->string('password');
             $table->foreignId("year");
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('role')->default('Formateur');
             $table->string('picture_path')->default("undefindedUser.png");
             $table->integer('status')->default(0);
-            $table->rememberToken();
+            $table->string('remember_token', 100)->nullable();
             $table->timestamps();
         });
     }

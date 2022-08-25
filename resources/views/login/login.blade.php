@@ -17,7 +17,7 @@
           @csrf
           <div class="form-group mb-6">
             <label for="username" class="form-label inline-block mb-2 text-gray-700">Identifiant</label>
-            <x-contents.inpute type='text' name='cin' value="{{old('cin')}}"/>
+            <x-contents.inpute placeholder="Matricule / Email" type='text' name='cin_email' value="{{old('cin_email')}}"/>
           </div>
 
           <div class="form-group mb-6">

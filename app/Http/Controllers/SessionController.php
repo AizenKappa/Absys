@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Mail\NotifyMail;
 
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\Validator;
 
 class SessionController extends Controller
 {
@@ -20,28 +20,169 @@ class SessionController extends Controller
 
     public function store(Request $request)
     {
-        $result = $request->validate(['cin' => 'bail|required|exists:users,cin']);
-        
-        $user = $request->validate([
-            'cin' => '',
-            'password' => ['bail','required',new vpassword($result['cin'])]
-        ]);
-
-        if(!User::Where('cin', $result['cin'])->first()->active){
-
-            return redirect('/')->with('suspended','Account suspended for this moment');
-
-            /* return view('login.login',[
-                'error' => 'Account suspended for this moment',
-            ]); */
-        }
-        
+        // dd($request->all());
+        $cin_email = $request->cin_email;
+        $pwd = $request->password;
         $remember_me  = ( !empty( $request->input('check')) )? TRUE : FALSE;
-
-        if(Auth::attempt($user,$remember_me)){
-            $request->session()->regenerate();
-            return redirect()->intended('home');
+        
+        /* if(filter_var($cin_email, FILTER_VALIDATE_EMAIL)) {
+            // logic for a valid email
+            $result = $request->validate(['cin_email' => 'bail|required|exists:users,email']);
+            $user = $request->validate([
+                'cin_email' => '',
+                'password' => ['bail','required',new vpassword($result['cin_email'])]
+            ]);
+    
+            if(!User::Where('email', $result['cin_email'])->first()->active ){
+    
+                return redirect('/')->with('suspended','Account suspended for this moment');
+            }
+            
+            $remember_me  = ( !empty( $request->input('check')) )? TRUE : FALSE;
+    
+            if(Auth::attempt([
+                'email'=>$cin_email,
+                "password"=>$request->password,
+            ],$remember_me)){
+                $request->session()->regenerate();
+                return redirect()->intended('home');
+            }
         }
+        else {
+            // logic for a valid matricule
+            $result = $request->validate(['cin_email' => 'bail|required|exists:users,cin']);
+            $user = $request->validate([
+                'cin_email' => '',
+                'password' => ['bail','required',new vpassword($result['cin_email'])]
+            ]);
+    
+            if(!User::Where('cin', $result['cin_email'])->first()->active  ){
+    
+                return redirect('/')->with('suspended','Account suspended for this moment');
+            }
+            
+            $remember_me  = ( !empty( $request->input('check')) )? TRUE : FALSE;
+    
+            if(Auth::attempt([
+                'cin'=>$cin_email,
+                "password"=>$request->password,
+            ],$remember_me)){
+                $request->session()->regenerate();
+                return redirect()->intended('home');
+            }
+        } */
+     
+        /* using validator */
+        
+        $messages = [
+            "required"=>":attribute Obligatoire",
+            "exists"=>":attribute invalide"
+        ];
+      
+        $rules = [
+            "cin_email"=>'required',
+        ];
+        $attributes = [
+            'cin_email' => 'Matricule/Email', 
+        ];
+        
+        $validator = Validator::make($request->all(),$rules,$messages,$attributes);
+        if ($validator->stopOnFirstFailure()->fails()) {
+            return redirect('/')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        else{
+            
+            if(filter_var($cin_email, FILTER_VALIDATE_EMAIL)){
+            
+                /* email */
+                $input = [
+                    "email"=>$cin_email,
+                    "password"=>$pwd
+                ];
+    
+                $rules = [
+                    "email"=>'bail|required|exists:users,email',
+                    'password' => ['bail','required',new vpassword($cin_email)]
+                ];
+                $attributes = [
+                    'email' => 'Email',
+                    'password'=>"Mot de passe"
+                ];
+                
+                $validator = Validator::make($input,$rules,$messages,$attributes);
+                if ($validator->stopOnFirstFailure()->fails()) {
+                    return redirect('/')
+                                ->withErrors($validator)
+                                ->withInput();
+                }
+                else
+                {
+                    if(!User::Where('email', $cin_email)->first()->active  ){
+            
+                        return redirect('/')->with('suspended','Account suspended for this moment');
+                    }
+                    
+                    
+                    
+                    if(Auth::attempt([
+                        'email'=>$cin_email,
+                        "password"=>$request->password,
+                    ],$remember_me)){
+                        $request->session()->regenerate();
+                        return redirect()->intended('home');
+                    }
+
+                }
+            }else{
+                /* cin */
+                $input = [
+                    "cin"=>$cin_email,
+                    "password"=>$pwd
+                ];
+    
+                $rules = [
+                    "cin"=>'bail|required|exists:users,cin',
+                    'password' => ['bail','required',new vpassword($cin_email)]
+                ];
+                $attributes = [
+                    'cin' => 'matricule',
+                    'password'=>"Mot de passe"
+                ];
+                
+                $validator = Validator::make($input,$rules,$messages,$attributes);
+                if ($validator->stopOnFirstFailure()->fails()) {
+                    return redirect('/')
+                                ->withErrors($validator)
+                                ->withInput();
+                } else
+                {
+                    if(!User::Where('cin', $cin_email)->first()->active  ){
+            
+                        return redirect('/')->with('suspended','Account suspended for this moment');
+                    }
+                    
+                    
+                    
+                    if(Auth::attempt([
+                        'cin'=>$cin_email,
+                        "password"=>$request->password,
+                    ],$remember_me)){
+                        $request->session()->regenerate();
+                        return redirect()->intended('home');
+                    }
+
+                }
+            }
+
+        }
+       
+
+
+      
+     
+       
 
     }
 
