@@ -75,25 +75,28 @@ class SessionController extends Controller
         /* using validator */
         
         $messages = [
-            "required"=>":attribute Obligatoire",
+            "required"=>":attribute obligatoire",
             "exists"=>":attribute invalide"
         ];
       
         $rules = [
             "cin_email"=>'required',
+            "password" => 'required',
         ];
+
+
         $attributes = [
-            'cin_email' => 'Matricule/Email', 
+            'cin_email' => 'Identifiant',
+            'password' => 'Mot de passe'
         ];
         
         $validator = Validator::make($request->all(),$rules,$messages,$attributes);
         if ($validator->stopOnFirstFailure()->fails()) {
             return redirect('/')
-                        ->withErrors($validator)
-                        ->withInput();
-        }
-        else{
-            
+                ->withErrors($validator)
+                ->withInput();
+        }else{
+        
             if(filter_var($cin_email, FILTER_VALIDATE_EMAIL)){
             
                 /* email */
@@ -103,12 +106,11 @@ class SessionController extends Controller
                 ];
     
                 $rules = [
-                    "email"=>'bail|required|exists:users,email',
-                    'password' => ['bail','required',new vpassword($cin_email)]
+                    "email"=>'bail|exists:users,email',
+                    'password' => ['bail',new vpassword($cin_email)]
                 ];
                 $attributes = [
                     'email' => 'Email',
-                    'password'=>"Mot de passe"
                 ];
                 
                 $validator = Validator::make($input,$rules,$messages,$attributes);
@@ -119,7 +121,7 @@ class SessionController extends Controller
                 }
                 else
                 {
-                    if(!User::Where('email', $cin_email)->first()->active  ){
+                    if(!User::Where('email', $cin_email)->first()->active){
             
                         return redirect('/')->with('suspended','Account suspended for this moment');
                     }
@@ -147,8 +149,7 @@ class SessionController extends Controller
                     'password' => ['bail','required',new vpassword($cin_email)]
                 ];
                 $attributes = [
-                    'cin' => 'matricule',
-                    'password'=>"Mot de passe"
+                    'cin' => 'Matricule',
                 ];
                 
                 $validator = Validator::make($input,$rules,$messages,$attributes);
