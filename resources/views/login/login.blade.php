@@ -24,23 +24,23 @@
 
 
 
-        <label for="Password" class="form-label inline-block mb-2 text-gray-700">Mot de passe</label>
+              <label for="Password" class="form-label inline-block mb-2 text-gray-700">Mot de passe</label>
 
-        <div id="login" class="relative" >
 
-          <input placeholder="Mot de passe" class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700
-          bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-ou
-            tm-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-           :type="open ? 'password':'text'" name='password' autocomplete="on"/>
-            <fas :icon="open ? 'eye-slash':'eye'" 
-            class="cursor-pointer absolute top-2 right-2 pointer h-5 w-5" 
-            @click="open = !open"/>
+                <input placeholder="Mot de passe" class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700
+                bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-ou
+                  tm-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                {{-- :type="open ? 'password':'text'" --}} name='password' autocomplete="on"/>
+                  {{-- <fas :icon="open ? 'eye-slash':'eye'" 
+                  class="cursor-pointer absolute top-2 right-2 pointer h-5 w-5" 
+                  @click="open = !open"/> --}}
 
-    
+          
+              
         </div>
 
 
-          </div>
+          
           <div class="flex justify-between items-center mb-6">
             <div class="form-group form-check">
               <input type="checkbox" name="check" id="Check">
