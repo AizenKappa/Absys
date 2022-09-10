@@ -43,6 +43,15 @@ export default function useFilieres(){
         if(prof_id.value ==  null ){ getprofs(groupe_id) }
         
     };
+
+    const getetatst = async (groupe_id) => {
+        let response = await axios.get(`/etatst/${groupe_id}`)
+        stagiaires.value = response.data.data
+
+        nom_gp.value = stagiaires.value[0].nom_gp
+
+        stagiaires.value = stagiaires.value.filter((e) => e.Nj > 0);
+    }
     
 
     const getprofs = async (groupe_id) =>{
@@ -118,7 +127,7 @@ export default function useFilieres(){
     }
     
 
-    return { filieres , prof_id , admin , groupes , stagiaires, allEtats , getFilieres , profs , getgroupes , justif_status , addJustif,
+    return { filieres , prof_id , admin , getetatst , groupes , stagiaires, allEtats , getFilieres , profs , getgroupes , justif_status , addJustif,
             getstagiaires , nom_gp , getetats , addAbsence , user , getuser , add_status, etats };
 
     

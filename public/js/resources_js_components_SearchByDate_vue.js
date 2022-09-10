@@ -572,7 +572,7 @@ function useFilieres() {
     };
   }();
 
-  var getprofs = /*#__PURE__*/function () {
+  var getetatst = /*#__PURE__*/function () {
     var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(groupe_id) {
       var response;
       return _regeneratorRuntime().wrap(function _callee4$(_context4) {
@@ -580,13 +580,17 @@ function useFilieres() {
           switch (_context4.prev = _context4.next) {
             case 0:
               _context4.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/profs/".concat(groupe_id));
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/etatst/".concat(groupe_id));
 
             case 2:
               response = _context4.sent;
-              profs.value = response.data.data;
+              stagiaires.value = response.data.data;
+              nom_gp.value = stagiaires.value[0].nom_gp;
+              stagiaires.value = stagiaires.value.filter(function (e) {
+                return e.Nj > 0;
+              });
 
-            case 4:
+            case 6:
             case "end":
               return _context4.stop();
           }
@@ -594,24 +598,24 @@ function useFilieres() {
       }, _callee4);
     }));
 
-    return function getprofs(_x4) {
+    return function getetatst(_x4) {
       return _ref4.apply(this, arguments);
     };
   }();
 
-  var getuser = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+  var getprofs = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(groupe_id) {
       var response;
       return _regeneratorRuntime().wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
               _context5.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/user");
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/profs/".concat(groupe_id));
 
             case 2:
               response = _context5.sent;
-              user.value = response.data;
+              profs.value = response.data.data;
 
             case 4:
             case "end":
@@ -621,28 +625,26 @@ function useFilieres() {
       }, _callee5);
     }));
 
-    return function getuser() {
+    return function getprofs(_x5) {
       return _ref5.apply(this, arguments);
     };
   }();
 
-  var getetats = /*#__PURE__*/function () {
-    var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(id, period, limitD, limitF) {
+  var getuser = /*#__PURE__*/function () {
+    var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
       var response;
       return _regeneratorRuntime().wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
               _context6.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/etats/".concat(id, "/").concat(period, "/").concat(limitD, "/").concat(limitF));
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/user");
 
             case 2:
               response = _context6.sent;
-              etats.value = response.data.data;
-              allEtats.value = response.data.data;
-              console.log(allEtats.value);
+              user.value = response.data;
 
-            case 6:
+            case 4:
             case "end":
               return _context6.stop();
           }
@@ -650,8 +652,37 @@ function useFilieres() {
       }, _callee6);
     }));
 
-    return function getetats(_x5, _x6, _x7, _x8) {
+    return function getuser() {
       return _ref6.apply(this, arguments);
+    };
+  }();
+
+  var getetats = /*#__PURE__*/function () {
+    var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(id, period, limitD, limitF) {
+      var response;
+      return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              _context7.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/etats/".concat(id, "/").concat(period, "/").concat(limitD, "/").concat(limitF));
+
+            case 2:
+              response = _context7.sent;
+              etats.value = response.data.data;
+              allEtats.value = response.data.data;
+              console.log(allEtats.value);
+
+            case 6:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7);
+    }));
+
+    return function getetats(_x6, _x7, _x8, _x9) {
+      return _ref7.apply(this, arguments);
     };
   }();
 
@@ -715,6 +746,7 @@ function useFilieres() {
     filieres: filieres,
     prof_id: prof_id,
     admin: admin,
+    getetatst: getetatst,
     groupes: groupes,
     stagiaires: stagiaires,
     allEtats: allEtats,

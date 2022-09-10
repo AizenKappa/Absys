@@ -208,7 +208,7 @@
     import { faSortAlphaAsc ,  } from '@fortawesome/free-solid-svg-icons';
     import axios  from 'axios';
     import {ref ,reactive,watch, onMounted,computed , onBeforeMount} from "vue";
-    import { useRoute,useRouter } from 'vue-router';
+    import {useRouter } from 'vue-router';
 
     const stagPerPage = ref(15)
     const stagiaires = ref([])

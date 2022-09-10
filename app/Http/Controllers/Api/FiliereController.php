@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FiliereResource;
+use App\Http\Resources\StagiaireResource;
 use App\Models\Duration;
 use App\Models\Filiere;
 use App\Models\Prof;
@@ -81,8 +82,14 @@ class FiliereController extends Controller
     public function getstagiaires(Request $request)
     {
 
+        return StagiaireResource::collection(Groupe::Find($request->id)->stagiaires->where('status','Active')  );
+    }
+    public function getetatsst(Request $request)
+    {
+
         return FiliereResource::collection(Groupe::Find($request->id)->stagiaires->where('status','Active')  );
     }
+    
 
     public function stagsGroupe(Request $request)
     {

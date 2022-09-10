@@ -97,6 +97,8 @@ Route::get('/getModules',[FiliereController::class, 'getModules']);
 Route::get('/etatFil',[FiliereController::class, 'getEtatFil']);
 Route::get('filieres/{id}', [FiliereController::class, 'getgroupes']);
 Route::get('groupes/{id}', [FiliereController::class, 'getstagiaires']);
+Route::get('etatst/{id}', [FiliereController::class, 'getetatsst']);
+
 Route::post('getDurations',[FiliereController::class, 'getDurations']);
 Route::post('/profile', [FiliereController::class, 'getprofile'])->middleware('auth');
 Route::get('/deletPicture', [FiliereController::class, 'deletPicture'])->middleware('auth');

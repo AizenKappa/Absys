@@ -76,7 +76,7 @@
 
     <!-- Justif Table -->
     <div v-if="show_etats == true" class="antialiased text-gray-600 lg:px-[2rem] xl:px-[6rem] py-[3rem]">
-            <div class="flex flex-col justify-center">
+            <div class="relative flex flex-col justify-center">
             <div class="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
                 <header class="px-5 py-4 border-b flex justify-between items-center border-gray-200 w-full">
                     <h2 class="font-semibold text-gray-800"><span class="text-gray-400 hover:text-sky-700 cursor-pointer" @click="stepback"><fas size="lg" icon="fa-arrow-left" /></span></h2>
@@ -113,8 +113,11 @@
                                 </th>
                             </tr>
                         </thead>
+                        
                         <tbody class="text-sm divide-y divide-gray-100">
                             <tr v-for="(item, index) in list_etats" :key="index">
+
+                                
 
                                 <td class="p-2 whitespace-nowrap">
                                     <div class="font-medium text-gray-800">{{getStName(item.stagiaire_id,true)}}</div>
@@ -163,6 +166,7 @@
             <input placeholder="Ecrire Le Motif" class="h-7 px-2 w-[10rem] shadow-lg shadow-gray-300" v-if="selected_motif == 'autre'" type="text" v-model="selected_motif_autre" >
         </div>
     <!-- Button -->
+
         <div class="grid place-items-end sm:p-5 p-3">
             <button
             :disabled="submitBtn==false"
@@ -208,11 +212,11 @@
     /* Call Api Groupes */
     const getcontents = () =>  { selected_gp.value = "choose your groupe" , getgroupes(selected.value)}
     /* Return all our functuons and variables from { services/filieres.js } to use here */
-    const { getFilieres , filieres , profs , getgroupes , groupes , stagiaires, getstagiaires , nom_gp , addJustif , justif_status } = useFilieres();
+    const { getFilieres , filieres , profs , getgroupes , groupes , stagiaires, getetatst , nom_gp , addJustif , justif_status } = useFilieres();
     /* On Mounted call Aoi Flieres */
     onMounted(getFilieres())
     const getstContents = () => { 
-        getstagiaires(selected_gp.value,true) 
+        getetatst(selected_gp.value) 
         list_etats.value = false ,show_error.value = false 
     }
     /* This function hide stagiaires table and show Justif table */
@@ -246,7 +250,7 @@
 
     const getsts = async () => {
         
-        let result = await getstagiaires(selected_gp.value,true)
+        let result = await getetatst(selected_gp.value)
         show_etats.value = false
         close.value = true
     }

@@ -46,10 +46,13 @@
                                 <th class="p-2 whitespace-nowrap">
                                     <div class="font-semibold text-left">Absence</div>
                                 </th>
+                                <th class="p-2 whitespace-nowrap">
+                                    <div class="font-semibold text-left">Details</div>
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="text-sm divide-y divide-gray-100">
-                            <tr v-for="st in stagiaires" :key="st.id" >
+                            <tr class="cursor-pointer" v-for="st in stagiaires" :key="st.id" :class="st.leave ?'bg-red-100':''">
                                 <td class="p-2 whitespace-nowrap">
                                     <div class="font-medium text-gray-800">{{st.nom_st}}</div>
                                 </td>
@@ -58,6 +61,9 @@
                                 </td>
                                 <td class="p-2 whitespace-nowrap">
                                     <div><input @change="checkStd()" ref="st_inputs"  :name="st.id" value='absent' type="checkbox" class="h-4 w-4"></div>
+                                </td>
+                                <td>
+                                    <a class="text-blue-500 underline" :href="'/stagiaire/'+st.id" target="_blank">Detail</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -115,9 +121,11 @@
     import { ref, watch } from 'vue';
     import useFilieres from '../services/filieres.js'
     import { onMounted,onUpdated } from 'vue';
+    import {useRouter } from 'vue-router';
     import axios from 'axios';
     /* some Logic Variables */
     const st_inputs = ref([])
+    const router = useRouter()
     /* Inputs to send  */
 
     const seance = ref(null);

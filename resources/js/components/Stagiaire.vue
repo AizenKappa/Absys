@@ -169,7 +169,7 @@
             </tr>
           </tbody>
           <tbody>
-            <template v-if="nj_abs.length > 0">
+            <template v-if="boolean">
                 <tr v-for="abs in nj_abs" :key="abs.id" class="border border-black">
                     <td class="md:px-2 md:py-1  whitespace-nowrap
                     text-sm font-medium text-gray-900 text-center border border-gray-500">{{abs.date_abs}}</td>
@@ -329,9 +329,11 @@
   
     const monthly_abs_just = ref([]);
     const monthly_abs_nj = ref([]);
+    
    
     const just_abs = ref([])
     const nj_abs = ref([])
+    const boolean = ref(false)
     
     const absProf =  ref({})
     onMounted(async()=>
@@ -340,6 +342,7 @@
         await axios.get(`/stagiaireAbs/${studentId.value}`).then((response) =>
         {
             // console.log(response.data)
+            /* console.log(response.data) */
             studentInfo.value = response.data;
             stFullName.value = studentInfo.value.stFullName
             groupe_name.value= studentInfo.value.groupe_name
@@ -352,10 +355,17 @@
             
             just_abs.value =studentInfo.value.just_abs 
             nj_abs.value =studentInfo.value.nj_abs
+
+            boolean.value = Object.keys(nj_abs.value).length > 0
+
+            
             
             absProf.value =studentInfo.value.absProf 
             // console.log(st_total_abs.value)
             // console.log(groupe_total_abs.value)
+
+            /* console.log(JSON.parse(JSON.stringify(nj_abs.value)).length) */
+
             var pieOptions =  
             {
                 layout: {

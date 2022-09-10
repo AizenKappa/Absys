@@ -54,6 +54,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var monthly_abs_nj = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
     var just_abs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
     var nj_abs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
+
+    var _boolean = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+
     var absProf = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({});
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
       var monthlyOptions, monthlyData, monthlyConfig, monthlyCtx;
@@ -64,6 +67,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _context.next = 2;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/stagiaireAbs/".concat(studentId.value)).then(function (response) {
                 // console.log(response.data)
+
+                /* console.log(response.data) */
                 studentInfo.value = response.data;
                 stFullName.value = studentInfo.value.stFullName;
                 groupe_name.value = studentInfo.value.groupe_name;
@@ -73,8 +78,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 monthly_abs_nj.value = studentInfo.value.monthly_abs.nj;
                 just_abs.value = studentInfo.value.just_abs;
                 nj_abs.value = studentInfo.value.nj_abs;
+                _boolean.value = Object.keys(nj_abs.value).length > 0;
                 absProf.value = studentInfo.value.absProf; // console.log(st_total_abs.value)
                 // console.log(groupe_total_abs.value)
+
+                /* console.log(JSON.parse(JSON.stringify(nj_abs.value)).length) */
 
                 var pieOptions = {
                   layout: {
@@ -304,6 +312,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       monthly_abs_nj: monthly_abs_nj,
       just_abs: just_abs,
       nj_abs: nj_abs,
+      "boolean": _boolean,
       absProf: absProf,
       loadStagPdf: loadStagPdf,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
@@ -662,7 +671,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     )]);
   }), 128
   /* KEYED_FRAGMENT */
-  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", _hoisted_16, _hoisted_18))])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" no justifée "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_23, [_hoisted_24, _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [$setup.nj_abs.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", _hoisted_16, _hoisted_18))])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" no justifée "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_23, [_hoisted_24, _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [$setup["boolean"] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     key: 0
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.nj_abs, function (abs) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
