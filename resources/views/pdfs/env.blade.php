@@ -91,6 +91,28 @@
             th{
                 word-wrap: break-word
             }
+            .headerenv{
+                width: 600px;
+  
+                border-top: 1px solid black;
+                border-bottom: 4px solid black;
+                border-left: 1px solid black;
+                border-right: 4px solid black;
+                /* padding: 15px 0; */
+            }
+            .infoenv{
+                margin-left: 83px;
+                font-weight: bold;
+            }
+            .contentheader{
+                padding: 15px 0;
+                margin: 1px;
+                border-top: 4px solid black;
+                border-bottom: 1px solid black;
+                border-left: 4px solid black;
+                border-right: 1px solid black;
+            }
+
             
     </style>
 </head>
@@ -98,141 +120,159 @@
     @foreach($data as $d)
     
     <section style="max-height: 1090px;height:1090px;border:1px solid transparent">
-        <div style="text-align: center;margin-top:100px">
-            <h1 style="border:3px solid black;display:inline-block;padding:5px 100px">Enveloppe Examen</h1>
+        <div id="envlope" style="text-align: center;margin-top:100px;">
+                
+                <h1 class="headerenv" style="display:inline-block;font-weight: bolder;font-size:25px;">
+                    <div class="contentheader">Enveloppe Examen</div>
+                </h1>
+
         </div>
-        <h2 style="margin-top:45px;padding-left: 100px">L'enveloppe contient :</h2>
-        <ul style="font-weight: bolder;font-size:25px;margin-top:15px;padding-left:150px;list-style-image:url('{{public_path("/img/listStyle.png")}}')">
-            <li >Copies examen</li>
-            <li >Enoncé Epreuve </li>
-            <li >PV de note</li>
-            <li >Détail notes</li>
-            <li >Feuille de présence</li>
+        <h2 style="margin-top:45px;padding-left: 110px;font-weight: bolder;font-size:20px">L'enveloppe contient :</h2>
+        <ul style="font-weight: bolder;font-size:18px;margin-top:35px;padding-left:165px;list-style-image:url('{{public_path("/img/listStyle.png")}}')">
+            <li style="margin-bottom:5px;">Copies examen</li>
+            <li style="margin-bottom:5px;">Enoncé Epreuve</li>
+            <li style="margin-bottom:5px;">PV de note</li>
+            <li style="margin-bottom:5px;">Détail notes</li>
+            <li style="margin-bottom:5px;">Feuille de présence</li>
         </ul>
       
-            <h2 style="font-weight:bolder;text-align: center;margin-top:35px;font-size:22px;margin-bottom:50px">EXAMEN DE FIN DE MODULE - LOCAL</h2>
+            <h2 style="font-weight:bolder;text-align: center;margin-top:55px;font-size:22px;margin-bottom:70px">EXAMEN DE FIN DE MODULE - LOCAL</h2>
 
-        <table style="margin:0 auto;font-size:18px;width: 500px">
-            <tr>
-                <th style="text-align: left"><p style="padding-right: 50px">Etablissement</p></th>
-                <th style="text-align: left">:&nbsp;ISTA EL HANK CASABLANCA</th>
-            </tr>
-            <tr>
-                <th style="text-align: left">Niveau</th>
-                <th style="text-align: left">:&nbsp;{{$d['groupe']['filiere']['niveau']}}</th>
-            </tr>
-            <tr>
-                <th style="text-align: left">Filière</th>
-                <th style="text-align: left">:&nbsp;{{$d['groupe']['filiere']['nom_fil']}}</th>
-            </tr>
-            <tr>
-                <th style="text-align: left"> Module</th>
-                <th style="text-align: left">:&nbsp;{{$d['module']['nom_module']}}</th>
-            </tr>
-            <tr>
-                <th style="text-align: left">Groupe</th>
-                <th style="text-align: left">:&nbsp;{{$d['groupe']['nom_gp']}}</th>
-            </tr>
-            <tr>
-                <th style="text-align: left">Type examen</th>
-                <th style="text-align: left">:&nbsp;</th>
-            </tr>
-        </table>
+        <div class="infoenv">
+            <table style="font-size:15px;width: 600px;">
+                <tr>
+                    <th style="text-align: left"><p style="padding-right: 50px">Etablissement</p></th>
+                    <th style="text-align: left">:&nbsp;ISTA EL HANK CASABLANCA</th>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Niveau</th>
+                    <th style="text-align: left">:&nbsp;{{$d['groupe']['filiere']['niveau']}}</th>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Filière</th>
+                    <th style="text-align: left">:&nbsp;{{$d['groupe']['filiere']['nom_fil']}}</th>
+                </tr>
+                <tr>
+                    <th style="text-align: left"> Module</th>
+                    <th style="text-align: left">:&nbsp;{{$d['module']['nom_module']}}</th>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Groupe</th>
+                    <th style="text-align: left">:&nbsp;{{$d['groupe']['nom_gp']}}</th>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Type examen</th>
+                    <th style="text-align: left">:&nbsp;</th>
+                </tr>
+            </table>
+        </div>
 
 
-        <h3 style="margin-left:100px; margin-top:100px">Formateur responsable:<strong>{{$d['prof']['nom_prof']}}</strong></h3>
+        <h3 style="margin-left:100px; margin-top:60px">Formateur responsable:<strong>{{$d['prof']['nom_prof']}}</strong></h3>
         
     </section>
     <section style="max-height: 1090px;height:1090px;border:1px solid transparent">
-        <div style="text-align: center;margin-top:100px">
-            <h1 style="border:3px solid black;display:inline-block;padding:5px 100px">Enveloppe Examen</h1>
+        <div id="envlope" style="text-align: center;margin-top:100px;">
+                
+                <h1 class="headerenv" style="display:inline-block;font-weight: bolder;font-size:25px;">
+                    <div class="contentheader">Enveloppe Examen</div>
+                </h1>
+
         </div>
-        <h2 style="margin-top:45px;padding-left: 100px">L'enveloppe contient :</h2>
-        <ul style="font-weight: bolder;font-size:25px;margin-top:15px;padding-left:150px;list-style-image:url('{{public_path("/img/listStyle.png")}}')">
-            <li >Copies examen</li>
-            <li >Enoncé Epreuve </li>
-            <li >PV de note</li>
-            <li >Détail notes</li>
-            <li >Feuille de présence</li>
+        <h2 style="margin-top:45px;padding-left: 110px;font-weight: bolder;font-size:20px">L'enveloppe contient :</h2>
+        <ul style="font-weight: bolder;font-size:18px;margin-top:35px;padding-left:165px;list-style-image:url('{{public_path("/img/listStyle.png")}}')">
+            <li style="margin-bottom:5px;">Copies examen</li>
+            <li style="margin-bottom:5px;">Enoncé Epreuve</li>
+            <li style="margin-bottom:5px;">PV de note</li>
+            <li style="margin-bottom:5px;">Détail notes</li>
+            <li style="margin-bottom:5px;">Feuille de présence</li>
         </ul>
       
-            <h2 style="font-weight:bolder;text-align: center;margin-top:35px;font-size:22px;margin-bottom:50px">CONTROLE CONTINU N°1</h2>
+            <h2 style="font-weight:bolder;text-align: center;margin-top:55px;font-size:22px;margin-bottom:70px">CONTROLE CONTINU N°1</h2>
 
-        <table style="margin:0 auto;font-size:18px;width: 500px">
-            <tr>
-                <th style="text-align: left"><p style="padding-right: 50px">Etablissement</p></th>
-                <th style="text-align: left">:&nbsp;ISTA EL HANK CASABLANCA</th>
-            </tr>
-            <tr>
-                <th style="text-align: left">Niveaux</th>
-                <th style="text-align: left">:&nbsp;{{$d['groupe']['filiere']['niveau']}}</th>
-            </tr>
-            <tr>
-                <th style="text-align: left">Filière</th>
-                <th style="text-align: left">:&nbsp;{{$d['groupe']['filiere']['nom_fil']}}</th>
-            </tr>
-            <tr>
-                <th style="text-align: left"> Module</th>
-                <th style="text-align: left">:&nbsp;{{$d['module']['nom_module']}}</th>
-            </tr>
-            <tr>
-                <th style="text-align: left">Groupe</th>
-                <th style="text-align: left">:&nbsp;{{$d['groupe']['nom_gp']}}</th>
-            </tr>
-            <tr>
-                <th style="text-align: left">Type examen</th>
-                <th style="text-align: left">:&nbsp;</th>
-            </tr>
-        </table>
+        <div class="infoenv">
+            <table style="font-size:15px;width: 600px;">
+                <tr>
+                    <th style="text-align: left"><p style="padding-right: 50px">Etablissement</p></th>
+                    <th style="text-align: left">:&nbsp;ISTA EL HANK CASABLANCA</th>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Niveau</th>
+                    <th style="text-align: left">:&nbsp;{{$d['groupe']['filiere']['niveau']}}</th>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Filière</th>
+                    <th style="text-align: left">:&nbsp;{{$d['groupe']['filiere']['nom_fil']}}</th>
+                </tr>
+                <tr>
+                    <th style="text-align: left"> Module</th>
+                    <th style="text-align: left">:&nbsp;{{$d['module']['nom_module']}}</th>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Groupe</th>
+                    <th style="text-align: left">:&nbsp;{{$d['groupe']['nom_gp']}}</th>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Type examen</th>
+                    <th style="text-align: left">:&nbsp;</th>
+                </tr>
+            </table>
+        </div>
 
 
-        <h3 style="margin-left:100px; margin-top:100px">Formateur responsable:<strong>{{$d['prof']['nom_prof']}}</strong></h3>
+        <h3 style="margin-left:100px; margin-top:60px">Formateur responsable:<strong>{{$d['prof']['nom_prof']}}</strong></h3>
         
     </section>
     <section style="max-height: 1090px;height:1090px;border:1px solid transparent">
-        <div style="text-align: center;margin-top:100px">
-            <h1 style="border:3px solid black;display:inline-block;padding:5px 100px">Enveloppe Examen</h1>
+        <div id="envlope" style="text-align: center;margin-top:100px;">
+                
+                <h1 class="headerenv" style="display:inline-block;font-weight: bolder;font-size:25px;">
+                    <div class="contentheader">Enveloppe Examen</div>
+                </h1>
+
         </div>
-        <h2 style="margin-top:45px;padding-left: 100px">L'enveloppe contient :</h2>
-        <ul style="font-weight: bolder;font-size:25px;margin-top:15px;padding-left:150px;list-style-image:url('{{public_path("/img/listStyle.png")}}')">
-            <li >Copies examen</li>
-            <li >Enoncé Epreuve </li>
-            <li >PV de note</li>
-            <li >Détail notes</li>
-            <li >Feuille de présence</li>
+        <h2 style="margin-top:45px;padding-left: 110px;font-weight: bolder;font-size:20px">L'enveloppe contient :</h2>
+        <ul style="font-weight: bolder;font-size:18px;margin-top:35px;padding-left:165px;list-style-image:url('{{public_path("/img/listStyle.png")}}')">
+            <li style="margin-bottom:5px;">Copies examen</li>
+            <li style="margin-bottom:5px;">Enoncé Epreuve</li>
+            <li style="margin-bottom:5px;">PV de note</li>
+            <li style="margin-bottom:5px;">Détail notes</li>
+            <li style="margin-bottom:5px;">Feuille de présence</li>
         </ul>
       
-            <h2 style="font-weight:bolder;text-align: center;margin-top:35px;font-size:22px;margin-bottom:50px">CONTROLE CONTINU N°2</h2>
+            <h2 style="font-weight:bolder;text-align: center;margin-top:55px;font-size:22px;margin-bottom:70px">CONTROLE CONTINU N°2</h2>
 
-        <table style="margin:0 auto;font-size:18px;width: 500px">
-            <tr>
-                <th style="text-align: left"><p style="padding-right: 50px">Etablissement</p></th>
-                <th style="text-align: left">:&nbsp;ISTA EL HANK CASABLANCA</th>
-            </tr>
-            <tr>
-                <th style="text-align: left">Niveau</th>
-                <th style="text-align: left">:&nbsp;{{$d['groupe']['filiere']['niveau']}}</th>
-            </tr>
-            <tr>
-                <th style="text-align: left">Filière</th>
-                <th style="text-align: left">:&nbsp;{{$d['groupe']['filiere']['nom_fil']}}</th>
-            </tr>
-            <tr>
-                <th style="text-align: left"> Module</th>
-                <th style="text-align: left">:&nbsp;{{$d['module']['nom_module']}}</th>
-            </tr>
-            <tr>
-                <th style="text-align: left">Groupe</th>
-                <th style="text-align: left">:&nbsp;{{$d['groupe']['nom_gp']}}</th>
-            </tr>
-            <tr>
-                <th style="text-align: left">Type examen</th>
-                <th style="text-align: left">:</th>
-            </tr>
-        </table>
+        <div class="infoenv">
+            <table style="font-size:15px;width: 600px;">
+                <tr>
+                    <th style="text-align: left"><p style="padding-right: 50px">Etablissement</p></th>
+                    <th style="text-align: left">:&nbsp;ISTA EL HANK CASABLANCA</th>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Niveau</th>
+                    <th style="text-align: left">:&nbsp;{{$d['groupe']['filiere']['niveau']}}</th>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Filière</th>
+                    <th style="text-align: left">:&nbsp;{{$d['groupe']['filiere']['nom_fil']}}</th>
+                </tr>
+                <tr>
+                    <th style="text-align: left"> Module</th>
+                    <th style="text-align: left">:&nbsp;{{$d['module']['nom_module']}}</th>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Groupe</th>
+                    <th style="text-align: left">:&nbsp;{{$d['groupe']['nom_gp']}}</th>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Type examen</th>
+                    <th style="text-align: left">:&nbsp;</th>
+                </tr>
+            </table>
+        </div>
 
 
-        <h3 style="margin-left:100px; margin-top:100px">Formateur responsable:<strong>{{$d['prof']['nom_prof']}}</strong></h3>
+        <h3 style="margin-left:100px; margin-top:60px">Formateur responsable:<strong>{{$d['prof']['nom_prof']}}</strong></h3>
         
     </section>
     @endforeach
