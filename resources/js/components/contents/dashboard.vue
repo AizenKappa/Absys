@@ -8,7 +8,10 @@
         <div v-if="dash" class="md:block md:h-screen md:w-[14rem] w-[96%] md:mx-0 mt-3 md:mt-0 bg-white md:overflow-y-scroll md:fixed fixed z-50">
             <div id="dashboard-header" class="flex justify-between mt-8 mb-10 mx-6">
                 <h1 class=" text-sm uppercase font-bold">{{ fullName }}</h1>
-                <span @click="dash=false" class="w-8 h-8 flex justify-center text-lg rounded-sm items-center active:border-[3px] active:border-zinc-900 md:hidden cursor-pointer"><fas icon="xmark" /></span>
+                <span @click="dash=false" class="w-8 h-8 flex justify-center text-lg rounded-sm items-center active:border-[3px] active:border-zinc-900 md:hidden cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+</svg>
+</span>
             </div>
             <!-- -- Caeds -- -->
             <cards v-model="dash" />
@@ -23,7 +26,10 @@
                 <!-- -- Navbar  -- -->
                 <div class="w-full h-20 md:px-14 md:pt-4 bg-blue-50 md:bg-sky-600 flex justify-between px-6 pt-5 ">
                     <span class="hidden md:block mt-3 font-bold text-white uppercase text-sm">{{title}}</span>
-                    <span @click="dash=true" class="w-10 h-10 flex justify-center rounded-sm items-center text-xl active:border-[3px] active:border-zinc-900 md:hidden cursor-pointer"><fas icon="bars" /></span>
+                    <span @click="dash=true" class="w-10 h-10 flex justify-center rounded-sm items-center text-xl active:border-[3px] active:border-zinc-900 md:hidden cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+</svg>
+</span>
                     
                     <select  @change="updateActiveYear" 
                     class="p-2 my-3 bg-transparent font-bold text-lg text-zinc-800 w-[13rem] outline-2 focus:outline-sky-500 rounded-sm" v-model="activeYear">
@@ -48,7 +54,7 @@
             <div v-show="show" class="w-44 h-35 bg-white shadow-md shadow-slate-400 rounded z-40 absolute top-16 md:right-20 right-10">
 
                 <router-link to="/Profile">
-                    <div class="px-4 py-3 hover:text-slate-600 active:bg-slate-300">View profile</div>
+                    <div class="px-4 py-3 hover:text-slate-600 active:bg-slate-300">Profile</div>
                 </router-link>
 
                 <div>  <hr> </div>

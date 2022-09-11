@@ -62,8 +62,10 @@
                         :class="gpFieldErr ? 'border-red-600':'border-gray-400'"
                         >
                             <span>{{newUser.fil.text}}</span>
-                            <fas v-if="!dropdownFil" icon="angle-down" />
-                            <fas v-if="dropdownFil" icon="angle-up" />
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+</svg>
+
                         </div>
                         <div class="relative">
                             <ul v-show="dropdownFil" class="dropdown-body h-[10rem] overflow-y-auto">
@@ -82,8 +84,10 @@
                         :class="gpFieldErr ? 'border-red-600':'border-gray-400'"
                         >
                             <span>{{newUser.gp.text}}</span>
-                            <fas v-if="!dropdownGp" icon="angle-down" />
-                            <fas v-if="dropdownGp" icon="angle-up" />
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+</svg>
+
                         </div>
                         <div class="relative">
                             <ul v-show="dropdownGp" class="dropdown-body h-[8rem] overflow-y-auto">

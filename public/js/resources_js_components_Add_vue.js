@@ -433,8 +433,6 @@ var _hoisted_35 = {
 };
 var _hoisted_36 = ["disabled"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_fas = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("fas");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Dropdowns-Fileres- "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Filieres_Select "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     name: "filiere",
     id: "filieres_select",
@@ -575,10 +573,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[10] || (_cache[10] = function ($event) {
       return $setup.addAbsence($setup.student_ids, $setup.prof_id, $setup.duration_id, $setup.seance, $setup.date_abs, $setup.reset, $setup.errorNet);
     }),
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.submitBtn == true ? 'button-on' : 'button-off', "text-2xl text-white rounded-full w-[3rem] h-[3rem] cursor-pointer"])
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
-    icon: "arrow-right"
-  })], 10
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.submitBtn == true ? 'button-on' : 'button-off', "text-2xl text-white rounded cursor-pointer"])
+  }, "confirmer", 10
   /* CLASS, PROPS */
   , _hoisted_36)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }

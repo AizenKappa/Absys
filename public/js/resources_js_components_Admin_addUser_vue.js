@@ -936,29 +936,24 @@ var _hoisted_75 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 var _hoisted_76 = {
   "class": "lg:w-[40rem] sm:w-[32rem] w-[25rem] pb-5 bg-white absolute z-20 translate-y-[-50%] translate-x-[-50%] md:translate-x-[-70%] top-[50%] left-[50%] grid place-content-center rounded-md"
 };
-var _hoisted_77 = {
-  "class": "lg:w-[40rem] sm:w-[32rem] w-[25rem] flex justify-between px-5 pt-5 pb-3"
-};
 
-var _hoisted_78 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, null, -1
+var _hoisted_77 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, null, -1
 /* HOISTED */
 );
 
-var _hoisted_79 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_78 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "lg:w-[40rem] sm:w-[32rem] w-[25rem] text-center uppercase text-slate-800 font-bold text-xl py-3"
 }, " Ajouter un module ", -1
 /* HOISTED */
 );
 
-var _hoisted_80 = {
+var _hoisted_79 = {
   "class": "lg:w-[35rem] flex justify-center items-center sm:w-[28rem] w-[22rem] mt-10 mb-14"
 };
-var _hoisted_81 = {
+var _hoisted_80 = {
   "class": "flex justify-center items-center pb-3 px-3 sm:px-5"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_fas = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("fas");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Add User Form "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
     onSubmit: _cache[11] || (_cache[11] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {}, ["prevent"]))
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Firstname "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
@@ -1137,38 +1132,26 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[12] || (_cache[12] = function ($event) {
       return $setup.modelModel = 'groupe';
     })
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
-    size: "xl",
-    icon: "fa-arrow-left"
-  })], 512
+  }, "←", 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $setup.modelModel == 'module']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "text-gray-400 hover:text-sky-700 cursor-pointer",
     onClick: _cache[13] || (_cache[13] = function ($event) {
       return $setup.modelModel = 'module';
     })
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
-    size: "xl",
-    icon: "fa-arrow-left"
-  })], 512
+  }, "←", 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $setup.modelModel == 'groupeModule']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "text-gray-400 hover:text-sky-700 cursor-pointer",
     onClick: _cache[14] || (_cache[14] = function ($event) {
       return $setup.modelModel = 'filiere', $setup.groupesIds = [];
     })
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
-    size: "xl",
-    icon: "fa-arrow-left"
-  })], 512
+  }, "←", 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $setup.modelModel == 'groupe']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "hover:text-sky-700 text-gray-400 cursor-pointer",
     onClick: $setup.Model
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
-    size: "xl",
-    icon: "fa-xmark"
-  })])]), _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Filieres Model "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.filieres, function (fil) {
+  }, "X")]), _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Filieres Model "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.filieres, function (fil) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: fil.id,
       onClick: $setup.filEvent,
@@ -1298,13 +1281,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* HYDRATE_EVENTS */
   )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [_hoisted_75, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_76, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
     onSubmit: _cache[21] || (_cache[21] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {}, ["prevent"]))
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_77, [_hoisted_78, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "lg:w-[40rem] sm:w-[32rem] w-[25rem] flex justify-between px-5 pt-5 pb-3"
+  }, [_hoisted_77, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "hover:text-sky-700 text-gray-400 cursor-pointer",
     onClick: $setup.Model2
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_fas, {
-    size: "xl",
-    icon: "fa-xmark"
-  })])]), _hoisted_79, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Add Model "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_80, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, "X")]), _hoisted_78, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Add Model "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_79, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "onUpdate:modelValue": _cache[20] || (_cache[20] = function ($event) {
       return $setup.nameModule = $event;
     }),
@@ -1313,7 +1295,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "w-[90%] py-2 px-2 shadow-md shadow-slate-300 font-semibold outline-2 focus:outline-sky-500"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.nameModule]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_81, [$setup.nameModule.length >= 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.nameModule]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_80, [$setup.nameModule.length >= 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 0,
     type: "submit",
     onClick: $setup.addModel,

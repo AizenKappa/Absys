@@ -29,7 +29,10 @@
             </select>
             <div v-if="selected_period == 'limit'" class="sm:w-[28rem] w-[100%] place-items-center gap-4 grid grid-cols-1 sm:flex justify-between items-center">
                 <input @change="inputeDate" v-model="period_debut" class="sm:w-[12rem] w-[60%] px-2" type="date" required>
-                <fas class="hidden sm:block" icon="angles-right"/><fas class="block sm:hidden" icon="angles-down"/>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+</svg>
+
                 <input @change="inputeDate" v-model="period_fin" class="sm:w-[12rem] w-[60%] px-2" type="date" required>
             </div>
         </div>

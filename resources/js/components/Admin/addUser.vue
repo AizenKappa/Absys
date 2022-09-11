@@ -121,17 +121,17 @@
             <form @submit.prevent>
                <div class="lg:w-[40rem] sm:w-[32rem] w-[25rem] flex justify-between px-5 pt-5 pb-3">
                     <span class="text-gray-400 hover:text-sky-700 cursor-pointer"
-                    v-show="modelModel == 'module'" @click="modelModel = 'groupe'"><fas size="xl" icon="fa-arrow-left" /></span>
+                    v-show="modelModel == 'module'" @click="modelModel = 'groupe'">&#8592;</span>
 
                     <span class="text-gray-400 hover:text-sky-700 cursor-pointer"
-                    v-show="modelModel == 'groupeModule'" @click="modelModel = 'module'"><fas size="xl" icon="fa-arrow-left" /></span>
+                    v-show="modelModel == 'groupeModule'" @click="modelModel = 'module'">&#8592;</span>
 
                     <span class="text-gray-400 hover:text-sky-700 cursor-pointer"
-                    v-show="modelModel == 'groupe'" @click="modelModel = 'filiere', groupesIds = []"><fas size="xl" icon="fa-arrow-left" /></span>
+                    v-show="modelModel == 'groupe'" @click="modelModel = 'filiere', groupesIds = []">&#8592;</span>
 
                     <span 
                     class="hover:text-sky-700 text-gray-400 cursor-pointer" 
-                    @click="Model"><fas size="xl" icon="fa-xmark" /></span>
+                    @click="Model">X</span>
                 </div>
                 <div class="lg:w-[40rem] sm:w-[32rem] w-[25rem] text-center uppercase lg:text-lg text-slate-800 font-bold sm:text-base py-3">
                     les Groupes et les module de ce Formateur
@@ -300,7 +300,7 @@
                     <span></span>
                     <span 
                     class="hover:text-sky-700 text-gray-400 cursor-pointer" 
-                    @click="Model2"><fas size="xl" icon="fa-xmark" /></span>
+                    @click="Model2">X</span>
                     
                 </div>
                 <div class="lg:w-[40rem] sm:w-[32rem] w-[25rem] text-center uppercase text-slate-800 font-bold text-xl py-3">

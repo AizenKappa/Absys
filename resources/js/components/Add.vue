@@ -103,12 +103,12 @@
         </div>
         
     <!-- Button -->
-        <div v-if="nom_gp != null" class="w-full md:pl-[90%] pl-[85%] h-[6rem] flex items-center">
+        <div v-if="nom_gp != null" class="w-full md:pl-[90%] pl-[85%] h-[6rem] flex  items-center">
             <button :disabled="submitBtn==false"
             @click="addAbsence(student_ids,prof_id,duration_id,seance,date_abs,reset,errorNet)" 
             :class="submitBtn == true ? 'button-on':'button-off'" 
-            class="text-2xl text-white rounded-full w-[3rem] h-[3rem] cursor-pointer" 
-            ><fas icon="arrow-right" /></button>
+            class="text-2xl text-white rounded cursor-pointer" 
+            >confirmer</button>
             
         </div>
         

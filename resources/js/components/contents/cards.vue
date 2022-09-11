@@ -4,43 +4,49 @@
 <section id="dashboard-cards" class="font-bold text-sm ">
     <!-- --first card -->
 
-
+    <div class="card">
+            <hr class="px-16 my-5 mt-6">
+            
+            <router-link to="/home" @click="$emit('update:modelValue',check())">
+                <h2 class="px-6 mb-4 text-xs uppercase font-bold text-gray-500 ">Stagiaires</h2>
+            </router-link>
+    </div>
         <div class="card">
             <hr class="px-16 my-5 mt-6">
-            <h2 class="px-6 mb-4 text-xs uppercase font-bold text-gray-500 ">Admin section</h2>
+            <h2 class="px-6 mb-4 text-xs uppercase font-bold text-gray-500 ">Gestion d'absences</h2>
             <div class="grid gap-5 px-6 text-gray-400">
 
-                <router-link to="/home" @click="$emit('update:modelValue',check())">
-                    <fas icon="user" />
-                    <span>Dashboard</span>
-                </router-link>
+               
 
                 <template v-if="boolean">
-                    <router-link to="/add" @click="$emit('update:modelValue',check())">
-                        <fas icon="user-graduate" />
-                        <span>Ajouter l'absence</span>
+                    <router-link to="/add" @click="$emit('update:modelValue',check())"> 
+                        <span>Ajouter</span>
                     </router-link>
                 
                     <template v-if="adminSection">
                         <router-link to="/just" @click="$emit('update:modelValue',check())">
-                            <fas icon="user-graduate" />
-                            <span>Justifier l'absence</span>
+                            <span>Justifier</span>
                         </router-link>
                     </template>
                 </template>
 
                 <router-link to="/SearchByDate" @click="$emit('update:modelValue',check())">
-                    <fas icon="user-graduate" />
                     <span class="text-center ">Les Absences</span>
                 </router-link>
                 <router-link to="/detail" @click="$emit('update:modelValue',check())">
-                    <fas icon="user-graduate" />
                     <span class="text-center ">Detail Class</span>
                 </router-link>
                 
             </div>
         </div>
 
+        <div class="card">
+            <hr class="px-16 my-5 mt-6">
+            
+            <router-link to="/impressions" @click="$emit('update:modelValue',check())">
+                <h2 class="px-6 mb-4 text-xs uppercase font-bold text-gray-500 ">Impressions</h2>
+            </router-link>
+    </div>
 
     <!-- --second card -->
 
@@ -48,32 +54,28 @@
 
             <div class="card">
                 <hr class="px-16 my-5 mt-7">
-                <h2 class="px-6 mb-4 text-gray-500 text-xs uppercase font-bold ">Admin section</h2>
+                <h2 class="px-6 mb-4 text-gray-500 text-xs uppercase font-bold ">Administration</h2>
                 <div class="grid gap-5 px-6 text-gray-400">
 
-                    <router-link to="/impressions" @click="$emit('update:modelValue',check())">
-                        <fas icon="user-graduate" />
-                        <span>Impressions</span>
-                    </router-link>
 
                     <router-link to="/User" @click="$emit('update:modelValue',check())">
-                        <fas icon="user-graduate" />
-                        <span>Update Users</span>
+                        <span>Utilisateurs
+                        </span>
                     </router-link>
                     
                     <router-link to="/editEtat" @click="$emit('update:modelValue',check())">
-                        <fas icon="user-graduate" />
-                        <span>Update Absence</span>
+                
+                        <span>Absences</span>
                     </router-link>
 
                     <router-link to="/Estg" @click="$emit('update:modelValue',check())">
-                        <fas icon="user-graduate" />
-                        <span>Update Stagiaiare</span>
+                       
+                        <span>Stagiaires</span>
                     </router-link>
                         
                     <router-link to="/settings" @click="$emit('update:modelValue',check())">
-                        <fas icon="user-graduate" />
-                        <span>Settings</span>
+                      
+                        <span>Paramétres</span>
                     </router-link>
 
                 </div>

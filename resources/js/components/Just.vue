@@ -79,7 +79,7 @@
             <div class="relative flex flex-col justify-center">
             <div class="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
                 <header class="px-5 py-4 border-b flex justify-between items-center border-gray-200 w-full">
-                    <h2 class="font-semibold text-gray-800"><span class="text-gray-400 hover:text-sky-700 cursor-pointer" @click="stepback"><fas size="lg" icon="fa-arrow-left" /></span></h2>
+                    <h2 class="font-semibold text-gray-800"><span class="text-gray-400 hover:text-sky-700 cursor-pointer" @click="stepback">&#8592;</span></h2>
                     <span class="font-semibold text-gray-800 pr-1" >{{nom_gp}}</span>
                 </header>
                 <div class="p-3 w-full">
@@ -173,7 +173,7 @@
             v-on:click="addJustifAndReset()" 
             class="text-2xl text-white rounded-full w-[3rem] h-[3rem]"
             :class="submitBtn == true ? 'button-on':'button-off'">
-            <fas icon="arrow-right" /></button>
+            &#8594;</button>
         </div>
     </div>
     
