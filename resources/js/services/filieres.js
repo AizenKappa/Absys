@@ -46,6 +46,7 @@ export default function useFilieres(){
 
     const getetatst = async (groupe_id) => {
         let response = await axios.get(`/etatst/${groupe_id}`)
+  
         stagiaires.value = response.data.data
 
         nom_gp.value = stagiaires.value[0].nom_gp
