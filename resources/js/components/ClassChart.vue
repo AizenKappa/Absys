@@ -6,9 +6,13 @@
                  
 
         <div class="flex flex-row justify-between p-2 uppercase text-xs font-semibold">
-            <span class=" text-blue-900 m-2 select-none"><fas icon="fa-arrow-right" /> Tous les Heures : {{data.total_h}} h </span>
-            <span @click="Model('open')" class="mt-2 text-gray-300 hover:text-sky-700"><fas size="xl" icon="fa-chart-pie"/> </span>          
-            <span class=" text-blue-900 m-2 select-none">Non justifiées : {{data.nj_h}} h <fas icon="fa-arrow-left" /></span>          
+            <span class=" text-blue-900 m-2 select-none">&#8594; Tous les Heures : {{data.total_h}} h </span>
+            <span @click="Model('open')" class="mt-2 text-gray-300 hover:text-sky-700"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
+  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
+</svg>
+ </span>          
+            <span class=" text-blue-900 m-2 select-none">Non justifiées : {{data.nj_h}} h &#8592;</span>          
         </div>
 
         <div class="w-full h-[380px]  mx-auto  ">   
@@ -26,9 +30,9 @@
                     <span
                     @click="mostAbs(data.groupe.id)" 
                     class="text-sm text-gray-400 hover:text-cyan-600 cursor-pointer">
-                    <fas icon="fa-arrow-right" /> Most stagiaire absences</span>
+                    &#8594; Most stagiaire absences</span>
                         
-                    <span class="hover:text-sky-700 text-gray-400 cursor-pointer" @click="Model('close')"><fas size="xl" icon="fa-xmark" /></span>
+                    <span class="hover:text-sky-700 text-gray-400 cursor-pointer" @click="Model('close')">X</span>
                     
                 </div>
                 <div class="flex">
@@ -47,17 +51,17 @@
                 </div>
 
                 <div v-if="active == 'pieT'" class="w-full flex justify-between px-2 mt-2 font-bold text-base">
-                    <span class="text-[#00CED1]"><fas icon="fa-arrow-right" /> {{ Pourcentage(data.total_h/(hoursTotal)*100)+'%' }}</span>
-                    <span class="text-[#4169E1]">{{ (100 - Pourcentage(data.total_h/(hoursTotal)*100))+'%' }} <fas icon="fa-arrow-left" /></span>
+                    <span class="text-[#00CED1]">&#8594; {{ Pourcentage(data.total_h/(hoursTotal)*100)+'%' }}</span>
+                    <span class="text-[#4169E1]">{{ (100 - Pourcentage(data.total_h/(hoursTotal)*100))+'%' }} &#8592;</span>
                 </div>
 
                 <div v-else-if="active == 'pieF'" class="w-full flex justify-between px-2 mt-2 font-bold text-base">
-                    <span class="text-[#00CED1]"><fas icon="fa-arrow-right" /> {{ Pourcentage(data.total_h/(hoursFil)*100)+'%' }}</span>
-                    <span class="text-[#4169E1]">{{ (100 - Pourcentage(data.total_h/(hoursFil)*100))+'%' }} <fas icon="fa-arrow-left" /></span>
+                    <span class="text-[#00CED1]">&#8594; {{ Pourcentage(data.total_h/(hoursFil)*100)+'%' }}</span>
+                    <span class="text-[#4169E1]">{{ (100 - Pourcentage(data.total_h/(hoursFil)*100))+'%' }} &#8592;</span>
                 </div>
                 <div v-if="active == 'pieFF'" class="w-full flex justify-between px-2 mt-2 font-bold text-base">
-                    <span class="text-[#00CED1]"><fas icon="fa-arrow-right" /> {{ Pourcentage(hoursFil/(hoursTotal)*100)+'%' }}</span>
-                    <span class="text-[#4169E1]">{{ (100 - Pourcentage(hoursFil/(hoursTotal)*100))+'%' }} <fas icon="fa-arrow-left" /></span>
+                    <span class="text-[#00CED1]">&#8594; {{ Pourcentage(hoursFil/(hoursTotal)*100)+'%' }}</span>
+                    <span class="text-[#4169E1]">{{ (100 - Pourcentage(hoursFil/(hoursTotal)*100))+'%' }} &#8592;</span>
                 </div>
                 
                 <div class="w-full flex justify-center">

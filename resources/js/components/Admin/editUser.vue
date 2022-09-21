@@ -52,7 +52,7 @@
                 <div class="mb-2" v-if="user.role.text == 'Formateur'">
 
                     <span class=" text-blue-700">
-                        <span><fas size="lg" icon="fa-arrow-right" /></span>
+                        <span>&#8594;</span>
                         <span class="mx-2 text-lg font-semibold">Formateur</span>
                     </span>
 
@@ -65,7 +65,7 @@
                 </div>
 
                 <div v-if="user.role.text == 'admin'" class=" text-blue-700">
-                    <span><fas size="lg" icon="fa-arrow-right" /></span>
+                    <span>&#8594;</span>
                     <span class="mx-2 text-lg font-semibold">Admin</span>
                 </div>
 
@@ -143,15 +143,15 @@
                         <form @submit.prevent>
                         <div class="lg:w-[40rem] sm:w-[32rem] w-[25rem] flex justify-between px-5 pt-5 pb-3">
                                 <span class="text-gray-400 hover:text-sky-700 cursor-pointer"
-                                v-show="FiliereModel == false" @click="FiliereModel = true"><fas size="xl" icon="fa-arrow-left" /></span>
+                                v-show="FiliereModel == false" @click="FiliereModel = true">&#8592;</span>
                                 <span class="text-gray-400 hover:text-sky-700 cursor-pointer"
-                                v-show="FiliereModel == true" @click="FiliereModel = null"><fas size="xl" icon="fa-arrow-left" /></span>
+                                v-show="FiliereModel == true" @click="FiliereModel = null">&#8592;</span>
                                 <span class="text-gray-400 hover:text-sky-700 cursor-pointer"
-                                v-show="FiliereModel == 'Module'" @click="FiliereModel = null"><fas size="xl" icon="fa-arrow-left" /></span>
+                                v-show="FiliereModel == 'Module'" @click="FiliereModel = null">&#8592;</span>
                                 <span></span>
                                 <span 
                                 class="hover:text-sky-700 text-gray-400 cursor-pointer" 
-                                @click="ModelX"><fas size="xl" icon="fa-xmark" /></span>
+                                @click="ModelX">X</span>
                             </div>
                             <div class="lg:w-[40rem] sm:w-[32rem] w-[25rem] text-center uppercase text-slate-800 font-bold text-xl py-3">
                                 Goupes du Formateur
@@ -168,7 +168,7 @@
                                     <div class="mb-8 px-5" v-for="(groupe,index) in groupesUser">
                                         <div class="h-10 border-b-2 border-sky-600 text-sky-800 text-base font-bold px-5">
                                             <span class="hover:text-sky-700 mx-2 text-gray-400 cursor-pointer" @click="deletGp(index,groupe.nom_gp)">
-                                                <fas size="lg" icon="fa-xmark" />
+                                                X
                                             </span>
                                             {{ groupe.nom_gp }}
                                         </div>
@@ -176,7 +176,7 @@
                                             <div v-for="(md,indx) in groupe.modules" >
                                                 <div :for="md.id">
                                                     <span class="hover:text-gray-800 mx-2 text-gray-400 cursor-pointer" @click="deletMd(index+'*'+indx)">
-                                                        <fas size="lg" icon="fa-xmark" />
+                                                        X
                                                     </span>
                                                     {{ md.nom_module }}
                                                 </div>
@@ -304,7 +304,7 @@
                             <span></span>
                             <span 
                             class="hover:text-sky-700 text-gray-400 cursor-pointer" 
-                            @click="Model2"><fas size="xl" icon="fa-xmark" /></span>
+                            @click="Model2">X</span>
                             
                         </div>
                         <div class="lg:w-[35rem] sm:w-[28rem] w-[22rem] text-center uppercase text-slate-800 font-bold text-xl py-3">

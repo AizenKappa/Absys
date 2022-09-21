@@ -135,8 +135,14 @@
             <li style="margin-bottom:5px;">Détail notes</li>
             <li style="margin-bottom:5px;">Feuille de présence</li>
         </ul>
-      
-            <h2 style="font-weight:bolder;text-align: center;margin-top:55px;font-size:22px;margin-bottom:70px">EXAMEN DE FIN DE MODULE - LOCAL</h2>
+           
+            <h2 style="font-weight:bolder;text-align: center;margin-top:55px;font-size:22px;margin-bottom:70px">EXAMEN DE FIN DE MODULE - 
+                @if($d['module']['regional'] == 1)
+                 <span>Régional</span>
+                @else
+                 <span>LOCAL</span>    
+                @endif
+            </h2>
 
         <div class="infoenv">
             <table style="font-size:15px;width: 600px;">
@@ -154,7 +160,7 @@
                 </tr>
                 <tr>
                     <th style="text-align: left"> Module</th>
-                    <th style="text-align: left">:&nbsp;{{$d['module']['nom_module']}}</th>
+                    <th style="text-align: left">:&nbsp;{{$d['module']['code_module']}}-{{$d['module']['nom_module']}}</th>
                 </tr>
                 <tr>
                     <th style="text-align: left">Groupe</th>
@@ -206,7 +212,7 @@
                 </tr>
                 <tr>
                     <th style="text-align: left"> Module</th>
-                    <th style="text-align: left">:&nbsp;{{$d['module']['nom_module']}}</th>
+                    <th style="text-align: left">:&nbsp;{{$d['module']['code_module']}}-{{$d['module']['nom_module']}}</th>
                 </tr>
                 <tr>
                     <th style="text-align: left">Groupe</th>
@@ -258,7 +264,7 @@
                 </tr>
                 <tr>
                     <th style="text-align: left"> Module</th>
-                    <th style="text-align: left">:&nbsp;{{$d['module']['nom_module']}}</th>
+                    <th style="text-align: left">:&nbsp;{{$d['module']['code_module']}}-{{$d['module']['nom_module']}}</th>
                 </tr>
                 <tr>
                     <th style="text-align: left">Groupe</th>

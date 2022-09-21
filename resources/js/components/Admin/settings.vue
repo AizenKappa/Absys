@@ -51,11 +51,11 @@
             <div class="text-xl font-bold uppercase text-black text-center mb-10">Nouvelle Anneé</div>
             <div  class="flex justify-around w-[40rem] px-[2rem]">
                 <span class=" text-xl font-semibold text-blue-700">
-                    <fas icon="user-graduate" /> Année scolaire : </span>
+                    Année scolaire : </span>
                 <input v-model="dyear"
                 @input="Error = ''"
                 class="py-1 w-32 px-2 shadow-md shadow-gray-300 rounded-sm outline-2 outline-sky-700" placeholder="Debut anneé" type="number" min="2021">
-                <span class=" text-sky-700"><fas size="lg" icon="fa-arrow-right" /></span>
+                <span class=" text-sky-700">&#8594;</span>
                 <input readonly :value="fyear"
                 class="py-1 px-2 w-32 shadow-md shadow-gray-300 rounded-sm outline-2 outline-sky-700" placeholder="Fin anneé" type="number" min="2022">
             </div>

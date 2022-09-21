@@ -22,10 +22,9 @@
 
     <div v-if="stagiaires" class="mt-4 flex w-full relative h-12 sm:scale-x-90 lg:scale-x-100 scale-x-75" >
         <router-link to="/addStag">
-            <div class="inline-flex items-center px-5 py-3  text-base font-semibold text-white absolute right-5
+            <div class="inline-flex items-center px-4 py-3  text-center text-base font-semibold text-white absolute right-5
                 justify-around select-none bg-blue-600 rounded-md cursor-pointer w-[10rem] hover:bg-blue-700">
-                Add stagiaire
-                <fas icon="plus" />
+                Ajouter un Stagiaire  
             </div>
         </router-link>
 

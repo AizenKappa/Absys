@@ -1236,6 +1236,8 @@ class FiliereController extends Controller
                 {
                     $array_modules[] = [
                         "nom_module" => $e[17],
+                        "code_module"=>strtoupper($e[16]),
+                        "regional"=>(strtoupper($e[18]) == "O" ? 1: 0 ) 
                     ];
 
                     $Modules[] = $e[17];

@@ -8,7 +8,7 @@
                 <!-- Filieres_Select -->
                 <div class="w-full lg:w-[45%] my-12">
                     <select name="filiere" id="filieres_select" v-model="selected" class="w-full font-medium h-[2rem]" v-on:change="getcontents()">
-                        <option class="hidden">choose your class</option>
+                        <option class="hidden" value="choose your class">Choisir votre classe</option>
                         <option  :value="fil.id" v-for="fil in filieres" :key="fil.id">{{fil.nom_fil}}</option>
                     </select>
                 </div>
@@ -17,7 +17,7 @@
                     <select name="groupe" v-if="selected != 'choose your class'" class="w-full font-medium h-[2rem]"
                     v-model="selected_gp"
                     v-on:change="getsts()">
-                        <option class="hidden">choose your groupe</option>
+                        <option class="hidden" value="choose your groupe">choisir votre groupe</option>
                         <option :value="gp.id" v-for="gp in groupes" :key="gp.id">{{gp.nom_gp}}</option>
                     </select>
                 </div>
@@ -29,7 +29,7 @@
             <div class="flex flex-col justify-center">
             <div class="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
                 <header class="px-5 py-4 border-b border-gray-200 w-full">
-                    <h2 class="font-semibold text-gray-800">{{nom_gp}}</h2>
+                    <h2 class="font-semibold text-gray-800">Groupe => {{nom_gp}}</h2>
                 </header>
                 <div class=" w-full">
                 <div class="overflow-y-scroll h-[23rem]">
@@ -37,13 +37,13 @@
                         <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
                             <tr>
                                 <th class="p-2 whitespace-nowrap">
-                                    <div class="font-semibold text-left">Name</div>
+                                    <div class="font-semibold text-left">Nom</div>
                                 </th>
                                 <th class="p-2 whitespace-nowrap">
-                                    <div class="font-semibold text-left">Prenom</div>
+                                    <div class="font-semibold text-left">Prénom</div>
                                 </th>
                                 <th class="p-2">
-                                    <div class="font-semibold text-left">Nombre d'heures d'absences NJ</div>
+                                    <div class="font-semibold text-left">Absences Non Justifier (heure)</div>
                                 </th>
                             </tr>
                         </thead>
@@ -64,7 +64,7 @@
                                 </td>
                             </tr>
                             <tr v-if="stagiaires.length == 0">
-                                <th class="h-[10rem] text-center font-semibold text-lg text-sky-800" colspan="3" >Aucune absence pour le justifier</th>
+                                <th class="h-[10rem] text-center font-semibold text-lg text-sky-800" colspan="3" >Aucune absence à justifier</th>
                             </tr>
                         </tbody>
                     </table>
@@ -79,7 +79,7 @@
             <div class="relative flex flex-col justify-center">
             <div class="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
                 <header class="px-5 py-4 border-b flex justify-between items-center border-gray-200 w-full">
-                    <h2 class="font-semibold text-gray-800"><span class="text-gray-400 hover:text-sky-700 cursor-pointer" @click="stepback"><fas size="lg" icon="fa-arrow-left" /></span></h2>
+                    <h2 class="font-semibold text-gray-800"><span class="text-gray-400 hover:text-sky-700 cursor-pointer" @click="stepback">&#8592;</span></h2>
                     <span class="font-semibold text-gray-800 pr-1" >{{nom_gp}}</span>
                 </header>
                 <div class="p-3 w-full">
@@ -158,9 +158,9 @@
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <select v-model="selected_motif" class="w-[10rem] h-7 font-medium shadow-lg shadow-gray-300" v-on:change="selected_motif_autre = null">
                 <option class="hidden">Motif</option>
-                <option>A.....</option>
-                <option>B.....</option>
-                <option>C.....</option>
+                <option>Maladie</option>
+                <option>Concours</option>
+                <option>Permis</option>
                 <option value="autre">Autre</option>
             </select>
             <input placeholder="Ecrire Le Motif" class="h-7 px-2 w-[10rem] shadow-lg shadow-gray-300" v-if="selected_motif == 'autre'" type="text" v-model="selected_motif_autre" >
@@ -173,7 +173,7 @@
             v-on:click="addJustifAndReset()" 
             class="text-2xl text-white rounded-full w-[3rem] h-[3rem]"
             :class="submitBtn == true ? 'button-on':'button-off'">
-            <fas icon="arrow-right" /></button>
+            &#8594;</button>
         </div>
     </div>
     
@@ -236,7 +236,7 @@
         close.value = null
 
         if(Object.keys(list_etats.value).length === 0){
-            /* show_error.value = true */
+            show_error.value = true
         }
     }
 
