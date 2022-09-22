@@ -89,7 +89,8 @@
                 display: table;
             }
             th{
-                word-wrap: break-word
+                word-wrap: break-word;
+                line-height: 30px;
             }
             .headerenv{
                 width: 600px;
@@ -146,7 +147,7 @@
 
         <div class="infoenv">
             <table style="font-size:15px;width: 600px;">
-                <tr>
+                <tr >
                     <th style="text-align: left"><p style="padding-right: 50px">Etablissement</p></th>
                     <th style="text-align: left">:&nbsp;ISTA EL HANK CASABLANCA</th>
                 </tr>
@@ -160,7 +161,7 @@
                 </tr>
                 <tr>
                     <th style="text-align: left"> Module</th>
-                    <th style="text-align: left">:&nbsp;{{$d['module']['code_module']}}-{{$d['module']['nom_module']}}</th>
+                    <th style="text-align: left">:&nbsp;{{$d['module']['code_module']}} - {{$d['module']['nom_module']}}</th>
                 </tr>
                 <tr>
                     <th style="text-align: left">Groupe</th>
@@ -174,7 +175,7 @@
         </div>
 
 
-        <h3 style="margin-left:100px; margin-top:60px">Formateur responsable:<strong>{{$d['prof']['nom_prof']}}</strong></h3>
+        <h3 style="margin-left:100px; margin-top:60px">Formateur responsable : <strong>{{$d['prof']['nom_prof']}}</strong></h3>
         
     </section>
     <section style="max-height: 1090px;height:1090px;border:1px solid transparent">
@@ -212,7 +213,7 @@
                 </tr>
                 <tr>
                     <th style="text-align: left"> Module</th>
-                    <th style="text-align: left">:&nbsp;{{$d['module']['code_module']}}-{{$d['module']['nom_module']}}</th>
+                    <th style="text-align: left">:&nbsp;{{$d['module']['code_module']}} - {{$d['module']['nom_module']}}</th>
                 </tr>
                 <tr>
                     <th style="text-align: left">Groupe</th>
@@ -226,7 +227,7 @@
         </div>
 
 
-        <h3 style="margin-left:100px; margin-top:60px">Formateur responsable:<strong>{{$d['prof']['nom_prof']}}</strong></h3>
+        <h3 style="margin-left:100px; margin-top:60px">Formateur responsable : <strong>{{$d['prof']['nom_prof']}}</strong></h3>
         
     </section>
     <section style="max-height: 1090px;height:1090px;border:1px solid transparent">
@@ -251,8 +252,10 @@
         <div class="infoenv">
             <table style="font-size:15px;width: 600px;">
                 <tr>
-                    <th style="text-align: left"><p style="padding-right: 50px">Etablissement</p></th>
-                    <th style="text-align: left">:&nbsp;ISTA EL HANK CASABLANCA</th>
+                    <th style="text-align: left">
+                        <p style="padding-right: 50px">Etablissement</p>
+                    </th>
+                    <th style="text-align: left;">:&nbsp;ISTA EL HANK CASABLANCA</th>
                 </tr>
                 <tr>
                     <th style="text-align: left">Niveau</th>
@@ -264,7 +267,7 @@
                 </tr>
                 <tr>
                     <th style="text-align: left"> Module</th>
-                    <th style="text-align: left">:&nbsp;{{$d['module']['code_module']}}-{{$d['module']['nom_module']}}</th>
+                    <th style="text-align: left">:&nbsp;{{$d['module']['code_module']}} - {{$d['module']['nom_module']}}</th>
                 </tr>
                 <tr>
                     <th style="text-align: left">Groupe</th>
@@ -278,7 +281,7 @@
         </div>
 
 
-        <h3 style="margin-left:100px; margin-top:60px">Formateur responsable:<strong>{{$d['prof']['nom_prof']}}</strong></h3>
+        <h3 style="margin-left:100px; margin-top:60px">Formateur responsable : <strong>{{$d['prof']['nom_prof']}}</strong></h3>
         
     </section>
     @endforeach

@@ -123,7 +123,7 @@ class SessionController extends Controller
                 {
                     if(!User::Where('email', $cin_email)->first()->active){
             
-                        return redirect('/')->with('suspended','Account suspended for this moment');
+                        return redirect('/')->with('suspended','Ce compte est suspendu pour le moment');
                     }
                     
                     
@@ -161,7 +161,7 @@ class SessionController extends Controller
                 {
                     if(!User::Where('cin', $cin_email)->first()->active  ){
             
-                        return redirect('/')->with('suspended','Account suspended for this moment');
+                        return redirect('/')->with('suspended','Ce compte est suspendu pour le moment');
                     }
                     
                     

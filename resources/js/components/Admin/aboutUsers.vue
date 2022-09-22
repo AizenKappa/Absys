@@ -20,8 +20,7 @@
             <router-link  to="/addUser">
                 <div class="inline-flex items-center px-5 py-3  text-base font-semibold text-white 
                     justify-around select-none bg-blue-600 rounded-md cursor-pointer w-[8.5rem] hover:bg-blue-700">
-                    Add User
-                    <fas icon="plus" />
+                    Utilisateur +
                 </div>
             </router-link>
 
@@ -48,7 +47,7 @@
                                     <div class="font-semibold text-left">Status</div>
                                 </th>
                                 <th class="p-2 whitespace-nowrap">
-                                    <div class="font-semibold text-left">Edit</div>
+                                    <div class="font-semibold text-left">Modifier</div>
                                 </th>
                                 <th class="p-2 whitespace-nowrap">
                                     <div class="font-semibold text-left">Delet</div>
@@ -75,11 +74,11 @@
                                     <div>
                                         <span v-if="user.status"
                                             class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                            Online
+                                            en ligne
                                         </span>
                                         <span v-if="!user.status"
                                             class="inline-flex px-2 text-xs font-semibold leading-5 text-gray-400 bg-gray-200 rounded-full">
-                                            Offline
+                                            hors ligne
                                         </span>
                                     </div>
                                 </td>
@@ -182,11 +181,22 @@
         axios.post('/updateActive',{ id: id , active: !element.checked})
         .then((response) => {
             element.checked = !element.checked
-            Swal.fire(
-                'Suprimé!',
-                'Le compte a été supprimé.',
+            if(element.checked){
+                Swal.fire(
+                'Activé!',
+                'Le compte a été activer.',
                 'success'
-            )
+                )
+            }
+            else{
+                
+                Swal.fire(
+                'Désactiver!',
+                'Le compte a été désactiver.',
+                'error'
+                )
+            }
+            
             
         }).catch((error) => {  Error() });
 
@@ -247,20 +257,21 @@
         })
     }
     const sweetactive = (id,element) => {
-        Swal.fire({
-            title: 'Êtes-vous sûr?',
-            text: "Vou ne pourrez pas revenir en arriére!",
-            icon: 'warning',
-            showCancelButton: true,
-            cancelButtonText:"Annuler",
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Supprimer!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                updateActive(id,element)
-            }
-        })
+        updateActive(id,element)
+        // Swal.fire({
+        //     title: 'Êtes-vous sûr?',
+        //     text: "Vou ne pourrez pas revenir en arriére!",
+        //     icon: 'warning',
+        //     showCancelButton: true,
+        //     cancelButtonText:"Annuler",
+        //     confirmButtonColor: '#3085d6',
+        //     cancelButtonColor: '#d33',
+        //     confirmButtonText: 'Désactiver!'
+        // }).then((result) => {
+        //     if (result.isConfirmed) {
+        //         updateActive(id,element)
+        //     }
+        // })
     }
 
     const Error = () => {

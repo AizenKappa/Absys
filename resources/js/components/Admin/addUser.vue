@@ -62,7 +62,7 @@
                     @input="checkinpute" title="pwd" v-model="newUser.password.text" type="password" name="pwd" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none -blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required>
                     <label
                     :class="newUser.password.check?'peer-focus:text-blue-600':'peer-focus:text-red-600'"
-                    for="pwd" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mot de pass</label>
+                    for="pwd" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mot de passe</label>
                     <span v-if="!newUser.password.check" class="text-sm text-red-600 font-medium">{{ pwdError }}</span>
                 </div>
                 <!-- Repeate password -->
@@ -72,7 +72,7 @@
                     @input="checkinpute" title="rpwd" v-model="newUser.rpassword.text" type="password" name="r-pwd" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none -blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required>
                     <label
                     :class="newUser.rpassword.check?'peer-focus:text-blue-600':'peer-focus:text-red-600'"
-                    for="r-pwd" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Répéter le mot de pass</label>
+                    for="r-pwd" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirmer le mot de passe</label>
                     <span v-if="!newUser.rpassword.check" class="text-sm text-red-600 font-medium">{{ rpwdError }}</span>
                 </div>
 
@@ -513,7 +513,7 @@
             role:newUser.role.text,modules:slectedMdIds.value,})
         .then((response) => {  
 
-            if(response.data.message !== "user added successe" ){
+            if(response.data.message !== "Utilisateur ajouté avec succès" ){
                 if(response.data.champ == "email"){
 
                     newUser.email.check = false

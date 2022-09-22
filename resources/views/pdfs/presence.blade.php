@@ -115,7 +115,7 @@
 
         </div> --}}
         <div >
-            <img src="{{public_path("/img/testHeader.png")}}" style="height:120px;">
+            <img src="{{public_path("/img/testHeader.jpeg")}}" style="height:120px;">
         </div>
         <div>
             <h6 style="text-align:center">{{$data["institut"]}}</h6>
@@ -244,7 +244,7 @@
         </table>
         <strong style="font-size:12px;margin-top: 20px">Formateur &nbsp;&nbsp;&nbsp;:&nbsp;................................</strong>
         <div style="position: absolute;top:960px;left:43px;">
-            <img src="{{public_path("/img/footer.png")}}" style="height:90px;">
+            <img src="{{public_path("/img/footer.jpeg")}}" style="height:90px;">
         </div>
     </section>
 

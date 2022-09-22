@@ -441,7 +441,7 @@
         })
     }
     const errorNet = () => {
-        toast.error("Error network" , {
+        toast.error("Problème de réseau" , {
             position: "bottom-right",
             timeout: 3000,
             closeOnClick: true,
@@ -485,7 +485,7 @@
                 
                 Swal.fire(
                 'Suprimé!',
-                'Le compte a été supprimé.',
+                'L\'absence est supprimée.',
                 'success'
                 )
             }

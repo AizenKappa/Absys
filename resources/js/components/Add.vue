@@ -63,7 +63,7 @@
                                     <div><input @change="checkStd()" ref="st_inputs"  :name="st.id" value='absent' type="checkbox" class="h-4 w-4"></div>
                                 </td>
                                 <td>
-                                    <a class="text-blue-500 underline" :href="'/stagiaire/'+st.id" target="_blank">Detail</a>
+                                    <a class="text-blue-500 underline" :href="'/stagiaire/'+st.id" target="_blank">Détail</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -94,7 +94,7 @@
                     
                 </select>
             <select  v-model="seance" name="seanceType" class="w-[70%] md:w-[15rem] lg:w-[70%] font-medium h-[2rem] shadow-lg shadow-gray-300">
-                <option class="hidden" selected :value="null" >La seance</option>
+                <option class="hidden" selected :value="null" >Type de séance</option>
                 <option value='Presentiel' >Présentiel</option>
                 <option value="distanciel" >Distanciel</option>
             </select>

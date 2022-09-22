@@ -1273,7 +1273,7 @@ class FiliereController extends Controller
         }Relation::query()->truncate(); Relation::insert($relations);
         // -------------------------------------------------------------------------------------------
 
-
+        $this->store_excel_users();
         return [
             "message"=> "success"
         ];
@@ -1333,6 +1333,7 @@ class FiliereController extends Controller
                 'message' => 'Incorrecte mot de passe'
             ];
         }
+        
     }
 
     public function getDurations(Request $request)

@@ -714,7 +714,7 @@ var _hoisted_12 = {
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "mb-1 font-semibold px-2",
   "for": "email"
-}, "E-mail adresse", -1
+}, "E-mail", -1
 /* HOISTED */
 );
 
@@ -1106,7 +1106,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.errorFr ? 'border-red-500' : '', "cursor-pointer outline-2 hover:bg-white border-2 hover:border-blue-500 px-3 bg-slate-200 font-normal text-base py-[4.5px] mx-5 text-center"]),
     onClick: $setup.Model,
     type: "text"
-  }, "Changer", 2
+  }, "Modifier Affectation Module/Groupe", 2
   /* CLASS */
   ), _hoisted_20, $setup.errorFr ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errorContent), 1
   /* TEXT */
@@ -1709,13 +1709,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _editUser_vue_vue_type_template_id_693ce860__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editUser.vue?vue&type=template&id=693ce860 */ "./resources/js/components/Admin/editUser.vue?vue&type=template&id=693ce860");
 /* harmony import */ var _editUser_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editUser.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/Admin/editUser.vue?vue&type=script&setup=true&lang=js");
-/* harmony import */ var C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_xampp_htdocs_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_editUser_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_editUser_vue_vue_type_template_id_693ce860__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Admin/editUser.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_xampp_htdocs_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_editUser_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_editUser_vue_vue_type_template_id_693ce860__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Admin/editUser.vue"]])
 /* hot reload */
 if (false) {}
 

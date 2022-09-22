@@ -226,7 +226,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   role: newUser.role.text,
                   modules: slectedMdIds.value
                 }).then(function (response) {
-                  if (response.data.message !== "user added successe") {
+                  if (response.data.message !== "Utilisateur ajouté avec succès") {
                     if (response.data.champ == "email") {
                       newUser.email.check = false;
                       emailError.value = response.data.message;
@@ -1054,7 +1054,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newUser.password.text]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.newUser.password.check ? 'peer-focus:text-blue-600' : 'peer-focus:text-red-600', "peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"]),
     "for": "pwd"
-  }, "Mot de pass", 2
+  }, "Mot de passe", 2
   /* CLASS */
   ), !$setup.newUser.password.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.pwdError), 1
   /* TEXT */
@@ -1074,7 +1074,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newUser.rpassword.text]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.newUser.rpassword.check ? 'peer-focus:text-blue-600' : 'peer-focus:text-red-600', "peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"]),
     "for": "r-pwd"
-  }, "Répéter le mot de pass", 2
+  }, "Confirmer le mot de passe", 2
   /* CLASS */
   ), !$setup.newUser.rpassword.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.rpwdError), 1
   /* TEXT */
@@ -1649,13 +1649,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _addUser_vue_vue_type_template_id_205bb6f1__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./addUser.vue?vue&type=template&id=205bb6f1 */ "./resources/js/components/Admin/addUser.vue?vue&type=template&id=205bb6f1");
 /* harmony import */ var _addUser_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./addUser.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/Admin/addUser.vue?vue&type=script&setup=true&lang=js");
-/* harmony import */ var C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_xampp_htdocs_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_Users_Hannibal_Desktop_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_addUser_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_addUser_vue_vue_type_template_id_205bb6f1__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Admin/addUser.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_xampp_htdocs_Absys_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_addUser_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_addUser_vue_vue_type_template_id_205bb6f1__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Admin/addUser.vue"]])
 /* hot reload */
 if (false) {}
 

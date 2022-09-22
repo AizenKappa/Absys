@@ -31,7 +31,7 @@
                 </div>
                 <!-- Email -->
                 <div class="grid grid-cols-1 gap-1">
-                    <label class="mb-1 font-semibold px-2" for="email">E-mail adresse</label>
+                    <label class="mb-1 font-semibold px-2" for="email">E-mail</label>
                     <input
                     @input="checkinpute"
                     :class="user.email.check?'outline-blue-500':'outline-red-500'"
@@ -59,7 +59,7 @@
                     <span
                     :class="errorFr?'border-red-500':''"
                     @click="Model" type="text" class=" cursor-pointer outline-2 hover:bg-white border-2 hover:border-blue-500 px-3  bg-slate-200
-                    font-normal text-base py-[4.5px] mx-5 text-center">Changer</span><br>
+                    font-normal text-base py-[4.5px] mx-5 text-center">Modifier Affectation Module/Groupe</span><br>
                     <div v-if="errorFr" class="text-sm text-red-600 font-medium mt-2">{{errorContent}}</div>
 
                 </div>

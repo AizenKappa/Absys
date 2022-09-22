@@ -8,7 +8,7 @@
                 <!-- Filieres_Select -->
                 <div class="w-full lg:w-[45%] my-12">
                     <select name="filiere" id="filieres_select" v-model="selected" class="w-full font-medium h-[2rem]" v-on:change="getcontents()">
-                        <option class="hidden" value="choose your class">Choisir votre classe</option>
+                        <option class="hidden" value="choose your class">Filière</option>
                         <option  :value="fil.id" v-for="fil in filieres" :key="fil.id">{{fil.nom_fil}}</option>
                     </select>
                 </div>
@@ -17,7 +17,7 @@
                     <select name="groupe" v-if="selected != 'choose your class'" class="w-full font-medium h-[2rem]"
                     v-model="selected_gp"
                     v-on:change="getsts()">
-                        <option class="hidden" value="choose your groupe">choisir votre groupe</option>
+                        <option class="hidden" value="choose your groupe">Groupe</option>
                         <option :value="gp.id" v-for="gp in groupes" :key="gp.id">{{gp.nom_gp}}</option>
                     </select>
                 </div>

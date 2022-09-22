@@ -20,12 +20,12 @@
         <!-- Period_Select -->
         <div class="w-full px-10 grid grid-cols-1 gap-6 lg:flex md:justify-between">
             <select v-on:change="periodChanged" class=" w-full sm:w-[50%] md:w-[15rem] h-7" v-model="selected_period">
-                <option value="year" selected>L'annee entiere</option>
-                <option value="week">Cette semaine</option>
-                <option value="subweek">La semain precedent</option>
-                <option value="month">Ce mois</option>
-                <option value="submonth">Le mois precedent</option>
-                <option value="limit">Limitation</option>
+                <option value="year" selected>L'année entière</option>
+                <option value="week">La semaine courante</option>
+                <option value="subweek">La semaine précédente</option>
+                <option value="month">Le mois courant</option>
+                <option value="submonth">Le mois précédent</option>
+                <option value="limit">Autres</option>
             </select>
             <div v-if="selected_period == 'limit'" class="sm:w-[28rem] w-[100%] place-items-center gap-4 grid grid-cols-1 sm:flex justify-between items-center">
                 <input @change="inputeDate" v-model="period_debut" class="sm:w-[12rem] w-[60%] px-2" type="date" required>
@@ -52,27 +52,27 @@
         <div class="sm:flex sm:justify-center px-10 sm:px-0 mt-10 lg:scale-100 md:scale-90 sm:scale-75 gap-5 place-content-center grid grid-cols-1 scale-90">
             <a
                 @click="activeHoure = 'NJ'"
-                class="px-6 py-2.5 text-white sm:w-auto w-[100%]  font-medium text-xs uppercase rounded flex select-none
+                class="px-6 py-2.5 text-white sm:w-auto w-[100%]  font-medium text-xs  rounded flex select-none
                 items-center whitespace-nowrap  cursor-pointer active:bg-blue-800 active:shadow-lg"
                 :class="activeHoure == 'NJ'?'bg-blue-800 shadow-lg':'bg-blue-600 shadow-md hover:bg-blue-700'"
                 >
-                Les Heures non justifier
+               Absences non justifiers
             </a>
             <a
                 @click="activeHoure = 'TT'"
-                class="px-6 py-2.5 text-white sm:w-auto w-[100%]  font-medium text-xs uppercase rounded flex select-none
+                class="px-6 py-2.5 text-white sm:w-auto w-[100%]  font-medium text-xs  rounded flex select-none
                 items-center whitespace-nowrap  cursor-pointer active:bg-blue-800 active:shadow-lg sm:mx-2 lg:mx-8"
                 :class="activeHoure == 'TT'?'bg-blue-800 shadow-lg':'bg-blue-600 shadow-md hover:bg-blue-700'"
                 >
-                Tous les Heures
+                Absences justifiers et non justifiers
             </a>
             <a
                 @click="activeHoure = 'J'"
-                class="px-6 py-2.5 sm:w-auto w-[100%] text-white font-medium text-xs uppercase rounded flex select-none
+                class="px-6 py-2.5 sm:w-auto w-[100%] text-white font-medium text-xs  rounded flex select-none
                 items-center whitespace-nowrap cursor-pointer active:bg-blue-800 active:shadow-lg"
                 :class="activeHoure == 'J'?'bg-blue-800 shadow-lg':'bg-blue-600 shadow-md hover:bg-blue-700'"
                 >
-                Les Heures justifier
+                Absences justifiers
             </a>
         </div>
 

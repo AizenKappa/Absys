@@ -25,7 +25,7 @@
 <body>
     <section style="max-height: 1090px;border:1px solid transparent">
         <div >
-            <img src="{{public_path("/img/testHeader.png")}}" style="height:120px;">
+            <img src="{{public_path("/img/testHeader.jpeg")}}" style="height:120px;">
         </div>
         <h3>{{$dataa["info"]["stFullName"]}}<br>{{ $dataa["info"]["groupe_name"] }}</h3>
 
@@ -116,7 +116,7 @@
     @endif
     </table>
     <div style="position: absolute;top:960px;left:43px;">
-        <img src="{{public_path("/img/footer.png")}}" style="height:90px;">
+        <img src="{{public_path("/img/footer.jpeg")}}" style="height:90px;">
     </div>
     </section>
    

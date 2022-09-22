@@ -6,7 +6,7 @@
                  
 
         <div class="flex flex-row justify-between p-2 uppercase text-xs font-semibold">
-            <span class=" text-blue-900 m-2 select-none">&#8594; Tous les Heures : {{data.total_h}} h </span>
+            <span class=" text-blue-900 m-2 select-none">&#8594; Absences totales : {{data.total_h}} h </span>
             <span @click="Model('open')" class="mt-2 text-gray-300 hover:text-sky-700"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
   <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
@@ -30,7 +30,7 @@
                     <span
                     @click="mostAbs(data.groupe.id)" 
                     class="text-sm text-gray-400 hover:text-cyan-600 cursor-pointer">
-                    &#8594; Most stagiaire absences</span>
+                    &#8594; Stagiaires avec plus d'absences</span>
                         
                     <span class="hover:text-sky-700 text-gray-400 cursor-pointer" @click="Model('close')">X</span>
                     

@@ -31,10 +31,10 @@
                 </template>
 
                 <router-link to="/SearchByDate" @click="$emit('update:modelValue',check())">
-                    <span class="text-center ">Les Absences</span>
+                    <span class="text-center ">Absences Par Période</span>
                 </router-link>
                 <router-link to="/detail" @click="$emit('update:modelValue',check())">
-                    <span class="text-center ">Detail Class</span>
+                    <span class="text-center ">Absences Par Filière</span>
                 </router-link>
                 
             </div>
@@ -43,10 +43,10 @@
         <div class="card">
             <hr class="px-16 my-5 mt-6">
             
-            <router-link to="/impressions" @click="$emit('update:modelValue',check())">
-                <h2 class="px-6 mb-4 text-xs uppercase font-bold text-gray-500 ">Impressions</h2>
+            <router-link class="text-gray-500" to="/impressions" @click="$emit('update:modelValue',check())">
+                <h2 class="pl-6">Impressions</h2>
             </router-link>
-    </div>
+        </div>
 
     <!-- --second card -->
 
@@ -59,8 +59,7 @@
 
 
                     <router-link to="/User" @click="$emit('update:modelValue',check())">
-                        <span>Utilisateurs
-                        </span>
+                        <span>Utilisateurs</span>
                     </router-link>
                     
                     <router-link to="/editEtat" @click="$emit('update:modelValue',check())">

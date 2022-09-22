@@ -2,14 +2,14 @@
 
     <div class="w-full lg:w-[45%] my-12 mx-5">
         <select   class="w-full font-medium h-[2rem] outline-2 outline-sky-600" @change="chartfilter"  v-model="selectedFil" >
-            <option    value="all" selected>Tous les Filieres</option>
+            <option    value="all" selected>Tous les Filières</option>
             <option  :value="fil.id" v-for="fil in fillWithAbs" :key="fil.id">{{fil.nom_fil}}</option>
         </select>
     </div>
     <select class="h-[2rem] w-[15rem] font-medium mb-10 mx-5 outline-2 outline-sky-600"  @change="chartSort" v-model="sort" >
-        <option value="noSort" class="hidden" selected>Trieé L'affichae des heures</option>
-        <option value="total_h">Tous les heures</option>
-        <option value="nj_h">Les heures non justifiées</option>
+        <option value="noSort" class="hidden" selected>Trieé par type d'absence</option>
+        <option value="total_h">Absences totales</option>
+        <option value="nj_h">Absences non justifiées</option>
     </select>
 
     <template v-if="classDetails == null">
