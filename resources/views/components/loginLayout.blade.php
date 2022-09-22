@@ -86,7 +86,7 @@
             <div class="flex justify-between text-sm font-semibold text-slate-800 mx-5 mt-[5rem]">
               <span >&copy;2022 ABSYS Réalisé par : <span class="font-bold">Hakim assim | Anass dabibe</span> 
               Encadré par Mr Najil Kamal</span>
-              <span>Supervisé par Mr Rabii Najmeddine</span>
+              <span>Supervisé par Mr Rabii Nejmeddine</span>
             </div>
               
           </div>

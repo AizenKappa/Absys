@@ -8,10 +8,10 @@
             <div class="row-start-2 row-end-3 xl:my-10 mx-8 lg:w-[40rem] w-[95%] sm:w-[30rem] bg-gray-100 shadow-lg shadow-gray-300 rounded-md relative">
                 <!-- header -->
                 <div class="bg-white text-xl px-6 py-8 text-gray-700 font-bold w-full rounded-md">
-                    My account
+                    Profile
                 </div>
                 <div class="uppercase px-6 pt-6 text-base text-gray-400 font-bold">
-                    user information
+                    Détail du compte
                 </div>
                 <!-- Inputes -->
                 <div class="grid grid-cols-1 w-full lg:grid-cols-2 gap-5 pb-12 pt-8 px-10 place-items-start">
@@ -23,11 +23,11 @@
                         <span class="error_message" v-if="!user.first.check">Nom invalide</span>
                     </label>
                     <label class="w-full">
-                        <div class="mb-2 text-sm text-slate-600 font-bold">Prenom</div>
+                        <div class="mb-2 text-sm text-slate-600 font-bold">Prénom</div>
                         <input
                         v-on:input="checkinpute"
                         :class="!user.last.check ?'inpute-error':''" title="last"  v-model="user.last.text" class="shadow-md rounded-md py-6 px-3 outline-2 outline-cyan-500 shadow-gray-300 w-[100%] lg:w-[16rem] h-[2rem]" placeholder="Prenom" type="text">
-                        <span class="error_message" v-if="!user.last.check">Prenom invalide</span>
+                        <span class="error_message" v-if="!user.last.check">Prénom invalide</span>
                     </label>
                     <label class="w-full">
                         <div class="mb-2 text-sm text-slate-600 font-bold">CIN</div>
@@ -49,7 +49,7 @@
                     <!-- Password -->
                     <div class="pt-8 px-5 mb-10">
                         <div class="grid grid-cols-1">
-                            <label for="pwd" class="mb-2 text-sm text-slate-600 font-bold">PASSWORD</label>
+                            <label for="pwd" class="mb-2 text-sm text-slate-600 font-bold">Mot de passe</label>
                             <span class="text-sm text-slate-400">// Entrez le mot de pass pour enregistrer les modifications</span>
                             <input id="pwd" v-model="user.pwd.text" type="password" title="pwd"
                             :disabled = "disablePwd"
@@ -63,7 +63,7 @@
                     <div class="flex justify-between pb-5 px-3 sm:px-5 items-center">
                         <div
                         @click="Model"
-                        class=" hover:text-blue-700 text-sm font-semibold cursor-pointer text-blue-600">Changer votre mot de pass ?</div>
+                        class=" hover:text-blue-700 text-sm font-semibold cursor-pointer text-blue-600">Changer votre mot de passe ?</div>
                         <button
                         v-on:click="checkuser()"
                         class="bg-transparent active:bg-blue-500 text-blue-700 font-semibold active:text-white py-2 px-6 border border-blue-500 active:border-transparent rounded">

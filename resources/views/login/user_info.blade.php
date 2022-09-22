@@ -16,7 +16,7 @@
                 <x-contents.button type='submit'/>
                     @if ($errors->any())
                         <div class="w-full text-center bg-red-100 py-2 mt-3 rounded-md text-md text-red-500">
-                            Les donnees sont incorecte         
+                            Les données sont incorrectes         
                         </div>
                     @endif
                 </div>

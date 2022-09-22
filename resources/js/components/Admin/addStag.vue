@@ -51,7 +51,7 @@
                     @input="checkinpute" title="num" v-model="newUser.num.text" type="text" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none -blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required>
                     <label
                     :class="newUser.num.check?'peer-focus:text-blue-600':'peer-focus:text-red-600'"
-                    for="num" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Numero Personnelle</label>
+                    for="num" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Numéro Personnel</label>
                     <span v-if="!newUser.num.check" class=" text-red-600">{{ numError }}</span>
                 </div>
 
@@ -77,7 +77,7 @@
                     </div>
                 </div>
 
-                <div @click="gpFieldErr = false" v-show="newUser.fil.text != 'choose your class'"  class="relative w-full mb-8 group z-10">
+                <div @click="gpFieldErr = false" v-show="newUser.fil.text != 'Filière'"  class="relative w-full mb-8 group z-10">
                    <div class="relative w-full mb-8 group z-10">
                         <div @click="dropdownGp = !dropdownGp" 
                         class="dropdown-head border-b-2"
@@ -109,7 +109,7 @@
                     title="currentpwd" v-model="AuthPwd.text" type="password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none -blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required>
                     <label
                     :class="AuthPwd.check?'text-red-600':'peer-focus:text-blue-600'"
-                    class="peer-focus:font-medium absolute text-md text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mot de Pass</label>
+                    class="peer-focus:font-medium absolute text-md text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mot de Passe</label>
                     <span v-if="AuthPwd.check" class=" text-red-600"> {{ AuthPwd.error }} </span>
                 </div>
             <!-- Submit btn -->
@@ -138,8 +138,8 @@
         prenom : { text:"", check:true, reg: /^[a-z\s]{3,}$/i},
         mat : { text:"", check:true, reg: /^[\d\\]{6,}$/i },
         num : { text:"", check:true, reg: /^[0-9]{10}$/i },
-        fil : { text:"choose your class", check:true },
-        gp : { text:"choose your groupe", check:true, value:null }
+        fil : { text:"Filière", check:true },
+        gp : { text:"Groupe", check:true, value:null }
     })
 
     const AuthPwd = reactive({
@@ -148,7 +148,7 @@
 
 
     const nomError = ref("Nom invalide")
-    const prenomError = ref("Prenom invalide")
+    const prenomError = ref("Prénom invalide")
     const matError = ref("Matricule invalide")
     const numError = ref("Numero invalide")
     const gpFieldErr = ref(false)
@@ -245,7 +245,7 @@
         console.log(response.data.message)
 
 
-        if(response.data.message !== "stagiaire added successe" ){
+        if(response.data.message !== "Stagiaire ajouté avec succès" ){
             if(response.data.champ == "mat"){
 
                 newUser.mat.check = false
@@ -285,8 +285,8 @@
             newUser[elem].text = ""
 
         }
-        newUser.gp.text= "choose your class"
-        newUser.fil.text= "choose your groupe"
+        newUser.gp.text= "Filière"
+        newUser.fil.text= "Groupe"
         newUser.gp.value = null
         AuthPwd.text = ""
     }
@@ -294,7 +294,7 @@
     const handleDropFil = (event) => {
         dropdownFil.value = false
         newUser.fil.text = event.target.innerHTML
-        newUser.gp.text = "choose your groupe"
+        newUser.gp.text = "Groupe"
         getgroupes(event.target.value)
     }
     const handleDropGp = (event) => {

@@ -16,7 +16,7 @@
             <form method="POST" action="/pwd_reset">
                 @csrf
                 <p class="px-2 text-sm font-semibold mb-3 mt-8">
-                    Créez un mot de passe sécurisé
+                    Créer un mot de passe sécurisé
                 </p>
                 
                 <div  class="grid grid-cols-1 gap-4 mb-5">
@@ -26,7 +26,7 @@
                 <x-contents.button type='submit'/>
                     @if (session()->has('error'))
                         <div class="w-full text-center bg-red-100 py-2 mt-3 rounded-md text-md text-red-500">
-                            Mot de passe incorrect         
+                            Mot de passe incorrecte         
                         </div>
                     @endif
                 </div>

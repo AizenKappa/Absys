@@ -59,11 +59,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         reg: /^[0-9]{10}$/i
       },
       fil: {
-        text: "choose your class",
+        text: "Filière",
         check: true
       },
       gp: {
-        text: "choose your groupe",
+        text: "Groupe",
         check: true,
         value: null
       }
@@ -74,7 +74,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       error: ""
     });
     var nomError = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("Nom invalide");
-    var prenomError = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("Prenom invalide");
+    var prenomError = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("Prénom invalide");
     var matError = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("Matricule invalide");
     var numError = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("Numero invalide");
     var gpFieldErr = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
@@ -171,7 +171,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
                 console.log(response.data.message);
 
-                if (response.data.message !== "stagiaire added successe") {
+                if (response.data.message !== "Stagiaire ajouté avec succès") {
                   if (response.data.champ == "mat") {
                     newUser.mat.check = false;
                     matError.value = response.data.message;
@@ -217,8 +217,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         newUser[elem].text = "";
       }
 
-      newUser.gp.text = "choose your class";
-      newUser.fil.text = "choose your groupe";
+      newUser.gp.text = "Filière";
+      newUser.fil.text = "Groupe";
       newUser.gp.value = null;
       AuthPwd.text = "";
     };
@@ -226,7 +226,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var handleDropFil = function handleDropFil(event) {
       dropdownFil.value = false;
       newUser.fil.text = event.target.innerHTML;
-      newUser.gp.text = "choose your groupe";
+      newUser.gp.text = "Groupe";
       getgroupes(event.target.value);
     };
 
@@ -482,7 +482,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newUser.num.text]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.newUser.num.check ? 'peer-focus:text-blue-600' : 'peer-focus:text-red-600', "peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"]),
     "for": "num"
-  }, "Numero Personnelle", 2
+  }, "Numéro Personnel", 2
   /* CLASS */
   ), !$setup.newUser.num.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.numError), 1
   /* TEXT */
@@ -541,7 +541,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $setup.dropdownGp]])])])], 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $setup.newUser.fil.text != 'choose your class']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Auth Password "), _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $setup.newUser.fil.text != 'Filière']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Auth Password "), _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     onInput: _cache[8] || (_cache[8] = function ($event) {
       return $setup.AuthPwd.check = false;
     }),
@@ -557,7 +557,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* CLASS, HYDRATE_EVENTS */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.AuthPwd.text]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.AuthPwd.check ? 'text-red-600' : 'peer-focus:text-blue-600', "peer-focus:font-medium absolute text-md text-gray-500 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"])
-  }, "Mot de Pass", 2
+  }, "Mot de Passe", 2
   /* CLASS */
   ), $setup.AuthPwd.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.AuthPwd.error), 1
   /* TEXT */

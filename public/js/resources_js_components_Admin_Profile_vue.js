@@ -492,7 +492,7 @@ var _hoisted_2 = {
 var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "bg-white text-xl px-6 py-8 text-gray-700 font-bold w-full rounded-md"
-  }, " My account ", -1
+  }, " Profile ", -1
   /* HOISTED */
   );
 });
@@ -500,7 +500,7 @@ var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "uppercase px-6 pt-6 text-base text-gray-400 font-bold"
-  }, " user information ", -1
+  }, " Détail du compte ", -1
   /* HOISTED */
   );
 });
@@ -531,7 +531,7 @@ var _hoisted_9 = {
 var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "mb-2 text-sm text-slate-600 font-bold"
-  }, "Prenom", -1
+  }, "Prénom", -1
   /* HOISTED */
   );
 });
@@ -583,7 +583,7 @@ var _hoisted_20 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "pwd",
     "class": "mb-2 text-sm text-slate-600 font-bold"
-  }, "PASSWORD", -1
+  }, "Mot de passe", -1
   /* HOISTED */
   );
 });
@@ -786,7 +786,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "text"
   }, null, 34
   /* CLASS, HYDRATE_EVENTS */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.user.last.text]]), !$setup.user.last.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_11, "Prenom invalide")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.user.last.text]]), !$setup.user.last.check ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_11, "Prénom invalide")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     onInput: $setup.checkinpute,
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([!$setup.user.cin.check ? 'inpute-error' : '', "shadow-md rounded-md py-6 px-3 outline-2 outline-cyan-500 shadow-gray-300 w-[100%] lg:w-[16rem] h-[2rem]"]),
     title: "cin",
@@ -832,7 +832,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Button "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     onClick: $setup.Model,
     "class": "hover:text-blue-700 text-sm font-semibold cursor-pointer text-blue-600"
-  }, "Changer votre mot de pass ?"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, "Changer votre mot de passe ?"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[5] || (_cache[5] = function ($event) {
       return $setup.checkuser();
     }),

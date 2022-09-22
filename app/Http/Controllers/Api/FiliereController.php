@@ -1312,25 +1312,25 @@ class FiliereController extends Controller
 
             $search = Stagiaire::Where('year',$year)->Where('matricule_st',$request->mat)->count();
 
-            if($search > 0) { return ['champ' => 'mat' ,'message' => 'Cet Matricule déja existe']; }
+            if($search > 0) { return ['champ' => 'mat' ,'message' => 'Ce matricule est déjà utilisé. Essayez un autre !']; }
 
             
             Stagiaire::create([
                 'matricule_st' => $request->mat,
-                'nom_st' => $request->first,
-                'prenom_st' => $request->last,
+                'nom_st' => strtoupper( $request->first),
+                'prenom_st' => strtoupper( $request->last   ) ,
                 'groupe_id' => $request->gp,
                 'numero_personnelle' => $request->num
             ]);
 
             return [
-                'message' => 'stagiaire added successe'
+                'message' => 'Stagiaire ajouté avec succès'
                 
             ];
         }else{
             return [ 
                 'champ' => 'password' ,
-                'message' => 'Incorrecte mot de passe'
+                'message' => 'Mot de passe incorrect'
             ];
         }
         
