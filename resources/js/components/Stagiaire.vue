@@ -238,7 +238,7 @@
               </th>
               <th scope="col" class="text-sm md:text-md border border-black
                font-medium  md:px-2 md:py-1 text-center">
-               Heure total
+               Absences totales
               </th>
              
             </tr>
@@ -394,6 +394,30 @@
                                 position:"end"
                             },
                         },
+                        labels: 
+                        {
+                            render: function(args) 
+                            {
+                                if (args.value == 0) {
+                                    return ""
+                                }else {
+                                    return args.value + ' H';
+                                }
+                            },      
+                            fontStyle: "bolder",
+                            showZero: true,
+                        },
+                        tooltip:{
+                            callbacks:{
+                                label: function(context) {
+                                    
+                                    console.log(context);
+                                    return context.label + " : " +context.formattedValue + " h";
+                            }
+                            }
+                            
+                        }
+                        
                     }
             }
 

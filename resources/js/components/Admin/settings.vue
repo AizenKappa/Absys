@@ -13,21 +13,31 @@
             <form 
                 class="bg-white p-5 grid grid-cols-1 gap-4 place-items-center w-[40rem] rounded-sm"
                 @submit.prevent="sweetalert">
-                <div class="uppercase font-bold ">Changer les fichiers excel</div>
+                <div class="relative w-full">
+                        <p class="absolute top-0 left-0 cursor-pointer text-black hover:text-[#0EA5E9]" @click="readyPlates=false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+                <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+                </svg>
+                        </p>
+                        <p class="text-xl font-bold uppercase text-black text-center mb-10">
+                            Importation des données
+                        </p>
+                </div>
+                
                 <div class="grid place-items-center gap-5 w-[33rem]">
                     <div class="relative w-full">
-                        <span class="font-semibold text-xs ml-2">Entrez la baseplate</span>
+                        <span class="font-semibold text-xs ml-2">Charger la baseplate des stagiaires</span>
                         <input id="custome_inpute" @change="handleBase" required class="form-control
                         w-full text-lg font-normal text-gray-700 border border-solid border-gray-300 rounded
                         focus:text-gray-700 focus:border-blue-600 focus:outline-none px-2 py-1.5" type="file">
-                        <span v-if="bwrong" class="absolute top-4 right-5 text-red-500">Wrong baseplate !!</span>
+                        <span v-if="bwrong" class="absolute top-4 right-5 text-red-500">Fichier invalid !!</span>
                     </div>
                     <div class="relative w-full">
-                        <span class="font-semibold text-xs ml-2">Entrez l'avancement</span>
+                        <span class="font-semibold text-xs ml-2">Charger l'avancement des modules/formateur</span>
                         <input id="custome_inpute" required  @change="handleAvant" class="form-control
                         w-full text-lg font-normal text-gray-700 border border-solid border-gray-300 rounded
                         focus:text-gray-700 focus:border-blue-600 focus:outline-none px-2 py-1.5" type="file">
-                        <span v-if="awrong" class="absolute top-4 right-5 text-red-500">Wrong avant !!</span>
+                        <span v-if="awrong" class="absolute top-4 right-5 text-red-500">Fichier invalid!!</span>
                     </div>
                 </div>
                 <button type="submit" class="rounded text-md px-5 py-2.5 mr-2 inline-flex items-center w-[8rem]"
@@ -39,7 +49,7 @@
                         <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
                         </svg>
                     </span>
-                    <span v-if="loading" class="text-center">Loading...</span>
+                    <span v-if="loading" class="text-center">Chargement...</span>
                     <div v-if="!loading"  class="text-center w-full">Upload</div>
                 </button>
             </form>
@@ -48,16 +58,18 @@
 
         <!-- Upload base plates -->
         <template v-else>
-            <div class="text-xl font-bold uppercase text-black text-center mb-10">Nouvelle Anneé</div>
+            <p class="text-xl font-bold uppercase text-black text-center mb-10">
+                Nouvelle Année
+            </p>
             <div  class="flex justify-around w-[40rem] px-[2rem]">
                 <span class=" text-xl font-semibold text-blue-700">
                     Année scolaire : </span>
                 <input v-model="dyear"
                 @input="Error = ''"
-                class="py-1 w-32 px-2 shadow-md shadow-gray-300 rounded-sm outline-2 outline-sky-700" placeholder="Debut anneé" type="number" min="2021">
+                class="py-1 w-32 px-2 shadow-md shadow-gray-300 rounded-sm outline-2 outline-sky-700" placeholder="année 1" type="number" min="2021">
                 <span class=" text-sky-700">&#8594;</span>
                 <input readonly :value="fyear"
-                class="py-1 px-2 w-32 shadow-md shadow-gray-300 rounded-sm outline-2 outline-sky-700" placeholder="Fin anneé" type="number" min="2022">
+                class="py-1 px-2 w-32 shadow-md shadow-gray-300 rounded-sm outline-2 outline-sky-700" placeholder="anneé 2" type="number" min="2022">
             </div>
             <div class=" text-md font-semibold text-red-500">{{ Error }}</div>
             <div @click="checkyearinpute" 
@@ -68,15 +80,15 @@
 
     <div class="mt-10 rounded-sm shadow-md shadow-slate-300">
         <form @submit.prevent="downloadExcel" class="bg-white p-5 grid grid-cols-1 gap-4 place-items-center w-[40rem] rounded-sm">
-            <div class="uppercase font-bold ">Download Stagiaire Absences</div>
+            <div class="uppercase font-bold ">Télécharger le rapport d'absence (excel)</div>
 
             <select class="p-2 my-3 shadow-md shadow-slate-300 text-sm font-semibold text-slate-700 w-[13rem] outline-2 focus:outline-sky-500 rounded-sm" v-model="etatYear" required>
-                    <option class="hidden" :value = null >Choisie l'anneé scolaire</option>
+                    <option class="hidden" :value = null >l'année scolaire</option>
                     <option v-for="year in absysyear" :value=year.year>{{year.year}}</option>
             </select>
                 
             <button type="submit" class="text-white rounded-md bg-sky-500 hover:bg-blue-500 active:bg-sky-600 mt-1 cursor-pointer font-bold px-6 py-2 shadow-sm shadow-slate-100">
-                    <div class="text-center w-full">Download</div>
+                    <div class="text-center w-full">Télécharger</div>
             </button>
         </form>
     </div>
@@ -157,7 +169,7 @@
             }else{
                 Error.value = "On a déja une version avec cet année"
             }
-        }).catch((e) => {  error(`Something went wrong`)  });
+        }).catch((e) => {  error(`Erreur`)  });
 
     }
 
@@ -201,7 +213,8 @@
                 loading.value = false
                 success("successeful")
                 //here type ur shit
-                router.go({ path: '/home' })
+                localStorage.setItem("relPage","off")   
+                router.push({ path: '/home'})
             }else if(response.data.message == "error"){
                 loading.value = false
                 warning(response.data.text)
@@ -209,7 +222,7 @@
         })
         .catch((erro) => { 
             loading.value = false
-            error(`Something went wrong`) 
+            error(`Erreur`) 
         })
     }
 

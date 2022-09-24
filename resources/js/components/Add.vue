@@ -107,7 +107,7 @@
             <button :disabled="submitBtn==false"
             @click="addAbsence(student_ids,prof_id,duration_id,seance,date_abs,reset,errorNet)" 
             :class="submitBtn == true ? 'button-on':'button-off'" 
-            class="text-2xl text-white rounded cursor-pointer" 
+            class="text-md p-1 text-white rounded cursor-pointer" 
             >confirmer</button>
             
         </div>

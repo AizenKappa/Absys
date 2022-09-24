@@ -573,7 +573,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[10] || (_cache[10] = function ($event) {
       return $setup.addAbsence($setup.student_ids, $setup.prof_id, $setup.duration_id, $setup.seance, $setup.date_abs, $setup.reset, $setup.errorNet);
     }),
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.submitBtn == true ? 'button-on' : 'button-off', "text-2xl text-white rounded cursor-pointer"])
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.submitBtn == true ? 'button-on' : 'button-off', "text-md p-1 text-white rounded cursor-pointer"])
   }, "confirmer", 10
   /* CLASS, PROPS */
   , _hoisted_36)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);

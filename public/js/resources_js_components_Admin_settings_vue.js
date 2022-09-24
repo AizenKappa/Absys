@@ -151,7 +151,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     Error.value = "On a déja une version avec cet année";
                   }
                 })["catch"](function (e) {
-                  error("Something went wrong");
+                  error("Erreur");
                 });
 
               case 1:
@@ -200,7 +200,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           loading.value = false;
           success("successeful"); //here type ur shit
 
-          router.go({
+          localStorage.setItem("relPage", "off");
+          router.push({
             path: '/home'
           });
         } else if (response.data.message == "error") {
@@ -209,7 +210,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       })["catch"](function (erro) {
         loading.value = false;
-        error("Something went wrong");
+        error("Erreur");
       });
     }
 
@@ -311,29 +312,33 @@ var _hoisted_2 = {
   "class": "bg-white p-5 grid grid-cols-1 gap-4 place-items-center w-[40rem] rounded-sm shadow-md shadow-slate-300"
 };
 var _hoisted_3 = ["onSubmit"];
-
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "uppercase font-bold"
-}, "Changer les fichiers excel", -1
-/* HOISTED */
-);
-
-var _hoisted_5 = {
-  "class": "grid place-items-center gap-5 w-[33rem]"
-};
-var _hoisted_6 = {
+var _hoisted_4 = {
   "class": "relative w-full"
 };
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "font-semibold text-xs ml-2"
-}, "Entrez la baseplate", -1
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "30",
+  height: "30",
+  fill: "currentColor",
+  "class": "bi bi-arrow-left-circle-fill",
+  viewBox: "0 0 16 16"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  d: "M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_6 = [_hoisted_5];
+
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "text-xl font-bold uppercase text-black text-center mb-10"
+}, " Importation des données ", -1
 /* HOISTED */
 );
 
 var _hoisted_8 = {
-  key: 0,
-  "class": "absolute top-4 right-5 text-red-500"
+  "class": "grid place-items-center gap-5 w-[33rem]"
 };
 var _hoisted_9 = {
   "class": "relative w-full"
@@ -341,7 +346,7 @@ var _hoisted_9 = {
 
 var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "font-semibold text-xs ml-2"
-}, "Entrez l'avancement", -1
+}, "Charger la baseplate des stagiaires", -1
 /* HOISTED */
 );
 
@@ -350,10 +355,24 @@ var _hoisted_11 = {
   "class": "absolute top-4 right-5 text-red-500"
 };
 var _hoisted_12 = {
+  "class": "relative w-full"
+};
+
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "font-semibold text-xs ml-2"
+}, "Charger l'avancement des modules/formateur", -1
+/* HOISTED */
+);
+
+var _hoisted_14 = {
+  key: 0,
+  "class": "absolute top-4 right-5 text-red-500"
+};
+var _hoisted_15 = {
   key: 0
 };
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
   role: "status",
   "class": "inline w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300",
   viewBox: "0 0 100 101",
@@ -369,68 +388,68 @@ var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_14 = [_hoisted_13];
-var _hoisted_15 = {
+var _hoisted_17 = [_hoisted_16];
+var _hoisted_18 = {
   key: 1,
   "class": "text-center"
 };
-var _hoisted_16 = {
+var _hoisted_19 = {
   key: 2,
   "class": "text-center w-full"
 };
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "text-xl font-bold uppercase text-black text-center mb-10"
-}, "Nouvelle Anneé", -1
+}, " Nouvelle Année ", -1
 /* HOISTED */
 );
 
-var _hoisted_18 = {
+var _hoisted_21 = {
   "class": "flex justify-around w-[40rem] px-[2rem]"
 };
 
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "text-xl font-semibold text-blue-700"
 }, " Année scolaire : ", -1
 /* HOISTED */
 );
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "text-sky-700"
 }, "→", -1
 /* HOISTED */
 );
 
-var _hoisted_21 = ["value"];
-var _hoisted_22 = {
+var _hoisted_24 = ["value"];
+var _hoisted_25 = {
   "class": "text-md font-semibold text-red-500"
 };
-var _hoisted_23 = {
+var _hoisted_26 = {
   "class": "mt-10 rounded-sm shadow-md shadow-slate-300"
 };
-var _hoisted_24 = ["onSubmit"];
+var _hoisted_27 = ["onSubmit"];
 
-var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "uppercase font-bold"
-}, "Download Stagiaire Absences", -1
+}, "Télécharger le rapport d'absence (excel)", -1
 /* HOISTED */
 );
 
-var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   "class": "hidden",
   value: null
-}, "Choisie l'anneé scolaire", -1
+}, "l'année scolaire", -1
 /* HOISTED */
 );
 
-var _hoisted_27 = ["value"];
+var _hoisted_30 = ["value"];
 
-var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "submit",
   "class": "text-white rounded-md bg-sky-500 hover:bg-blue-500 active:bg-sky-600 mt-1 cursor-pointer font-bold px-6 py-2 shadow-sm shadow-slate-100"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-center w-full"
-}, "Download")], -1
+}, "Télécharger")], -1
 /* HOISTED */
 );
 
@@ -439,7 +458,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 0,
     "class": "bg-white p-5 grid grid-cols-1 gap-4 place-items-center w-[40rem] rounded-sm",
     onSubmit: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($setup.sweetalert, ["prevent"])
-  }, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": "absolute top-0 left-0 cursor-pointer text-black hover:text-[#0EA5E9]",
+    onClick: _cache[0] || (_cache[0] = function ($event) {
+      return $setup.readyPlates = false;
+    })
+  }, _hoisted_6), _hoisted_7]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     id: "custome_inpute",
     onChange: $setup.handleBase,
     required: "",
@@ -447,7 +471,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "file"
   }, null, 32
   /* HYDRATE_EVENTS */
-  ), $setup.bwrong ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_8, "Wrong baseplate !!")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  ), $setup.bwrong ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_11, "Fichier invalid !!")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     id: "custome_inpute",
     required: "",
     onChange: $setup.handleAvant,
@@ -455,66 +479,66 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "file"
   }, null, 32
   /* HYDRATE_EVENTS */
-  ), $setup.awrong ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_11, "Wrong avant !!")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  ), $setup.awrong ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_14, "Fichier invalid!!")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "submit",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["rounded text-md px-5 py-2.5 mr-2 inline-flex items-center w-[8rem]", $setup.loading ? 'text-white bg-blue-700' : 'hover:bg-blue-600  text-blue-700 hover:text-white border border-blue-500 hover:border-transparent'])
-  }, [$setup.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_12, _hoisted_14)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_15, "Loading...")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$setup.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, "Upload")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
+  }, [$setup.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_15, _hoisted_17)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_18, "Chargement...")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$setup.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_19, "Upload")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
   /* CLASS */
   )], 40
   /* PROPS, HYDRATE_EVENTS */
   , _hoisted_3)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     key: 1
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Upload base plates "), _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Upload base plates "), _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $setup.dyear = $event;
     }),
-    onInput: _cache[1] || (_cache[1] = function ($event) {
+    onInput: _cache[2] || (_cache[2] = function ($event) {
       return $setup.Error = '';
     }),
     "class": "py-1 w-32 px-2 shadow-md shadow-gray-300 rounded-sm outline-2 outline-sky-700",
-    placeholder: "Debut anneé",
+    placeholder: "année 1",
     type: "number",
     min: "2021"
   }, null, 544
   /* HYDRATE_EVENTS, NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.dyear]]), _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.dyear]]), _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     readonly: "",
     value: $setup.fyear,
     "class": "py-1 px-2 w-32 shadow-md shadow-gray-300 rounded-sm outline-2 outline-sky-700",
-    placeholder: "Fin anneé",
+    placeholder: "anneé 2",
     type: "number",
     min: "2022"
   }, null, 8
   /* PROPS */
-  , _hoisted_21)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.Error), 1
+  , _hoisted_24)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.Error), 1
   /* TEXT */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     onClick: $setup.checkyearinpute,
     "class": "text-white rounded-md bg-sky-500 hover:bg-blue-500 active:bg-sky-600 mt-1 cursor-pointer font-bold px-6 py-2 shadow-sm shadow-slate-100"
   }, "Suivant")], 64
   /* STABLE_FRAGMENT */
-  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
     onSubmit: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($setup.downloadExcel, ["prevent"]),
     "class": "bg-white p-5 grid grid-cols-1 gap-4 place-items-center w-[40rem] rounded-sm"
-  }, [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  }, [_hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": "p-2 my-3 shadow-md shadow-slate-300 text-sm font-semibold text-slate-700 w-[13rem] outline-2 focus:outline-sky-500 rounded-sm",
-    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $setup.etatYear = $event;
     }),
     required: ""
-  }, [_hoisted_26, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.absysyear, function (year) {
+  }, [_hoisted_29, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.absysyear, function (year) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: year.year
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(year.year), 9
     /* TEXT, PROPS */
-    , _hoisted_27);
+    , _hoisted_30);
   }), 256
   /* UNKEYED_FRAGMENT */
   ))], 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.etatYear]]), _hoisted_28], 40
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.etatYear]]), _hoisted_31], 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_24)])]);
+  , _hoisted_27)])]);
 }
 
 /***/ }),

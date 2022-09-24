@@ -11444,6 +11444,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var dropdown = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(false);
     var headDrop = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)("Choos Option");
     var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();
+    var route = (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.useRoute)();
 
     function studentInfo(id) {
       router.push('/stagiaire/' + id);
@@ -11451,6 +11452,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     var lastPageNum = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
       return stagIntoPages.value.length - 1;
+    });
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.onBeforeMount)(function () {
+      if (localStorage.getItem("relPage")) {
+        localStorage.removeItem('relPage');
+        location.reload();
+      }
     });
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(stagPerPage, function () {
       currentPage.value = 0;
@@ -11601,6 +11608,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       dropdown: dropdown,
       headDrop: headDrop,
       router: router,
+      route: route,
       studentInfo: studentInfo,
       lastPageNum: lastPageNum,
       searchFailed: searchFailed,
@@ -11621,7 +11629,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       onMounted: vue__WEBPACK_IMPORTED_MODULE_1__.onMounted,
       computed: vue__WEBPACK_IMPORTED_MODULE_1__.computed,
       onBeforeMount: vue__WEBPACK_IMPORTED_MODULE_1__.onBeforeMount,
-      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_2__.useRouter
+      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_2__.useRouter,
+      useRoute: vue_router__WEBPACK_IMPORTED_MODULE_2__.useRoute
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,

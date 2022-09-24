@@ -104,6 +104,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                         align: "end",
                         position: "end"
                       }
+                    },
+                    labels: {
+                      render: function render(args) {
+                        if (args.value == 0) {
+                          return "";
+                        } else {
+                          return args.value + ' H';
+                        }
+                      },
+                      fontStyle: "bolder",
+                      showZero: true
+                    },
+                    tooltip: {
+                      callbacks: {
+                        label: function label(context) {
+                          console.log(context);
+                          return context.label + " : " + context.formattedValue + " h";
+                        }
+                      }
                     }
                   }
                 };
@@ -583,7 +602,7 @@ var _hoisted_41 = /*#__PURE__*/_withScopeId(function () {
   }, " Prof "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
     scope: "col",
     "class": "text-sm md:text-md border border-black font-medium md:px-2 md:py-1 text-center"
-  }, " Heure total ")])], -1
+  }, " Absences totales ")])], -1
   /* HOISTED */
   );
 });

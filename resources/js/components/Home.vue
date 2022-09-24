@@ -208,7 +208,7 @@
     import { faSortAlphaAsc ,  } from '@fortawesome/free-solid-svg-icons';
     import axios  from 'axios';
     import {ref ,reactive,watch, onMounted,computed , onBeforeMount} from "vue";
-    import {useRouter } from 'vue-router';
+    import {useRouter,useRoute } from 'vue-router';
 
     const stagPerPage = ref(15)
     const stagiaires = ref([])
@@ -219,11 +219,18 @@
     const headDrop = ref("Choos Option")
     
     const router = useRouter()
+    const route = useRoute();
     function studentInfo(id){
         router.push('/stagiaire/'+id)
     }
     const lastPageNum = computed(()=>{ return stagIntoPages.value.length - 1 })
-      
+    onBeforeMount(()=>{
+        if(localStorage.getItem("relPage")){
+            localStorage.removeItem('relPage');
+            location.reload()
+        }
+            
+      })
     watch(stagPerPage,()=>{ currentPage.value = 0
         stagIntoPages.value= arrayChunk(stagiaires.value,Number(stagPerPage.value),search.value)
     })
