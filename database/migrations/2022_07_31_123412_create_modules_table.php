@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
-            $table->string("nom_module")->unique();
+            $table->string("nom_module");
             $table->string("code_module");
             $table->boolean("regional");
             $table->timestamps();

@@ -149,7 +149,7 @@
             <table style="font-size:15px;width: 600px;">
                 <tr >
                     <th style="text-align: left"><p style="padding-right: 50px">Etablissement</p></th>
-                    <th style="text-align: left">:&nbsp;ISTA EL HANK CASABLANCA</th>
+                    <th style="text-align: left">:&nbsp;ISTA Hay Hassani 2 Casablanca</th>
                 </tr>
                 <tr>
                     <th style="text-align: left">Niveau</th>
@@ -201,7 +201,7 @@
             <table style="font-size:15px;width: 600px;">
                 <tr>
                     <th style="text-align: left"><p style="padding-right: 50px">Etablissement</p></th>
-                    <th style="text-align: left">:&nbsp;ISTA EL HANK CASABLANCA</th>
+                    <th style="text-align: left">:&nbsp;ISTA Hay Hassani 2 Casablanca</th>
                 </tr>
                 <tr>
                     <th style="text-align: left">Niveau</th>
@@ -255,7 +255,7 @@
                     <th style="text-align: left">
                         <p style="padding-right: 50px">Etablissement</p>
                     </th>
-                    <th style="text-align: left;">:&nbsp;ISTA EL HANK CASABLANCA</th>
+                    <th style="text-align: left;">:&nbsp;ISTA Hay Hassani 2 Casablanca</th>
                 </tr>
                 <tr>
                     <th style="text-align: left">Niveau</th>
