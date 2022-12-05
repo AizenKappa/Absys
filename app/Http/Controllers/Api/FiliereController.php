@@ -1043,7 +1043,7 @@ class FiliereController extends Controller
 
         $handle = fopen($basePath, "r");
         while (( $row = fgetcsv($handle)) !== false) {
-            if($row[5] == "ISTA HAY HASSANI 2 CASABLANCA" && $ids->contains($row[0])){
+            if($row[5] == "ISTA ESSAFA CASABLANCA" && $ids->contains($row[0])){
                 if(!$old->contains($row[0])){
                     $prof = [
                         'id' => $row[0],
@@ -1157,12 +1157,15 @@ class FiliereController extends Controller
 
         foreach ($array as $e)
         {
-            if (!in_array($e[5],$Filieres) && preg_match('/HAY HASSANI 2/', $e[2]) && preg_match('/\w+/',$e[5]))
+            $code_fil = strtoupper(trim($e[4]));
+            $nom_fil = strtoupper(trim($e[5]));
+            $niveau = strtoupper(trim($e[3]));
+            if (!in_array($nom_fil,$Filieres) && preg_match('/ESSAFA/', $e[2]) && preg_match('/\w+/',$nom_fil))
             {
                 Filiere::create([
-                    "code_fil" => $e[4],
-                    "nom_fil" => $e[5],
-                    "niveau"=> $e[3]
+                    "code_fil" => $code_fil,
+                    "nom_fil" => $nom_fil,
+                    "niveau"=> $niveau
                 ]);
                 $Filieres = $this->filieres()->pluck('nom_fil')->toArray();
             }
@@ -1172,11 +1175,13 @@ class FiliereController extends Controller
         $groupes = $this->groupes()->pluck('nom_gp')->toArray();
         foreach ($array as $e) 
         {
-            if (!in_array($e[7],$groupes) && preg_match('/HAY HASSANI 2/', $e[2]) && preg_match('/\w+/',$e[7]))
+            $nom_gp = strtoupper(trim($e[7]));
+            $code_fil = strtoupper(trim($e[4]));
+            if (!in_array($nom_gp,$groupes) && preg_match('/ESSAFA/', $e[2]) && preg_match('/\w+/',$nom_gp))
             {
                 Groupe::create([
-                    "filiere_id" => Filiere::Where('code_fil',$e[4])->first()->id,
-                    "nom_gp" => $e[7],
+                    "filiere_id" => Filiere::Where('code_fil',$code_fil)->first()->id,
+                    "nom_gp" => $nom_gp,
                 ]);
                 $groupes = $this->groupes()->pluck('nom_gp')->toArray();
             }
@@ -1193,20 +1198,25 @@ class FiliereController extends Controller
 
         foreach ($array as $e) 
         {
-            $regex = preg_match('/HAY HASSANI 2/', $e[2]) && preg_match('/oui/', strtolower($e[10]));
-            if (!in_array($e[9],$matricules) && $regex && $groupes->contains($e[7]))
+            $matricule_st = strtoupper(trim($e[9]));
+            $nom_st = strtoupper(trim($e[15]));
+            $prenom_st = strtoupper(trim($e[16]));
+            $nom_gp = strtoupper(trim($e[7]));
+            $numero = strtoupper(trim($e[22]));
+            $regex = preg_match('/ESSAFA/', $e[2]) && preg_match('/oui/', strtolower($e[10]));
+            if (!in_array($e[9],$matricules) && $regex && $groupes->contains($nom_gp))
             {
                 $stagiaires[] = [
-                    "matricule_st" =>$e[9],
-                    "nom_st" => $e[15],
-                    "prenom_st" => $e[16],
-                    "groupe_id" => $allgroupes->Where('nom_gp',$e[7])->first()->id,
+                    "matricule_st" =>$matricule_st,
+                    "nom_st" => $nom_st,
+                    "prenom_st" => $prenom_st,
+                    "groupe_id" => $allgroupes->Where('nom_gp',$nom_gp)->first()->id,
                     "year" => $year,
-                    "numero_personnelle" => $e[22]
+                    "numero_personnelle" => $numero
 
                 ];
 
-                array_push($matricules, $e[9]);
+                array_push($matricules, $matricule_st);
             }
         }
       
@@ -1223,19 +1233,22 @@ class FiliereController extends Controller
             $nom_module = strtoupper(trim($e[17]));
             $code_module = strtoupper(trim($e[16]));
             $regional = (strtoupper($e[18]) == "O" ? 1: 0 ) ;
-            $regex = preg_match('/[\s\w]{2,}/', $e[19]) && preg_match('/[\s\w]{2,}/',$e[20]);
+            $code_prof = strtoupper(trim($e[19]));
+            $nom_prof = strtoupper(trim($e[20]));
+
+            $regex = preg_match('/[\s\w]{2,}/', $code_prof) && preg_match('/[\s\w]{2,}/',$nom_prof);
             if($regex)
             {
-                if (!in_array($e[20],$Formateurs))
+                if (!in_array($nom_prof,$Formateurs))
                 {
                     $array_profs[] = [
-                        "code_prof" => $e[19],
-                        "nom_prof" => $e[20]
+                        "code_prof" => $code_prof,
+                        "nom_prof" => $nom_prof
                     ];
 
-                    $Formateurs[] = $e[20];
+                    $Formateurs[] = $nom_prof;
                 }
-                if (!in_array($e[17],$Modules) && preg_match('/[\s\w]{2,}/',$e[17]))
+                if (!in_array($nom_module,$Modules) && preg_match('/[\s\w]{2,}/',$nom_module))
                 {
                     $array_modules[] = [
                         "nom_module" => $nom_module,
@@ -1256,13 +1269,15 @@ class FiliereController extends Controller
 
         foreach (array_slice($array_p, 1) as $e)
         {
-            $nom_module =$nom_module = strtoupper(trim($e[17])); 
-            if($modules->contains($e[17]) && $groupes->contains($e[8]) && $profs->contains($e[20])
-                && preg_match('/[\s\w]{2,}/', $e[17]) && preg_match('/[\s\w]{2,}/',$e[5]) && preg_match('/[\s\w]{2,}/',$e[7]))
+           $nom_module = strtoupper(trim($e[17]));
+            $nom_gp = strtoupper(trim($e[8])); 
+            $nom_prof=strtoupper(trim($e[20]));
+            if($modules->contains($nom_module) && $groupes->contains($nom_gp) && $profs->contains($nom_prof)
+                && preg_match('/[\s\w]{2,}/', $nom_module) && preg_match('/[\s\w]{2,}/',$e[5]) && preg_match('/[\s\w]{2,}/',$e[7]))
             {
-                $groupe_id = $groupeModel->where('nom_gp',$e[8])->first()->id;
+                $groupe_id = $groupeModel->where('nom_gp',$nom_gp)->first()->id;
                 $module_id = $moduleModel->where('nom_module',$nom_module)->first()->id;
-                $prof_id = $profModel->where('nom_prof',$e[20])->first()->id;
+                $prof_id = $profModel->where('nom_prof',$nom_prof)->first()->id;
                 
                 $array_rel = [
                     "prof_id" => $prof_id,

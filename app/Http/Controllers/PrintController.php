@@ -57,7 +57,7 @@ class PrintController extends Controller
         $DR = "DRCS";
         $anneeScolaire = Absysyear::where("current",1)->get("year")[0]["year"];
         $complexe = "CF ANFA";
-        $institut = "ISTA Hay Hassani 2 Casablanca";
+        $institut = "CENTRE DE QUALIFICATION PROFESSIONNELLE ESSAFA CASABLANCA";
         $data = [];
         foreach($groupe_id_arr as $groupe_id){
             $groupe = Groupe::with('filiere')->where('id',$groupe_id)->get()[0];
